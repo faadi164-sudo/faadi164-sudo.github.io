@@ -1684,7 +1684,7 @@ const T = {
     nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', vocabulary: 'Vocabulary', quran: 'Quran', phrases: 'Phrases', quiz: 'Quiz' },
     switchLabel: 'اردو', switchTitle: 'یہ صفحہ اردو میں پڑھیں', switchLang: 'ur',
     about: 'About', contact: 'Contact', privacy: 'Privacy policy', support: 'Support Harf',
-    listen: '🔊 Listen', sep: '›', prev: '← Previous', next: 'Next →',
+    listen: 'Listen', sep: '›', prev: '← Previous', next: 'Next →',
     footer: 'Free Arabic lessons for English and Urdu speakers.',
   },
   ur: {
@@ -1692,7 +1692,7 @@ const T = {
     nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', vocabulary: 'الفاظ', quran: 'قرآن', phrases: 'جملے', quiz: 'کوئز' },
     switchLabel: 'English', switchTitle: 'Read this page in English', switchLang: 'en',
     about: 'ہمارے بارے میں', contact: 'رابطہ', privacy: 'رازداری کی پالیسی', support: 'حرف کی مدد کریں',
-    listen: '🔊 سنیں', sep: '‹', prev: '→ پچھلا', next: 'اگلا ←',
+    listen: 'سنیں', sep: '‹', prev: '→ پچھلا', next: 'اگلا ←',
     footer: 'اردو اور انگریزی بولنے والوں کے لیے مفت عربی اسباق۔',
   },
 };
@@ -1872,11 +1872,16 @@ const LEVELS = {
 };
 
 const FONTS = {
-  en: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap',
-  ur: 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap',
+  en: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Amiri:ital,wght@0,400;0,700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap',
+  ur: 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Amiri:ital,wght@0,400;0,700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap',
 };
 const PATTERN_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><g fill="none" stroke="#e3ac45" stroke-width="1" stroke-opacity=".30"><rect x="18" y="18" width="36" height="36"/><rect x="18" y="18" width="36" height="36" transform="rotate(45 36 36)"/><circle cx="36" cy="36" r="9"/><path d="M0 0l9 9M72 0l-9 9M0 72l9-9M72 72l-9-9" stroke-opacity=".22"/></g></svg>';
 const PATTERN = 'url("data:image/svg+xml,' + encodeURIComponent(PATTERN_SVG) + '")';
+const STAR_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><g fill="#c9973a"><rect x="9" y="9" width="22" height="22"/><rect x="9" y="9" width="22" height="22" transform="rotate(45 20 20)"/></g><circle cx="20" cy="20" r="5.5" fill="none" stroke="#fffaf0" stroke-width="1.6"/></svg>';
+const STAR = 'url("data:image/svg+xml,' + encodeURIComponent(STAR_SVG) + '")';
+const ROSETTE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g fill="none" stroke="#f3d58a" stroke-width="1"><g stroke-opacity=".55"><rect x="45" y="45" width="110" height="110"/><rect x="45" y="45" width="110" height="110" transform="rotate(45 100 100)"/></g><g stroke-opacity=".35"><rect x="62" y="62" width="76" height="76" transform="rotate(22.5 100 100)"/><rect x="62" y="62" width="76" height="76" transform="rotate(67.5 100 100)"/><circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="36"/></g></g></svg>';
+const ROSETTE = 'url("data:image/svg+xml,' + encodeURIComponent(ROSETTE_SVG) + '")';
+const SPK = 'url("data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#000"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>') + '")';
 const FAVICON = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0d6b57"/><text x="32" y="46" font-size="38" text-anchor="middle" fill="#ffffff" font-family="serif">ح</text></svg>');
 
 function layout(lang, o) {
@@ -1957,6 +1962,7 @@ function supportBox(lang) {
 }
 
 // ---------------------------------------------------------------- pages
+const CARD_GLYPH = { 'alphabet.html': 'أ ب ت', 'writing.html': 'قَلَم', 'lessons.html': 'نَحْو', 'classic-tales.html': 'حِكَايَات', 'reading.html': 'قِصَص', 'vocabulary.html': 'كَلِمَات', 'quran.html': 'قُرْآن', 'phrases.html': 'جُمَل', 'saudi-arabic.html': 'هَلَا', 'quiz.html': 'اِخْتِبَار' };
 function homePage(lang) {
   const ur = lang === 'ur';
   const n = (v) => num(lang, v);
@@ -2047,7 +2053,7 @@ ${urBox}
 <section>
   <h2 class="orn">${C.insideH}</h2>
   <div class="cards">
-    ${C.cards.map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
+    ${C.cards.map(([f, h, p]) => `<a class="card${f === 'alphabet.html' || f === 'classic-tales.html' ? ' wide' : ''}" href="${link(lang, f)}"><span class="cg" lang="ar" aria-hidden="true">${CARD_GLYPH[f] || ''}</span><h3>${h}</h3><p>${p}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('\n    ')}
   </div>
 </section>
 <section class="split">
@@ -2132,7 +2138,7 @@ function letterPage(lang, i) {
       ? `${fmt('{' + x.c + '}')} اپنے بعد والے حرف سے جڑتا ہے، اس لیے اس کی چار شکلیں ہیں۔ یہاں جوڑ کی جگہ لکیر (${fmt('{ـ}')}) سے دکھائی گئی ہے۔`
       : `${fmt('{' + x.c + '}')} اپنے بعد والے حرف سے کبھی نہیں جڑتا۔ اس کی شروع والی شکل اکیلی شکل جیسی ہے، اور اگلا حرف الگ سے شروع ہوتا ہے۔`,
     dotsH: 'پہچان', simH: 'ان سے الگ پہچانیں', exH: 'مثال', mean: x.wu,
-    listenL: '🔊 حرف سنیں', listenW: '🔊 لفظ سنیں', learn: 'سیکھ لیا؟ نشان لگائیں',
+    listenL: 'حرف سنیں', listenW: 'لفظ سنیں', learn: 'سیکھ لیا؟ نشان لگائیں',
     quiz: 'سارے حروف ہو گئے؟ کوئز دیں ←',
   } : {
     title: `Arabic letter ${x.en} (${x.c}): sound, shapes and example | Harf`,
@@ -2145,7 +2151,7 @@ function letterPage(lang, i) {
       ? `${esc(x.en)} joins to the letter after it, so it has four shapes. The line (${fmt('{ـ}')}) shows where it connects to the letters around it.`
       : `${esc(x.en)} never joins to the letter after it. Its start shape is the same as its alone shape, and the next letter starts fresh.`,
     dotsH: 'How to spot it', simH: 'Don’t confuse it with', exH: 'Example word', mean: x.we,
-    listenL: '🔊 Hear the letter', listenW: '🔊 Hear the word', learn: 'Mark as learned',
+    listenL: 'Hear the letter', listenW: 'Hear the word', learn: 'Mark as learned',
     quiz: 'Finished the alphabet? Take the quiz →',
   };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['alphabet.html', T[lang].nav.alphabet], [null, ur ? x.ur : x.en]])}
@@ -2319,8 +2325,8 @@ function vocabularyPage(lang) {
 // Flashcards plus the full word list. Words: [Arabic, transliteration, English, Urdu]
 function deckHtml(lang, slug, words) {
   const ur = lang === 'ur';
-  const C = ur ? { ar: 'عربی', tr: 'رومن تلفظ', m: 'مطلب', flip: 'پلٹنے کے لیے ٹیپ کریں', prev: 'پچھلا', next: 'اگلا', known: 'یاد ہے؟ نشان لگائیں', listen: '🔊 سنیں', list: 'تمام الفاظ' }
-    : { ar: 'Arabic', tr: 'Pronunciation', m: 'Meaning', flip: 'Tap or press Space to flip', prev: 'Previous', next: 'Next', known: 'Mark as known', listen: '🔊 Listen', list: 'All words' };
+  const C = ur ? { ar: 'عربی', tr: 'رومن تلفظ', m: 'مطلب', flip: 'پلٹنے کے لیے ٹیپ کریں', prev: 'پچھلا', next: 'اگلا', known: 'یاد ہے؟ نشان لگائیں', listen: 'سنیں', list: 'تمام الفاظ' }
+    : { ar: 'Arabic', tr: 'Pronunciation', m: 'Meaning', flip: 'Tap or press Space to flip', prev: 'Previous', next: 'Next', known: 'Mark as known', listen: 'Listen', list: 'All words' };
   const pics = words.some((w) => w[4]);
   const rows = words.map(([a, tr, en, u, pic]) => {
     const m = ur ? u : en;
@@ -2637,8 +2643,8 @@ function storyPage(lang, i) {
   const text = st.s.map((x) => x.w.map((w) => w[0]).join(' ')).join(' ');
   const sents = st.s.map((x) => `<p class="st"><span class="ar" lang="ar">${x.w.map(([a, en, u]) => `<button class="rw" type="button" data-w="${esc(plain(a))}" data-m="${esc(ur ? u : en)}">${a}</button>`).join(' ')}</span><span class="st-tr latin">${esc(x.tr)}</span><span class="st-m">${esc(ur ? x.ur : x.en)}</span></p>`).join('\n  ');
   const qs = st.q.map((q) => `<details class="practice"><summary>${esc(ur ? q.ur : q.en)}</summary><div class="ans"><span class="ar" lang="ar">${q.a}</span> <span>${esc(ur ? q.aUr : q.aEn)}</span></div></details>`).join('\n');
-  const C = ur ? { listen: '▶ پوری کہانی سنیں', showTr: 'تلفظ دکھائیں', showM: 'ترجمہ دکھائیں', tap: 'کسی لفظ پر ٹیپ کریں تو اس کا مطلب یہاں نظر آئے گا۔', qH: 'سوال', qHint: 'جواب دیکھنے کے لیے سوال پر ٹیپ کریں۔', all: 'تمام کہانیاں' }
-    : { listen: '▶ Listen to the story', showTr: 'Show pronunciation', showM: 'Show translation', tap: 'Tap a word to see its meaning here.', qH: 'Questions', qHint: 'Tap a question to see the answer.', all: 'All stories' };
+  const C = ur ? { listen: 'پوری کہانی سنیں', showTr: 'تلفظ دکھائیں', showM: 'ترجمہ دکھائیں', tap: 'کسی لفظ پر ٹیپ کریں تو اس کا مطلب یہاں نظر آئے گا۔', qH: 'سوال', qHint: 'جواب دیکھنے کے لیے سوال پر ٹیپ کریں۔', all: 'تمام کہانیاں' }
+    : { listen: 'Listen to the story', showTr: 'Show pronunciation', showM: 'Show translation', tap: 'Tap a word to see its meaning here.', qH: 'Questions', qHint: 'Tap a question to see the answer.', all: 'All stories' };
   const title = ur ? `آسان عربی کہانی: ${st.ur}` : `Easy Arabic story: ${st.en}`;
   const desc = ur ? `${st.ur} (${st.ar}): ابتدائی طلبہ کے لیے اعراب والی آسان عربی کہانی، ہر لفظ کے معنی، آواز اور ترجمے کے ساتھ۔`
     : `${st.en} (${st.ar}): a short, fully vowelled Arabic story for beginners, with the meaning of every word, audio and translation.`;
@@ -2701,10 +2707,10 @@ function classicPage(lang, i) {
   const text = t.s.map((x) => x.w.map((w) => w.a).join(' ')).join(' ');
   const sents = t.s.map((x) => {
     const words = x.w.map((w) => `<button class="rw" type="button" data-w="${esc(w.a)}" data-m="${esc(ur ? w.ur : w.en)}" data-tr="${esc(w.tr)}"${w.root ? ` data-root="${esc(w.root)}"` : ''}${(ur ? w.our : w.oen) ? ` data-o="${esc(ur ? w.our : w.oen)}"` : ''}${w.rel && w.rel.length ? ` data-rel="${esc(w.rel.map((r) => r.a + '=' + (ur ? r.ur : r.en)).join(';;'))}"` : ''}>${esc(w.raw)}</button>`).join(' ');
-    return `<div class="st"><span class="ar" lang="ar">${words}</span><span class="st-tr latin">${esc(x.tr)}</span><span class="st-m">${esc(ur ? x.ur : x.en)}</span><button class="btn sm st-play" type="button" data-say="${esc(x.w.map((w) => w.a).join(' '))}" aria-label="${T[lang].listen}">🔊</button></div>`;
+    return `<div class="st"><span class="ar" lang="ar">${words}</span><span class="st-tr latin">${esc(x.tr)}</span><span class="st-m">${esc(ur ? x.ur : x.en)}</span><button class="btn sm st-play" type="button" data-say="${esc(x.w.map((w) => w.a).join(' '))}" aria-label="${T[lang].listen}"></button></div>`;
   }).join('\n  ');
-  const C = ur ? { listen: '▶ پوری کہانی سنیں', showTr: 'تلفظ دکھائیں', showM: 'جملوں کا ترجمہ', showO: 'لفظ کا مادہ اور ماخذ', tap: 'کسی لفظ پر ٹیپ کریں تو اس کی آواز اور مطلب یہاں نظر آئے گا۔ «لفظ کا مادہ اور ماخذ» آن کریں تو مادہ اور اسی مادے کے دوسرے الفاظ بھی ملیں گے۔', all: 'تمام کہانیاں', about: 'اس کہانی کے بارے میں', lvl: 'درجہ' }
-    : { listen: '▶ Listen to the tale', showTr: 'Show pronunciation', showM: 'Show sentence translation', showO: 'Word origins', tap: 'Tap a word to hear it and see its meaning here. Turn on “Word origins” to see its root and related words.', all: 'All tales', about: 'About this tale', lvl: 'Level' };
+  const C = ur ? { listen: 'پوری کہانی سنیں', showTr: 'تلفظ دکھائیں', showM: 'جملوں کا ترجمہ', showO: 'لفظ کا مادہ اور ماخذ', tap: 'کسی لفظ پر ٹیپ کریں تو اس کی آواز اور مطلب یہاں نظر آئے گا۔ «لفظ کا مادہ اور ماخذ» آن کریں تو مادہ اور اسی مادے کے دوسرے الفاظ بھی ملیں گے۔', all: 'تمام کہانیاں', about: 'اس کہانی کے بارے میں', lvl: 'درجہ' }
+    : { listen: 'Listen to the tale', showTr: 'Show pronunciation', showM: 'Show sentence translation', showO: 'Word origins', tap: 'Tap a word to hear it and see its meaning here. Turn on “Word origins” to see its root and related words.', all: 'All tales', about: 'About this tale', lvl: 'Level' };
   const title = ur ? `کلاسیکی عربی کہانی: ${t.ur}` : `Classic Arabic story: ${t.en}`;
   const desc = ur ? `${t.ur} (${t.ar}): اعراب والی آسان عربی کہانی، ہر لفظ کا مطلب، تلفظ اور جملوں کا اردو ترجمہ۔`
     : `${t.en} (${t.ar}): a classic tale in vowelled Arabic with the meaning and pronunciation of every word and sentence translations.`;
@@ -3230,6 +3236,270 @@ footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);f
   .lang{margin-inline-start:auto}
 }
 @media (prefers-reduced-motion: reduce){ .flash-in{transition:none} }
+/* ================= Harf premium layer: parchment, emerald and gold-leaf ================= */
+:root{
+  --bg:#f7f2e7; --surface:#fffdf8; --ink:#16241f; --muted:#5d6a63;
+  --accent:#0b5d4b; --accent-2:#08463a; --accent-soft:#e7f0ea; --gold:#9a6d14; --gold-2:#c9973a; --gold-3:#ecd08a;
+  --line:#e6dcc6; --line-2:#d9caa6;
+  --shadow:0 1px 2px rgba(70,48,10,.05),0 10px 28px -14px rgba(70,48,10,.22);
+  --shadow-lg:0 2px 4px rgba(70,48,10,.06),0 24px 50px -22px rgba(40,30,10,.38);
+  --arabic:"Amiri","Noto Naskh Arabic","Traditional Arabic",serif;
+  --display:"Fraunces",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1412; --surface:#121e1a; --ink:#ece7da; --muted:#a3ada6; --accent:#5cc7a8; --accent-2:#3aa889; --accent-soft:#16302a;
+    --gold:#e0b45a; --gold-2:#d3a24a; --gold-3:#f0d595; --line:#25332e; --line-2:#3a4a42;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); --shadow-lg:0 24px 50px -22px rgba(0,0,0,.7);
+  }
+}
+body{background-color:var(--bg);background-image:radial-gradient(1200px 600px at 50% -200px,rgba(201,151,58,.10),transparent 70%);background-repeat:no-repeat;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:rgba(201,151,58,.28)}
+h1,h2,h3{letter-spacing:-.01em;font-variation-settings:"SOFT" 50,"WONK" 0}
+html[lang="ur"] h1,html[lang="ur"] h2,html[lang="ur"] h3{letter-spacing:0}
+h1{font-weight:600}
+.ar{font-feature-settings:"kern","liga","calt"}
+a{text-decoration-color:rgba(11,93,75,.35);text-underline-offset:3px}
+a:hover{text-decoration-color:currentColor}
+
+/* Header */
+header.top{background:rgba(247,242,231,.86);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);box-shadow:none;border-bottom:1px solid var(--line)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header.top{background:rgba(11,20,18,.86)}}
+header.top::after{height:3px;background:linear-gradient(90deg,transparent,var(--gold-2) 20%,var(--gold-3) 50%,var(--gold-2) 80%,transparent);opacity:.85}
+.bar{padding:10px 0;gap:18px}
+.brand{gap:10px}
+.brand::before{content:"";width:34px;height:34px;flex:none;background:__STAR__ center/contain no-repeat;filter:drop-shadow(0 2px 3px rgba(120,80,10,.25))}
+.brand .ar{font-size:30px;color:var(--accent);line-height:1.2;margin-top:-4px}
+.brand b{font-size:23px;font-weight:600;letter-spacing:.01em}
+nav.tabs{gap:4px}
+nav.tabs a{position:relative;padding:6px 12px;border-radius:8px;color:var(--muted);font-weight:600;font-size:15.5px;transition:color .15s,background .15s}
+nav.tabs a:hover{color:var(--accent);background:rgba(11,93,75,.06)}
+nav.tabs a[aria-current="page"]{background:transparent;color:var(--accent)}
+nav.tabs a[aria-current="page"]::after{content:"";position:absolute;left:50%;bottom:-2px;width:7px;height:7px;transform:translateX(-50%) rotate(45deg);background:var(--gold-2);border-radius:1px}
+.lang{border-color:var(--line-2);padding:4px 14px;background:transparent;transition:all .15s}
+.lang:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Buttons */
+.btn{border-radius:10px;border-color:var(--line-2);padding:8px 16px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 1px 2px rgba(70,48,10,.06);transition:transform .12s,box-shadow .15s,border-color .15s,background .15s}
+.btn:hover{border-color:var(--gold-2);transform:translateY(-1px);box-shadow:0 6px 14px -8px rgba(70,48,10,.35)}
+.btn:active{transform:none}
+.btn.primary{background:linear-gradient(180deg,#0f6e59,#0a5242);border-color:#09493b;color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 8px 18px -10px rgba(8,70,58,.7)}
+.btn.primary:hover{background:linear-gradient(180deg,#127b63,#0b5b49);border-color:#09493b}
+.btn.gold{background:linear-gradient(180deg,#f2cf7c,#d39f3c);border-color:#b98524;color:#2a1b02;box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 10px 22px -10px rgba(150,100,20,.8)}
+.btn.gold:hover{background:linear-gradient(180deg,#f7da92,#dcab4a)}
+.btn.ghost{border-color:rgba(243,213,138,.55);color:#fbf3dd;box-shadow:none}
+.btn.ghost:hover{background:rgba(243,213,138,.12);border-color:#f3d58a}
+.btn.on,.btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+[data-say]::before,#say::before{content:"";display:inline-block;width:1.05em;height:1.05em;margin-inline-end:.45em;vertical-align:-.17em;background:currentColor;-webkit-mask:__SPK__ center/contain no-repeat;mask:__SPK__ center/contain no-repeat}
+html[dir="rtl"] [data-say]::before,html[dir="rtl"] #say::before{transform:scaleX(-1)}
+.chip{border-color:var(--line-2);transition:all .15s}
+.chip:hover{border-color:var(--gold-2);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Hero: illuminated panel */
+.hero{padding:56px 52px;border-radius:28px;gap:40px;
+  background:radial-gradient(90% 120% at 82% 18%,#15876b 0%,#0c654f 34%,#073d33 78%,#052c25 100%);
+  box-shadow:0 30px 60px -30px rgba(5,44,37,.85),0 0 0 1px rgba(201,151,58,.35)}
+.hero::before{opacity:.55;background-size:64px 64px}
+.hero::after{inset:12px;border:1px solid rgba(236,208,138,.5);border-radius:20px;
+  background:__STAR__ 10px 10px/18px no-repeat,__STAR__ calc(100% - 10px) 10px/18px no-repeat,__STAR__ 10px calc(100% - 10px)/18px no-repeat,__STAR__ calc(100% - 10px) calc(100% - 10px)/18px no-repeat;
+  box-shadow:inset 0 0 0 5px rgba(5,44,37,.0),inset 0 0 0 6px rgba(236,208,138,.18)}
+.hero h1{font-size:clamp(34px,4.6vw,54px);line-height:1.08;font-weight:600;letter-spacing:-.02em;text-shadow:0 2px 18px rgba(0,0,0,.25)}
+html[lang="ur"] .hero h1{font-size:clamp(28px,3.6vw,40px);line-height:1.9}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--gold-3);letter-spacing:.14em;font-size:12px}
+.hero .eyebrow::before{content:"";width:28px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-3))}
+.hero .lead{color:#d6e7df;font-size:18.5px;line-height:1.7;max-width:56ch}
+.hero .row{gap:12px;margin-top:6px}
+.hero .btn{padding:11px 22px;font-size:16.5px;border-radius:12px}
+.hero-note a{color:var(--gold-3);text-decoration-color:rgba(236,208,138,.4)}
+.mihrab{width:min(320px,100%);padding:3px;background:linear-gradient(160deg,#fbe7ad,#c9973a 40%,#8a5d10 70%,#e9c46f);box-shadow:0 30px 50px -20px rgba(0,0,0,.65),0 0 0 6px rgba(236,208,138,.12),0 0 60px rgba(243,213,138,.18)}
+.mihrab-in{border:0;background:__ROSETTE__ center 40%/88% no-repeat,radial-gradient(80% 60% at 50% 38%,#127160 0%,#0a4b3e 55%,#052c25 100%)}
+.mihrab-in::before{opacity:.25}
+.mihrab-in::after{content:"";position:absolute;inset:12px;border:1px solid rgba(236,208,138,.55);border-radius:999px 999px 8px 8px;pointer-events:none}
+.calli{font-size:104px;color:#f7dc94;background:linear-gradient(180deg,#fff1c4 10%,#e8bd5c 55%,#b8862a 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.45))}
+.mihrab-in small{color:var(--gold-3);letter-spacing:.32em;font-size:12px;opacity:.9}
+.mihrab-in small::before,.mihrab-in small::after{content:"◆";font-size:7px;margin:0 10px;vertical-align:2px;opacity:.8}
+
+/* Stats */
+.stats{gap:14px;margin-top:-6px}
+.stat{position:relative;border:1px solid var(--line);border-top:0;border-radius:16px;padding:18px 20px 16px;background:linear-gradient(180deg,var(--surface),var(--surface));box-shadow:var(--shadow);overflow:hidden}
+.stat::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--gold-2),var(--gold-3),var(--gold-2))}
+.stat::after{content:"";position:absolute;inset-inline-end:16px;top:16px;width:22px;height:22px;background:__STAR__ center/contain no-repeat;opacity:.9}
+.stat strong{font-size:30px;font-weight:600;color:var(--accent)}
+.stat span{font-size:14px;letter-spacing:.02em}
+.meter{height:5px;background:var(--accent-soft)}
+.meter i{background:linear-gradient(90deg,var(--accent),#1a9a7c)}
+
+/* Ornamental section headings */
+h2.orn{gap:18px;font-weight:600;font-size:28px;margin-bottom:22px}
+html[lang="ur"] h2.orn{font-size:23px}
+h2.orn::before{height:14px;background:__STAR__ right center/14px no-repeat,linear-gradient(90deg,transparent,var(--gold-2)) left center/calc(100% - 22px) 1px no-repeat}
+h2.orn::after{height:14px;background:__STAR__ left center/14px no-repeat,linear-gradient(270deg,transparent,var(--gold-2)) right center/calc(100% - 22px) 1px no-repeat}
+html[dir="rtl"] h2.orn::before{background:__STAR__ left center/14px no-repeat,linear-gradient(270deg,transparent,var(--gold-2)) right center/calc(100% - 22px) 1px no-repeat}
+html[dir="rtl"] h2.orn::after{background:__STAR__ right center/14px no-repeat,linear-gradient(90deg,transparent,var(--gold-2)) left center/calc(100% - 22px) 1px no-repeat}
+
+/* Cards */
+.cards{gap:18px}
+.card{border-radius:18px;border-color:var(--line);box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease,border-color .2s}
+.cards .card::after{content:"";inset:0 0 auto;top:0;inset-inline-end:auto;width:100%;height:3px;background:linear-gradient(90deg,var(--gold-2),var(--gold-3),var(--gold-2));background-image:linear-gradient(90deg,var(--gold-2),var(--gold-3),var(--gold-2));transform:scaleX(0);transform-origin:center;opacity:1;transition:transform .3s ease;left:0}
+a.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--line-2)}
+a.card:hover::after{transform:scaleX(1);opacity:1}
+.card h3{font-weight:600;font-size:20px}
+.card .cg{display:block;font-family:"Aref Ruqaa","Amiri",serif;font-weight:700;font-size:30px;line-height:1.5;color:var(--gold-2);direction:rtl;text-align:end;margin:-6px 0 2px;opacity:.95;transition:color .2s}
+a.card:hover .cg{color:var(--gold)}
+.card .go{display:block;margin-top:12px;color:var(--gold-2);font-weight:700;transition:transform .2s}
+a.card:hover .go{transform:translateX(4px)}
+html[dir="rtl"] a.card:hover .go{transform:translateX(-4px)}
+.card:has(.cg){padding:20px 22px 18px}
+
+/* Tale cards */
+.tcard{display:flex;flex-direction:column}
+.tcard .eyebrow{font-size:11px;letter-spacing:.12em;color:var(--gold)}
+.tcard h3{font-size:19px;line-height:1.25;margin-bottom:auto;padding-bottom:10px}
+.tcard p:last-child{margin-top:8px;padding-top:10px;border-top:1px solid var(--line);text-align:end}
+.tcard p .ar{font-size:25px;color:var(--accent);line-height:1.6}
+.tsearch{padding:8px 16px;border-color:var(--line-2);box-shadow:var(--shadow)}
+.tsearch:focus{outline:none;border-color:var(--gold-2);box-shadow:0 0 0 4px rgba(201,151,58,.18)}
+
+/* Boxes and support banner */
+.box{border-radius:16px;border-color:var(--line);border-inline-start:3px solid var(--gold-2);box-shadow:var(--shadow)}
+.box.support{position:relative;overflow:hidden;border:0;color:#f4efe0;padding:26px 30px;background:radial-gradient(100% 160% at 100% 0%,#13806a,#0a5242 50%,#063a30)}
+.box.support::before{content:"";position:absolute;inset:0;background-image:__PAT__;background-size:60px 60px;opacity:.35;pointer-events:none}
+.box.support::after{content:"";position:absolute;inset:8px;border:1px solid rgba(236,208,138,.4);border-radius:11px;pointer-events:none}
+.box.support > *{position:relative;z-index:1}
+.box.support strong{color:var(--gold-3)}
+.box.support .btn.primary{background:linear-gradient(180deg,#f2cf7c,#d39f3c);border-color:#b98524;color:#2a1b02}
+
+/* Lists, letters, rows */
+.lesson-list a,.ex-row,.ph,.pw,.verse,.fact,.groups li,.lt,.quiz,.letter-top,details.practice,.forms div{border-color:var(--line);box-shadow:var(--shadow)}
+.lesson-list a{border-radius:16px;transition:transform .15s,box-shadow .2s,border-color .2s}
+.lesson-list a:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--gold-2)}
+.lesson-list .num{display:grid;place-items:center;width:44px;height:44px;font-size:18px;font-weight:700;color:#fff;background:__STAR__ center/contain no-repeat;text-shadow:0 1px 2px rgba(80,50,0,.5)}
+.lesson-list > li > a > .ar{font-size:28px}
+.lt{border-radius:14px;transition:transform .15s,box-shadow .2s,border-color .2s}
+.lt:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--gold-2)}
+.lt .ar{font-size:44px;color:var(--accent)}
+.lt.done{background:linear-gradient(180deg,var(--accent-soft),var(--surface))}
+.big-letter{color:var(--accent);text-shadow:0 6px 24px rgba(11,93,75,.15)}
+.letter-top{border-radius:20px;background:radial-gradient(60% 120% at 0% 50%,rgba(201,151,58,.08),transparent 70%),var(--surface)}
+.anum{border-color:var(--gold-2);background:radial-gradient(circle,rgba(201,151,58,.12),transparent 70%)}
+.surah-name{font-family:"Aref Ruqaa","Amiri",serif;font-size:38px}
+.verse{border-radius:18px}
+.w{border-radius:12px;background:var(--surface)}
+.w:hover{border-color:var(--gold-2)}
+.flash .face{border-radius:22px;box-shadow:var(--shadow-lg)}
+.face .ar{color:var(--accent)}
+.face.back{background:linear-gradient(180deg,var(--accent-soft),var(--surface))}
+table.words{border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border-color:var(--line)}
+.words th{background:linear-gradient(180deg,#f3ecdc,#efe6d2);color:var(--gold);letter-spacing:.03em}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .words th{background:var(--surface)}}
+.quiz{border-radius:20px}
+.opt{border-radius:14px;background:var(--surface);transition:all .15s}
+.opt:hover{border-color:var(--gold-2)}
+.crumbs{font-size:13.5px;letter-spacing:.01em}
+.crumbs a{text-decoration-color:var(--line-2)}
+.eyebrow{letter-spacing:.12em;font-size:12px}
+h1 .ar{font-family:"Aref Ruqaa","Amiri",serif;font-weight:700;color:var(--gold-2)}
+
+/* Reading pages: manuscript-style reader */
+.story-tools{gap:8px;margin:18px 0 16px;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);width:fit-content;max-width:100%}
+.story-tools .btn{border:0;box-shadow:none;background:transparent;padding:7px 14px;font-size:15px}
+.story-tools .btn:hover{background:var(--accent-soft);transform:none}
+.story-tools .btn.sm{background:linear-gradient(180deg,#0f6e59,#0a5242);color:#fff;font-size:15px;padding:7px 16px}
+.story-tools .btn[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.story{position:relative;max-width:860px;padding:40px 48px 28px;border-radius:6px;border:1px solid var(--line-2);
+  background:radial-gradient(120% 80% at 50% 0%,#fffdf6,#fbf5e6 70%,#f5ecd6);box-shadow:var(--shadow-lg)}
+.story::before{content:"";position:absolute;inset:10px;border:1px solid rgba(201,151,58,.55);outline:1px solid rgba(201,151,58,.25);outline-offset:4px;pointer-events:none;border-radius:2px}
+.story::after{content:"";position:absolute;left:50%;top:-11px;width:22px;height:22px;transform:translateX(-50%);background:__STAR__ center/contain no-repeat}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .story{background:radial-gradient(120% 80% at 50% 0%,#17251f,#121e1a 70%)}}
+.st{grid-template-columns:1fr auto;column-gap:14px;align-items:start;padding:12px 0;margin:0}
+.st + .st{border-top:1px dashed rgba(201,151,58,.35)}
+.st > .ar{grid-column:1;font-size:31px;line-height:2.15;color:var(--ink)}
+.st > .st-tr,.st > .st-m{grid-column:1}
+.st-tr{text-align:right;direction:ltr;color:var(--gold)}
+.st-m{font-size:16px;line-height:1.55;padding-top:2px}
+html[lang="ur"] .st-m{line-height:2.1}
+.st-play{grid-column:2;grid-row:1;align-self:center;justify-self:end;margin:0;width:38px;height:38px;padding:0;border-radius:50%;display:inline-grid;place-items:center;color:var(--accent);border-color:var(--line-2);background:var(--surface)}
+.st-play::before{margin:0!important;width:17px!important;height:17px!important}
+.st-play:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.rw{padding:0 3px;border-radius:6px;transition:background .12s,color .12s}
+.rw:hover,.rw.on{background:rgba(201,151,58,.18);color:var(--accent);box-shadow:inset 0 -2px 0 var(--gold-2)}
+.gloss{max-width:860px;border-radius:16px;padding:12px 20px;color:#f4efe0;border:1px solid rgba(236,208,138,.45);
+  background:linear-gradient(180deg,rgba(9,72,59,.97),rgba(5,44,37,.97));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 18px 40px -16px rgba(0,0,0,.55)}
+.gloss .ar{color:var(--gold-3);font-size:28px}
+
+/* Pager */
+.pager{border-top:0;position:relative;padding-top:26px}
+.pager::before{content:"";position:absolute;top:0;left:0;right:0;height:14px;background:__STAR__ center/14px no-repeat,linear-gradient(90deg,transparent,var(--gold-2),transparent) center/100% 1px no-repeat}
+
+/* Footer: emerald with gold */
+footer{margin-top:40px;padding:56px 0 40px;color:#c9d9d2;background:radial-gradient(80% 140% at 50% 0%,#0c5a49,#073a31 60%,#052a23);border-top:0}
+footer::before{height:6px;background-color:transparent;background-image:linear-gradient(90deg,#8a5d10,#ecd08a 30%,#c9973a 50%,#ecd08a 70%,#8a5d10)}
+footer::after{content:"";position:absolute;inset:6px 0 0;background-image:__PAT__;background-size:64px 64px;opacity:.25;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%)}
+.foot{position:relative;z-index:1;text-align:center;display:grid;justify-items:center;gap:6px}
+.foot::before{content:"حَرْف";font-family:"Aref Ruqaa","Amiri",serif;font-weight:700;font-size:44px;line-height:1.3;background:linear-gradient(180deg,#fff1c4,#d8a94d);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot strong{color:#fbf3dd}
+.foot-links{justify-content:center;gap:22px;margin:8px 0}
+.foot-links a{color:var(--gold-3);text-decoration:none;font-weight:600}
+.foot-links a:hover{color:#fff;text-decoration:underline}
+.foot .small{opacity:.7}
+.toast{background:#073a31;color:#f4efe0;border:1px solid rgba(236,208,138,.4);border-radius:12px}
+
+@media (max-width:820px){
+  .hero{padding:40px 24px 34px;gap:22px;text-align:center}
+  .hero .row{justify-content:center}
+  .hero .eyebrow{justify-content:center}
+  .hero .eyebrow::before{display:none}
+  .hero .lead{margin-inline:auto}
+  .mihrab{width:200px}
+  .calli{font-size:70px}
+  .story{padding:30px 22px 20px}
+  .st > .ar{font-size:27px}
+}
+@media (max-width:520px){
+  .bar{gap:8px 12px;padding:8px 0 0}
+  nav.tabs{padding:4px 0 10px;-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+  html[dir="rtl"] nav.tabs{-webkit-mask-image:linear-gradient(270deg,#000 85%,transparent);mask-image:linear-gradient(270deg,#000 85%,transparent)}
+  nav.tabs a[aria-current="page"]::after{bottom:0}
+  .stats{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .stat{padding:14px 12px}
+  .stat strong{font-size:21px}
+  .stat::after{display:none}
+  .stat span{font-size:12.5px}
+  h2.orn{font-size:23px;gap:10px}
+  .story-tools{width:100%}
+  .story-tools .btn{font-size:14px;padding:6px 10px}
+  .st-play{width:34px;height:34px}
+}
+
+/* Home card grid: two featured cards make a clean 4 x 3 layout */
+.card:has(.cg){display:flex;flex-direction:column}
+.card .go{margin-top:auto;padding-top:12px}
+@media (min-width:900px){
+  .cards:has(> .card.wide){grid-template-columns:repeat(4,1fr)}
+  .card.wide{grid-column:span 2;color:#f4efe0;border-color:transparent;background:radial-gradient(120% 160% at 100% 0%,#13806a,#0a5242 55%,#063a30);overflow:hidden}
+  .card.wide::before{content:"";position:absolute;inset-inline-end:-40px;top:50%;width:220px;height:220px;transform:translateY(-50%);background:__ROSETTE__ center/contain no-repeat;opacity:.7;pointer-events:none}
+  .card.wide h3{color:#fff;font-size:24px}
+  .card.wide p{color:#cfe1d9;max-width:34ch}
+  .card.wide .cg{color:var(--gold-3);font-size:40px;direction:inherit;text-align:start;position:relative;margin-bottom:6px}
+  .card.wide .go{color:var(--gold-3)}
+  a.card.wide:hover .cg{color:#fff1c4}
+}
+
+@media (max-width:620px){
+  .cards:has(> .card .cg){grid-template-columns:1fr 1fr;gap:10px}
+  .card:has(.cg){padding:14px 14px 12px;border-radius:14px}
+  .card .cg{font-size:24px;margin:-4px 0 0}
+  .card:has(.cg) h3{font-size:16.5px;margin-bottom:4px}
+  .card:has(.cg) p{font-size:13.5px;line-height:1.45}
+  html[lang="ur"] .card:has(.cg) p{line-height:2}
+  .card .go{display:none}
+  .card.wide{grid-column:1 / -1;color:#f4efe0;border-color:transparent;background:radial-gradient(120% 160% at 100% 0%,#13806a,#0a5242 55%,#063a30)}
+  .card.wide h3{color:#fff}.card.wide p{color:#cfe1d9}.card.wide .cg{color:var(--gold-3)}
+}
+html[lang="ur"] .hero .lead{line-height:2.35;font-size:16.5px}
+html[lang="ur"] .hero .eyebrow{font-size:14px;letter-spacing:0}
+@media (prefers-reduced-motion: reduce){ .card,.btn,.lt,.lesson-list a{transition:none} a.card:hover,.btn:hover{transform:none} }
 `;
 
 const APP_JS = String.raw`(function () {
@@ -3575,7 +3845,7 @@ function build() {
     add(lang, 'privacy.html', privacyPage(lang));
   }
   files['404.html'] = notFoundPage();
-  files['style.css'] = STYLE_CSS.replace(/__PAT__/g, PATTERN);
+  files['style.css'] = STYLE_CSS.replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   files['app.js'] = APP_JS;
   files['googleba7aa79e24dbfa47.html'] = 'google-site-verification: googleba7aa79e24dbfa47.html'; // Google Search Console ownership, keep this
   files['robots.txt'] = `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
