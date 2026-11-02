@@ -1675,13 +1675,222 @@ const LESSONS = [
       { en: 'Say “I went to the market yesterday.”', ur: '«میں کل بازار گیا تھا» کہیں۔', a: 'ذَهَبْتُ إِلَى السُّوقِ أَمْسِ', tr: 'dhahabtu ila s-suuqi amsi' },
     ],
   },
+  {
+    slug: 'lesson-25-kaana', key: 'كَانَ',
+    en: {
+      title: 'Was and were: {كَانَ}', short: 'Put a sentence into the past with kaana.',
+      intro: 'To move a sentence like {الْجَوُّ حَارٌّ} (the weather is hot) into the past, put {كَانَ} (kaana, was) in front of it. The describing word then ends in -an instead of -un: {كَانَ الْجَوُّ حَارًّا} (the weather was hot).',
+      points: [
+        '{كُنْتُ} I was · {كُنْتَ} you were (m) · {كُنْتِ} you were (f) · {كَانَ} he was · {كَانَتْ} she was · {كُنَّا} we were · {كَانُوا} they were.',
+        'The second part takes -an: {كَانَ الْمُدَرِّسُ مَرِيضًا} (the teacher was ill). Places with {فِي} do not change: {كُنْتُ فِي الْبَيْتِ}.',
+        'For the future use {سَيَكُونُ} (will be): {سَيَكُونُ الْجَوُّ بَارِدًا} (the weather will be cold).',
+      ],
+    },
+    ur: {
+      title: 'تھا اور تھے: {كَانَ}', short: '{كَانَ} سے جملے کو ماضی میں بدلیں۔',
+      intro: '{الْجَوُّ حَارٌّ} (موسم گرم ہے) جیسے جملے کو ماضی میں لانے کے لیے اس سے پہلے {كَانَ} (تھا) لگائیں۔ خبر کے آخر میں تنوینِ رفع کی جگہ تنوینِ نصب آ جاتی ہے: {كَانَ الْجَوُّ حَارًّا} (موسم گرم تھا)۔',
+      points: [
+        '{كُنْتُ} میں تھا · {كُنْتَ} تم تھے (مذکر) · {كُنْتِ} تم تھیں (مؤنث) · {كَانَ} وہ تھا · {كَانَتْ} وہ تھی · {كُنَّا} ہم تھے · {كَانُوا} وہ سب تھے۔',
+        'خبر منصوب ہوتی ہے: {كَانَ الْمُدَرِّسُ مَرِيضًا} (استاد بیمار تھے)۔ {فِي} والی جگہ نہیں بدلتی: {كُنْتُ فِي الْبَيْتِ}۔',
+        'مستقبل کے لیے {سَيَكُونُ} (ہوگا): {سَيَكُونُ الْجَوُّ بَارِدًا} (موسم ٹھنڈا ہوگا)۔',
+      ],
+    },
+    ex: [
+      ['كَانَ الْجَوُّ حَارًّا', 'kaana l-jawwu ḥaarran', 'The weather was hot.', 'موسم گرم تھا۔'],
+      ['كُنْتُ مَرِيضًا أَمْسِ', 'kuntu mariiḍan amsi', 'I was ill yesterday.', 'میں کل بیمار تھا۔'],
+      ['كَانَتِ الْمَدْرَسَةُ مُغْلَقَةً', 'kaanati l-madrasatu mughlaqatan', 'The school was closed.', 'اسکول بند تھا۔'],
+      ['أَيْنَ كُنْتَ؟', 'ayna kunta?', 'Where were you?', 'تم کہاں تھے؟'],
+      ['كُنْتُ فِي الْمَسْجِدِ', 'kuntu fil-masjidi', 'I was in the mosque.', 'میں مسجد میں تھا۔'],
+      ['كُنَّا طُلَّابًا فِي الْجَامِعَةِ', 'kunnaa ṭullaaban fil-jaamiʿati', 'We were students at the university.', 'ہم یونیورسٹی میں طالب علم تھے۔'],
+      ['سَيَكُونُ الْجَوُّ بَارِدًا غَدًا', 'sa-yakuunu l-jawwu baaridan ghadan', 'The weather will be cold tomorrow.', 'کل موسم ٹھنڈا ہوگا۔'],
+    ],
+    practice: [
+      { en: 'Say “The door was open.”', ur: '«دروازہ کھلا تھا» کہیں۔', a: 'كَانَ الْبَابُ مَفْتُوحًا', tr: 'kaana l-baabu maftuuḥan' },
+      { en: 'Say “She was a teacher.”', ur: '«وہ استانی تھی» کہیں۔', a: 'كَانَتْ مُدَرِّسَةً', tr: 'kaanat mudarrisatan' },
+      { en: 'Say “We were at home.”', ur: '«ہم گھر پر تھے» کہیں۔', a: 'كُنَّا فِي الْبَيْتِ', tr: 'kunnaa fil-bayti' },
+    ],
+  },
+  {
+    slug: 'lesson-26-lan', key: 'لَنْ',
+    en: {
+      title: 'Will not: {لَنْ}', short: 'Say what will not happen.',
+      intro: 'To say something will not happen, put {لَنْ} (lan) before the present verb and change its last vowel from -u to -a: {يَذْهَبُ} → {لَنْ يَذْهَبَ} (he will not go). Do not add {سَـ} after {لَنْ}.',
+      points: [
+        'Three ways to say “not” with verbs: {لَا أَشْرَبُ} I don’t drink (now or usually) · {لَمْ أَشْرَبْ} I didn’t drink · {لَنْ أَشْرَبَ} I won’t drink.',
+        'Verbs that end in -uuna lose the -na: {يَذْهَبُونَ} → {لَنْ يَذْهَبُوا} (they will not go).',
+        '{لَنْ} is strong and firm. You will hear it in promises: {لَنْ أَنْسَاكَ} (I will never forget you).',
+      ],
+    },
+    ur: {
+      title: 'نہیں کرے گا: {لَنْ}', short: 'بتائیں کہ آگے کیا نہیں ہوگا۔',
+      intro: 'کسی کام کے آئندہ نہ ہونے کو بتانے کے لیے مضارع سے پہلے {لَنْ} لگائیں اور آخری پیش کو زبر سے بدل دیں: {يَذْهَبُ} ← {لَنْ يَذْهَبَ} (وہ نہیں جائے گا)۔ {لَنْ} کے بعد {سَـ} نہ لگائیں۔',
+      points: [
+        'فعل کی نفی کے تین طریقے: {لَا أَشْرَبُ} میں نہیں پیتا · {لَمْ أَشْرَبْ} میں نے نہیں پیا · {لَنْ أَشْرَبَ} میں نہیں پیوں گا۔',
+        'جو افعال {ـونَ} پر ختم ہوں ان کا نون گر جاتا ہے: {يَذْهَبُونَ} ← {لَنْ يَذْهَبُوا} (وہ نہیں جائیں گے)۔',
+        '{لَنْ} پختہ نفی ہے، وعدوں میں اکثر آتا ہے: {لَنْ أَنْسَاكَ} (میں تمہیں کبھی نہیں بھولوں گا)۔',
+      ],
+    },
+    ex: [
+      ['لَنْ أَذْهَبَ إِلَى السُّوقِ الْيَوْمَ', 'lan adhhaba ila s-suuqi l-yawma', 'I will not go to the market today.', 'میں آج بازار نہیں جاؤں گا۔'],
+      ['لَنْ يَتَأَخَّرَ', 'lan yata’akhkhara', 'He will not be late.', 'وہ دیر نہیں کرے گا۔'],
+      ['لَنْ نَنْسَاكَ', 'lan nansaaka', 'We will not forget you.', 'ہم تمہیں نہیں بھولیں گے۔'],
+      ['لَا أَشْرَبُ الشَّايَ', 'laa ashrabu sh-shaaya', 'I don’t drink tea.', 'میں چائے نہیں پیتا۔'],
+      ['لَمْ أَشْرَبِ الشَّايَ', 'lam ashrabi sh-shaaya', 'I did not drink the tea.', 'میں نے چائے نہیں پی۔'],
+      ['لَنْ أَشْرَبَ الشَّايَ', 'lan ashraba sh-shaaya', 'I will not drink the tea.', 'میں چائے نہیں پیوں گا۔'],
+      ['لَنْ يَحْضُرُوا الدَّرْسَ', 'lan yaḥḍuruu d-darsa', 'They will not attend the lesson.', 'وہ سبق میں حاضر نہیں ہوں گے۔'],
+    ],
+    practice: [
+      { en: 'Say “I will not be late.”', ur: '«میں دیر نہیں کروں گا» کہیں۔', a: 'لَنْ أَتَأَخَّرَ', tr: 'lan ata’akhkhara' },
+      { en: 'Say “She will not travel tomorrow.”', ur: '«وہ کل سفر نہیں کرے گی» کہیں۔', a: 'لَنْ تُسَافِرَ غَدًا', tr: 'lan tusaafira ghadan' },
+      { en: 'Change {سَأَكْتُبُ} to “I will not write.”', ur: '{سَأَكْتُبُ} کو «میں نہیں لکھوں گا» میں بدلیں۔', a: 'لَنْ أَكْتُبَ', tr: 'lan aktuba' },
+    ],
+  },
+  {
+    slug: 'lesson-27-dont', key: 'لَا تَكْتُبْ',
+    en: {
+      title: 'Don’t! {لَا تَفْعَلْ}', short: 'Tell someone not to do something.',
+      intro: 'To tell someone not to do something, put {لَا} before the “you” form of the present verb and make its ending silent: {تَكْتُبُ} → {لَا تَكْتُبْ} (don’t write). This is different from {لَا تَكْتُبُ} (you don’t write), which only describes.',
+      points: [
+        'To a man: {لَا تَجْلِسْ} · to a woman: {لَا تَجْلِسِي} · to a group: {لَا تَجْلِسُوا}.',
+        'Add {مِنْ فَضْلِكَ} (please) to sound polite: {لَا تُدَخِّنْ مِنْ فَضْلِكَ} (please don’t smoke).',
+        'Two you will often hear: {لَا تَخَفْ} (don’t be afraid) and {لَا تَحْزَنْ} (don’t be sad). The second appears in the Quran: {لَا تَحْزَنْ إِنَّ اللّٰهَ مَعَنَا}.',
+      ],
+    },
+    ur: {
+      title: 'ایسا نہ کرو! {لَا تَفْعَلْ}', short: 'کسی کو کسی کام سے روکیں۔',
+      intro: 'کسی کو کسی کام سے روکنے کے لیے حاضر کے مضارع سے پہلے {لَا} لگائیں اور آخر ساکن کر دیں: {تَكْتُبُ} ← {لَا تَكْتُبْ} (مت لکھو)۔ یہ {لَا تَكْتُبُ} (تم نہیں لکھتے) سے مختلف ہے، جو صرف خبر دیتا ہے۔',
+      points: [
+        'مرد سے: {لَا تَجْلِسْ} · عورت سے: {لَا تَجْلِسِي} · جماعت سے: {لَا تَجْلِسُوا}۔',
+        'شائستگی کے لیے {مِنْ فَضْلِكَ} (براہ کرم) لگائیں: {لَا تُدَخِّنْ مِنْ فَضْلِكَ} (براہ کرم سگریٹ نہ پئیں)۔',
+        'دو عام جملے: {لَا تَخَفْ} (ڈرو مت) اور {لَا تَحْزَنْ} (غم نہ کرو)۔ دوسرا قرآن میں آیا ہے: {لَا تَحْزَنْ إِنَّ اللّٰهَ مَعَنَا}۔',
+      ],
+    },
+    ex: [
+      ['لَا تَتَأَخَّرْ', 'laa tata’akhkhar', 'Don’t be late.', 'دیر نہ کرو۔'],
+      ['لَا تَتَكَلَّمْ فِي الْفَصْلِ', 'laa tatakallam fil-faṣli', 'Don’t talk in class.', 'کلاس میں باتیں نہ کرو۔'],
+      ['لَا تَنْسَيْ كِتَابَكِ', 'laa tansay kitaabaki', 'Don’t forget your book (to a woman).', 'اپنی کتاب نہ بھولنا (عورت سے)۔'],
+      ['لَا تَلْعَبُوا هُنَا', 'laa talʿabuu hunaa', 'Don’t play here (to a group).', 'یہاں مت کھیلو (جماعت سے)۔'],
+      ['لَا تَخَفْ', 'laa takhaf', 'Don’t be afraid.', 'ڈرو مت۔'],
+      ['لَا تَحْزَنْ', 'laa taḥzan', 'Don’t be sad.', 'غم نہ کرو۔'],
+      ['لَا تَفْتَحِ النَّافِذَةَ مِنْ فَضْلِكَ', 'laa taftaḥi n-naafidhata min faḍlika', 'Please don’t open the window.', 'براہ کرم کھڑکی نہ کھولیں۔'],
+    ],
+    practice: [
+      { en: 'Tell a man “Don’t sit here.”', ur: 'مرد سے کہیں «یہاں نہ بیٹھو»۔', a: 'لَا تَجْلِسْ هُنَا', tr: 'laa tajlis hunaa' },
+      { en: 'Say “Don’t write on the door.”', ur: '«دروازے پر نہ لکھو» کہیں۔', a: 'لَا تَكْتُبْ عَلَى الْبَابِ', tr: 'laa taktub ʿala l-baabi' },
+      { en: 'Tell a group “Don’t go.”', ur: 'جماعت سے کہیں «مت جاؤ»۔', a: 'لَا تَذْهَبُوا', tr: 'laa tadhhabuu' },
+    ],
+  },
+  {
+    slug: 'lesson-28-ordinals-days', key: 'الْأَوَّلُ',
+    en: {
+      title: 'First, second, third and the days of the week', short: 'Order words, and the seven days.',
+      intro: 'Order words come after the noun, like adjectives, and match it: {الدَّرْسُ الْأَوَّلُ} (the first lesson), {الْحِصَّةُ الْأُولَى} (the first class). From “second” onwards they follow one pattern: {ثَانٍ}, {ثَالِثٌ}, {رَابِعٌ}.',
+      points: [
+        '{الْأَوَّلُ} 1st · {الثَّانِي} 2nd · {الثَّالِثُ} 3rd · {الرَّابِعُ} 4th · {الْخَامِسُ} 5th · {السَّادِسُ} 6th · {السَّابِعُ} 7th · {الثَّامِنُ} 8th · {التَّاسِعُ} 9th · {الْعَاشِرُ} 10th. For feminine nouns add {ـة}, but “first” becomes {الْأُولَى}.',
+        'Days: {السَّبْتُ} Saturday · {الْأَحَدُ} Sunday · {الِاثْنَيْنِ} Monday · {الثُّلَاثَاءُ} Tuesday · {الْأَرْبِعَاءُ} Wednesday · {الْخَمِيسُ} Thursday · {الْجُمُعَةُ} Friday.',
+        'Sunday to Thursday are named from numbers: {الْأَحَدُ} from one, {الِاثْنَيْنِ} from two, {الْخَمِيسُ} from five. {الْجُمُعَةُ} means “the gathering”.',
+      ],
+    },
+    ur: {
+      title: 'پہلا، دوسرا، تیسرا اور ہفتے کے دن', short: 'ترتیبی اعداد اور سات دن۔',
+      intro: 'ترتیبی عدد صفت کی طرح اسم کے بعد آتا ہے اور اس سے مطابقت رکھتا ہے: {الدَّرْسُ الْأَوَّلُ} (پہلا سبق)، {الْحِصَّةُ الْأُولَى} (پہلا پیریڈ)۔ «دوسرا» سے آگے سب ایک ہی وزن پر ہیں: {ثَانٍ}، {ثَالِثٌ}، {رَابِعٌ}۔',
+      points: [
+        '{الْأَوَّلُ} پہلا · {الثَّانِي} دوسرا · {الثَّالِثُ} تیسرا · {الرَّابِعُ} چوتھا · {الْخَامِسُ} پانچواں · {السَّادِسُ} چھٹا · {السَّابِعُ} ساتواں · {الثَّامِنُ} آٹھواں · {التَّاسِعُ} نواں · {الْعَاشِرُ} دسواں۔ مؤنث کے لیے {ـة} لگائیں، مگر «پہلی» {الْأُولَى} ہے۔',
+        'دن: {السَّبْتُ} ہفتہ · {الْأَحَدُ} اتوار · {الِاثْنَيْنِ} پیر · {الثُّلَاثَاءُ} منگل · {الْأَرْبِعَاءُ} بدھ · {الْخَمِيسُ} جمعرات · {الْجُمُعَةُ} جمعہ۔',
+        'اتوار سے جمعرات تک کے نام اعداد سے بنے ہیں: {الْأَحَدُ} ایک سے، {الِاثْنَيْنِ} دو سے، {الْخَمِيسُ} پانچ سے۔ {الْجُمُعَةُ} کا مطلب ہے «اجتماع کا دن»۔',
+      ],
+    },
+    ex: [
+      ['الدَّرْسُ الْأَوَّلُ', 'ad-darsu l-awwalu', 'the first lesson', 'پہلا سبق'],
+      ['الْحِصَّةُ الْأُولَى', 'al-ḥiṣṣatu l-uulaa', 'the first class (period)', 'پہلا پیریڈ'],
+      ['الطَّابِقُ الثَّالِثُ', 'aṭ-ṭaabiqu th-thaalithu', 'the third floor', 'تیسری منزل'],
+      ['السَّيَّارَةُ الثَّانِيَةُ', 'as-sayyaaratu th-thaaniyatu', 'the second car', 'دوسری گاڑی'],
+      ['مَا الْيَوْمُ؟', 'ma l-yawmu?', 'What day is it today?', 'آج کون سا دن ہے؟'],
+      ['الْيَوْمُ يَوْمُ الْأَحَدِ', 'al-yawmu yawmu l-aḥadi', 'Today is Sunday.', 'آج اتوار ہے۔'],
+      ['الْجُمُعَةُ يَوْمُ عُطْلَةٍ', 'al-jumuʿatu yawmu ʿuṭlatin', 'Friday is a day off.', 'جمعہ چھٹی کا دن ہے۔'],
+      ['أَنَا فِي الصَّفِّ الْخَامِسِ', 'ana fiṣ-ṣaffi l-khaamisi', 'I am in the fifth grade.', 'میں پانچویں جماعت میں ہوں۔'],
+    ],
+    practice: [
+      { en: 'Say “the fourth lesson”.', ur: '«چوتھا سبق» کہیں۔', a: 'الدَّرْسُ الرَّابِعُ', tr: 'ad-darsu r-raabiʿu' },
+      { en: 'Say “the first car”.', ur: '«پہلی گاڑی» کہیں۔', a: 'السَّيَّارَةُ الْأُولَى', tr: 'as-sayyaaratu l-uulaa' },
+      { en: 'Say “Today is Thursday.”', ur: '«آج جمعرات ہے» کہیں۔', a: 'الْيَوْمُ يَوْمُ الْخَمِيسِ', tr: 'al-yawmu yawmu l-khamiisi' },
+    ],
+  },
+  {
+    slug: 'lesson-29-abu-akhu', key: 'أَبُو',
+    en: {
+      title: 'Father of, brother of: {أَبُو} and {أَخُو}', short: 'Short nouns that grow a long vowel.',
+      intro: 'A few short nouns, such as {أَبٌ} (father), {أَخٌ} (brother) and {ذُو} (owner of), take a long vowel when another noun or a pronoun follows them: {أَبُو مُحَمَّدٍ} (Muhammad’s father), {أَخُوكَ} (your brother). The long vowel shows the word’s job in the sentence.',
+      points: [
+        'As the subject it ends in -uu: {هٰذَا أَبُو خَالِدٍ}. As the object it ends in -aa: {رَأَيْتُ أَبَا خَالِدٍ}. After a preposition it ends in -ii: {سَلَّمْتُ عَلَى أَبِي خَالِدٍ}.',
+        'Many famous names use this pattern: {أَبُو بَكْرٍ}, {أَبُو هُرَيْرَةَ}. Arabs often call a man “father of” his eldest son.',
+        '{ذُو} means “having” or “owner of”: {رَجُلٌ ذُو عِلْمٍ} (a man of knowledge). For a woman use {ذَاتُ}.',
+      ],
+    },
+    ur: {
+      title: 'باپ، بھائی: {أَبُو} اور {أَخُو}', short: 'وہ مختصر اسم جن میں حرفِ علت بڑھ جاتا ہے۔',
+      intro: 'چند مختصر اسم، جیسے {أَبٌ} (باپ)، {أَخٌ} (بھائی) اور {ذُو} (والا)، جب کسی اسم یا ضمیر کی طرف مضاف ہوں تو ان کے آخر میں حرفِ علت آ جاتا ہے: {أَبُو مُحَمَّدٍ} (محمد کے والد)، {أَخُوكَ} (تمہارا بھائی)۔ یہی حرف جملے میں لفظ کا کردار بتاتا ہے۔',
+      points: [
+        'فاعل یا مبتدا ہو تو واو: {هٰذَا أَبُو خَالِدٍ}۔ مفعول ہو تو الف: {رَأَيْتُ أَبَا خَالِدٍ}۔ حرفِ جر کے بعد یا: {سَلَّمْتُ عَلَى أَبِي خَالِدٍ}۔',
+        'بہت سے مشہور نام اسی طرز پر ہیں: {أَبُو بَكْرٍ}، {أَبُو هُرَيْرَةَ}۔ عرب اکثر آدمی کو اس کے بڑے بیٹے کے نام سے «ابو فلاں» کہتے ہیں۔',
+        '{ذُو} کا مطلب ہے «والا»: {رَجُلٌ ذُو عِلْمٍ} (علم والا آدمی)۔ عورت کے لیے {ذَاتُ}۔',
+      ],
+    },
+    ex: [
+      ['هٰذَا أَبُو خَالِدٍ', 'haadhaa abuu khaalidin', 'This is Khalid’s father.', 'یہ خالد کے والد ہیں۔'],
+      ['أَيْنَ أَخُوكَ؟', 'ayna akhuuka?', 'Where is your brother?', 'تمہارا بھائی کہاں ہے؟'],
+      ['رَأَيْتُ أَبَاكَ فِي الْمَسْجِدِ', 'ra’aytu abaaka fil-masjidi', 'I saw your father in the mosque.', 'میں نے تمہارے والد کو مسجد میں دیکھا۔'],
+      ['سَلَّمْتُ عَلَى أَخِيكَ', 'sallamtu ʿalaa akhiika', 'I greeted your brother.', 'میں نے تمہارے بھائی کو سلام کیا۔'],
+      ['أَبُو بَكْرٍ صَدِيقُ النَّبِيِّ', 'abuu bakrin ṣadiiqu n-nabiyyi', 'Abu Bakr is the Prophet’s friend.', 'ابو بکرؓ نبی ﷺ کے دوست ہیں۔'],
+      ['هُوَ رَجُلٌ ذُو عِلْمٍ', 'huwa rajulun dhuu ʿilmin', 'He is a man of knowledge.', 'وہ علم والا آدمی ہے۔'],
+    ],
+    practice: [
+      { en: 'Say “This is your brother.”', ur: '«یہ تمہارا بھائی ہے» کہیں۔', a: 'هٰذَا أَخُوكَ', tr: 'haadhaa akhuuka' },
+      { en: 'Say “I know your father.”', ur: '«میں تمہارے والد کو جانتا ہوں» کہیں۔', a: 'أَعْرِفُ أَبَاكَ', tr: 'aʿrifu abaaka' },
+      { en: 'Say “I went with your brother.”', ur: '«میں تمہارے بھائی کے ساتھ گیا» کہیں۔', a: 'ذَهَبْتُ مَعَ أَخِيكَ', tr: 'dhahabtu maʿa akhiika' },
+    ],
+  },
+  {
+    slug: 'lesson-30-how-beautiful', key: 'مَا أَجْمَلَ',
+    en: {
+      title: 'How beautiful! {مَا أَجْمَلَ}', short: 'Show wonder and admiration.',
+      intro: 'To say “How beautiful…!”, put {مَا} before the {أَفْعَلَ} form of the adjective, then the noun ending in -a: {مَا أَجْمَلَ الْمَسْجِدَ!} (How beautiful the mosque is!). With a pronoun: {مَا أَجْمَلَهُ!} (How beautiful it is!).',
+      points: [
+        'Make it from the adjective: {جَمِيلٌ} → {مَا أَجْمَلَ} · {كَبِيرٌ} → {مَا أَكْبَرَ} · {حَسَنٌ} → {مَا أَحْسَنَ} · {بَارِدٌ} → {مَا أَبْرَدَ}.',
+        'The noun after it always ends in -a: {مَا أَطْيَبَ الطَّعَامَ!} (How delicious the food is!).',
+        'Don’t confuse it with the question {مَا هٰذَا؟} (What is this?). The {أَفْعَلَ} shape after {مَا} tells you it is wonder, not a question.',
+      ],
+    },
+    ur: {
+      title: 'کتنا خوبصورت! {مَا أَجْمَلَ}', short: 'تعجب اور تعریف کا اظہار۔',
+      intro: '«کتنا خوبصورت…!» کہنے کے لیے صفت کے {أَفْعَلَ} وزن سے پہلے {مَا} لگائیں، پھر اسم زبر کے ساتھ: {مَا أَجْمَلَ الْمَسْجِدَ!} (مسجد کتنی خوبصورت ہے!)۔ ضمیر کے ساتھ: {مَا أَجْمَلَهُ!} (یہ کتنا خوبصورت ہے!)۔',
+      points: [
+        'صفت سے بنائیں: {جَمِيلٌ} ← {مَا أَجْمَلَ} · {كَبِيرٌ} ← {مَا أَكْبَرَ} · {حَسَنٌ} ← {مَا أَحْسَنَ} · {بَارِدٌ} ← {مَا أَبْرَدَ}۔',
+        'بعد والا اسم ہمیشہ منصوب ہوتا ہے: {مَا أَطْيَبَ الطَّعَامَ!} (کھانا کتنا مزیدار ہے!)۔',
+        'اسے سوال {مَا هٰذَا؟} (یہ کیا ہے؟) سے نہ ملائیں۔ {مَا} کے بعد {أَفْعَلَ} کا وزن بتاتا ہے کہ یہ تعجب ہے، سوال نہیں۔',
+      ],
+    },
+    ex: [
+      ['مَا أَجْمَلَ الْحَدِيقَةَ!', 'maa ajmala l-ḥadiiqata!', 'How beautiful the garden is!', 'باغ کتنا خوبصورت ہے!'],
+      ['مَا أَكْبَرَ هٰذَا الْبَيْتَ!', 'maa akbara haadha l-bayta!', 'How big this house is!', 'یہ گھر کتنا بڑا ہے!'],
+      ['مَا أَبْرَدَ الْمَاءَ!', 'maa abrada l-maa’a!', 'How cold the water is!', 'پانی کتنا ٹھنڈا ہے!'],
+      ['مَا أَحْسَنَ خَطَّكَ!', 'maa aḥsana khaṭṭaka!', 'How good your handwriting is!', 'تمہاری لکھائی کتنی اچھی ہے!'],
+      ['مَا أَطْيَبَ هٰذَا الطَّعَامَ!', 'maa aṭyaba haadha ṭ-ṭaʿaama!', 'How delicious this food is!', 'یہ کھانا کتنا مزیدار ہے!'],
+      ['مَا أَجْمَلَهَا!', 'maa ajmalahaa!', 'How beautiful she is!', 'وہ کتنی خوبصورت ہے!'],
+    ],
+    practice: [
+      { en: 'Say “How big the mosque is!”', ur: '«مسجد کتنی بڑی ہے!» کہیں۔', a: 'مَا أَكْبَرَ الْمَسْجِدَ!', tr: 'maa akbara l-masjida!' },
+      { en: 'Say “How cold the weather is!”', ur: '«موسم کتنا ٹھنڈا ہے!» کہیں۔', a: 'مَا أَبْرَدَ الْجَوَّ!', tr: 'maa abrada l-jawwa!' },
+      { en: 'Say “How beautiful it is!” (masculine)', ur: '«یہ کتنا خوبصورت ہے!» (مذکر) کہیں۔', a: 'مَا أَجْمَلَهُ!', tr: 'maa ajmalahu!' },
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------- interface text
 const T = {
   en: {
     dir: 'ltr', brand: 'Harf', skip: 'Skip to content', navLabel: 'Sections',
-    nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', vocabulary: 'Vocabulary', quran: 'Quran', phrases: 'Phrases', quiz: 'Quiz' },
+    nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', stories: 'Stories', vocabulary: 'Vocabulary', quran: 'Quran', phrases: 'Phrases', quiz: 'Quiz' },
     switchLabel: 'اردو', switchTitle: 'یہ صفحہ اردو میں پڑھیں', switchLang: 'ur',
     about: 'About', contact: 'Contact', privacy: 'Privacy policy', support: 'Support Harf',
     listen: 'Listen', sep: '›', prev: '← Previous', next: 'Next →',
@@ -1689,7 +1898,7 @@ const T = {
   },
   ur: {
     dir: 'rtl', brand: 'حرف', skip: 'مواد پر جائیں', navLabel: 'حصے',
-    nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', vocabulary: 'الفاظ', quran: 'قرآن', phrases: 'جملے', quiz: 'کوئز' },
+    nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', stories: 'کہانیاں', vocabulary: 'الفاظ', quran: 'قرآن', phrases: 'جملے', quiz: 'کوئز' },
     switchLabel: 'English', switchTitle: 'Read this page in English', switchLang: 'en',
     about: 'ہمارے بارے میں', contact: 'رابطہ', privacy: 'رازداری کی پالیسی', support: 'حرف کی مدد کریں',
     listen: 'سنیں', sep: '‹', prev: '→ پچھلا', next: 'اگلا ←',
@@ -1888,7 +2097,7 @@ function layout(lang, o) {
   const t = T[lang];
   const self = link(lang, o.file);
   const other = link(t.switchLang, o.file);
-  const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['vocabulary.html', 'vocabulary'], ['quran.html', 'quran'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
+  const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['stories.html', 'stories'], ['vocabulary.html', 'vocabulary'], ['quran.html', 'quran'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
     .map(([f, k]) => `<a href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${t.nav[k]}</a>`).join('');
   const ads = ADSENSE_CLIENT
     ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n` : '';
@@ -2229,12 +2438,117 @@ ${sections}
   return layout(lang, { file: 'writing.html', section: 'alphabet', title: C.title, desc: C.desc, body });
 }
 
+// ---------------------------------------------------------------- lesson pictures (original line drawings)
+const ICONS = {
+  book: '<path class="s" d="M14 12h30a6 6 0 0 1 6 6v34H20a6 6 0 0 1-6-6z"/><path d="M14 46a6 6 0 0 1 6-6h30"/><path class="g" d="M24 19h18v8H24z"/>',
+  books: '<g transform="translate(-6 6) scale(.8)"><path class="s" d="M14 12h30a6 6 0 0 1 6 6v34H20a6 6 0 0 1-6-6z"/><path d="M14 46a6 6 0 0 1 6-6h30"/></g><g transform="translate(10 2) scale(.8)"><path class="s" d="M14 12h30a6 6 0 0 1 6 6v34H20a6 6 0 0 1-6-6z"/><path d="M14 46a6 6 0 0 1 6-6h30"/><path class="g" d="M24 19h18v8H24z"/></g><g transform="translate(24 10) scale(.6)"><path class="s" d="M14 12h30a6 6 0 0 1 6 6v34H20a6 6 0 0 1-6-6z"/><path d="M14 46a6 6 0 0 1 6-6h30"/></g>',
+  pen: '<g transform="rotate(-40 32 32)"><rect class="s" x="27" y="6" width="10" height="38" rx="2"/><path class="g" d="M27 44h10l-5 11z"/><path d="M27 14h10"/></g>',
+  penBroken: '<g transform="rotate(-40 32 32)"><path class="s" d="M27 6h10v16l-3 2-3-2-4 2z"/><path class="s" d="M27 30l4-2 3 2 3-2v16H27z"/><path class="g" d="M27 44h10l-5 11z"/></g>',
+  house: '<path class="s" d="M13 30 32 14l19 16v22H13z"/><path d="M8 34 32 12l24 22"/><path class="g" d="M27 52V42a5 5 0 0 1 10 0v10z"/><rect x="17" y="34" width="7" height="7"/><rect x="40" y="34" width="7" height="7"/>',
+  mosque: '<path class="s" d="M12 52V35h32v17z"/><path class="g" d="M14 35c0-9 6-14 14-18 8 4 14 9 14 18z"/><path d="M28 17v-5"/><circle cx="28" cy="10" r="1.6"/><rect class="s" x="48" y="20" width="7" height="32"/><path class="g" d="M47 20l4.5-9 4.5 9z"/><path class="g" d="M24 52v-7a4 4 0 0 1 8 0v7z"/><path d="M6 52h54"/>',
+  door: '<rect class="s" x="18" y="8" width="28" height="47" rx="2"/><path d="M22 14h20v16H22zM22 35h20v16H22z" stroke-opacity=".5"/><circle class="g" cx="40" cy="33" r="2.6"/><path d="M10 55h44"/>',
+  doorOpen: '<rect x="18" y="8" width="28" height="47" rx="1"/><path class="g" d="M19 9h26v45H19z" opacity=".35"/><path class="s" d="M18 8l13 5v47l-13-5z"/><circle class="g" cx="27" cy="35" r="1.8"/><path d="M10 55h44"/>',
+  key: '<circle class="g" cx="19" cy="32" r="10"/><circle cx="19" cy="32" r="3.2"/><path d="M29 32h27M48 32v8M55 32v6"/>',
+  desk: '<path class="s" d="M6 24h52v6H6z"/><path d="M11 30v24M53 30v24"/><rect class="s" x="34" y="30" width="16" height="14"/><path class="g" d="M38 36h8v3h-8z"/>',
+  bed: '<path d="M8 20v34M56 36v18"/><path class="s" d="M8 38h48v9H8z"/><rect class="g" x="12" y="30" width="13" height="8" rx="3"/><path class="s" d="M27 33h29v5H27z"/>',
+  chair: '<path class="s" d="M20 6h24v26H20z"/><path d="M26 13h12M26 19h12M26 25h12" stroke-opacity=".5"/><path class="g" d="M20 6h24v4H20z"/><path class="s" d="M14 32h36l-4 8H18z"/><path d="M18 40v16M46 40v16M23 40v11M41 40v11"/>',
+  star: '<path class="g" d="M32 7l6.6 15.6 16.9 1.5-12.8 11.2 3.8 16.6L32 43.1l-14.5 8.8 3.8-16.6L8.5 24.1l16.9-1.5z"/>',
+  moon: '<path class="g" d="M38 8a24 24 0 1 0 18 38A19 19 0 1 1 38 8z"/><circle class="g" cx="16" cy="14" r="1.5"/><circle class="g" cx="22" cy="24" r="1"/>',
+  sun: '<circle class="g" cx="32" cy="32" r="11"/><path d="M32 8v8M32 48v8M8 32h8M48 32h8M15 15l6 6M43 43l6 6M15 49l6-6M43 21l6-6"/>',
+  mountain: '<path class="s" d="M3 54 24 18l12 18 7-9 18 27z"/><path class="g" d="M24 18l-6 10 6-3 6 3z"/><path class="g" d="M43 27l-4 5 4-1.5 4 1.5z"/>',
+  cup: '<path class="s" d="M14 22h30l-3 30H17z"/><path d="M44 28h4a6 6 0 0 1 0 12h-6"/><path class="g" d="M16.4 28h25.2l-.7 7H17.1z"/><path d="M10 55h38"/>',
+  tea: '<path class="s" d="M14 26h30l-3 26H17z"/><path d="M44 31h4a5 5 0 0 1 0 10h-5"/><path class="g" d="M16 31h26l-.6 6H16.6z"/><path d="M23 20c-2-3 2-5 0-9M31 20c-2-3 2-5 0-9M39 20c-2-3 2-5 0-9" stroke-opacity=".6"/><path d="M10 55h40"/>',
+  cat: '<path class="s" d="M22 55c-7 0-9-9-7-17 1.5-6 6-10 6-10l-1-12 8 7h8l8-7-1 12s4.5 4 6 10c2 8 0 17-7 17z"/><circle class="g" cx="27" cy="29" r="2.2"/><circle class="g" cx="37" cy="29" r="2.2"/><path d="M32 33v2M29 36l3-1 3 1"/><path d="M42 53c9 1 13-5 10-11"/>',
+  bag: '<rect class="s" x="12" y="22" width="40" height="32" rx="4"/><path d="M24 22v-6a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v6"/><path class="g" d="M12 32h40v5H12z"/><path d="M30 34.5h4"/>',
+  car: '<path class="s" d="M5 44v-9l7-3 7-11h24l9 11 7 3v9z"/><path d="M21 24l-5 8h14v-8zM34 24v8h15l-7-8z"/><circle class="g" cx="18" cy="45" r="5.5"/><circle class="g" cx="46" cy="45" r="5.5"/>',
+  window: '<path class="s" d="M14 54V27a18 18 0 0 1 36 0v27z"/><path d="M32 9v45M14 34h36"/><path class="g" d="M10 54h44v4H10z"/>',
+  tree: '<path d="M32 56V34M32 44l-6-6M32 40l6-6"/><circle class="s" cx="32" cy="24" r="16"/><circle class="g" cx="25" cy="22" r="2.6"/><circle class="g" cx="38" cy="28" r="2.6"/><circle class="g" cx="35" cy="15" r="2.6"/><path d="M20 56h24"/>',
+  palm: '<path d="M33 56c-2-12-1-24 1-34"/><path class="s" d="M34 22c-8-6-18-5-24 1 8-1 16 0 24-1zM34 22c8-7 18-6 23 0-8-1-15 0-23 0zM34 22c-3-8-1-14 5-17-1 6-3 11-5 17zM34 22c-6 2-12 8-13 14 5-5 9-9 13-14zM34 22c6 2 11 7 12 13-4-5-8-9-12-13z"/><circle class="g" cx="32" cy="26" r="2.2"/><circle class="g" cx="36" cy="26" r="2.2"/><path d="M22 56h22"/>',
+  man: '<path class="s" d="M19 57l3-25a10 10 0 0 1 20 0l3 25z"/><circle class="s" cx="32" cy="15" r="7.5"/><path class="g" d="M23.5 13a8.5 8.5 0 0 1 17 0v2h-17z"/><path class="g" d="M24 12h16v2.5H24z"/><path d="M32 30v14"/>',
+  woman: '<path class="s" d="M18 57l4-24a10 10 0 0 1 20 0l4 24z"/><path class="g" d="M22.5 17a9.5 9.5 0 0 1 19 0v5c0 4-4.5 8-9.5 8s-9.5-4-9.5-8z"/><circle class="s" cx="32" cy="18" r="5.5"/>',
+  boy: '<g transform="translate(8 15) scale(.75)"><path class="s" d="M19 57l3-25a10 10 0 0 1 20 0l3 25z"/><circle class="s" cx="32" cy="15" r="7.5"/><path class="g" d="M24.5 13a7.5 7.5 0 0 1 15 0z"/></g>',
+  girl: '<g transform="translate(8 15) scale(.75)"><path class="s" d="M18 57l4-24a10 10 0 0 1 20 0l4 24z"/><path class="g" d="M22.5 17a9.5 9.5 0 0 1 19 0v5c0 4-4.5 8-9.5 8s-9.5-4-9.5-8z"/><circle class="s" cx="32" cy="18" r="5.5"/></g>',
+  apple: '<path class="g" d="M32 22c-6-4-18-3-18 11 0 12 9 20 14 19 2 0 3-1 4-1s2 1 4 1c5 1 14-7 14-19 0-14-12-15-18-11z"/><path d="M32 22c0-5 2-9 6-11"/><path class="s" d="M34 16c4-4 9-3 10-1-3 3-7 3-10 1z"/>',
+  plane: '<path class="s" d="M7 38l45-15c4-1.4 6 3.6 2 5.4L13 45z"/><path class="g" d="M27 31l-7-14h6l14 9z"/><path class="g" d="M25 41l5 12h5l1-15z"/><path class="g" d="M8 38l-3-9h4l6 6z"/>',
+  ball: '<circle class="s" cx="32" cy="33" r="19"/><path class="g" d="M32 24l7 5-2.7 8h-8.6L25 29z"/><path d="M32 24v-10M39 29l9-4M36.3 37l6 7M27.7 37l-6 7M25 29l-9-4"/>',
+  building: '<rect class="s" x="16" y="6" width="32" height="50"/><path d="M16 18h32M16 30h32M16 42h32" stroke-opacity=".45"/><path class="g" d="M16 18h32v12H16z" opacity=".55"/><rect x="21" y="9" width="6" height="6"/><rect x="37" y="9" width="6" height="6"/><rect x="21" y="21" width="6" height="6"/><rect x="37" y="21" width="6" height="6"/><rect x="21" y="33" width="6" height="6"/><rect x="37" y="33" width="6" height="6"/><path class="g" d="M28 56v-9h8v9z"/><path d="M8 56h48"/>',
+  calendar: '<rect class="s" x="10" y="14" width="44" height="40" rx="4"/><path class="g" d="M10 18a4 4 0 0 1 4-4h36a4 4 0 0 1 4 4v7H10z"/><path d="M21 9v9M43 9v9"/><g stroke="none" fill="currentColor"><circle cx="18" cy="33" r="2"/><circle cx="27" cy="33" r="2"/><circle cx="36" cy="33" r="2"/><circle cx="45" cy="33" r="2"/><circle cx="18" cy="43" r="2"/><circle cx="27" cy="43" r="2"/><circle cx="45" cy="43" r="2"/></g><circle class="g" cx="36" cy="43" r="4"/>',
+  paper: '<path class="s" d="M16 8h24l10 10v38H16z"/><path d="M40 8v10h10M22 28h22M22 36h22M22 44h14"/>',
+  school: '<path class="s" d="M8 56V28h48v28z"/><path class="g" d="M4 30 32 12l28 18z"/><circle class="s" cx="32" cy="23" r="4"/><path class="g" d="M27 56V44h10v12z"/><rect x="13" y="35" width="8" height="8"/><rect x="43" y="35" width="8" height="8"/>',
+  flower: '<path d="M32 56V34M32 46c-6 0-9-4-10-8 5 0 9 3 10 8zM32 42c6 0 9-4 10-8-5 0-9 3-10 8z"/><g class="g"><circle cx="32" cy="16" r="6"/><circle cx="42" cy="22" r="6"/><circle cx="38" cy="33" r="6"/><circle cx="26" cy="33" r="6"/><circle cx="22" cy="22" r="6"/></g><circle class="s" cx="32" cy="25" r="5"/>',
+  food: '<path class="s" d="M6 40h52a26 13 0 0 1-52 0z"/><path class="g" d="M14 40c2-10 34-10 36 0z"/><path d="M24 30c-2-3 2-5 0-8M32 29c-2-3 2-5 0-8M40 30c-2-3 2-5 0-8" stroke-opacity=".6"/><path d="M4 54h56"/>',
+  no: '<circle cx="50" cy="50" r="10" fill="#fff" stroke="var(--bad)" stroke-width="3"/><path d="M43 57l14-14" stroke="var(--bad)" stroke-width="3"/>',
+  arrow: '<path d="M8 32h40M38 22l10 10-10 10" stroke-width="3"/>',
+};
+const clockIcon = (h, m) => {
+  const a = (deg, len) => { const r = (deg - 90) * Math.PI / 180; return `${(32 + len * Math.cos(r)).toFixed(1)} ${(32 + len * Math.sin(r)).toFixed(1)}`; };
+  const ticks = Array.from({ length: 12 }, (_, k) => `M${a(k * 30, 19)}L${a(k * 30, k % 3 ? 21 : 23)}`).join('');
+  return `<circle class="g" cx="32" cy="32" r="26"/><circle class="s" cx="32" cy="32" r="22.5"/><path d="${ticks}"/><path d="M32 32L${a(((h % 12) + m / 60) * 30, 12)}" stroke-width="3.2"/><path d="M32 32L${a(m * 6, 17)}"/><circle cx="32" cy="32" r="2" fill="currentColor"/>`;
+};
+// A picture is a list of [icon, x, y, scale]; a string is one full-size icon.
+function picSvg(spec) {
+  const parts = typeof spec === 'string' ? [[spec, 0, 0, 1]] : spec;
+  const inner = parts.map(([ic, x = 0, y = 0, k = 1]) => {
+    const body = ic.startsWith('clock:') ? clockIcon(...ic.slice(6).split(':').map(Number)) : ICONS[ic];
+    if (!body) throw new Error('missing icon ' + ic);
+    return x || y || k !== 1 ? `<g transform="translate(${x} ${y}) scale(${k})">${body}</g>` : body;
+  }).join('');
+  return `<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${inner}</g></svg>`;
+}
+const two = (ic, k = .62) => [[ic, -4, 12, k], [ic, 26, 12, k]];
+const three = (ic, k = .5) => [[ic, -2, 4, k], [ic, 30, 4, k], [ic, 14, 32, k]];
+// [picture, Arabic, English, Urdu]
+const LESSON_PICS = {
+  'lesson-1-this-is': [['book', 'هٰذَا كِتَابٌ', 'This is a book.', 'یہ کتاب ہے۔'], ['pen', 'هٰذَا قَلَمٌ', 'This is a pen.', 'یہ قلم ہے۔'], ['house', 'هٰذَا بَيْتٌ', 'This is a house.', 'یہ گھر ہے۔'], ['mosque', 'هٰذَا مَسْجِدٌ', 'This is a mosque.', 'یہ مسجد ہے۔'], ['door', 'هٰذَا بَابٌ', 'This is a door.', 'یہ دروازہ ہے۔'], ['key', 'هٰذَا مِفْتَاحٌ', 'This is a key.', 'یہ چابی ہے۔'], ['desk', 'هٰذَا مَكْتَبٌ', 'This is a desk.', 'یہ میز ہے۔'], ['chair', 'هٰذَا كُرْسِيٌّ', 'This is a chair.', 'یہ کرسی ہے۔']],
+  'lesson-2-that-is': [['star', 'ذٰلِكَ نَجْمٌ', 'That is a star.', 'وہ ستارہ ہے۔'], ['moon', 'ذٰلِكَ قَمَرٌ', 'That is a moon.', 'وہ چاند ہے۔'], ['mountain', 'ذٰلِكَ جَبَلٌ', 'That is a mountain.', 'وہ پہاڑ ہے۔'], ['mosque', 'ذٰلِكَ مَسْجِدٌ', 'That is a mosque.', 'وہ مسجد ہے۔']],
+  'lesson-3-the': [['book', 'الْكِتَابُ جَدِيدٌ', 'The book is new.', 'کتاب نئی ہے۔'], ['penBroken', 'الْقَلَمُ مَكْسُورٌ', 'The pen is broken.', 'قلم ٹوٹا ہوا ہے۔'], ['doorOpen', 'الْبَابُ مَفْتُوحٌ', 'The door is open.', 'دروازہ کھلا ہے۔'], ['cup', 'الْمَاءُ بَارِدٌ', 'The water is cold.', 'پانی ٹھنڈا ہے۔']],
+  'lesson-4-where': [[[['desk', 0, 8, 1], ['book', 8, 9, .4]], 'الْكِتَابُ عَلَى الْمَكْتَبِ', 'The book is on the desk.', 'کتاب میز پر ہے۔'], [[['chair', 0, 0, 1], ['cat', 19, 33, .42]], 'الْقِطُّ تَحْتَ الْكُرْسِيِّ', 'The cat is under the chair.', 'بلی کرسی کے نیچے ہے۔'], [[['bag', 0, 4, 1], ['pen', 10, -10, .55]], 'الْقَلَمُ فِي الْحَقِيبَةِ', 'The pen is in the bag.', 'قلم بستے میں ہے۔'], [[['house', 0, 0, 1], ['man', 34, 26, .45]], 'الْمُدَرِّسُ أَمَامَ الْبَيْتِ', 'The teacher is in front of the house.', 'استاد گھر کے سامنے ہیں۔']],
+  'lesson-5-feminine': [['car', 'هٰذِهِ سَيَّارَةٌ', 'This is a car.', 'یہ گاڑی ہے۔'], ['clock:10:10', 'هٰذِهِ سَاعَةٌ', 'This is a clock.', 'یہ گھڑی ہے۔'], ['window', 'هٰذِهِ نَافِذَةٌ', 'This is a window.', 'یہ کھڑکی ہے۔'], ['bag', 'هٰذِهِ حَقِيبَةٌ', 'This is a bag.', 'یہ بستہ ہے۔'], ['tree', 'هٰذِهِ شَجَرَةٌ', 'This is a tree.', 'یہ درخت ہے۔'], ['apple', 'هٰذِهِ تُفَّاحَةٌ', 'This is an apple.', 'یہ سیب ہے۔']],
+  'lesson-6-whose': [[[['car', 6, 10, .8], ['key', -6, -8, .55]], 'مِفْتَاحُ السَّيَّارَةِ', 'the car key', 'گاڑی کی چابی'], ['mosque', 'بَابُ الْمَسْجِدِ', 'the door of the mosque', 'مسجد کا دروازہ'], [[['man', -8, 4, .9], ['book', 30, 22, .5]], 'كِتَابُ الْمُدَرِّسِ', 'the teacher’s book', 'استاد کی کتاب'], [[['house', 0, 0, 1], ['key', 30, 34, .4]], 'لِمَنْ هٰذَا الْبَيْتُ؟', 'Whose is this house?', 'یہ گھر کس کا ہے؟']],
+  'lesson-7-pronouns': [['boy', 'أَنَا طَالِبٌ', 'I am a student.', 'میں طالب علم ہوں۔'], ['man', 'هُوَ مُدَرِّسٌ', 'He is a teacher.', 'وہ استاد ہیں۔'], ['woman', 'هِيَ طَبِيبَةٌ', 'She is a doctor.', 'وہ ڈاکٹر ہیں۔'], [[['boy', -12, 0, 1], ['boy', 12, 0, 1]], 'نَحْنُ طُلَّابٌ', 'We are students.', 'ہم طالب علم ہیں۔']],
+  'lesson-8-my-your': [['book', 'هٰذَا كِتَابِي', 'This is my book.', 'یہ میری کتاب ہے۔'], ['pen', 'هٰذَا قَلَمُكَ', 'This is your pen.', 'یہ تمہارا قلم ہے۔'], ['house', 'هٰذَا بَيْتُهُ', 'This is his house.', 'یہ اس کا گھر ہے۔'], ['car', 'هٰذِهِ سَيَّارَتُهَا', 'This is her car.', 'یہ اس کی گاڑی ہے۔']],
+  'lesson-9-adjectives': [[[['house', -4, 4, .95], ['house', 40, 30, .4]], 'بَيْتٌ كَبِيرٌ وَبَيْتٌ صَغِيرٌ', 'a big house and a small house', 'بڑا گھر اور چھوٹا گھر'], ['car', 'سَيَّارَةٌ جَدِيدَةٌ', 'a new car', 'نئی گاڑی'], ['tea', 'شَايٌ حَارٌّ', 'hot tea', 'گرم چائے'], ['mountain', 'جَبَلٌ عَالٍ', 'a high mountain', 'اونچا پہاڑ']],
+  'lesson-10-plurals': [['books', 'كُتُبٌ', 'books', 'کتابیں'], [three('pen', .55), 'أَقْلَامٌ', 'pens', 'قلم (جمع)'], [three('star'), 'نُجُومٌ', 'stars', 'ستارے'], [[['boy', -14, 0, 1], ['boy', 0, 0, 1], ['boy', 14, 0, 1]], 'هٰؤُلَاءِ طُلَّابٌ', 'These are students.', 'یہ طالب علم ہیں۔']],
+  'lesson-11-past-tense': [[[['man', -12, 4, .85], ['arrow', 14, 0, .45], ['mosque', 30, 18, .55]], 'ذَهَبَ إِلَى الْمَسْجِدِ', 'He went to the mosque.', 'وہ مسجد گیا۔'], [[['paper', -4, 0, 1], ['pen', 18, 10, .7]], 'كَتَبَ الدَّرْسَ', 'He wrote the lesson.', 'اس نے سبق لکھا۔'], ['cup', 'شَرِبَ الْمَاءَ', 'He drank the water.', 'اس نے پانی پیا۔'], ['apple', 'أَكَلَ التُّفَّاحَةَ', 'He ate the apple.', 'اس نے سیب کھایا۔']],
+  'lesson-12-present-tense': [['book', 'يَقْرَأُ الْكِتَابَ', 'He reads the book.', 'وہ کتاب پڑھتا ہے۔'], ['tea', 'يَشْرَبُ الشَّايَ', 'He drinks tea.', 'وہ چائے پیتا ہے۔'], [[['bed', 0, 8, 1], ['moon', 34, -2, .4]], 'يَنَامُ', 'He sleeps.', 'وہ سوتا ہے۔'], [[['paper', -4, 0, 1], ['pen', 18, 10, .7]], 'تَكْتُبُ الدَّرْسَ', 'She writes the lesson.', 'وہ سبق لکھتی ہے۔']],
+  'lesson-13-i-have': [['car', 'عِنْدِي سَيَّارَةٌ', 'I have a car.', 'میرے پاس گاڑی ہے۔'], ['cat', 'عِنْدَنَا قِطٌّ', 'We have a cat.', 'ہمارے پاس بلی ہے۔'], ['key', 'عِنْدَهُ مِفْتَاحٌ', 'He has a key.', 'اس کے پاس چابی ہے۔'], ['bag', 'عِنْدَهَا حَقِيبَةٌ', 'She has a bag.', 'اس کے پاس بستہ ہے۔']],
+  'lesson-14-laysa': [[[['key', 0, 0, 1], ['no', 0, 0, 1]], 'لَيْسَ هٰذَا قَلَمًا', 'This is not a pen.', 'یہ قلم نہیں ہے۔'], [[['door', 0, 0, 1], ['no', 0, 0, 1]], 'لَيْسَ الْبَابُ مَفْتُوحًا', 'The door is not open.', 'دروازہ کھلا نہیں ہے۔'], [[['cup', 0, 0, 1], ['no', 0, 0, 1]], 'لَيْسَ الْمَاءُ حَارًّا', 'The water is not hot.', 'پانی گرم نہیں ہے۔']],
+  'lesson-15-dual': [[two('book'), 'كِتَابَانِ', 'two books', 'دو کتابیں'], [two('pen'), 'قَلَمَانِ', 'two pens', 'دو قلم'], [two('car', .55), 'سَيَّارَتَانِ', 'two cars', 'دو گاڑیاں'], [two('house'), 'بَيْتَانِ', 'two houses', 'دو گھر']],
+  'lesson-16-counting': [[three('book'), 'ثَلَاثَةُ كُتُبٍ', 'three books', 'تین کتابیں'], [[['apple', -4, -2, .5], ['apple', 28, -2, .5], ['apple', -4, 30, .5], ['apple', 28, 30, .5]], 'أَرْبَعُ تُفَّاحَاتٍ', 'four apples', 'چار سیب'], [[['star', -2, -2, .42], ['star', 21, -2, .42], ['star', 42, -2, .42], ['star', 8, 30, .42], ['star', 32, 30, .42]], 'خَمْسَةُ نُجُومٍ', 'five stars', 'پانچ ستارے'], [[['boy', -14, 0, 1], ['boy', 14, 0, 1]], 'كَمْ طَالِبًا؟', 'How many students?', 'کتنے طالب علم؟']],
+  'lesson-17-commands': [[[['paper', -4, 0, 1], ['pen', 18, 10, .7]], 'اُكْتُبْ', 'Write!', 'لکھو!'], ['book', 'اِقْرَأْ', 'Read!', 'پڑھو!'], ['doorOpen', 'اِفْتَحِ الْبَابَ', 'Open the door!', 'دروازہ کھولو!'], ['chair', 'اِجْلِسْ', 'Sit down!', 'بیٹھو!']],
+  'lesson-18-future': [['plane', 'سَأُسَافِرُ بِالطَّائِرَةِ', 'I will travel by plane.', 'میں ہوائی جہاز سے سفر کروں گا۔'], ['bag', 'سَأَذْهَبُ إِلَى السُّوقِ', 'I will go to the market.', 'میں بازار جاؤں گا۔'], ['calendar', 'سَأَزُورُكَ غَدًا', 'I will visit you tomorrow.', 'میں کل تم سے ملنے آؤں گا۔'], [[['bed', 0, 8, 1], ['moon', 34, -2, .4]], 'سَيَنَامُ مُبَكِّرًا', 'He will sleep early.', 'وہ جلدی سوئے گا۔']],
+  'lesson-19-did-not': [[[['tea', 0, 0, 1], ['no', 0, 0, 1]], 'لَمْ أَشْرَبِ الشَّايَ', 'I did not drink the tea.', 'میں نے چائے نہیں پی۔'], [[['paper', 0, 0, 1], ['no', 0, 0, 1]], 'لَمْ يَكْتُبِ الدَّرْسَ', 'He did not write the lesson.', 'اس نے سبق نہیں لکھا۔'], [[['apple', 0, 0, 1], ['no', 0, 0, 1]], 'لَمْ آكُلِ التُّفَّاحَةَ', 'I did not eat the apple.', 'میں نے سیب نہیں کھایا۔']],
+  'lesson-20-questions': [['sun', 'كَيْفَ الْجَوُّ؟', 'How is the weather?', 'موسم کیسا ہے؟'], ['clock:1:30', 'مَتَى الصَّلَاةُ؟', 'When is the prayer?', 'نماز کب ہے؟'], ['books', 'كَمْ كِتَابًا عِنْدَكَ؟', 'How many books do you have?', 'تمہارے پاس کتنی کتابیں ہیں؟'], ['mosque', 'أَيْنَ الْمَسْجِدُ؟', 'Where is the mosque?', 'مسجد کہاں ہے؟']],
+  'lesson-21-inna': [['sun', 'إِنَّ الْجَوَّ جَمِيلٌ', 'The weather is truly lovely.', 'یقیناً موسم خوشگوار ہے۔'], ['mosque', 'إِنَّ الْمَسْجِدَ كَبِيرٌ', 'The mosque is truly big.', 'یقیناً مسجد بڑی ہے۔'], ['book', 'إِنَّ الْكِتَابَ مُفِيدٌ', 'The book is truly useful.', 'یقیناً کتاب مفید ہے۔']],
+  'lesson-22-comparing': [[[['mountain', -2, 0, 1], ['house', 40, 36, .32]], 'الْجَبَلُ أَكْبَرُ مِنَ الْبَيْتِ', 'The mountain is bigger than the house.', 'پہاڑ گھر سے بڑا ہے۔'], [[['plane', -2, -6, .7], ['car', 26, 30, .5]], 'الطَّائِرَةُ أَسْرَعُ مِنَ السَّيَّارَةِ', 'The plane is faster than the car.', 'ہوائی جہاز گاڑی سے تیز ہے۔'], [[['sun', -6, -2, .85], ['moon', 34, 30, .45]], 'الشَّمْسُ أَكْبَرُ مِنَ الْقَمَرِ', 'The sun is bigger than the moon.', 'سورج چاند سے بڑا ہے۔']],
+  'lesson-23-alladhi': [[[['man', -10, 0, 1], ['book', 30, 26, .5]], 'الرَّجُلُ الَّذِي يَقْرَأُ', 'the man who is reading', 'وہ آدمی جو پڑھ رہا ہے'], [[['girl', -10, 0, 1], ['pen', 28, 24, .55]], 'الْبِنْتُ الَّتِي تَكْتُبُ', 'the girl who is writing', 'وہ لڑکی جو لکھ رہی ہے'], [[['car', 0, 0, 1], ['key', 38, 6, .35]], 'السَّيَّارَةُ الَّتِي اشْتَرَيْتُهَا', 'the car that I bought', 'وہ گاڑی جو میں نے خریدی']],
+  'lesson-24-time': [['clock:3:0', 'السَّاعَةُ الثَّالِثَةُ', 'three o’clock', 'تین بجے'], ['clock:5:30', 'الْخَامِسَةُ وَالنِّصْفُ', 'half past five', 'ساڑھے پانچ'], ['clock:10:15', 'الْعَاشِرَةُ وَالرُّبْعُ', 'quarter past ten', 'سوا دس'], ['clock:7:45', 'الثَّامِنَةُ إِلَّا رُبْعًا', 'quarter to eight', 'پونے آٹھ']],
+  'lesson-25-kaana': [['sun', 'كَانَ الْجَوُّ حَارًّا', 'The weather was hot.', 'موسم گرم تھا۔'], ['doorOpen', 'كَانَ الْبَابُ مَفْتُوحًا', 'The door was open.', 'دروازہ کھلا تھا۔'], ['school', 'كَانَتِ الْمَدْرَسَةُ مُغْلَقَةً', 'The school was closed.', 'اسکول بند تھا۔'], ['mosque', 'كُنْتُ فِي الْمَسْجِدِ', 'I was in the mosque.', 'میں مسجد میں تھا۔']],
+  'lesson-26-lan': [[[['tea', 0, 0, 1], ['no', 0, 0, 1]], 'لَنْ أَشْرَبَ الشَّايَ', 'I will not drink the tea.', 'میں چائے نہیں پیوں گا۔'], [[['clock:8:0', 0, 0, 1], ['no', 0, 0, 1]], 'لَنْ أَتَأَخَّرَ', 'I will not be late.', 'میں دیر نہیں کروں گا۔'], [[['plane', 0, 0, 1], ['no', 0, 0, 1]], 'لَنْ أُسَافِرَ غَدًا', 'I will not travel tomorrow.', 'میں کل سفر نہیں کروں گا۔']],
+  'lesson-27-dont': [[[['chair', 0, 0, 1], ['no', 0, 0, 1]], 'لَا تَجْلِسْ هُنَا', 'Don’t sit here.', 'یہاں نہ بیٹھو۔'], [[['window', 0, 0, 1], ['no', 0, 0, 1]], 'لَا تَفْتَحِ النَّافِذَةَ', 'Don’t open the window.', 'کھڑکی نہ کھولو۔'], [[['ball', 0, 0, 1], ['no', 0, 0, 1]], 'لَا تَلْعَبُوا هُنَا', 'Don’t play here.', 'یہاں مت کھیلو۔'], [[['door', 0, 0, 1], ['pen', 18, 14, .5], ['no', 0, 0, 1]], 'لَا تَكْتُبْ عَلَى الْبَابِ', 'Don’t write on the door.', 'دروازے پر نہ لکھو۔']],
+  'lesson-28-ordinals-days': [['building', 'الطَّابِقُ الثَّالِثُ', 'the third floor', 'تیسری منزل'], ['book', 'الدَّرْسُ الْأَوَّلُ', 'the first lesson', 'پہلا سبق'], ['calendar', 'الْيَوْمُ يَوْمُ الْخَمِيسِ', 'Today is Thursday.', 'آج جمعرات ہے۔'], ['mosque', 'يَوْمُ الْجُمُعَةِ', 'Friday', 'جمعہ کا دن']],
+  'lesson-29-abu-akhu': [[[['man', -10, 0, 1], ['boy', 14, 0, 1]], 'هٰذَا أَبُو خَالِدٍ', 'This is Khalid’s father.', 'یہ خالد کے والد ہیں۔'], [[['boy', -12, 0, 1], ['boy', 12, 0, 1]], 'هٰذَا أَخُوكَ', 'This is your brother.', 'یہ تمہارا بھائی ہے۔'], [[['man', -10, 0, 1], ['mosque', 26, 22, .55]], 'رَأَيْتُ أَبَاكَ فِي الْمَسْجِدِ', 'I saw your father in the mosque.', 'میں نے تمہارے والد کو مسجد میں دیکھا۔'], [[['man', -10, 0, 1], ['books', 26, 24, .55]], 'رَجُلٌ ذُو عِلْمٍ', 'a man of knowledge', 'علم والا آدمی']],
+  'lesson-30-how-beautiful': [[[['palm', -10, 0, .9], ['flower', 30, 20, .6]], 'مَا أَجْمَلَ الْحَدِيقَةَ!', 'How beautiful the garden is!', 'باغ کتنا خوبصورت ہے!'], ['mountain', 'مَا أَكْبَرَ الْجَبَلَ!', 'How big the mountain is!', 'پہاڑ کتنا بڑا ہے!'], ['cup', 'مَا أَبْرَدَ الْمَاءَ!', 'How cold the water is!', 'پانی کتنا ٹھنڈا ہے!'], ['food', 'مَا أَطْيَبَ الطَّعَامَ!', 'How delicious the food is!', 'کھانا کتنا مزیدار ہے!']],
+};
+function picBoard(lang, slug) {
+  const items = LESSON_PICS[slug];
+  if (!items) return '';
+  const ur = lang === 'ur';
+  return `<section>
+  <h2>${ur ? 'تصویروں سے سیکھیں' : 'Learn with pictures'}</h2>
+  <p class="note">${ur ? 'تصویر پر ٹیپ کریں اور جملہ سنیں۔' : 'Tap a picture to hear the sentence.'}</p>
+  <div class="pics">
+  ${items.map(([p, a, en, u]) => `<button class="pic" type="button" data-say="${esc(a)}">${picSvg(p)}<span class="ar" lang="ar">${a}</span><span class="mean">${esc(ur ? u : en)}</span></button>`).join('\n  ')}
+  </div>
+</section>`;
+}
+
 function lessonsPage(lang) {
   const ur = lang === 'ur';
   const item = (l, i) => `<li><a href="${link(lang, l.slug + '.html')}"><span class="num">${num(lang, i + 1)}</span><span><strong>${fmt(l[lang].title)}</strong><p>${fmt(l[lang].short)}</p></span><span class="ar" lang="ar">${l.key}</span></a></li>`;
   const parts = ur
-    ? [[0, 8, 'حصہ اول: پہلے جملے'], [8, 16, 'حصہ دوم: صفت، گنتی اور روزمرہ کے افعال'], [16, 24, 'حصہ سوم: حکم، مستقبل، وجہ اور وقت']]
-    : [[0, 8, 'Part 1: First sentences'], [8, 16, 'Part 2: Describing, counting and everyday verbs'], [16, 24, 'Part 3: Instructions, the future, reasons and time']];
+    ? [[0, 8, 'حصہ اول: پہلے جملے'], [8, 16, 'حصہ دوم: صفت، گنتی اور روزمرہ کے افعال'], [16, 24, 'حصہ سوم: حکم، مستقبل، وجہ اور وقت'], [24, 32, 'حصہ چہارم: تھا، نہیں کرے گا، نہی اور تعجب']]
+    : [[0, 8, 'Part 1: First sentences'], [8, 16, 'Part 2: Describing, counting and everyday verbs'], [16, 24, 'Part 3: Instructions, the future, reasons and time'], [24, 32, 'Part 4: Was, will not, don’t and wonder']];
   const list = parts.filter(([a]) => a < LESSONS.length).map(([a, b, h], k) => `<h2 class="part-h">${h}</h2>
 <ol class="lesson-list">
   ${LESSONS.slice(a, k === parts.length - 1 ? LESSONS.length : b).map((l, i) => item(l, a + i)).join('\n  ')}
@@ -2255,7 +2569,7 @@ function lessonsPage(lang) {
 <p class="lead">${C.lead}</p>
 <p><a href="${link(lang, 'alphabet.html')}">${C.first}</a></p>
 ${list}
-<section class="box" style="margin-top:28px"><p>${ur ? `اسباق کے ساتھ پڑھنے کی مشق کے لیے <a href="${link(lang, 'reading.html')}">آسان عربی کہانیاں</a> پڑھیں۔` : `Practise reading alongside the lessons with our <a href="${link(lang, 'reading.html')}">easy Arabic stories</a>.`}</p></section>`;
+<section class="box" style="margin-top:28px"><p>${ur ? `اسباق کے ساتھ پڑھنے کی مشق کے لیے <a href="${link(lang, 'reading.html')}">آسان عربی کہانیاں</a> پڑھیں۔` : `Practise reading alongside the lessons with our <a href="${link(lang, 'stories.html')}">Arabic stories</a>.`}</p></section>`;
   return layout(lang, { file: 'lessons.html', section: 'lessons', title: C.title, desc: C.desc, body });
 }
 
@@ -2279,6 +2593,7 @@ function lessonPage(lang, i) {
 <p class="eyebrow">${C.label} ${n}${ur ? '،' : ' ·'} <span class="ar" lang="ar">${l.key}</span></p>
 <h1>${fmt(L.title)}</h1>
 <p class="lead">${fmt(L.intro)}</p>
+${picBoard(lang, l.slug)}
 <section>
   <h2>${C.ex}</h2>
   <div class="ex">
@@ -2617,6 +2932,49 @@ ${groups}
 // ---------------------------------------------------------------- reading and level test
 const plain = (w) => w.replace(/[،.؟!:]/g, '');
 
+function storiesPage(lang) {
+  const ur = lang === 'ur';
+  const n = (v) => num(lang, v);
+  const lv = (k) => (ur ? 'درجہ ' + n(k) : 'Level ' + k);
+  const byLevel = [1, 2, 3].map((k) => [k, CLASSICS.filter((t) => t.level === k)]).filter(([, a]) => a.length);
+  const taleCard = (t) => `<a class="card tcard" href="${link(lang, 'tale-' + t.slug + '.html')}"><p class="eyebrow">${lv(t.level)}${ur ? '، ' : ' · '}${n(t.s.length)} ${ur ? 'جملے' : 'sentences'}</p><h3>${ur ? t.ur : t.en}</h3><p><span class="ar" lang="ar">${t.ar}</span></p></a>`;
+  const C = ur ? {
+    title: 'عربی کہانیاں: لفظ بہ لفظ ترجمے کے ساتھ | حرف', desc: `${n(CLASSICS.length + STORIES.length)} اعراب والی عربی کہانیاں، ہر لفظ کا مطلب، تلفظ، مادہ اور جملوں کا اردو ترجمہ۔`,
+    h1: 'عربی کہانیاں', lead: 'کہانیاں پڑھنا عربی سیکھنے کا سب سے خوشگوار طریقہ ہے۔ ہر کہانی اعراب کے ساتھ ہے؛ کسی بھی لفظ پر ٹیپ کریں تو اس کی آواز، مطلب، تلفظ اور مادہ نظر آئے گا۔',
+    cl: ['کلاسیکی کہانیاں', `ایسوپ کی حکایات، کلیلہ و دمنہ، الف لیلہ، جحا کے لطیفے اور لوک کہانیاں: ${n(CLASSICS.length)} کہانیاں آسان عربی میں۔`],
+    ez: ['آسان کہانیاں', `اسباق کے ساتھ پڑھنے کے لیے ${n(STORIES.length)} مختصر کہانیاں: کلاس روم، خاندان، بازار اور سفر۔`],
+    start: 'یہاں سے شروع کریں', all: 'تمام کہانیاں دیکھیں ←', how: 'کہانیوں سے کیسے سیکھیں',
+    steps: ['پہلے پوری کہانی سنیں، پھر ہر جملہ خود اونچی آواز میں پڑھیں۔', 'جو لفظ نہ آئے اس پر ٹیپ کریں؛ ترجمہ آخر میں دیکھیں۔', 'روز ایک کہانی پڑھیں اور اگلے دن اسے دوبارہ پڑھیں۔'],
+  } : {
+    title: 'Arabic stories with word-by-word translation | Harf', desc: `${CLASSICS.length + STORIES.length} vowelled Arabic stories with the meaning, pronunciation and root of every word, and sentence translations.`,
+    h1: 'Arabic stories', lead: 'Reading stories is the most enjoyable way to learn Arabic. Every story is fully vowelled; tap any word to hear it and see its meaning, pronunciation and root.',
+    cl: ['Classic tales', `Aesop’s fables, Kalila wa Dimna, the Arabian Nights, Juha jokes and folk tales: ${CLASSICS.length} stories in simple Arabic.`],
+    ez: ['Easy stories', `${STORIES.length} short stories to read alongside the lessons: the classroom, family, the market and travel.`],
+    start: 'Start here', all: 'See all the tales →', how: 'How to learn with stories',
+    steps: ['Listen to the whole story first, then read each sentence aloud yourself.', 'Tap any word you don’t know; check the translation only at the end.', 'Read one story a day, and read it again the next day.'],
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.stories]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<section>
+  <div class="cards">
+    <a class="card wide" href="${link(lang, 'classic-tales.html')}"><span class="cg" lang="ar" aria-hidden="true">حِكَايَات</span><h3>${C.cl[0]}</h3><p>${C.cl[1]}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>
+    <a class="card wide" href="${link(lang, 'reading.html')}"><span class="cg" lang="ar" aria-hidden="true">قِصَص</span><h3>${C.ez[0]}</h3><p>${C.ez[1]}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>
+  </div>
+</section>
+${byLevel.map(([k, a]) => `<section>
+  <h2 class="orn">${C.start}: ${lv(k)}</h2>
+  <p class="note">${LEVELS[lang][k]}</p>
+  <div class="cards">
+    ${a.slice(0, 4).map(taleCard).join('\n    ')}
+  </div>
+</section>`).join('\n')}
+<p class="row center"><a class="btn primary" href="${link(lang, 'classic-tales.html')}">${C.all}</a></p>
+<section class="box" style="margin-top:32px"><h2>${C.how}</h2><ol class="steps">${C.steps.map((x) => `<li>${x}</li>`).join('')}</ol></section>
+${supportBox(lang)}`;
+  return layout(lang, { file: 'stories.html', section: 'stories', title: C.title, desc: C.desc, body });
+}
+
 function readingPage(lang) {
   const ur = lang === 'ur';
   const cards = STORIES.map((st) => `<a class="card" href="${link(lang, 'reading-' + st.slug + '.html')}"><p class="eyebrow">${ur ? 'درجہ ' + ud(st.level) + '، ' + st.afterUr : 'Level ' + st.level + ' · ' + st.afterEn}</p><h3>${ur ? st.ur : st.en}</h3><p><span class="ar" lang="ar">${st.ar}</span></p></a>`).join('\n    ');
@@ -2627,14 +2985,14 @@ function readingPage(lang) {
     title: 'Easy Arabic stories for beginners: graded reading | Harf', desc: 'Short, fully vowelled Arabic stories for beginners. Tap any word to hear it and see its meaning, with translations and questions.',
     h1: 'Easy Arabic stories', lead: 'Short, fully vowelled stories that follow the lessons. Tap any word to hear it and see what it means. Try reading on your own first, then check the translation.',
   };
-  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['lessons.html', T[lang].nav.lessons], [null, C.h1]])}
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['stories.html', T[lang].nav.stories], [null, C.h1]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
 <div class="cards">
     ${cards}
 </div>
 ${CLASSICS.length ? `<section class="box" style="margin-top:28px"><h2>${ur ? 'کلاسیکی کہانیاں' : 'Classic tales'}</h2><p>${ur ? `${num(lang, CLASSICS.length)} پرانی کہانیاں لفظ بہ لفظ ترجمے، تلفظ اور لفظ کے مادے کے ساتھ۔ <a href="${link(lang, 'classic-tales.html')}">کلاسیکی کہانیاں پڑھیں ←</a>` : `${CLASSICS.length} old tales with word-by-word translation, pronunciation and word origins. <a href="${link(lang, 'classic-tales.html')}">Read the classic tales →</a>`}</p></section>` : ''}`;
-  return layout(lang, { file: 'reading.html', section: 'lessons', title: C.title, desc: C.desc, body });
+  return layout(lang, { file: 'reading.html', section: 'stories', title: C.title, desc: C.desc, body });
 }
 
 function storyPage(lang, i) {
@@ -2648,7 +3006,7 @@ function storyPage(lang, i) {
   const title = ur ? `آسان عربی کہانی: ${st.ur}` : `Easy Arabic story: ${st.en}`;
   const desc = ur ? `${st.ur} (${st.ar}): ابتدائی طلبہ کے لیے اعراب والی آسان عربی کہانی، ہر لفظ کے معنی، آواز اور ترجمے کے ساتھ۔`
     : `${st.en} (${st.ar}): a short, fully vowelled Arabic story for beginners, with the meaning of every word, audio and translation.`;
-  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['reading.html', ur ? 'آسان کہانیاں' : 'Easy stories'], [null, ur ? st.ur : st.en]])}
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['stories.html', T[lang].nav.stories], ['reading.html', ur ? 'آسان کہانیاں' : 'Easy stories'], [null, ur ? st.ur : st.en]])}
 <p class="eyebrow">${ur ? 'درجہ ' + ud(st.level) + '، ' + st.afterUr : 'Level ' + st.level + ' · ' + st.afterEn}</p>
 <h1>${ur ? st.ur : st.en} <span class="ar" lang="ar">${st.ar}</span></h1>
 <div class="row story-tools">${say(lang, text, C.listen)}<button class="btn" type="button" data-tog="show-tr" aria-pressed="false">${C.showTr}</button><button class="btn" type="button" data-tog="show-m" aria-pressed="false">${C.showM}</button></div>
@@ -2665,7 +3023,7 @@ function storyPage(lang, i) {
   <a class="btn" href="${link(lang, 'reading.html')}">${C.all}</a>
   ${next ? `<a class="btn primary" href="${link(lang, 'reading-' + next.slug + '.html')}">${ur ? 'اگلی: ' + next.ur + ' ←' : 'Next: ' + next.en + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran.html')}">${ur ? 'اب قرآنی عربی آزمائیں ←' : 'Now try Quranic Arabic →'}</a>`}
 </nav>`;
-  return layout(lang, { file: 'reading-' + st.slug + '.html', section: 'lessons', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+  return layout(lang, { file: 'reading-' + st.slug + '.html', section: 'stories', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
 }
 
 
@@ -2685,7 +3043,7 @@ function classicsPage(lang) {
     note: 'These tales come from old, traditional sources. The Arabic text and translations are written by Harf for learners.',
   };
   const chips = [['', C.all], ['1', (ur ? 'درجہ ' : 'Level ') + n(1)], ['2', (ur ? 'درجہ ' : 'Level ') + n(2)], ['3', (ur ? 'درجہ ' : 'Level ') + n(3)]];
-  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['reading.html', ur ? 'آسان کہانیاں' : 'Easy stories'], [null, C.h1]])}
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['stories.html', T[lang].nav.stories], [null, C.h1]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
 <div class="tfilter" id="tf"><div class="chips" role="group" aria-label="${ur ? 'درجہ' : 'Level'}">${chips.map(([v, l], k) => `<button class="chip" type="button" data-lv="${v}" aria-pressed="${k === 0}">${l}</button>`).join('')}</div>
@@ -2697,7 +3055,7 @@ function classicsPage(lang) {
 <p class="note" id="tnone" hidden>${C.none}</p>
 <p><a href="${link(lang, 'reading.html')}">${C.easy}</a></p>
 <p class="note">${C.note}</p>`;
-  return layout(lang, { file: 'classic-tales.html', section: 'lessons', title: C.title, desc: C.desc, body });
+  return layout(lang, { file: 'classic-tales.html', section: 'stories', title: C.title, desc: C.desc, body });
 }
 
 function classicPage(lang, i) {
@@ -2715,7 +3073,7 @@ function classicPage(lang, i) {
   const desc = ur ? `${t.ur} (${t.ar}): اعراب والی آسان عربی کہانی، ہر لفظ کا مطلب، تلفظ اور جملوں کا اردو ترجمہ۔`
     : `${t.en} (${t.ar}): a classic tale in vowelled Arabic with the meaning and pronunciation of every word and sentence translations.`;
   const links = [prev && ['<', prev], next && ['>', next]];
-  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['classic-tales.html', ur ? 'کلاسیکی کہانیاں' : 'Classic tales'], [null, ur ? t.ur : t.en]])}
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['stories.html', T[lang].nav.stories], ['classic-tales.html', ur ? 'کلاسیکی کہانیاں' : 'Classic tales'], [null, ur ? t.ur : t.en]])}
 <p class="eyebrow">${C.lvl} ${n(t.level)}${ur ? '، ' : ' · '}${n(i + 1)}/${n(CLASSICS.length)}</p>
 <h1>${ur ? t.ur : t.en} <span class="ar" lang="ar">${t.ar}</span></h1>
 <div class="row story-tools">${say(lang, text, C.listen)}<button class="btn" type="button" data-tog="show-tr" aria-pressed="false">${C.showTr}</button><button class="btn" type="button" data-tog="show-m" aria-pressed="false">${C.showM}</button><button class="btn" type="button" data-tog="show-o" aria-pressed="false">${C.showO}</button></div>
@@ -2728,7 +3086,7 @@ ${(ur ? t.srcUr : t.srcEn) ? `<section class="box"><h2>${C.about}</h2><p>${esc(u
   ${prev ? `<a class="btn" href="${link(lang, 'tale-' + prev.slug + '.html')}">${T[lang].prev}: ${esc(ur ? prev.ur : prev.en)}</a>` : `<a class="btn" href="${link(lang, 'classic-tales.html')}">${C.all}</a>`}
   ${next ? `<a class="btn primary" href="${link(lang, 'tale-' + next.slug + '.html')}">${ur ? 'اگلی: ' + esc(next.ur) + ' ←' : 'Next: ' + esc(next.en) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'classic-tales.html')}">${C.all}</a>`}
 </nav>`;
-  return layout(lang, { file: 'tale-' + t.slug + '.html', section: 'lessons', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+  return layout(lang, { file: 'tale-' + t.slug + '.html', section: 'stories', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
 }
 
 function levelPage(lang) {
@@ -3499,6 +3857,20 @@ footer::after{content:"";position:absolute;inset:6px 0 0;background-image:__PAT_
 }
 html[lang="ur"] .hero .lead{line-height:2.35;font-size:16.5px}
 html[lang="ur"] .hero .eyebrow{font-size:14px;letter-spacing:0}
+
+/* Lesson picture boards */
+.pics{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;max-width:900px}
+.pic{display:grid;justify-items:center;gap:2px;padding:16px 12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);color:var(--ink);text-align:center;transition:transform .15s,box-shadow .2s,border-color .2s}
+.pic[data-say]::before{display:none}
+.pic:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--gold-2)}
+.pic svg{width:104px;height:104px;color:var(--accent);margin-bottom:6px;padding:8px;border-radius:50%;background:radial-gradient(circle,rgba(201,151,58,.12),transparent 70%);overflow:visible}
+.pic svg .s{fill:var(--accent-soft)}
+.pic svg .g{fill:var(--gold-3);stroke:var(--gold)}
+.pic .ar{font-size:24px;line-height:1.7}
+.pic .mean{font-size:14px;color:var(--muted);line-height:1.4}
+html[lang="ur"] .pic .mean{line-height:2}
+.pic:active svg{transform:scale(.96)}
+@media (max-width:520px){.pics{grid-template-columns:1fr 1fr;gap:10px}.pic svg{width:84px;height:84px}.pic .ar{font-size:21px}}
 @media (prefers-reduced-motion: reduce){ .card,.btn,.lt,.lesson-list a{transition:none} a.card:hover,.btn:hover{transform:none} }
 `;
 
@@ -3827,6 +4199,7 @@ function build() {
     add(lang, 'writing.html', writingPage(lang));
     add(lang, 'lessons.html', lessonsPage(lang));
     LESSONS.forEach((l, i) => add(lang, l.slug + '.html', lessonPage(lang, i)));
+    add(lang, 'stories.html', storiesPage(lang));
     add(lang, 'reading.html', readingPage(lang));
     STORIES.forEach((x, i) => add(lang, 'reading-' + x.slug + '.html', storyPage(lang, i)));
     if (CLASSICS.length) { add(lang, 'classic-tales.html', classicsPage(lang)); CLASSICS.forEach((x, i) => add(lang, 'tale-' + x.slug + '.html', classicPage(lang, i))); }
