@@ -1613,6 +1613,23 @@ const pageUrl = (file) => SITE_URL + '/' + (file === 'index.html' ? '' : file);
 const say = (lang, text, label) => `<button class="btn sm" type="button" data-say="${esc(text)}">${label || T[lang].listen}</button>`;
 const totalWords = TOPICS.reduce((n, t) => n + t.words.length, 0);
 const deckTotal = totalWords + QWORDS.length;
+// Pictures for vocabulary flashcards and the picture quiz, in the same order as each topic's words.
+const dots = (n) => '●'.repeat(Math.min(n, 5)) + (n > 5 ? ' ' + '●'.repeat(n - 5) : '');
+const PICS = {
+  greetings: ['👋', '🤝', '😊', '🌅', '🌙', '🙏', '🙂', '✅', '❌', '👋'],
+  numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(dots),
+  family: ['👨', '👩', '👦', '👧', '👦', '👧', '👴', '👵', '🤵', '👰'],
+  food: ['💧', '🍞', '🌴', '☕', '🍵', '🍚', '🥩', '🍗', '🥛', '🍎'],
+  everyday: ['🏠', '🏫', '🚗', '📕', '🖊️', '🚪', '📅', '💼', '🛒', '🕌'],
+  colours: ['🔴', '🔵', '🟢', '🟡', '⚫', '⚪', '🟤', '🟠'],
+};
+TOPICS.forEach((t) => { const p = PICS[t.slug]; if (p) t.words.forEach((w, k) => { if (p[k]) w[4] = p[k]; }); });
+// Picture quiz: skip pictures that stand for more than one word in the list.
+const PIC_QUIZ = (() => {
+  const all = TOPICS.flatMap((t) => (['family', 'food', 'everyday', 'colours'].includes(t.slug) ? t.words.filter((w) => w[4]) : []));
+  const count = {}; all.forEach((w) => { count[w[4]] = (count[w[4]] || 0) + 1; });
+  return all.filter((w) => count[w[4]] === 1);
+})();
 const arNum = (n) => String(n).replace(/[0-9]/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
 const BASMALA = SURAHS[0].v[0].w.map((x) => x[0]).join(' ');
 PRAYER.forEach((p) => { if (p.a === 'BASMALA') p.a = BASMALA; });
@@ -2061,14 +2078,15 @@ function deckHtml(lang, slug, words) {
   const ur = lang === 'ur';
   const C = ur ? { ar: 'عربی', tr: 'رومن تلفظ', m: 'مطلب', flip: 'پلٹنے کے لیے ٹیپ کریں', prev: 'پچھلا', next: 'اگلا', known: 'یاد ہے؟ نشان لگائیں', listen: '🔊 سنیں', list: 'تمام الفاظ' }
     : { ar: 'Arabic', tr: 'Pronunciation', m: 'Meaning', flip: 'Tap or press Space to flip', prev: 'Previous', next: 'Next', known: 'Mark as known', listen: '🔊 Listen', list: 'All words' };
-  const rows = words.map(([a, tr, en, u]) => {
+  const pics = words.some((w) => w[4]);
+  const rows = words.map(([a, tr, en, u, pic]) => {
     const m = ur ? u : en;
-    return `<tr data-ar="${esc(a)}" data-tr="${esc(tr)}" data-m="${esc(m)}" data-key="${esc(slug + '|' + a)}"><td class="a"><span class="ar" lang="ar">${a}</span></td><td class="latin">${esc(tr)}</td><td>${esc(m)}</td><td>${say(lang, a)}</td></tr>`;
+    return `<tr data-ar="${esc(a)}" data-tr="${esc(tr)}" data-m="${esc(m)}" data-key="${esc(slug + '|' + a)}"${pic ? ` data-pic="${esc(pic)}"` : ''}>${pics ? `<td class="pic" aria-hidden="true">${pic || ''}</td>` : ''}<td class="a"><span class="ar" lang="ar">${a}</span></td><td class="latin">${esc(tr)}</td><td>${esc(m)}</td><td>${say(lang, a)}</td></tr>`;
   }).join('\n      ');
   return `<div class="cardzone">
   <div class="flash" id="flash" tabindex="0" role="button" aria-label="${ur ? 'کارڈ پلٹیں' : 'Flip card'}">
     <div class="flash-in">
-      <div class="face front"><span class="ar" lang="ar" id="fAr"></span><span class="hint">${C.flip}</span></div>
+      <div class="face front"><span class="fpic" id="fPic" aria-hidden="true"></span><span class="ar" lang="ar" id="fAr"></span><span class="hint">${C.flip}</span></div>
       <div class="face back"><span class="ar small" lang="ar" id="fAr2"></span><span class="tr latin" id="fTr"></span><span class="mean" id="fM"></span></div>
     </div>
   </div>
@@ -2081,7 +2099,7 @@ function deckHtml(lang, slug, words) {
 <h2>${C.list}</h2>
 <div class="tbl">
   <table class="words">
-    <thead><tr><th>${C.ar}</th><th>${C.tr}</th><th>${C.m}</th><th><span class="sr">${C.listen}</span></th></tr></thead>
+    <thead><tr>${pics ? '<th><span class="sr">🖼</span></th>' : ''}<th>${C.ar}</th><th>${C.tr}</th><th>${C.m}</th><th><span class="sr">${C.listen}</span></th></tr></thead>
     <tbody>
       ${rows}
     </tbody>
@@ -2140,15 +2158,16 @@ function quizPage(lang) {
     letters: LETTERS.map((x) => [x.c, ur ? x.ur : x.en]),
     words: TOPICS.flatMap((t) => t.words.map((w) => [w[0], ur ? w[3] : w[2]])),
     quran: QWORDS.map((w) => [w[0], ur ? w[3] : w[2]]),
+    pics: PIC_QUIZ.map((w) => [w[4], w[0]]),
   };
   const C = ur ? {
-    title: 'عربی کوئز: حروف اور الفاظ | حرف', desc: 'عربی حروف اور الفاظ پر مفت کوئز۔ دس سوال، ہر بار نیا سیٹ۔',
-    h1: 'عربی کوئز: حروف اور الفاظ', lead: 'حرف کے حروف اور الفاظ پر دس سوال۔ ہر بار نیا سیٹ۔',
-    modes: [['mixed', 'ملا جلا'], ['letters', 'صرف حروف'], ['words', 'صرف الفاظ'], ['quran', 'قرآنی الفاظ']],
+    title: 'عربی کوئز: حروف، الفاظ اور تصویریں | حرف', desc: 'عربی حروف، الفاظ، تصویروں اور قرآنی الفاظ پر مفت کوئز۔ دس سوال، ہر بار نیا سیٹ۔',
+    h1: 'عربی کوئز', lead: 'حروف، الفاظ، تصویروں یا قرآنی الفاظ پر دس سوال۔ اوپر سے قسم چنیں؛ ہر بار نیا سیٹ آتا ہے۔',
+    modes: [['mixed', 'ملا جلا'], ['letters', 'صرف حروف'], ['words', 'صرف الفاظ'], ['pics', 'تصویریں'], ['quran', 'قرآنی الفاظ']],
   } : {
-    title: 'Arabic quiz: letters and words | Harf', desc: 'A free Arabic quiz on letters and words. Ten questions, a new set every time.',
-    h1: 'Arabic quiz: letters and words', lead: 'Ten questions on the letters and words from Harf. You get a new set every time.',
-    modes: [['mixed', 'Mixed'], ['letters', 'Letters only'], ['words', 'Words only'], ['quran', 'Quran words']],
+    title: 'Arabic quiz: letters, words and pictures | Harf', desc: 'A free Arabic quiz on letters, words, pictures and Quran words. Ten questions, a new set every time.',
+    h1: 'Arabic quiz', lead: 'Ten questions on letters, words, pictures or Quran words. Pick a type below; you get a new set every time.',
+    modes: [['mixed', 'Mixed'], ['letters', 'Letters only'], ['words', 'Words only'], ['pics', 'Pictures'], ['quran', 'Quran words']],
   };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.quiz]])}
 <h1>${C.h1}</h1>
@@ -2730,6 +2749,10 @@ table.words{width:100%;border-collapse:collapse;background:var(--surface);border
 .face .tr{font-size:19px;color:var(--gold);font-weight:600}
 .face .mean{font-size:24px;font-family:var(--display);margin-top:4px}
 .face .hint{position:absolute;bottom:10px;font-size:13px;color:var(--muted)}
+.fpic{font-size:44px;line-height:1.2;color:var(--accent);letter-spacing:2px}
+.fpic:empty{display:none}
+.words td.pic{font-size:24px;text-align:center;width:52px;color:var(--accent);white-space:nowrap}
+.qbig.pic{font-size:72px;line-height:1.3}
 .controls{margin-top:12px}
 .counter{font-variant-numeric:tabular-nums;color:var(--muted)}
 
@@ -2852,7 +2875,7 @@ const APP_JS = String.raw`(function () {
     known: '✓ یاد ہے', markKnown: 'یاد ہے؟ نشان لگائیں',
     score: 'اسکور', next: 'اگلا ←', finished: 'مکمل', youScored: 'آپ کا اسکور',
     again: 'نیا سیٹ', question: 'سوال', hideGuide: 'رہنما حرف چھپائیں', showGuide: 'رہنما حرف دکھائیں',
-    q1: 'یہ کون سا حرف ہے؟', q2: 'یہ حرف تلاش کریں:', q3: 'اس کا مطلب کیا ہے؟', q4: 'اسے عربی میں کیسے کہیں گے؟',
+    q1: 'یہ کون سا حرف ہے؟', q2: 'یہ حرف تلاش کریں:', q3: 'اس کا مطلب کیا ہے؟', q4: 'اسے عربی میں کیسے کہیں گے؟', q5: 'تصویر کے لیے صحیح لفظ چنیں:',
     great: 'بہت خوب! اب کوئی نیا موضوع آزمائیں۔', good: 'اچھی پیش رفت۔ فلیش کارڈز دہرائیں اور دوبارہ کوشش کریں۔', keep: 'ہمت نہ ہاریں۔ حروف دہرائیں اور پھر کوشش کریں۔'
   } : {
     noVoice: 'No Arabic voice found. Add Arabic in your device’s text-to-speech settings.',
@@ -2861,7 +2884,7 @@ const APP_JS = String.raw`(function () {
     known: '✓ Known', markKnown: 'Mark as known',
     score: 'Score', next: 'Next →', finished: 'Finished', youScored: 'You scored',
     again: 'Try another set', question: 'Question', hideGuide: 'Hide guide', showGuide: 'Show guide',
-    q1: 'Which letter is this?', q2: 'Find the letter called…', q3: 'What does this mean?', q4: 'How do you say this in Arabic?',
+    q1: 'Which letter is this?', q2: 'Find the letter called…', q3: 'What does this mean?', q4: 'How do you say this in Arabic?', q5: 'Which word matches the picture?',
     great: 'Excellent work. Try a new topic next.', good: 'Good progress. Review the flashcards and go again.', keep: 'Keep going. Practise the alphabet, then try again.'
   };
   function N(x) { x = String(x); return L === 'ur' ? x.replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.charAt(+d); }) : x; }
@@ -2927,13 +2950,13 @@ const APP_JS = String.raw`(function () {
   var fc = $('#flash');
   if (fc) {
     var rows = $$('tr[data-ar]');
-    var deck = rows.map(function (r) { return { ar: r.getAttribute('data-ar'), tr: r.getAttribute('data-tr'), m: r.getAttribute('data-m'), key: r.getAttribute('data-key'), row: r }; });
+    var deck = rows.map(function (r) { return { ar: r.getAttribute('data-ar'), tr: r.getAttribute('data-tr'), m: r.getAttribute('data-m'), key: r.getAttribute('data-key'), pic: r.getAttribute('data-pic') || '', row: r }; });
     var known = store.get('known', []);
     var idx = 0;
     var render = function () {
       var w = deck[idx];
       fc.classList.remove('flipped');
-      $('#fAr').textContent = w.ar; $('#fAr2').textContent = w.ar; $('#fTr').textContent = w.tr; $('#fM').textContent = w.m;
+      $('#fPic').textContent = w.pic; $('#fAr').textContent = w.ar; $('#fAr2').textContent = w.ar; $('#fTr').textContent = w.tr; $('#fM').textContent = w.m;
       $('#count').textContent = N(idx + 1) + '/' + N(deck.length);
       var k = has(known, w.key), kb = $('#known');
       kb.textContent = k ? S.known : S.markKnown; kb.classList.toggle('on', k);
@@ -3057,6 +3080,10 @@ const APP_JS = String.raw`(function () {
     var shuffle = function (a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
     var makeQ = function (type) {
       var pick;
+      if (type === 'pic') {
+        pick = shuffle(data.pics).slice(0, 4);
+        return { p: S.q5, big: pick[0][0], bigPic: true, opts: pick.map(function (x) { return x[1]; }), ans: pick[0][1], optAr: true };
+      }
       if (type === 'letter') {
         pick = shuffle(data.letters).slice(0, 4);
         return Math.random() < 0.5
@@ -3071,7 +3098,7 @@ const APP_JS = String.raw`(function () {
     var renderQ;
     var start = function () {
       qs = [];
-      for (var i = 0; i < 10; i++) qs.push(makeQ(mode === 'letters' ? 'letter' : mode === 'words' ? 'word' : mode === 'quran' ? 'quran' : (i % 2 ? 'word' : 'letter')));
+      for (var i = 0; i < 10; i++) qs.push(makeQ(mode === 'letters' ? 'letter' : mode === 'words' ? 'word' : mode === 'quran' ? 'quran' : mode === 'pics' ? 'pic' : (i % 2 ? 'word' : 'letter')));
       qi = 0; score = 0; renderQ();
     };
     renderQ = function () {
@@ -3087,7 +3114,7 @@ const APP_JS = String.raw`(function () {
       var opts = shuffle(q.opts).map(function (o) { return '<button class="opt" type="button" data-v="' + esc(o) + '">' + (q.optAr ? '<span class="ar" lang="ar">' + esc(o) + '</span>' : esc(o)) + '</button>'; }).join('');
       var counter = L === 'ur' ? N(10) + ' میں سے ' + N(qi + 1) : N(qi + 1) + ' of 10';
       qb.innerHTML = '<p class="qprompt">' + S.question + ' ' + counter + (L === 'ur' ? '، ' : ' · ') + q.p + '</p>' +
-        '<p class="qbig ' + (q.bigAr ? 'ar' : 'txt') + '"' + (q.bigAr ? ' lang="ar"' : '') + '>' + esc(q.big) + '</p>' +
+        '<p class="qbig ' + (q.bigPic ? 'pic' : q.bigAr ? 'ar' : 'txt') + '"' + (q.bigAr ? ' lang="ar"' : '') + '>' + esc(q.big) + '</p>' +
         '<div class="opts">' + opts + '</div>' +
         '<div class="qfoot"><span class="score">' + S.score + ' ' + N(score) + '</span><button class="btn" id="qnext" type="button" disabled>' + S.next + '</button></div>';
       $$('.opt', qb).forEach(function (b) {
