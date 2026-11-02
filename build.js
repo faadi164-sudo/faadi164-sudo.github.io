@@ -277,6 +277,78 @@ const TOPICS = [
       ['برتقالي', 'burtuqaalii', 'Orange', 'نارنجی'],
     ],
   },
+  {
+    slug: 'jobs', en: 'Jobs', ur: 'پیشے',
+    titleEn: 'Arabic words for jobs and professions', titleUr: 'عربی میں پیشوں کے نام',
+    introEn: 'Say what you do with {أنا} (I am) and the job: {أنا مهندس} (I am an engineer). These are the masculine forms; for a woman, add {ة}: {طبيبة}, {مدرسة}.',
+    introUr: 'اپنا پیشہ بتانے کے لیے {أنا} (میں ہوں) کے بعد پیشہ لگائیں: {أنا مهندس} (میں انجینئر ہوں)۔ یہ مذکر شکلیں ہیں؛ عورت کے لیے {ة} لگائیں: {طبيبة}، {مدرسة}۔',
+    words: [
+      ['طبيب', 'ṭabiib', 'Doctor', 'ڈاکٹر'],
+      ['ممرض', 'mumarriḍ', 'Nurse (man)', 'نرس (مرد)'],
+      ['مدرس', 'mudarris', 'Teacher', 'استاد'],
+      ['مهندس', 'muhandis', 'Engineer', 'انجینئر'],
+      ['محاسب', 'muḥaasib', 'Accountant', 'اکاؤنٹنٹ'],
+      ['سائق', 'saa’iq', 'Driver', 'ڈرائیور'],
+      ['طباخ', 'ṭabbaakh', 'Cook', 'باورچی'],
+      ['شرطي', 'shurṭii', 'Police officer', 'پولیس والا'],
+      ['طالب', 'ṭaalib', 'Student', 'طالب علم'],
+      ['عامل', 'ʿaamil', 'Worker', 'مزدور، کارکن'],
+    ],
+  },
+  {
+    slug: 'body', en: 'The body', ur: 'جسم',
+    titleEn: 'Arabic words for parts of the body', titleUr: 'عربی میں جسم کے حصوں کے نام',
+    introEn: 'Useful at the doctor’s: {عندي ألم في} (I have pain in) plus the body part. Many body words are feminine, such as {عين} (eye) and {يد} (hand), and some come in pairs.',
+    introUr: 'ڈاکٹر کے پاس کام آتے ہیں: {عندي ألم في} (مجھے درد ہے) کے بعد جسم کا حصہ بتائیں۔ جسم کے کئی الفاظ مؤنث ہیں، جیسے {عين} (آنکھ) اور {يد} (ہاتھ)، اور کچھ جوڑوں میں ہوتے ہیں۔',
+    words: [
+      ['رأس', 'ra’s', 'Head', 'سر'],
+      ['عين', 'ʿayn', 'Eye', 'آنکھ'],
+      ['أذن', 'udhun', 'Ear', 'کان'],
+      ['أنف', 'anf', 'Nose', 'ناک'],
+      ['فم', 'fam', 'Mouth', 'منہ'],
+      ['سن', 'sinn', 'Tooth', 'دانت'],
+      ['يد', 'yad', 'Hand', 'ہاتھ'],
+      ['رجل', 'rijl', 'Foot, leg', 'پاؤں، ٹانگ'],
+      ['قلب', 'qalb', 'Heart', 'دل'],
+      ['شعر', 'shaʿr', 'Hair', 'بال'],
+    ],
+  },
+  {
+    slug: 'places', en: 'Places and transport', ur: 'مقامات اور سواری',
+    titleEn: 'Arabic words for places and transport', titleUr: 'عربی میں مقامات اور سواریوں کے نام',
+    introEn: 'To ask the way, say {أين} (where) and the place: {أين المطار؟} (Where is the airport?). Add {من فضلك} (please) to be polite.',
+    introUr: 'راستہ پوچھنے کے لیے {أين} (کہاں) کے بعد جگہ کا نام لگائیں: {أين المطار؟} (ہوائی اڈا کہاں ہے؟)۔ شائستگی کے لیے {من فضلك} (مہربانی) بھی کہیں۔',
+    words: [
+      ['طائرة', 'ṭaa’ira', 'Plane', 'ہوائی جہاز'],
+      ['قطار', 'qiṭaar', 'Train', 'ٹرین'],
+      ['حافلة', 'ḥaafila', 'Bus', 'بس'],
+      ['دراجة', 'darraaja', 'Bicycle', 'سائیکل'],
+      ['مطار', 'maṭaar', 'Airport', 'ہوائی اڈا'],
+      ['مستشفى', 'mustashfaa', 'Hospital', 'ہسپتال'],
+      ['مطعم', 'maṭʿam', 'Restaurant', 'ریستوران'],
+      ['بنك', 'bank', 'Bank', 'بینک'],
+      ['فندق', 'funduq', 'Hotel', 'ہوٹل'],
+      ['شارع', 'shaariʿ', 'Street', 'سڑک، گلی'],
+    ],
+  },
+  {
+    slug: 'home', en: 'Around the home', ur: 'گھر کی چیزیں',
+    titleEn: 'Arabic words for things at home', titleUr: 'عربی میں گھر کی چیزوں کے نام',
+    introEn: 'Name what is around you: {هذا سرير} (This is a bed). Point at things in your own home and say their Arabic names out loud.',
+    introUr: 'اپنے اردگرد کی چیزوں کے نام لیں: {هذا سرير} (یہ بستر ہے)۔ اپنے گھر میں چیزوں کی طرف اشارہ کر کے ان کے عربی نام بلند آواز سے کہیں۔',
+    words: [
+      ['غرفة', 'ghurfa', 'Room', 'کمرہ'],
+      ['مطبخ', 'maṭbakh', 'Kitchen', 'باورچی خانہ'],
+      ['سرير', 'sariir', 'Bed', 'بستر'],
+      ['طاولة', 'ṭaawila', 'Table', 'میز'],
+      ['كرسي', 'kursii', 'Chair', 'کرسی'],
+      ['نافذة', 'naafidha', 'Window', 'کھڑکی'],
+      ['مفتاح', 'miftaaḥ', 'Key', 'چابی'],
+      ['ساعة', 'saaʿa', 'Clock, watch; hour', 'گھڑی؛ گھنٹہ'],
+      ['هاتف', 'haatif', 'Phone', 'فون'],
+      ['حديقة', 'ḥadiiqa', 'Garden', 'باغ'],
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------- phrases
@@ -1649,11 +1721,15 @@ const PICS = {
   food: ['💧', '🍞', '🌴', '☕', '🍵', '🍚', '🥩', '🍗', '🥛', '🍎'],
   everyday: ['🏠', '🏫', '🚗', '📕', '🖊️', '🚪', '📅', '💼', '🛒', '🕌'],
   colours: ['🔴', '🔵', '🟢', '🟡', '⚫', '⚪', '🟤', '🟠'],
+  jobs: ['🧑‍⚕️', '🩺', '👨‍🏫', '👷', '🧮', '🚖', '🧑‍🍳', '👮', '🎓', '🛠️'],
+  body: ['', '👁️', '👂', '👃', '👄', '🦷', '✋', '🦶', '❤️', '💇'],
+  places: ['✈️', '🚆', '🚌', '🚲', '🛫', '🏥', '🍽️', '🏦', '🏨', '🛣️'],
+  home: ['', '🍳', '🛏️', '', '🪑', '🪟', '🔑', '⏰', '📱', '🌳'],
 };
 TOPICS.forEach((t) => { const p = PICS[t.slug]; if (p) t.words.forEach((w, k) => { if (p[k]) w[4] = p[k]; }); });
 // Picture quiz: skip pictures that stand for more than one word in the list.
 const PIC_QUIZ = (() => {
-  const all = TOPICS.flatMap((t) => (['family', 'food', 'everyday', 'colours'].includes(t.slug) ? t.words.filter((w) => w[4]) : []));
+  const all = TOPICS.flatMap((t) => (['family', 'food', 'everyday', 'colours', 'jobs', 'body', 'places', 'home'].includes(t.slug) ? t.words.filter((w) => w[4]) : []));
   const count = {}; all.forEach((w) => { count[w[4]] = (count[w[4]] || 0) + 1; });
   return all.filter((w) => count[w[4]] === 1);
 })();
@@ -1762,7 +1838,7 @@ function homePage(lang) {
       ['writing.html', 'لکھنے کی مشق', 'ہر حرف اسکرین پر انگلی سے لکھیں، یا مفت ورک شیٹس پرنٹ کریں۔'],
       ['lessons.html', 'گرامر کے اسباق', `${n(LESSONS.length)} مختصر اسباق، پہلے جملے سے افعال، گنتی اور وقت بتانے تک۔`],
       ['reading.html', 'آسان کہانیاں', `${n(STORIES.length)} مختصر کہانیاں اعراب کے ساتھ؛ ہر لفظ پر ٹیپ کر کے مطلب دیکھیں۔`],
-      ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے رنگوں تک، فلیش کارڈز کے ساتھ۔`],
+      ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے پیشوں اور جسم تک، فلیش کارڈز کے ساتھ۔`],
       ['quran.html', 'قرآنی عربی', `سورہ فاتحہ اور ${n(SURAHS.length - 1)} مختصر سورتیں لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
       ['phrases.html', 'جملے', `ملنے جلنے، خریداری اور راستہ پوچھنے کے لیے ${n(PHRASES.length)} جملے۔`],
       ['saudi-arabic.html', 'سعودی بول چال', `سعودی عرب میں روزمرہ استعمال ہونے والے ${n(SAUDI.reduce((k, g) => k + g.items.length, 0))} جملے: دفتر، دکان، ٹیکسی اور ڈاکٹر۔`],
@@ -1790,7 +1866,7 @@ function homePage(lang) {
       ['writing.html', 'Writing practice', 'Trace every letter on screen with your finger, or print free tracing worksheets.'],
       ['lessons.html', 'Grammar lessons', `${LESSONS.length} short lessons, from your first sentence to verbs, numbers and telling the time.`],
       ['reading.html', 'Easy stories', `${STORIES.length} short vowelled stories; tap any word to see what it means.`],
-      ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to colours, with flashcards.`],
+      ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to jobs and the body, with flashcards.`],
       ['quran.html', 'Quranic Arabic', `Al-Fatiha and ${SURAHS.length - 1} short surahs word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
       ['phrases.html', 'Phrases', `${PHRASES.length} sentences for meeting people, shopping and getting around.`],
       ['saudi-arabic.html', 'Saudi Arabic', `${SAUDI.reduce((k, g) => k + g.items.length, 0)} phrases Saudis use every day: at work, in shops, in taxis and at the doctor.`],
