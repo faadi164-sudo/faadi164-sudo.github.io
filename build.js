@@ -541,6 +541,79 @@ const SAUDI = [
   ] },
 ];
 
+// ---------------------------------------------------------------- graded reading
+// Original short stories. Each sentence: w = [[Arabic word, English, Urdu], ...], plus transliteration and translations.
+const STORIES = [
+  { slug: 'in-the-classroom', level: 1, ar: 'فِي الْفَصْلِ', en: 'In the classroom', ur: 'کلاس روم میں', afterEn: 'after lessons 1–4', afterUr: 'سبق ۱ تا ۴ کے بعد',
+    s: [
+      { w: [['هٰذَا', 'this', 'یہ'], ['فَصْلٌ.', 'a classroom', 'ایک کلاس روم']], tr: 'haadhaa faṣlun.', en: 'This is a classroom.', ur: 'یہ ایک کلاس روم ہے۔' },
+      { w: [['فِي', 'in', 'میں'], ['الْفَصْلِ', 'the classroom', 'کلاس روم'], ['مُدَرِّسٌ', 'a teacher', 'ایک استاد'], ['وَطَالِبٌ.', 'and a student', 'اور ایک طالب علم']], tr: 'fil-faṣli mudarrisun wa-ṭaalibun.', en: 'In the classroom there is a teacher and a student.', ur: 'کلاس روم میں ایک استاد اور ایک طالب علم ہیں۔' },
+      { w: [['الْمُدَرِّسُ', 'the teacher', 'استاد'], ['مِنْ', 'from', 'سے'], ['مِصْرَ.', 'Egypt', 'مصر']], tr: 'al-mudarrisu min miṣra.', en: 'The teacher is from Egypt.', ur: 'استاد مصر سے ہیں۔' },
+      { w: [['وَالطَّالِبُ', 'and the student', 'اور طالب علم'], ['مِنْ', 'from', 'سے'], ['بَاكِسْتَانَ.', 'Pakistan', 'پاکستان']], tr: 'waṭ-ṭaalibu min baakistaana.', en: 'And the student is from Pakistan.', ur: 'اور طالب علم پاکستان سے ہے۔' },
+      { w: [['أَيْنَ', 'where', 'کہاں'], ['الْكِتَابُ؟', 'the book', 'کتاب']], tr: 'ayna l-kitaabu?', en: 'Where is the book?', ur: 'کتاب کہاں ہے؟' },
+      { w: [['الْكِتَابُ', 'the book', 'کتاب'], ['عَلَى', 'on', 'پر'], ['الْمَكْتَبِ.', 'the desk', 'میز']], tr: 'al-kitaabu ʿala l-maktabi.', en: 'The book is on the desk.', ur: 'کتاب میز پر ہے۔' },
+      { w: [['وَالْقَلَمُ', 'and the pen', 'اور قلم'], ['فِي', 'in', 'میں'], ['الْحَقِيبَةِ.', 'the bag', 'بستہ']], tr: 'wal-qalamu fil-ḥaqiibati.', en: 'And the pen is in the bag.', ur: 'اور قلم بستے میں ہے۔' },
+    ],
+    q: [
+      { en: 'Where is the teacher from?', ur: 'استاد کہاں سے ہیں؟', a: 'مِنْ مِصْرَ', aEn: 'From Egypt.', aUr: 'مصر سے۔' },
+      { en: 'Where is the pen?', ur: 'قلم کہاں ہے؟', a: 'فِي الْحَقِيبَةِ', aEn: 'In the bag.', aUr: 'بستے میں۔' },
+    ] },
+  { slug: 'my-family', level: 1, ar: 'عَائِلَتِي', en: 'My family', ur: 'میرا خاندان', afterEn: 'after lessons 1–8', afterUr: 'سبق ۱ تا ۸ کے بعد',
+    s: [
+      { w: [['اسْمِي', 'my name', 'میرا نام'], ['أَحْمَدُ.', 'Ahmad', 'احمد']], tr: 'ismii aḥmadu.', en: 'My name is Ahmad.', ur: 'میرا نام احمد ہے۔' },
+      { w: [['أَنَا', 'I', 'میں'], ['مِنْ', 'from', 'سے'], ['لَاهُورَ.', 'Lahore', 'لاہور']], tr: 'anaa min laahuura.', en: 'I am from Lahore.', ur: 'میں لاہور سے ہوں۔' },
+      { w: [['هٰذَا', 'this', 'یہ'], ['أَبِي،', 'my father', 'میرے ابو'], ['هُوَ', 'he', 'وہ'], ['طَبِيبٌ.', 'a doctor', 'ڈاکٹر']], tr: 'haadhaa abii, huwa ṭabiibun.', en: 'This is my father. He is a doctor.', ur: 'یہ میرے ابو ہیں۔ وہ ڈاکٹر ہیں۔' },
+      { w: [['وَهٰذِهِ', 'and this', 'اور یہ'], ['أُمِّي،', 'my mother', 'میری امی'], ['هِيَ', 'she', 'وہ'], ['مُدَرِّسَةٌ.', 'a teacher (woman)', 'استانی']], tr: 'wa-haadhihi ummii, hiya mudarrisatun.', en: 'And this is my mother. She is a teacher.', ur: 'اور یہ میری امی ہیں۔ وہ استانی ہیں۔' },
+      { w: [['أُخْتِي', 'my sister', 'میری بہن'], ['طَالِبَةٌ', 'a student (woman)', 'طالبہ'], ['فِي', 'at, in', 'میں'], ['الْجَامِعَةِ.', 'the university', 'یونیورسٹی']], tr: 'ukhtii ṭaalibatun fil-jaamiʿati.', en: 'My sister is a student at the university.', ur: 'میری بہن یونیورسٹی میں پڑھتی ہے۔' },
+      { w: [['بَيْتُنَا', 'our house', 'ہمارا گھر'], ['كَبِيرٌ', 'big', 'بڑا'], ['وَجَمِيلٌ.', 'and beautiful', 'اور خوبصورت']], tr: 'baytunaa kabiirun wa-jamiilun.', en: 'Our house is big and beautiful.', ur: 'ہمارا گھر بڑا اور خوبصورت ہے۔' },
+    ],
+    q: [
+      { en: 'What is Ahmad’s father’s job?', ur: 'احمد کے ابو کیا کام کرتے ہیں؟', a: 'هُوَ طَبِيبٌ', aEn: 'He is a doctor.', aUr: 'وہ ڈاکٹر ہیں۔' },
+      { en: 'Where is Ahmad from?', ur: 'احمد کہاں سے ہے؟', a: 'مِنْ لَاهُورَ', aEn: 'From Lahore.', aUr: 'لاہور سے۔' },
+    ] },
+  { slug: 'a-day-at-work', level: 2, ar: 'يَوْمٌ فِي الْعَمَلِ', en: 'A day at work', ur: 'دفتر میں ایک دن', afterEn: 'after lesson 11', afterUr: 'سبق ۱۱ کے بعد',
+    s: [
+      { w: [['ذَهَبْتُ', 'I went', 'میں گیا'], ['إِلَى', 'to', 'کی طرف'], ['الْعَمَلِ', 'work', 'کام'], ['صَبَاحًا.', 'in the morning', 'صبح']], tr: 'dhahabtu ila l-ʿamali ṣabaaḥan.', en: 'I went to work in the morning.', ur: 'میں صبح کام پر گیا۔' },
+      { w: [['دَخَلْتُ', 'I went into', 'میں داخل ہوا'], ['الْمَكْتَبَ', 'the office', 'دفتر'], ['وَجَلَسْتُ.', 'and I sat down', 'اور میں بیٹھ گیا']], tr: 'dakhaltu l-maktaba wa-jalastu.', en: 'I went into the office and sat down.', ur: 'میں دفتر میں داخل ہوا اور بیٹھ گیا۔' },
+      { w: [['شَرِبْتُ', 'I drank', 'میں نے پیا'], ['الْقَهْوَةَ', 'the coffee', 'قہوہ'], ['مَعَ', 'with', 'کے ساتھ'], ['زَمِيلِي.', 'my colleague', 'میرا ساتھی']], tr: 'sharibtu l-qahwata maʿa zamiilii.', en: 'I drank coffee with my colleague.', ur: 'میں نے اپنے ساتھی کے ساتھ قہوہ پیا۔' },
+      { w: [['كَتَبْنَا', 'we wrote', 'ہم نے لکھا'], ['تَقْرِيرًا', 'a report', 'ایک رپورٹ'], ['طَوِيلًا.', 'long', 'لمبی']], tr: 'katabnaa taqriiran ṭawiilan.', en: 'We wrote a long report.', ur: 'ہم نے ایک لمبی رپورٹ لکھی۔' },
+      { w: [['ثُمَّ', 'then', 'پھر'], ['ذَهَبْنَا', 'we went', 'ہم گئے'], ['إِلَى', 'to', 'کی طرف'], ['الِاجْتِمَاعِ.', 'the meeting', 'میٹنگ']], tr: 'thumma dhahabnaa ila l-ijtimaaʿi.', en: 'Then we went to the meeting.', ur: 'پھر ہم میٹنگ میں گئے۔' },
+      { w: [['خَرَجْتُ', 'I left', 'میں نکلا'], ['مِنَ', 'from', 'سے'], ['الْعَمَلِ', 'work', 'کام'], ['مَسَاءً.', 'in the evening', 'شام کو']], tr: 'kharajtu mina l-ʿamali masaa’an.', en: 'I left work in the evening.', ur: 'میں شام کو کام سے نکلا۔' },
+    ],
+    q: [
+      { en: 'What did he drink, and who with?', ur: 'اس نے کیا پیا، اور کس کے ساتھ؟', a: 'الْقَهْوَةَ مَعَ زَمِيلِهِ', aEn: 'Coffee, with his colleague.', aUr: 'اپنے ساتھی کے ساتھ قہوہ۔' },
+      { en: 'When did he leave work?', ur: 'وہ کام سے کب نکلا؟', a: 'مَسَاءً', aEn: 'In the evening.', aUr: 'شام کو۔' },
+    ] },
+  { slug: 'at-the-market', level: 2, ar: 'فِي السُّوقِ', en: 'At the market', ur: 'بازار میں', afterEn: 'after lesson 12', afterUr: 'سبق ۱۲ کے بعد',
+    s: [
+      { w: [['أَذْهَبُ', 'I go', 'میں جاتا ہوں'], ['إِلَى', 'to', 'کی طرف'], ['السُّوقِ', 'the market', 'بازار'], ['يَوْمَ', 'on the day of', 'کے دن'], ['الْجُمُعَةِ.', 'Friday', 'جمعہ']], tr: 'adh-habu ila s-suuqi yawma l-jumuʿati.', en: 'I go to the market on Fridays.', ur: 'میں جمعے کے دن بازار جاتا ہوں۔' },
+      { w: [['أَشْتَرِي', 'I buy', 'میں خریدتا ہوں'], ['الْخُبْزَ', 'bread', 'روٹی'], ['وَالْفَاكِهَةَ.', 'and fruit', 'اور پھل']], tr: 'ashtarii l-khubza wal-faakihata.', en: 'I buy bread and fruit.', ur: 'میں روٹی اور پھل خریدتا ہوں۔' },
+      { w: [['أَسْأَلُ', 'I ask', 'میں پوچھتا ہوں'], ['الْبَائِعَ:', 'the seller', 'دکاندار'], ['بِكَمْ', 'for how much', 'کتنے کا'], ['هٰذَا؟', 'this', 'یہ']], tr: 'as’alu l-baa’iʿa: bikam haadhaa?', en: 'I ask the seller, “How much is this?”', ur: 'میں دکاندار سے پوچھتا ہوں: «یہ کتنے کا ہے؟»' },
+      { w: [['يَقُولُ:', 'he says', 'وہ کہتا ہے'], ['بِعَشَرَةِ', 'for ten', 'دس کا'], ['رِيَالَاتٍ.', 'riyals', 'ریال']], tr: 'yaquulu: bi-ʿasharati riyaalaatin.', en: 'He says, “Ten riyals.”', ur: 'وہ کہتا ہے: «دس ریال کا۔»' },
+      { w: [['أَقُولُ:', 'I say', 'میں کہتا ہوں'], ['هٰذَا', 'this', 'یہ'], ['غَالٍ!', 'expensive', 'مہنگا']], tr: 'aquulu: haadhaa ghaalin!', en: 'I say, “That’s expensive!”', ur: 'میں کہتا ہوں: «یہ تو مہنگا ہے!»' },
+      { w: [['يَضْحَكُ', 'laughs', 'ہنستا ہے'], ['الْبَائِعُ', 'the seller', 'دکاندار'], ['وَيَقُولُ:', 'and says', 'اور کہتا ہے'], ['بِثَمَانِيَةٍ.', 'for eight', 'آٹھ کا']], tr: 'yaḍḥaku l-baa’iʿu wa-yaquulu: bi-thamaaniyatin.', en: 'The seller laughs and says, “Eight, then.”', ur: 'دکاندار ہنس کر کہتا ہے: «چلیں، آٹھ کا۔»' },
+    ],
+    q: [
+      { en: 'When does he go to the market?', ur: 'وہ بازار کب جاتا ہے؟', a: 'يَوْمَ الْجُمُعَةِ', aEn: 'On Fridays.', aUr: 'جمعے کے دن۔' },
+      { en: 'What price did they agree on?', ur: 'آخر میں کتنی قیمت طے ہوئی؟', a: 'ثَمَانِيَةُ رِيَالَاتٍ', aEn: 'Eight riyals.', aUr: 'آٹھ ریال۔' },
+    ] },
+];
+
+// ---------------------------------------------------------------- level test
+// Letter questions use letter slugs; the others give options in Arabic or in both languages. The first option is the answer.
+const LEVEL_QS = [
+  { type: 'letter', big: 'baa', opts: ['baa', 'taa', 'thaa', 'noon'] },
+  { type: 'letter', big: 'ayn', opts: ['ayn', 'ghayn', 'haa', 'jeem'] },
+  { pEn: 'How do you read this word?', pUr: 'یہ لفظ کیسے پڑھیں گے؟', big: 'بَاب', latin: ['baab', 'naab', 'taab', 'baat'] },
+  { pEn: 'What does this mean?', pUr: 'اس کا مطلب کیا ہے؟', big: 'هٰذَا كِتَابٌ', en: ['This is a book.', 'That is a pen.', 'Where is the book?', 'The book is big.'], ur: ['یہ کتاب ہے۔', 'وہ قلم ہے۔', 'کتاب کہاں ہے؟', 'کتاب بڑی ہے۔'] },
+  { pEn: 'Which word means “this” before a feminine noun such as {سَيَّارَةٌ}?', pUr: '{سَيَّارَةٌ} جیسے مؤنث اسم سے پہلے «یہ» کے لیے کون سا لفظ آئے گا؟', ar: ['هٰذِهِ', 'هٰذَا', 'ذٰلِكَ', 'هُوَ'] },
+  { pEn: 'What does this mean?', pUr: 'اس کا مطلب کیا ہے؟', big: 'الْقَلَمُ عَلَى الْمَكْتَبِ', en: ['The pen is on the desk.', 'The pen is in the bag.', 'The book is on the desk.', 'Where is the pen?'], ur: ['قلم میز پر ہے۔', 'قلم بستے میں ہے۔', 'کتاب میز پر ہے۔', 'قلم کہاں ہے؟'] },
+  { pEn: 'How do you say “my house”?', pUr: '«میرا گھر» عربی میں کیسے کہیں گے؟', ar: ['بَيْتِي', 'بَيْتُكَ', 'بَيْتُهُ', 'الْبَيْتُ'] },
+  { pEn: 'Which one means “The house is big”?', pUr: '«گھر بڑا ہے» کس کا مطلب ہے؟', ar: ['الْبَيْتُ كَبِيرٌ', 'الْبَيْتُ الْكَبِيرُ', 'بَيْتٌ كَبِيرٌ', 'بُيُوتٌ كَبِيرَةٌ'] },
+  { pEn: 'What does this mean?', pUr: 'اس کا مطلب کیا ہے؟', big: 'ذَهَبْتُ إِلَى السُّوقِ', en: ['I went to the market.', 'I go to the market.', 'She went to the market.', 'We went to the market.'], ur: ['میں بازار گیا۔', 'میں بازار جاتا ہوں۔', 'وہ (خاتون) بازار گئی۔', 'ہم بازار گئے۔'] },
+  { pEn: 'How do you say “We don’t understand”?', pUr: '«ہم نہیں سمجھتے» عربی میں کیسے کہیں گے؟', ar: ['لَا نَفْهَمُ', 'لَا أَفْهَمُ', 'لَا يَفْهَمُ', 'فَهِمْنَا'] },
+];
+
 // ---------------------------------------------------------------- grammar lessons
 // Order inspired by classic courses for non-Arabic speakers such as the Madinah books.
 // All explanations and example sentences here are original.
@@ -1120,6 +1193,7 @@ function homePage(lang) {
       ['alphabet.html', 'حروفِ تہجی', `تمام ${n(28)} حروف، ان کی چاروں شکلیں، تلفظ کی رہنمائی اور ہر حرف کی ایک مثال۔`],
       ['writing.html', 'لکھنے کی مشق', 'ہر حرف اسکرین پر انگلی سے لکھیں، یا مفت ورک شیٹس پرنٹ کریں۔'],
       ['lessons.html', 'گرامر کے اسباق', `${n(LESSONS.length)} مختصر اسباق، پہلے جملے سے اپنے بارے میں بات کرنے تک۔`],
+      ['reading.html', 'آسان کہانیاں', `${n(STORIES.length)} مختصر کہانیاں اعراب کے ساتھ؛ ہر لفظ پر ٹیپ کر کے مطلب دیکھیں۔`],
       ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے رنگوں تک، فلیش کارڈز کے ساتھ۔`],
       ['quran.html', 'قرآنی عربی', `سورہ فاتحہ اور ${n(SURAHS.length - 1)} مختصر سورتیں لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
       ['phrases.html', 'جملے', `ملنے جلنے، خریداری اور راستہ پوچھنے کے لیے ${n(PHRASES.length)} جملے۔`],
@@ -1147,6 +1221,7 @@ function homePage(lang) {
       ['alphabet.html', 'Alphabet', 'All 28 letters with their four shapes, pronunciation tips and an example word for each.'],
       ['writing.html', 'Writing practice', 'Trace every letter on screen with your finger, or print free tracing worksheets.'],
       ['lessons.html', 'Grammar lessons', `${LESSONS.length} short lessons, from your first sentence to talking about yourself.`],
+      ['reading.html', 'Easy stories', `${STORIES.length} short vowelled stories; tap any word to see what it means.`],
       ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to colours, with flashcards.`],
       ['quran.html', 'Quranic Arabic', `Al-Fatiha and ${SURAHS.length - 1} short surahs word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
       ['phrases.html', 'Phrases', `${PHRASES.length} sentences for meeting people, shopping and getting around.`],
@@ -1176,6 +1251,7 @@ function homePage(lang) {
       <a class="btn primary" href="${link(lang, 'alphabet.html')}">${C.cta1}</a>
       <a class="btn" href="${link(lang, 'lessons.html')}">${C.cta2}</a>
     </div>
+    <p class="note" style="margin-top:12px"><a href="${link(lang, 'level-test.html')}">${ur ? 'معلوم نہیں کہاں سے شروع کریں؟ دو منٹ کا لیول ٹیسٹ دیں ←' : 'Not sure where to start? Take the two-minute level test →'}</a></p>
   </div>
   <div class="stats" id="stats" data-letters="28" data-words="${deckTotal}">
     <div class="stat"><strong id="sLetters">${n(0)}/${n(28)}</strong><span>${C.s1}</span><div class="meter"><i id="mLetters"></i></div></div>
@@ -1383,7 +1459,8 @@ function lessonsPage(lang) {
 <p><a href="${link(lang, 'alphabet.html')}">${C.first}</a></p>
 <ol class="lesson-list">
   ${list}
-</ol>`;
+</ol>
+<section class="box" style="margin-top:28px"><p>${ur ? `اسباق کے ساتھ پڑھنے کی مشق کے لیے <a href="${link(lang, 'reading.html')}">آسان عربی کہانیاں</a> پڑھیں۔` : `Practise reading alongside the lessons with our <a href="${link(lang, 'reading.html')}">easy Arabic stories</a>.`}</p></section>`;
   return layout(lang, { file: 'lessons.html', section: 'lessons', title: C.title, desc: C.desc, body });
 }
 
@@ -1738,6 +1815,96 @@ function saudiPage(lang) {
 ${groups}
 <p><a href="${link(lang, 'phrases.html')}">${C.base}</a></p>`;
   return layout(lang, { file: 'saudi-arabic.html', section: 'phrases', title: C.title, desc: C.desc, body });
+}
+
+// ---------------------------------------------------------------- reading and level test
+const plain = (w) => w.replace(/[،.؟!:]/g, '');
+
+function readingPage(lang) {
+  const ur = lang === 'ur';
+  const cards = STORIES.map((st) => `<a class="card" href="${link(lang, 'reading-' + st.slug + '.html')}"><p class="eyebrow">${ur ? 'درجہ ' + ud(st.level) + '، ' + st.afterUr : 'Level ' + st.level + ' · ' + st.afterEn}</p><h3>${ur ? st.ur : st.en}</h3><p><span class="ar" lang="ar">${st.ar}</span></p></a>`).join('\n    ');
+  const C = ur ? {
+    title: 'آسان عربی کہانیاں: پڑھنے کی مشق | حرف', desc: 'ابتدائی طلبہ کے لیے آسان عربی کہانیاں اعراب کے ساتھ۔ ہر لفظ پر ٹیپ کر کے اس کا مطلب دیکھیں اور آواز سنیں۔',
+    h1: 'آسان عربی کہانیاں', lead: 'اعراب والی مختصر کہانیاں، اسباق کی ترتیب سے۔ کسی بھی لفظ پر ٹیپ کریں تو اس کی آواز اور مطلب سامنے آ جائے گا۔ پہلے خود پڑھنے کی کوشش کریں، پھر ترجمہ دیکھیں۔',
+  } : {
+    title: 'Easy Arabic stories for beginners: graded reading | Harf', desc: 'Short, fully vowelled Arabic stories for beginners. Tap any word to hear it and see its meaning, with translations and questions.',
+    h1: 'Easy Arabic stories', lead: 'Short, fully vowelled stories that follow the lessons. Tap any word to hear it and see what it means. Try reading on your own first, then check the translation.',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['lessons.html', T[lang].nav.lessons], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="cards">
+    ${cards}
+</div>`;
+  return layout(lang, { file: 'reading.html', section: 'lessons', title: C.title, desc: C.desc, body });
+}
+
+function storyPage(lang, i) {
+  const ur = lang === 'ur';
+  const st = STORIES[i], next = STORIES[i + 1];
+  const text = st.s.map((x) => x.w.map((w) => w[0]).join(' ')).join(' ');
+  const sents = st.s.map((x) => `<p class="st"><span class="ar" lang="ar">${x.w.map(([a, en, u]) => `<button class="rw" type="button" data-w="${esc(plain(a))}" data-m="${esc(ur ? u : en)}">${a}</button>`).join(' ')}</span><span class="st-tr latin">${esc(x.tr)}</span><span class="st-m">${esc(ur ? x.ur : x.en)}</span></p>`).join('\n  ');
+  const qs = st.q.map((q) => `<details class="practice"><summary>${esc(ur ? q.ur : q.en)}</summary><div class="ans"><span class="ar" lang="ar">${q.a}</span> <span>${esc(ur ? q.aUr : q.aEn)}</span></div></details>`).join('\n');
+  const C = ur ? { listen: '▶ پوری کہانی سنیں', showTr: 'تلفظ دکھائیں', showM: 'ترجمہ دکھائیں', tap: 'کسی لفظ پر ٹیپ کریں تو اس کا مطلب یہاں نظر آئے گا۔', qH: 'سوال', qHint: 'جواب دیکھنے کے لیے سوال پر ٹیپ کریں۔', all: 'تمام کہانیاں' }
+    : { listen: '▶ Listen to the story', showTr: 'Show pronunciation', showM: 'Show translation', tap: 'Tap a word to see its meaning here.', qH: 'Questions', qHint: 'Tap a question to see the answer.', all: 'All stories' };
+  const title = ur ? `آسان عربی کہانی: ${st.ur}` : `Easy Arabic story: ${st.en}`;
+  const desc = ur ? `${st.ur} (${st.ar}): ابتدائی طلبہ کے لیے اعراب والی آسان عربی کہانی، ہر لفظ کے معنی، آواز اور ترجمے کے ساتھ۔`
+    : `${st.en} (${st.ar}): a short, fully vowelled Arabic story for beginners, with the meaning of every word, audio and translation.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['reading.html', ur ? 'آسان کہانیاں' : 'Easy stories'], [null, ur ? st.ur : st.en]])}
+<p class="eyebrow">${ur ? 'درجہ ' + ud(st.level) + '، ' + st.afterUr : 'Level ' + st.level + ' · ' + st.afterEn}</p>
+<h1>${ur ? st.ur : st.en} <span class="ar" lang="ar">${st.ar}</span></h1>
+<div class="row story-tools">${say(lang, text, C.listen)}<button class="btn" type="button" data-tog="show-tr" aria-pressed="false">${C.showTr}</button><button class="btn" type="button" data-tog="show-m" aria-pressed="false">${C.showM}</button></div>
+<div class="story" id="story">
+  ${sents}
+</div>
+<p class="gloss" id="gloss" aria-live="polite">${C.tap}</p>
+<section>
+  <h2>${C.qH}</h2>
+  <p class="note">${C.qHint}</p>
+  ${qs}
+</section>
+<nav class="pager" aria-label="${C.all}">
+  <a class="btn" href="${link(lang, 'reading.html')}">${C.all}</a>
+  ${next ? `<a class="btn primary" href="${link(lang, 'reading-' + next.slug + '.html')}">${ur ? 'اگلی: ' + next.ur + ' ←' : 'Next: ' + next.en + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran.html')}">${ur ? 'اب قرآنی عربی آزمائیں ←' : 'Now try Quranic Arabic →'}</a>`}
+</nav>`;
+  return layout(lang, { file: 'reading-' + st.slug + '.html', section: 'lessons', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+}
+
+function levelPage(lang) {
+  const ur = lang === 'ur';
+  const L = (slug) => LETTERS.find((x) => x.slug === slug);
+  const qs = LEVEL_QS.map((q) => {
+    if (q.type === 'letter') return { p: ur ? 'یہ کون سا حرف ہے؟' : 'Which letter is this?', big: L(q.big).c, bigAr: true, opts: q.opts.map((x) => letterName(lang, L(x))), optAr: false };
+    const p = fmt(ur ? q.pUr : q.pEn);
+    if (q.latin) return { p, big: q.big, bigAr: true, opts: q.latin, optAr: false, latin: true };
+    if (q.ar) return { p, big: '', bigAr: false, opts: q.ar, optAr: true };
+    return { p, big: q.big, bigAr: true, opts: ur ? q.ur : q.en, optAr: false };
+  }).map((q) => Object.assign(q, { ans: q.opts[0] }));
+  const res = ur ? [
+    { min: 0, h: 'حروفِ تہجی سے شروع کریں', p: 'روزانہ تین حروف سیکھیں؛ دس دن میں آپ عربی پڑھنے لگیں گے۔ ہر حرف کے صفحے پر لکھنے کی مشق بھی ہے۔', href: link(lang, 'alphabet.html'), cta: 'حروفِ تہجی کھولیں' },
+    { min: 4, h: 'سبق ۱ سے شروع کریں', p: 'آپ حروف پہچانتے ہیں۔ اب گرامر کے اسباق شروع سے کریں اور ساتھ ساتھ حروف دہراتے رہیں۔', href: link(lang, 'lesson-1-this-is.html'), cta: 'سبق ۱ کھولیں' },
+    { min: 7, h: 'سبق ۹ سے آگے بڑھیں', p: 'آپ کی بنیاد اچھی ہے۔ صفت، جمع اور افعال کے اسباق کریں، اور ساتھ میں آسان کہانیاں پڑھیں۔', href: link(lang, 'lesson-9-adjectives.html'), cta: 'سبق ۹ کھولیں' },
+    { min: 9, h: 'بہت خوب! پڑھنے کی مشق کریں', p: 'آسان کہانیاں پڑھیں اور قرآنی عربی کے حصے میں سورتوں کا لفظ بہ لفظ ترجمہ سیکھیں۔', href: link(lang, 'reading.html'), cta: 'آسان کہانیاں کھولیں' },
+  ] : [
+    { min: 0, h: 'Start with the alphabet', p: 'Learn three letters a day and you will be reading in ten days. Each letter page has writing practice too.', href: link(lang, 'alphabet.html'), cta: 'Open the alphabet' },
+    { min: 4, h: 'Start at Lesson 1', p: 'You can read the letters. Begin the grammar lessons from the start and keep reviewing the alphabet as you go.', href: link(lang, 'lesson-1-this-is.html'), cta: 'Open Lesson 1' },
+    { min: 7, h: 'Move on from Lesson 9', p: 'You have a good base. Work through adjectives, plurals and verbs, and read the easy stories alongside.', href: link(lang, 'lesson-9-adjectives.html'), cta: 'Open Lesson 9' },
+    { min: 9, h: 'Excellent! Practise your reading', p: 'Read the easy stories, and learn the short surahs word by word in the Quranic Arabic section.', href: link(lang, 'reading.html'), cta: 'Open the easy stories' },
+  ];
+  const data = { qs, res, done: ur ? 'آپ کا نتیجہ' : 'Your result', again: ur ? 'دوبارہ ٹیسٹ دیں' : 'Take the test again', next: ur ? 'اگلا ←' : 'Next →', of: ur ? 'میں سے' : 'of' };
+  const C = ur ? {
+    title: 'عربی لیول ٹیسٹ: کہاں سے شروع کریں؟ | حرف', desc: 'دس سوالوں کا مفت عربی لیول ٹیسٹ۔ دو منٹ میں جانیں کہ آپ کو حروفِ تہجی سے شروع کرنا ہے یا اسباق سے۔',
+    h1: 'کہاں سے شروع کریں؟', lead: 'دس مختصر سوال، حروف سے افعال تک۔ کوئی جواب نہ آئے تو فکر نہ کریں، کوئی بھی چن کر آگے بڑھیں۔ آخر میں آپ کو بتایا جائے گا کہ کہاں سے شروع کریں۔',
+  } : {
+    title: 'Arabic level test: where should I start? | Harf', desc: 'A free ten-question Arabic level test. Find out in two minutes whether to start with the alphabet or the lessons.',
+    h1: 'Where should I start?', lead: 'Ten quick questions, from letters to verbs. Don’t worry if you don’t know an answer; just pick one and move on. At the end you’ll see where to start.',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="quiz" id="lvlbox" aria-live="polite"></div>
+<script type="application/json" id="lvl-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+  return layout(lang, { file: 'level-test.html', section: '', title: C.title, desc: C.desc, body });
 }
 
 function aboutPage(lang) {
@@ -2104,6 +2271,19 @@ html[lang="ur"] .w .m{line-height:2}
   .ws{border:0;border-bottom:1px solid #ccc;border-radius:0;padding:4px 0}
 }
 
+.story-tools{margin-bottom:12px}
+.story{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 20px;max-width:820px}
+.st{display:grid;margin:0 0 8px}
+.st > .ar{font-size:30px;line-height:2.1;text-align:right}
+.rw{border:0;background:none;padding:0 2px;margin:0;font:inherit;color:inherit;border-radius:6px;cursor:pointer;line-height:inherit}
+.rw:hover,.rw.on{background:var(--accent-soft);color:var(--accent)}
+.st-tr{color:var(--gold);font-weight:600;font-size:15px}
+.st-m{color:var(--muted)}
+.story:not(.show-tr) .st-tr,.story:not(.show-m) .st-m{display:none}
+.gloss{position:sticky;bottom:12px;z-index:5;background:var(--ink);color:var(--bg);border-radius:12px;padding:8px 16px;max-width:820px;margin:12px 0 28px}
+.gloss .ar{font-size:24px;line-height:1.5}
+h1 .ar{font-size:.85em;color:var(--accent);margin-inline-start:8px}
+
 footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);font-size:14px}
 .foot p{margin:0 0 6px}
 .foot-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
@@ -2291,6 +2471,55 @@ const APP_JS = String.raw`(function () {
     $('#wprint').addEventListener('click', function () { window.print(); });
   }
 
+
+  var story = $('#story');
+  if (story) {
+    var gl = $('#gloss');
+    $$('.rw', story).forEach(function (b) {
+      b.addEventListener('click', function () {
+        $$('.rw.on', story).forEach(function (x) { x.classList.remove('on'); });
+        b.classList.add('on');
+        speak(b.getAttribute('data-w'));
+        gl.innerHTML = '<span class="ar" lang="ar">' + esc(b.getAttribute('data-w')) + '</span> — ' + esc(b.getAttribute('data-m'));
+      });
+    });
+    $$('[data-tog]').forEach(function (t) {
+      t.addEventListener('click', function () {
+        var c = t.getAttribute('data-tog'), on = !story.classList.contains(c);
+        story.classList.toggle(c, on); t.setAttribute('aria-pressed', on ? 'true' : 'false'); t.classList.toggle('on', on);
+      });
+    });
+  }
+
+  var lv = $('#lvlbox');
+  if (lv) {
+    var LD = JSON.parse($('#lvl-data').textContent), li = 0, lsc = 0;
+    var mix = function (a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+    var showL = function () {
+      if (li >= LD.qs.length) {
+        var r = LD.res.filter(function (x) { return lsc >= x.min; }).pop();
+        lv.innerHTML = '<p class="qprompt">' + LD.done + '</p><p class="qbig txt">' + N(lsc) + '/' + N(LD.qs.length) + '</p><h2>' + r.h + '</h2><p>' + r.p + '</p><div class="row"><a class="btn primary" href="' + r.href + '">' + r.cta + '</a><button class="btn" type="button" id="lagain">' + LD.again + '</button></div>';
+        $('#lagain').addEventListener('click', function () { li = 0; lsc = 0; showL(); });
+        return;
+      }
+      var q = LD.qs[li], answered = false;
+      var counter = L === 'ur' ? N(LD.qs.length) + ' ' + LD.of + ' ' + N(li + 1) : N(li + 1) + ' ' + LD.of + ' ' + LD.qs.length;
+      var opts = mix(q.opts).map(function (o) { return '<button class="opt" type="button" data-v="' + esc(o) + '">' + (q.optAr ? '<span class="ar" lang="ar">' + esc(o) + '</span>' : q.latin ? '<span class="latin">' + esc(o) + '</span>' : esc(o)) + '</button>'; }).join('');
+      lv.innerHTML = '<p class="qprompt">' + counter + (L === 'ur' ? '، ' : ' · ') + q.p + '</p>' + (q.big ? '<p class="qbig ar" lang="ar">' + esc(q.big) + '</p>' : '') + '<div class="opts">' + opts + '</div><div class="qfoot"><span></span><button class="btn" id="lnext" type="button" disabled>' + LD.next + '</button></div>';
+      $$('.opt', lv).forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (answered) return; answered = true;
+          var ok = b.getAttribute('data-v') === q.ans; if (ok) lsc++;
+          $$('.opt', lv).forEach(function (x) { if (x.getAttribute('data-v') === q.ans) x.classList.add('right'); });
+          if (!ok) b.classList.add('wrong');
+          var n = $('#lnext'); n.disabled = false; n.focus();
+        });
+      });
+      $('#lnext').addEventListener('click', function () { li++; showL(); });
+    };
+    showL();
+  }
+
   var qb = $('#quizbox');
   if (qb) {
     var data = JSON.parse($('#quiz-data').textContent);
@@ -2327,7 +2556,7 @@ const APP_JS = String.raw`(function () {
       var q = qs[qi]; answered = false;
       var opts = shuffle(q.opts).map(function (o) { return '<button class="opt" type="button" data-v="' + esc(o) + '">' + (q.optAr ? '<span class="ar" lang="ar">' + esc(o) + '</span>' : esc(o)) + '</button>'; }).join('');
       var counter = L === 'ur' ? N(10) + ' میں سے ' + N(qi + 1) : N(qi + 1) + ' of 10';
-      qb.innerHTML = '<p class="qprompt">' + S.question + ' ' + counter + ' · ' + q.p + '</p>' +
+      qb.innerHTML = '<p class="qprompt">' + S.question + ' ' + counter + (L === 'ur' ? '، ' : ' · ') + q.p + '</p>' +
         '<p class="qbig ' + (q.bigAr ? 'ar' : 'txt') + '"' + (q.bigAr ? ' lang="ar"' : '') + '>' + esc(q.big) + '</p>' +
         '<div class="opts">' + opts + '</div>' +
         '<div class="qfoot"><span class="score">' + S.score + ' ' + N(score) + '</span><button class="btn" id="qnext" type="button" disabled>' + S.next + '</button></div>';
@@ -2367,6 +2596,9 @@ function build() {
     add(lang, 'writing.html', writingPage(lang));
     add(lang, 'lessons.html', lessonsPage(lang));
     LESSONS.forEach((l, i) => add(lang, l.slug + '.html', lessonPage(lang, i)));
+    add(lang, 'reading.html', readingPage(lang));
+    STORIES.forEach((x, i) => add(lang, 'reading-' + x.slug + '.html', storyPage(lang, i)));
+    add(lang, 'level-test.html', levelPage(lang));
     add(lang, 'vocabulary.html', vocabularyPage(lang));
     TOPICS.forEach((t, i) => add(lang, 'vocab-' + t.slug + '.html', topicPage(lang, i)));
     add(lang, 'quran.html', quranPage(lang));
