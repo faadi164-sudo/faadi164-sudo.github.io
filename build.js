@@ -10,6 +10,7 @@
   - Google AdSense approved: put your publisher ID in ADSENSE_CLIENT, e.g. 'ca-pub-1234567890123456'.
   - Contact email: set CONTACT_EMAIL.
   - Visitor stats: put your Google Analytics 4 measurement ID in GA_ID, e.g. 'G-ABC123XYZ9'.
+    To stop counting your own visits, open the site once on each device with ?notrack=1 (undo with ?notrack=0).
   - Google Search Console: put the content="..." code from its HTML-tag method in GSC_VERIFY.
   - New words: add rows to TOPICS. New phrases: add rows to PHRASES. New lessons: add to LESSONS.
 */
@@ -1112,7 +1113,8 @@ function layout(lang, o) {
   const verify = GSC_VERIFY ? `<meta name="google-site-verification" content="${esc(GSC_VERIFY)}">\n` : '';
   const analytics = GA_ID
     ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');</script>\n` : '';
+<script>try{var q=location.search;if(/[?&]notrack=1/.test(q))localStorage.setItem('harf-notrack','1');if(/[?&]notrack=0/.test(q))localStorage.removeItem('harf-notrack');if(localStorage.getItem('harf-notrack')==='1')window['ga-disable-${GA_ID}']=true;}catch(e){}
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');</script>\n` : '';
   return `<!DOCTYPE html>
 <html lang="${lang}" dir="${t.dir}">
 <head>
