@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harf: Learn Arabic Free</title>
+<meta name="description" content="Learn Arabic free: the alphabet with audio, flashcards, everyday phrases and quizzes. No sign-up.">
+<!-- Google AdSense: once approved, paste the <script async src="https://pagead2.googlesyndication.com/..."> tag from AdSense here -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: sticky top bar with tabs; one learning section shown at a time; ad slots between content blocks */
+  --bg:#f5f6f2; --surface:#ffffff; --ink:#17231f; --muted:#5b6964;
+  --accent:#0d6b57; --accent-soft:#e2f0eb; --gold:#a8720f; --line:#dde2da;
+  --good:#1f7a3f; --bad:#b3362c;
+  --display:"Fraunces", Georgia, serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --arabic:"Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1513; --surface:#18211e; --ink:#e7eee9; --muted:#9aa9a3;
+    --accent:#4cc3a3; --accent-soft:#1d3a32; --gold:#e3ac45; --line:#2a3632;
+    --good:#5fcf87; --bad:#ef7b70; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1513; --surface:#18211e; --ink:#e7eee9; --muted:#9aa9a3;
+  --accent:#4cc3a3; --accent-soft:#1d3a32; --gold:#e3ac45; --line:#2a3632;
+  --good:#5fcf87; --bad:#ef7b70; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+.ar{font-family:var(--arabic);direction:rtl;unicode-bidi:isolate}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.15;text-wrap:balance;margin:0}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:16px;padding:12px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink)}
+.brand .ar{font-size:30px;color:var(--accent);font-weight:700;line-height:1}
+.brand b{font-family:var(--display);font-size:22px}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a{padding:7px 14px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600}
+nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--bg)}
+nav.tabs a:hover{color:var(--ink)}
+nav.tabs a[aria-current="page"]:hover{color:var(--bg)}
+
+.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center;padding:36px 0 24px}
+.hero h1{font-size:clamp(30px,4.5vw,46px)}
+.hero p{color:var(--muted);max-width:56ch;margin:12px 0 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.stat strong{display:block;font-family:var(--display);font-size:28px;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:14px}
+.meter{height:6px;background:var(--line);border-radius:6px;margin-top:8px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);width:0}
+
+section.view{display:none;padding:8px 0 40px}
+section.view.on{display:block}
+.view-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:8px 0 18px}
+.view-head h2{font-size:28px}
+.view-head p{margin:4px 0 0;color:var(--muted);max-width:60ch}
+.note{font-size:14px;color:var(--muted)}
+
+/* Alphabet */
+.letters{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:10px;direction:rtl}
+.lt{direction:ltr;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 6px 8px;text-align:center;position:relative}
+.lt:hover{border-color:var(--accent)}
+.lt[aria-pressed="true"]{box-shadow:0 0 0 2px var(--gold)}
+.lt.done{border-color:var(--accent);background:var(--accent-soft)}
+.lt .ar{display:block;font-size:44px;line-height:1.3}
+.lt small{display:block;color:var(--muted);font-size:13px}
+.lt .tick{position:absolute;top:6px;left:8px;color:var(--accent);font-size:13px;font-weight:700}
+.detail{margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:start}
+.detail .big{font-size:110px;line-height:1.1;text-align:center;color:var(--accent)}
+.detail h3{font-size:24px}
+.forms{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.forms div{border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}
+.forms .ar{font-size:36px;display:block}
+.forms small{color:var(--muted);font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:10px;font-weight:600}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+/* Flashcards */
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:transparent;color:var(--muted);padding:6px 12px;border-radius:999px;font-weight:600}
+.chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.cardzone{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start}
+.flash{perspective:1200px;height:300px}
+.flash-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash.flipped .flash-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.face.back{transform:rotateY(180deg);background:var(--accent-soft);border-color:var(--accent)}
+.face .ar{font-size:56px;line-height:1.4}
+.face .tr{font-size:20px;color:var(--gold);font-weight:600}
+.face .en{font-size:26px;font-family:var(--display);margin-top:6px}
+.face .hint{position:absolute;bottom:12px;font-size:13px;color:var(--muted)}
+.counter{font-variant-numeric:tabular-nums;color:var(--muted)}
+.wordlist{background:var(--surface);border:1px solid var(--line);border-radius:14px;max-height:360px;overflow:auto}
+.wordlist button{display:flex;justify-content:space-between;gap:10px;width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);padding:9px 14px;text-align:left}
+.wordlist button:last-child{border-bottom:0}
+.wordlist button.cur{background:var(--accent-soft)}
+.wordlist .ar{font-size:20px}
+.wordlist .k{color:var(--good);font-weight:700}
+
+/* Phrases */
+.phr{display:grid;gap:10px}
+.ph{display:grid;grid-template-columns:1fr auto;gap:6px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;align-items:center}
+.ph .ar{font-size:28px;text-align:right;grid-column:1/2}
+.ph .tr{color:var(--gold);font-weight:600}
+.ph .en{color:var(--muted)}
+.ph .play{grid-row:1/4;grid-column:2}
+
+/* Quiz */
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;max-width:640px}
+.qprompt{font-size:15px;color:var(--muted);margin:0 0 6px}
+.qbig{font-size:64px;text-align:center;margin:6px 0 16px;line-height:1.4}
+.qbig.en{font-family:var(--display);font-size:34px;direction:ltr}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px;font-weight:600;min-height:54px}
+.opt .ar{font-size:26px}
+.opt.right{border-color:var(--good);color:var(--good)}
+.opt.wrong{border-color:var(--bad);color:var(--bad)}
+.qfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px;flex-wrap:wrap}
+.score{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums}
+
+/* Ads & support */
+.ad-slot{border:1px dashed var(--line);border-radius:12px;min-height:90px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin:24px 0}
+.support{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:18px 20px;margin:10px 0 24px}
+.support p{margin:2px 0 0;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);font-size:14px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;display:none;z-index:10}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr}
+  .cardzone{grid-template-columns:1fr}
+  .detail{grid-template-columns:1fr}
+  .detail .big{font-size:84px}
+}
+@media (max-width:420px){
+  .forms{grid-template-columns:repeat(2,1fr)}
+  .opts{grid-template-columns:1fr}
+  nav.tabs{margin-left:0}
+}
+@media (prefers-reduced-motion: reduce){ .flash-in{transition:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#alphabet"><span class="ar">حَرْف</span><b>Harf</b></a>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#alphabet">Alphabet</a>
+      <a href="#words">Flashcards</a>
+      <a href="#phrases">Phrases</a>
+      <a href="#quiz">Quiz</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <h1>Learn Arabic for free, one letter at a time</h1>
+      <p>Start with the 28 letters and how they change shape. Then build vocabulary with flashcards, practise everyday phrases and test yourself with quizzes. Tap any speaker button to hear the word. No account needed.</p>
+    </div>
+    <div class="stats" aria-label="Your progress">
+      <div class="stat"><strong id="sLetters">0/28</strong><span>Letters learned</span><div class="meter"><i id="mLetters"></i></div></div>
+      <div class="stat"><strong id="sWords">0</strong><span>Words known</span><div class="meter"><i id="mWords"></i></div></div>
+      <div class="stat"><strong id="sBest">–</strong><span>Best quiz</span><div class="meter"><i id="mBest"></i></div></div>
+    </div>
+  </div>
+
+  <div class="ad-slot" aria-hidden="true">Advertisement</div>
+
+  <!-- ALPHABET -->
+  <section class="view" id="v-alphabet" aria-labelledby="h-alpha">
+    <div class="view-head">
+      <div>
+        <h2 id="h-alpha">The Arabic alphabet</h2>
+        <p>Arabic is written right to left. Most letters join to the next one and change shape depending on where they sit in a word. Pick a letter to see its four forms.</p>
+      </div>
+    </div>
+    <div class="letters" id="letters"></div>
+    <div class="detail" id="detail"></div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section class="view" id="v-words" aria-labelledby="h-words">
+    <div class="view-head">
+      <div>
+        <h2 id="h-words">Vocabulary flashcards</h2>
+        <p>Read the Arabic, say it aloud, then flip the card to check. Mark a word as known to track your progress.</p>
+      </div>
+      <div class="chips" id="cats" role="group" aria-label="Topic"></div>
+    </div>
+    <div class="cardzone">
+      <div>
+        <div class="flash" id="flash" tabindex="0" role="button" aria-label="Flip card">
+          <div class="flash-in">
+            <div class="face front"><span class="ar" id="fAr"></span><span class="hint">Tap or press Space to flip</span></div>
+            <div class="face back"><span class="ar" id="fAr2" style="font-size:36px"></span><span class="tr" id="fTr"></span><span class="en" id="fEn"></span></div>
+          </div>
+        </div>
+        <div class="row" style="justify-content:space-between;margin-top:14px">
+          <div class="row">
+            <button class="btn" id="prev">← Previous</button>
+            <button class="btn" id="next">Next →</button>
+          </div>
+          <span class="counter" id="count"></span>
+          <div class="row">
+            <button class="btn" id="say">🔊 Listen</button>
+            <button class="btn" id="known">Mark as known</button>
+          </div>
+        </div>
+      </div>
+      <div class="wordlist" id="wordlist" aria-label="Words in this topic"></div>
+    </div>
+  </section>
+
+  <!-- PHRASES -->
+  <section class="view" id="v-phrases" aria-labelledby="h-phr">
+    <div class="view-head">
+      <div>
+        <h2 id="h-phr">Everyday phrases</h2>
+        <p>Useful sentences for meeting people, shopping and getting around. Forms shown are for speaking to a man; the note says what changes for a woman.</p>
+      </div>
+    </div>
+    <div class="phr" id="phr"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="view" id="v-quiz" aria-labelledby="h-quiz">
+    <div class="view-head">
+      <div>
+        <h2 id="h-quiz">Quick quiz</h2>
+        <p>Ten mixed questions on letters and words. A new set every time.</p>
+      </div>
+      <div class="chips" id="qmode" role="group" aria-label="Quiz type">
+        <button class="chip" data-m="mixed" aria-pressed="true">Mixed</button>
+        <button class="chip" data-m="letters" aria-pressed="false">Letters only</button>
+        <button class="chip" data-m="words" aria-pressed="false">Words only</button>
+      </div>
+    </div>
+    <div class="quiz" id="quizbox"></div>
+  </section>
+
+  <div class="ad-slot" aria-hidden="true">Advertisement</div>
+
+  <div class="support">
+    <div>
+      <strong>Harf is free for everyone.</strong>
+      <p>If it helps you, a small tip keeps new lessons coming.</p>
+    </div>
+    <a class="btn primary" href="https://ko-fi.com/" id="tip">Support Harf</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Harf · Free Arabic lessons · Pronunciation uses your device's built-in Arabic voice.</div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const LETTERS=[
+ ["ا","Alif","a / aa","Long ‘a’ as in ‘father’; also carries hamza","أسد","asad","lion",false],
+ ["ب","Baa","b","As in ‘bed’","باب","baab","door",true],
+ ["ت","Taa","t","As in ‘ten’","تمر","tamr","dates",true],
+ ["ث","Thaa","th","As in ‘think’","ثلاثة","thalaatha","three",true],
+ ["ج","Jiim","j","As in ‘jam’","جمل","jamal","camel",true],
+ ["ح","Ḥaa","ḥ","A strong breathy ‘h’ from deep in the throat","حليب","ḥaliib","milk",true],
+ ["خ","Khaa","kh","Like ‘ch’ in Scottish ‘loch’","خبز","khubz","bread",true],
+ ["د","Daal","d","As in ‘door’","دار","daar","home",false],
+ ["ذ","Dhaal","dh","As in ‘this’","ذهب","dhahab","gold",false],
+ ["ر","Raa","r","A rolled ‘r’","رجل","rajul","man",false],
+ ["ز","Zaay","z","As in ‘zoo’","زيت","zayt","oil",false],
+ ["س","Siin","s","As in ‘sun’","سمك","samak","fish",true],
+ ["ش","Shiin","sh","As in ‘ship’","شمس","shams","sun",true],
+ ["ص","Ṣaad","ṣ","A heavy ‘s’, said with the tongue pulled back","صديق","ṣadiiq","friend",true],
+ ["ض","Ḍaad","ḍ","A heavy ‘d’; the letter Arabic is famous for","ضوء","ḍaw’","light",true],
+ ["ط","Ṭaa","ṭ","A heavy ‘t’","طالب","ṭaalib","student",true],
+ ["ظ","Ẓaa","ẓ","A heavy ‘dh’","ظهر","ẓuhr","noon",true],
+ ["ع","ʿAyn","ʿ","A tight sound from the middle of the throat; no English match","عين","ʿayn","eye",true],
+ ["غ","Ghayn","gh","Like a French gargled ‘r’","غرفة","ghurfa","room",true],
+ ["ف","Faa","f","As in ‘fish’","فيل","fiil","elephant",true],
+ ["ق","Qaaf","q","A ‘k’ from the very back of the throat","قلم","qalam","pen",true],
+ ["ك","Kaaf","k","As in ‘kite’","كتاب","kitaab","book",true],
+ ["ل","Laam","l","As in ‘lamp’","ليل","layl","night",true],
+ ["م","Miim","m","As in ‘moon’","ماء","maa’","water",true],
+ ["ن","Nuun","n","As in ‘noon’","نور","nuur","light (glow)",true],
+ ["ه","Haa","h","As in ‘hat’","هلال","hilaal","crescent",true],
+ ["و","Waaw","w / uu","‘w’ as in ‘wet’ or long ‘oo’","ورد","ward","roses",false],
+ ["ي","Yaa","y / ii","‘y’ as in ‘yes’ or long ‘ee’","يد","yad","hand",true]
+];
+
+const WORDS={
+ "Greetings":[
+  ["السلام عليكم","as-salaamu ʿalaykum","Peace be upon you (hello)"],
+  ["وعليكم السلام","wa ʿalaykum as-salaam","And upon you peace (reply)"],
+  ["مرحبا","marḥaban","Hello"],
+  ["صباح الخير","ṣabaaḥ al-khayr","Good morning"],
+  ["مساء الخير","masaa’ al-khayr","Good evening"],
+  ["شكرا","shukran","Thank you"],
+  ["عفوا","ʿafwan","You’re welcome"],
+  ["نعم","naʿam","Yes"],
+  ["لا","laa","No"],
+  ["مع السلامة","maʿa as-salaama","Goodbye"]
+ ],
+ "Numbers":[
+  ["واحد","waaḥid","One (١)"],["اثنان","ithnaan","Two (٢)"],["ثلاثة","thalaatha","Three (٣)"],
+  ["أربعة","arbaʿa","Four (٤)"],["خمسة","khamsa","Five (٥)"],["ستة","sitta","Six (٦)"],
+  ["سبعة","sabʿa","Seven (٧)"],["ثمانية","thamaaniya","Eight (٨)"],["تسعة","tisʿa","Nine (٩)"],
+  ["عشرة","ʿashara","Ten (١٠)"]
+ ],
+ "Family":[
+  ["أب","ab","Father"],["أم","umm","Mother"],["أخ","akh","Brother"],["أخت","ukht","Sister"],
+  ["ابن","ibn","Son"],["بنت","bint","Daughter"],["جد","jadd","Grandfather"],["جدة","jadda","Grandmother"],
+  ["زوج","zawj","Husband"],["زوجة","zawja","Wife"]
+ ],
+ "Food":[
+  ["ماء","maa’","Water"],["خبز","khubz","Bread"],["تمر","tamr","Dates"],["قهوة","qahwa","Coffee"],
+  ["شاي","shaay","Tea"],["أرز","aruzz","Rice"],["لحم","laḥm","Meat"],["دجاج","dajaaj","Chicken"],
+  ["حليب","ḥaliib","Milk"],["فاكهة","faakiha","Fruit"]
+ ],
+ "Everyday":[
+  ["بيت","bayt","House"],["مدرسة","madrasa","School"],["سيارة","sayyaara","Car"],["كتاب","kitaab","Book"],
+  ["قلم","qalam","Pen"],["باب","baab","Door"],["يوم","yawm","Day"],["عمل","ʿamal","Work"],
+  ["سوق","suuq","Market"],["مسجد","masjid","Mosque"]
+ ]
+};
+
+const PHRASES=[
+ ["ما اسمك؟","maa ismuk?","What is your name?","To a woman: ismuki"],
+ ["اسمي أحمد","ismii aḥmad","My name is Ahmad",""],
+ ["كيف حالك؟","kayfa ḥaaluk?","How are you?","To a woman: ḥaaluki"],
+ ["بخير، الحمد لله","bikhayr, al-ḥamdu lillaah","Fine, praise be to God",""],
+ ["من أين أنت؟","min ayna anta?","Where are you from?","To a woman: anti"],
+ ["أنا من باكستان","ana min baakistaan","I am from Pakistan",""],
+ ["بكم هذا؟","bikam haadhaa?","How much is this?",""],
+ ["أين المسجد؟","ayna al-masjid?","Where is the mosque?",""],
+ ["لا أفهم","laa afham","I don’t understand",""],
+ ["هل تتكلم الإنجليزية؟","hal tatakallam al-injliiziyya?","Do you speak English?","To a woman: tatakallamiin"],
+ ["من فضلك","min faḍlak","Please","To a woman: faḍlik"],
+ ["إن شاء الله","in shaa’ allaah","God willing",""]
+];
+
+/* ---------- storage (optional; page works without it) ---------- */
+const store={
+  get(k,d){try{const v=localStorage.getItem("harf_"+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem("harf_"+k,JSON.stringify(v))}catch(e){}}
+};
+let learned=new Set(store.get("letters",[]));
+let known=new Set(store.get("known",[]));
+let best=store.get("best",null);
+const totalWords=Object.values(WORDS).reduce((n,a)=>n+a.length,0);
+
+const $=s=>document.querySelector(s);
+function toast(msg){const t=$("#toast");t.textContent=msg;t.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display="none",2600)}
+
+/* ---------- speech ---------- */
+let arVoice=null;
+function pickVoice(){try{const v=speechSynthesis.getVoices();arVoice=v.find(x=>/^ar/i.test(x.lang))||null}catch(e){}}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function speak(text){
+  try{
+    if(!("speechSynthesis" in window)) throw 0;
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang="ar-SA";u.rate=.8;if(arVoice)u.voice=arVoice;
+    speechSynthesis.speak(u);
+    if(!arVoice) setTimeout(()=>{pickVoice();if(!arVoice)toast("No Arabic voice found. Add Arabic in your device’s text-to-speech settings.")},400);
+  }catch(e){toast("Audio isn’t available in this browser.")}
+}
+
+function refreshStats(){
+  $("#sLetters").textContent=learned.size+"/28";
+  $("#mLetters").style.width=(learned.size/28*100)+"%";
+  $("#sWords").textContent=known.size+"/"+totalWords;
+  $("#mWords").style.width=(known.size/totalWords*100)+"%";
+  $("#sBest").textContent=best==null?"–":best+"/10";
+  $("#mBest").style.width=best==null?"0":(best*10)+"%";
+}
+
+/* ---------- alphabet ---------- */
+let curLetter=0;
+function renderLetters(){
+  $("#letters").innerHTML=LETTERS.map((l,i)=>
+    `<button class="lt${learned.has(i)?" done":""}" data-i="${i}" aria-pressed="${i===curLetter}">
+      ${learned.has(i)?'<span class="tick">✓</span>':""}
+      <span class="ar">${l[0]}</span><small>${l[1]}</small></button>`).join("");
+  $("#letters").querySelectorAll(".lt").forEach(b=>b.onclick=()=>{curLetter=+b.dataset.i;renderLetters();renderDetail()});
+}
+function renderDetail(){
+  const [ch,name,tr,hint,w,wt,we,joins]=LETTERS[curLetter], T="ـ";
+  const forms=joins?[ch,ch+T,T+ch+T,T+ch]:[ch,ch,T+ch,T+ch];
+  $("#detail").innerHTML=`
+    <div class="ar big">${ch}</div>
+    <div>
+      <h3>${name} <span class="note">· sounds like “${tr}”</span></h3>
+      <p style="margin:6px 0 0">${hint}.${joins?"":" <strong>Note:</strong> this letter never joins to the letter after it."}</p>
+      <div class="forms">
+        ${["Alone","Start","Middle","End"].map((f,k)=>`<div><span class="ar">${forms[k]}</span><small>${f}</small></div>`).join("")}
+      </div>
+      <p style="margin:0 0 12px">Example: <span class="ar" style="font-size:26px">${w}</span> <em>${wt}</em>, ${we}</p>
+      <div class="row">
+        <button class="btn" id="sayL">🔊 Letter</button>
+        <button class="btn" id="sayW">🔊 Example</button>
+        <button class="btn ${learned.has(curLetter)?"on":""}" id="learnL">${learned.has(curLetter)?"✓ Learned":"Mark as learned"}</button>
+        <button class="btn" id="nextL">Next letter →</button>
+      </div>
+    </div>`;
+  $("#sayL").onclick=()=>speak(ch);
+  $("#sayW").onclick=()=>speak(w);
+  $("#learnL").onclick=()=>{learned.has(curLetter)?learned.delete(curLetter):learned.add(curLetter);store.set("letters",[...learned]);renderLetters();renderDetail();refreshStats()};
+  $("#nextL").onclick=()=>{curLetter=(curLetter+1)%28;renderLetters();renderDetail()};
+}
+
+/* ---------- flashcards ---------- */
+let cat="Greetings",idx=0;
+function renderCats(){
+  $("#cats").innerHTML=Object.keys(WORDS).map(c=>`<button class="chip" aria-pressed="${c===cat}">${c}</button>`).join("");
+  $("#cats").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{cat=b.textContent;idx=0;renderCats();renderCard()});
+}
+function renderCard(){
+  const list=WORDS[cat],[ar,tr,en]=list[idx],key=cat+"|"+ar;
+  $("#flash").classList.remove("flipped");
+  $("#fAr").textContent=ar;$("#fAr2").textContent=ar;$("#fTr").textContent=tr;$("#fEn").textContent=en;
+  $("#count").textContent=(idx+1)+" / "+list.length;
+  const k=known.has(key);$("#known").textContent=k?"✓ Known":"Mark as known";$("#known").classList.toggle("on",k);
+  $("#wordlist").innerHTML=list.map((w,i)=>`<button class="${i===idx?"cur":""}" data-i="${i}"><span>${w[2]}${known.has(cat+"|"+w[0])?' <span class="k">✓</span>':""}</span><span class="ar">${w[0]}</span></button>`).join("");
+  $("#wordlist").querySelectorAll("button").forEach(b=>b.onclick=()=>{idx=+b.dataset.i;renderCard()});
+}
+$("#flash").onclick=()=>$("#flash").classList.toggle("flipped");
+$("#flash").onkeydown=e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();$("#flash").classList.toggle("flipped")}};
+$("#prev").onclick=()=>{const n=WORDS[cat].length;idx=(idx-1+n)%n;renderCard()};
+$("#next").onclick=()=>{idx=(idx+1)%WORDS[cat].length;renderCard()};
+$("#say").onclick=()=>speak(WORDS[cat][idx][0]);
+$("#known").onclick=()=>{const key=cat+"|"+WORDS[cat][idx][0];known.has(key)?known.delete(key):known.add(key);store.set("known",[...known]);renderCard();refreshStats()};
+
+/* ---------- phrases ---------- */
+$("#phr").innerHTML=PHRASES.map((p,i)=>`<div class="ph"><span class="ar">${p[0]}</span><button class="btn play" data-i="${i}" aria-label="Listen">🔊</button><span class="tr">${p[1]}</span><span class="en">${p[2]}${p[3]?` · <em>${p[3]}</em>`:""}</span></div>`).join("");
+$("#phr").querySelectorAll(".play").forEach(b=>b.onclick=()=>speak(PHRASES[+b.dataset.i][0]));
+
+/* ---------- quiz ---------- */
+let qmode="mixed",qs=[],qi=0,qscore=0,answered=false;
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const allWords=Object.values(WORDS).flat();
+function makeQ(type){
+  if(type==="letter"){
+    const pick=shuffle(LETTERS).slice(0,4);
+    return Math.random()<.5
+      ?{prompt:"Which letter is this?",big:pick[0][0],bigAr:true,opts:pick.map(l=>l[1]),ans:pick[0][1],optAr:false}
+      :{prompt:"Find the letter called…",big:pick[0][1],bigAr:false,opts:pick.map(l=>l[0]),ans:pick[0][0],optAr:true};
+  }
+  const pick=shuffle(allWords).slice(0,4);
+  return Math.random()<.5
+    ?{prompt:"What does this mean?",big:pick[0][0],bigAr:true,opts:pick.map(w=>w[2]),ans:pick[0][2],optAr:false}
+    :{prompt:"How do you say this in Arabic?",big:pick[0][2],bigAr:false,opts:pick.map(w=>w[0]),ans:pick[0][0],optAr:true};
+}
+function startQuiz(){
+  qs=Array.from({length:10},(_,i)=>makeQ(qmode==="letters"?"letter":qmode==="words"?"word":(i%2?"word":"letter")));
+  qi=0;qscore=0;renderQ();
+}
+function renderQ(){
+  const box=$("#quizbox");
+  if(qi>=qs.length){
+    if(best==null||qscore>best){best=qscore;store.set("best",best);refreshStats()}
+    box.innerHTML=`<p class="qprompt">Finished</p><div class="qbig en">You scored ${qscore} / 10</div>
+      <p style="text-align:center;color:var(--muted)">${qscore>=8?"Excellent work. Try a harder topic next.":qscore>=5?"Good progress. Review the flashcards and go again.":"Keep going. Practise the alphabet, then try again."}</p>
+      <div class="row" style="justify-content:center"><button class="btn primary" id="again">Try another set</button></div>`;
+    $("#again").onclick=startQuiz;return;
+  }
+  const q=qs[qi];answered=false;
+  box.innerHTML=`<p class="qprompt">Question ${qi+1} of 10 · ${q.prompt}</p>
+    <div class="qbig ${q.bigAr?"ar":"en"}">${q.big}</div>
+    <div class="opts">${shuffle(q.opts).map(o=>`<button class="opt" data-v="${o}">${q.optAr?`<span class="ar">${o}</span>`:o}</button>`).join("")}</div>
+    <div class="qfoot"><span class="score">Score ${qscore}</span><button class="btn" id="qnext" disabled>Next →</button></div>`;
+  box.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    if(answered)return;answered=true;
+    const ok=b.dataset.v===q.ans;if(ok)qscore++;
+    box.querySelectorAll(".opt").forEach(x=>{if(x.dataset.v===q.ans)x.classList.add("right")});
+    if(!ok)b.classList.add("wrong");
+    box.querySelector(".score").textContent="Score "+qscore;
+    const n=$("#qnext");n.disabled=false;n.focus();
+  });
+  $("#qnext").onclick=()=>{qi++;renderQ()};
+}
+$("#qmode").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{
+  qmode=b.dataset.m;$("#qmode").querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===b));startQuiz();
+});
+
+/* ---------- routing ---------- */
+const VIEWS=["alphabet","words","phrases","quiz"];
+function route(){
+  const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):"alphabet";
+  VIEWS.forEach(n=>$("#v-"+n).classList.toggle("on",n===v));
+  document.querySelectorAll("nav.tabs a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+}
+window.addEventListener("hashchange",route);
+
+renderLetters();renderDetail();renderCats();renderCard();startQuiz();refreshStats();route();
+</script>
+</body>
+</html>
