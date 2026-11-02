@@ -1,0 +1,96 @@
+=== two-goats | 1 | الْعَنْزَتَانِ | The Two Goats | دو بکریاں | A traditional fable about stubbornness, retold here in simple Arabic. | ضد کے بارے میں ایک روایتی حکایت، جو یہاں آسان عربی میں بیان کی گئی ہے۔
+كَانَتْ عَنْزَتَانِ تَمْشِيَانِ فِي الْجَبَلِ. | Two goats were walking in the mountains. | دو بکریاں پہاڑ میں چل رہی تھیں۔
+وَصَلَتَا إِلَى جِسْرٍ ضَيِّقٍ فَوْقَ نَهْرٍ. | They reached a narrow bridge over a river. | وہ ایک ندی پر بنے تنگ پل تک پہنچیں۔
+لَا يَمُرُّ عَلَى الْجِسْرِ إِلَّا وَاحِدَةٌ. | Only one can cross the bridge at a time. | پل پر سے ایک وقت میں صرف ایک ہی گزر سکتی ہے۔
+قَالَتِ الْأُولَى: «أَنَا أَوَّلًا!» | The first said, "Me first!" | پہلی نے کہا: «پہلے میں!»
+وَقَالَتِ الثَّانِيَةُ: «لَا، أَنَا أَوَّلًا!» | And the second said, "No, me first!" | اور دوسری نے کہا: «نہیں، پہلے میں!»
+لَمْ تَتْرُكْ وَاحِدَةٌ مِنْهُمَا الطَّرِيقَ لِلْأُخْرَى. | Neither of them gave way to the other. | ان میں سے کسی نے دوسری کے لیے راستہ نہ چھوڑا۔
+تَدَافَعَتَا بِقُرُونِهِمَا فَسَقَطَتَا فِي النَّهْرِ. | They pushed each other with their horns and both fell into the river. | وہ سینگوں سے ایک دوسری کو دھکیلنے لگیں اور دونوں ندی میں گر گئیں۔
+الْعِنَادُ يُتْعِبُ الْجَمِيعَ. | Stubbornness hurts everyone. | ضد سب کو نقصان پہنچاتی ہے۔
+
+=== fox-and-crow | 1 | الثَّعْلَبُ وَالْغُرَابُ | The Fox and the Crow | لومڑی اور کوّا | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+وَجَدَ غُرَابٌ قِطْعَةً مِنَ الْجُبْنِ. | A crow found a piece of cheese. | ایک کوّے کو پنیر کا ٹکڑا ملا۔
+طَارَ إِلَى غُصْنِ شَجَرَةٍ لِيَأْكُلَهَا. | He flew to a tree branch to eat it. | وہ اسے کھانے کے لیے درخت کی شاخ پر جا بیٹھا۔
+رَآهُ ثَعْلَبٌ جَائِعٌ وَأَرَادَ الْجُبْنَ. | A hungry fox saw him and wanted the cheese. | ایک بھوکی لومڑی نے اسے دیکھا اور اسے پنیر چاہیے تھا۔
+قَالَ الثَّعْلَبُ: «مَا أَجْمَلَ رِيشَكَ يَا غُرَابُ!» | The fox said, "How beautiful your feathers are, crow!" | لومڑی نے کہا: «اے کوّے! تمہارے پر کتنے خوبصورت ہیں!»
+«وَصَوْتُكَ أَجْمَلُ، فَغَنِّ لِي!» | "And your voice is even more beautiful, so sing for me!" | «اور تمہاری آواز تو اور بھی خوبصورت ہے، میرے لیے گاؤ!»
+فَرِحَ الْغُرَابُ وَفَتَحَ فَمَهُ لِيُغَنِّيَ. | The crow was pleased and opened his beak to sing. | کوّا خوش ہوا اور گانے کے لیے چونچ کھول دی۔
+سَقَطَ الْجُبْنُ فَأَخَذَهُ الثَّعْلَبُ وَهَرَبَ. | The cheese fell, and the fox took it and ran away. | پنیر گر گیا تو لومڑی اسے اٹھا کر بھاگ گئی۔
+لَا تُصَدِّقْ كُلَّ مَنْ يَمْدَحُكَ. | Don't believe everyone who flatters you. | ہر اس شخص کا یقین نہ کرو جو تمہاری تعریف کرے۔
+
+=== town-and-country-mouse | 2 | فَأْرُ الْمَدِينَةِ وَفَأْرُ الْقَرْيَةِ | The Town Mouse and the Country Mouse | شہری چوہا اور دیہاتی چوہا | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+كَانَ فَأْرٌ يَعِيشُ فِي الْقَرْيَةِ وَكَانَ لَهُ صَدِيقٌ فِي الْمَدِينَةِ. | A mouse lived in the countryside and had a friend in the city. | ایک چوہا گاؤں میں رہتا تھا اور شہر میں اس کا ایک دوست تھا۔
+زَارَ فَأْرُ الْمَدِينَةِ صَدِيقَهُ فَأَكَلَا خُبْزًا وَجُبْنًا بَسِيطًا. | The city mouse visited his friend and they ate simple bread and cheese. | شہری چوہا اپنے دوست سے ملنے آیا اور دونوں نے سادہ روٹی اور پنیر کھایا۔
+قَالَ فَأْرُ الْمَدِينَةِ: «طَعَامُكَ قَلِيلٌ، تَعَالَ مَعِي إِلَى الْمَدِينَةِ!» | The city mouse said, "Your food is poor. Come with me to the city!" | شہری چوہے نے کہا: «تمہارا کھانا بہت تھوڑا ہے، میرے ساتھ شہر چلو!»
+ذَهَبَا إِلَى بَيْتٍ كَبِيرٍ وَرَأَيَا مَائِدَةً مَلِيئَةً بِالطَّعَامِ. | They went to a big house and saw a table full of food. | وہ ایک بڑے گھر میں گئے اور کھانے سے بھری میز دیکھی۔
+أَخَذَا يَأْكُلَانِ وَفَجْأَةً دَخَلَ قِطٌّ ضَخْمٌ. | They began to eat, and suddenly a huge cat came in. | وہ کھانے لگے کہ اچانک ایک بہت بڑی بلی اندر آ گئی۔
+رَكَضَا وَاخْتَفَيَا فِي شَقٍّ صَغِيرٍ وَقَلْبَاهُمَا يَخْفِقَانِ. | They ran and hid in a small crack, their hearts pounding. | وہ بھاگے اور ایک چھوٹی سی درز میں چھپ گئے، اور ان کے دل زور سے دھڑک رہے تھے۔
+قَالَ فَأْرُ الْقَرْيَةِ: «أُفَضِّلُ طَعَامِي الْبَسِيطَ مَعَ الْأَمَانِ». | The country mouse said, "I prefer my simple food with safety." | دیہاتی چوہے نے کہا: «مجھے اپنا سادہ کھانا امن کے ساتھ زیادہ پسند ہے۔»
+رَجَعَ إِلَى قَرْيَتِهِ سَعِيدًا. | He went back to his village, happy. | وہ خوشی خوشی اپنے گاؤں لوٹ گیا۔
+الرَّاحَةُ أَجْمَلُ مِنَ الْغِنَى مَعَ الْخَوْفِ. | Peace of mind is better than wealth with fear. | خوف کے ساتھ دولت سے سکون بہتر ہے۔
+
+=== wolf-in-sheeps-skin | 2 | الذِّئْبُ وَجِلْدُ الْخَرُوفِ | The Wolf in a Sheepskin | بھیڑ کی کھال میں بھیڑیا | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+كَانَ ذِئْبٌ جَائِعٌ يَنْظُرُ إِلَى قَطِيعِ الْغَنَمِ. | A hungry wolf was looking at a flock of sheep. | ایک بھوکا بھیڑیا بھیڑوں کے ریوڑ کو دیکھ رہا تھا۔
+وَجَدَ جِلْدَ خَرُوفٍ عَلَى الْأَرْضِ فَلَبِسَهُ. | He found a sheepskin on the ground and put it on. | اسے زمین پر ایک بھیڑ کی کھال ملی تو اس نے اوڑھ لی۔
+دَخَلَ بَيْنَ الْغَنَمِ وَهُوَ يَمْشِي بِهُدُوءٍ. | He walked quietly in among the sheep. | وہ خاموشی سے چلتا ہوا بھیڑوں کے بیچ میں گھس گیا۔
+ظَنَّ الرَّاعِي أَنَّهُ خَرُوفٌ فَلَمْ يَنْتَبِهْ. | The shepherd thought he was a sheep and did not notice. | چرواہے نے سمجھا کہ وہ بھیڑ ہے اور دھیان نہ دیا۔
+فِي اللَّيْلِ أَغْلَقَ الرَّاعِي الْبَابَ وَنَامَ. | At night the shepherd shut the door and slept. | رات کو چرواہے نے دروازہ بند کیا اور سو گیا۔
+أَرَادَ الذِّئْبُ أَنْ يَأْكُلَ خَرُوفًا. | The wolf wanted to eat a sheep. | بھیڑیا ایک بھیڑ کھانا چاہتا تھا۔
+لٰكِنَّ الرَّاعِي دَخَلَ فِي الظَّلَامِ لِيَأْخُذَ خَرُوفًا لِلْعَشَاءِ فَأَمْسَكَ بِالذِّئْبِ. | But in the dark the shepherd came in to take a sheep for dinner and caught hold of the wolf. | لیکن چرواہا اندھیرے میں رات کے کھانے کے لیے ایک بھیڑ لینے آیا اور بھیڑیے کو پکڑ لیا۔
+اِنْكَشَفَ أَمْرُهُ وَنَالَ جَزَاءَهُ. | His secret was exposed and he got what he deserved. | اس کا راز کھل گیا اور اسے اس کی سزا مل گئی۔
+مَنْ يَخْدَعُ النَّاسَ يَنْكَشِفُ يَوْمًا. | Whoever deceives people is exposed one day. | جو لوگوں کو دھوکا دیتا ہے وہ ایک دن بے نقاب ہو جاتا ہے۔
+
+=== oak-and-reed | 2 | الْبَلُّوطَةُ وَالْقَصَبَةُ | The Oak and the Reed | بلوط اور سرکنڈا | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+كَانَتْ بَلُّوطَةٌ ضَخْمَةٌ تَقِفُ بِجَانِبِ النَّهْرِ. | A huge oak tree stood beside the river. | ایک بہت بڑا بلوط کا درخت ندی کے کنارے کھڑا تھا۔
+وَكَانَتْ بِجَانِبِهَا قَصَبَةٌ رَفِيعَةٌ. | And beside it was a thin reed. | اور اس کے پاس ایک پتلا سرکنڈا تھا۔
+قَالَتِ الْبَلُّوطَةُ: «أَنَا قَوِيَّةٌ وَأَنْتِ ضَعِيفَةٌ». | The oak said, "I am strong and you are weak." | بلوط نے کہا: «میں مضبوط ہوں اور تم کمزور ہو۔»
+هَبَّتْ رِيحٌ شَدِيدَةٌ فَانْحَنَتِ الْقَصَبَةُ وَلَمْ تَنْكَسِرْ. | A strong wind blew, and the reed bent but did not break. | تیز ہوا چلی تو سرکنڈا جھک گیا اور ٹوٹا نہیں۔
+أَمَّا الْبَلُّوطَةُ فَوَقَفَتْ بِعِنَادٍ. | But the oak stood there stubbornly. | اور بلوط ضد سے کھڑا رہا۔
+اِزْدَادَتِ الرِّيحُ قُوَّةً فَسَقَطَتِ الْبَلُّوطَةُ فِي النَّهْرِ. | The wind grew stronger, and the oak fell into the river. | ہوا اور تیز ہو گئی تو بلوط ندی میں گر پڑا۔
+قَالَتِ الْقَصَبَةُ: «الْمُرُونَةُ أَحْيَانًا أَقْوَى مِنَ الْقُوَّةِ». | The reed said, "Flexibility is sometimes stronger than force." | سرکنڈے نے کہا: «لچک کبھی کبھی طاقت سے زیادہ مضبوط ہوتی ہے۔»
+
+=== fox-and-stork | 2 | الثَّعْلَبُ وَاللَّقْلَقُ | The Fox and the Stork | لومڑی اور لق لق | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+دَعَا ثَعْلَبٌ لَقْلَقًا إِلَى الْعَشَاءِ. | A fox invited a stork to dinner. | ایک لومڑی نے لق لق کو رات کے کھانے پر بلایا۔
+وَضَعَ الثَّعْلَبُ الشُّورْبَةَ فِي صَحْنٍ مُسَطَّحٍ. | The fox put the soup in a flat dish. | لومڑی نے شوربہ ایک چپٹی پلیٹ میں ڈالا۔
+لَمْ يَسْتَطِعِ اللَّقْلَقُ أَنْ يَشْرَبَ بِمِنْقَارِهِ الطَّوِيلِ. | The stork could not drink with his long beak. | لق لق اپنی لمبی چونچ سے پی نہ سکا۔
+شَرِبَ الثَّعْلَبُ الشُّورْبَةَ كُلَّهَا وَضَحِكَ. | The fox drank all the soup and laughed. | لومڑی سارا شوربہ پی گئی اور ہنسی۔
+فِي الْيَوْمِ التَّالِي دَعَا اللَّقْلَقُ الثَّعْلَبَ إِلَى بَيْتِهِ. | The next day the stork invited the fox to his house. | اگلے دن لق لق نے لومڑی کو اپنے گھر بلایا۔
+قَدَّمَ لَهُ الطَّعَامَ فِي إِبْرِيقٍ طَوِيلٍ وَضَيِّقٍ. | He served him the food in a tall, narrow jug. | اس نے اسے کھانا ایک لمبی اور تنگ صراحی میں پیش کیا۔
+لَمْ يَسْتَطِعِ الثَّعْلَبُ أَنْ يَأْكُلَ وَأَكَلَ اللَّقْلَقُ بِسُهُولَةٍ. | The fox could not eat, while the stork ate easily. | لومڑی کھا نہ سکی اور لق لق نے آسانی سے کھا لیا۔
+عَامِلِ النَّاسَ كَمَا تُحِبُّ أَنْ يُعَامِلُوكَ. | Treat people as you would like them to treat you. | لوگوں سے ویسا ہی سلوک کرو جیسا تم چاہتے ہو کہ وہ تم سے کریں۔
+
+=== frog-and-ox | 1 | الضِّفْدَعُ وَالثَّوْرُ | The Frog and the Bull | مینڈک اور بیل | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+رَأَتْ ضِفْدَعَةٌ صَغِيرَةٌ ثَوْرًا كَبِيرًا. | A little frog saw a big bull. | ایک چھوٹی مینڈکی نے ایک بڑا بیل دیکھا۔
+قَالَتْ: «سَأَصِيرُ كَبِيرَةً مِثْلَهُ!» | She said, "I will become big like him!" | اس نے کہا: «میں بھی اس جیسی بڑی ہو جاؤں گی!»
+نَفَخَتْ بَطْنَهَا وَسَأَلَتْ أُمَّهَا: «هَلْ أَنَا كَبِيرَةٌ الْآنَ؟» | She puffed up her belly and asked her mother, "Am I big now?" | اس نے اپنا پیٹ پھلایا اور ماں سے پوچھا: «کیا میں اب بڑی ہو گئی؟»
+قَالَتِ الْأُمُّ: «لَا، لَا تَزَالِينَ صَغِيرَةً». | The mother said, "No, you are still small." | ماں نے کہا: «نہیں، تم ابھی چھوٹی ہو۔»
+نَفَخَتْ أَكْثَرَ وَأَكْثَرَ. | She puffed up more and more. | وہ اور زیادہ پھولتی گئی۔
+فَجْأَةً انْفَجَرَ بَطْنُهَا وَمَاتَتِ الضِّفْدَعَةُ. | Suddenly her belly burst and the frog died. | اچانک اس کا پیٹ پھٹ گیا اور مینڈکی مر گئی۔
+لَا تُحَاوِلْ أَنْ تَكُونَ مَا لَسْتَ عَلَيْهِ. | Don't try to be what you are not. | وہ بننے کی کوشش نہ کرو جو تم نہیں ہو۔
+
+=== donkey-in-lion-skin | 2 | الْحِمَارُ وَجِلْدُ الْأَسَدِ | The Donkey in the Lion's Skin | شیر کی کھال میں گدھا | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+وَجَدَ حِمَارٌ جِلْدَ أَسَدٍ فَلَبِسَهُ. | A donkey found a lion's skin and put it on. | ایک گدھے کو شیر کی کھال ملی تو اس نے پہن لی۔
+خَافَتِ الْحَيَوَانَاتُ مِنْهُ وَهَرَبَتْ. | The animals were afraid of him and ran away. | جانور اس سے ڈر گئے اور بھاگ گئے۔
+فَرِحَ الْحِمَارُ وَقَالَ: «أَنَا مَلِكُ الْغَابَةِ!» | The donkey was delighted and said, "I am the king of the forest!" | گدھا خوش ہوا اور بولا: «میں جنگل کا بادشاہ ہوں!»
+ثُمَّ أَرَادَ أَنْ يُخِيفَ الْجَمِيعَ فَنَهَقَ بِصَوْتٍ عَالٍ. | Then he wanted to frighten everyone and he brayed loudly. | پھر اس نے سب کو ڈرانا چاہا اور زور سے ڈھینچوں ڈھینچوں کرنے لگا۔
+سَمِعَهُ الثَّعْلَبُ وَضَحِكَ: «عَرَفْتُكَ مِنْ صَوْتِكَ!» | The fox heard him and laughed, "I recognised you by your voice!" | لومڑی نے اسے سنا اور ہنس کر کہا: «میں نے تمہیں تمہاری آواز سے پہچان لیا!»
+عَرَفَتِ الْحَيَوَانَاتُ الْحَقِيقَةَ وَضَحِكَتْ مِنْهُ. | The animals learned the truth and laughed at him. | جانوروں کو حقیقت معلوم ہو گئی اور وہ اس پر ہنسے۔
+اللِّبَاسُ لَا يُغَيِّرُ الْحَقِيقَةَ. | Clothes do not change the truth. | لباس حقیقت کو نہیں بدلتا۔
+
+=== the-miser | 1 | الْبَخِيلُ وَالْكَنْزُ | The Miser and His Treasure | کنجوس اور اس کا خزانہ | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+كَانَ رَجُلٌ بَخِيلٌ يَجْمَعُ الذَّهَبَ. | A miserly man collected gold. | ایک کنجوس آدمی سونا جمع کیا کرتا تھا۔
+دَفَنَ الذَّهَبَ تَحْتَ شَجَرَةٍ وَكَانَ يَزُورُهُ كُلَّ يَوْمٍ. | He buried the gold under a tree and visited it every day. | اس نے سونا ایک درخت کے نیچے دبا دیا اور ہر روز اسے دیکھنے جاتا۔
+رَآهُ لِصٌّ فَحَفَرَ وَأَخَذَ الذَّهَبَ. | A thief saw him, dug it up and took the gold. | ایک چور نے اسے دیکھ لیا، کھودا اور سونا لے گیا۔
+جَاءَ الْبَخِيلُ فَلَمْ يَجِدْ شَيْئًا فَبَكَى. | The miser came, found nothing and wept. | کنجوس آیا تو کچھ نہ ملا اور وہ رو پڑا۔
+قَالَ لَهُ جَارُهُ: «ضَعْ حَجَرًا مَكَانَ الذَّهَبِ». | His neighbour said to him, "Put a stone in place of the gold." | اس کے پڑوسی نے اس سے کہا: «سونے کی جگہ ایک پتھر رکھ دو۔»
+«أَنْتَ لَمْ تَسْتَعْمِلْهُ فَالْحَجَرُ مِثْلُهُ». | "You never used it, so a stone is just the same." | «تم نے اسے کبھی استعمال نہیں کیا، اس لیے پتھر بھی اسی جیسا ہے۔»
+الْمَالُ الَّذِي لَا يُسْتَعْمَلُ لَا قِيمَةَ لَهُ. | Money that is not used has no value. | جو مال استعمال نہ ہو اس کی کوئی قدر نہیں۔
+
+=== farmer-and-snake | 2 | الْفَلَّاحُ وَالْأَفْعَى | The Farmer and the Snake | کسان اور سانپ | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+فِي يَوْمٍ بَارِدٍ وَجَدَ فَلَّاحٌ أَفْعَى مُتَجَمِّدَةً. | On a cold day a farmer found a frozen snake. | ایک سرد دن ایک کسان کو ایک جمی ہوئی ناگن ملی۔
+أَشْفَقَ عَلَيْهَا وَوَضَعَهَا فِي صَدْرِهِ لِتَدْفَأَ. | He felt sorry for her and put her inside his coat to warm her. | اسے ترس آیا اور اس نے اسے گرم کرنے کے لیے اپنے سینے سے لگا لیا۔
+دَفِئَتِ الْأَفْعَى وَاسْتَعَادَتْ قُوَّتَهَا. | The snake warmed up and regained her strength. | ناگن گرم ہو گئی اور اس کی طاقت لوٹ آئی۔
+ثُمَّ لَدَغَتْ مُنْقِذَهَا. | Then she bit her rescuer. | پھر اس نے اپنے بچانے والے کو ڈس لیا۔
+قَالَ الْفَلَّاحُ وَهُوَ يَتَأَلَّمُ: «لِمَاذَا فَعَلْتِ هٰذَا؟» | The farmer said in pain, "Why did you do this?" | کسان نے تکلیف سے کہا: «تم نے یہ کیوں کیا؟»
+قَالَتِ الْأَفْعَى: «هٰذِهِ طَبِيعَتِي». | The snake said, "This is my nature." | ناگن نے کہا: «یہ میری فطرت ہے۔»
+لَا تُحْسِنْ إِلَى مَنْ لَا يَعْرِفُ الْجَمِيلَ. | Do not do good to someone who does not know gratitude. | اس شخص کے ساتھ نیکی نہ کرو جو احسان نہیں جانتا۔
