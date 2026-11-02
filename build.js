@@ -2089,6 +2089,366 @@ const LESSONS = [
       { en: 'Ask “Which month is Hajj in?”', ur: 'پوچھیں «حج کس مہینے میں ہے؟»', a: 'فِي أَيِّ شَهْرٍ الْحَجُّ؟', tr: 'fii ayyi shahrin al-ḥajju?' },
     ],
   },
+  {
+    slug: "lesson-37-past-all", key: "كَتَبُوا",
+    en: {
+      title: "The past tense for everyone: we, you all, they", short: "كَتَبْنَا، كَتَبْتُمْ، كَتَبُوا، كَتَبْنَ",
+      intro: "Every past verb is built on the “he” form, such as {كَتَبَ} (he wrote), with an ending for each person. You met {كَتَبْتُ} (I wrote) in lesson 11; here is the full set.",
+      points: ["Singular: {كَتَبْتُ} I · {كَتَبْتَ} you (m) · {كَتَبْتِ} you (f) · {كَتَبَ} he · {كَتَبَتْ} she.", "Plural: {كَتَبْنَا} we · {كَتَبْتُمْ} you all (m) · {كَتَبْتُنَّ} you all (f) · {كَتَبُوا} they (m) · {كَتَبْنَ} they (f).", "The alif at the end of {كَتَبُوا} is written but not pronounced. When the verb comes before its subject it stays singular: {ذَهَبَ الطُّلَّابُ} (the students went)."],
+    },
+    ur: {
+      title: "سب کے لیے ماضی: ہم، تم سب، وہ سب", short: "كَتَبْنَا، كَتَبْتُمْ، كَتَبُوا، كَتَبْنَ",
+      intro: "ہر ماضی کا فعل «وہ» کے صیغے، جیسے {كَتَبَ} (اس نے لکھا)، پر بنتا ہے اور ہر شخص کے لیے آخر میں علامت لگتی ہے۔ سبق ۱۱ میں آپ نے {كَتَبْتُ} (میں نے لکھا) سیکھا؛ یہاں پوری گردان ہے۔",
+      points: ["واحد: {كَتَبْتُ} میں · {كَتَبْتَ} تم (مذکر) · {كَتَبْتِ} تم (مؤنث) · {كَتَبَ} وہ (مرد) · {كَتَبَتْ} وہ (عورت)۔", "جمع: {كَتَبْنَا} ہم · {كَتَبْتُمْ} تم سب (مذکر) · {كَتَبْتُنَّ} تم سب (مؤنث) · {كَتَبُوا} وہ سب (مذکر) · {كَتَبْنَ} وہ سب (مؤنث)۔", "{كَتَبُوا} کے آخر کا الف لکھا جاتا ہے، پڑھا نہیں جاتا۔ اگر فعل فاعل سے پہلے آئے تو واحد رہتا ہے: {ذَهَبَ الطُّلَّابُ} (طلبہ گئے)۔"],
+    },
+    ex: [["ذَهَبْنَا إِلَى الْمَسْجِدِ", "dhahabnaa ila l-masjidi", "We went to the mosque.", "ہم مسجد گئے۔"], ["هَلْ فَهِمْتُمُ الدَّرْسَ؟", "hal fahimtumu d-darsa?", "Did you all understand the lesson?", "کیا تم سب نے سبق سمجھا؟"], ["الطُّلَّابُ خَرَجُوا مِنَ الْفَصْلِ", "aṭ-ṭullaabu kharajuu mina l-faṣli", "The students left the class.", "طلبہ کلاس سے نکل گئے۔"], ["الْبَنَاتُ كَتَبْنَ الدَّرْسَ", "al-banaatu katabna d-darsa", "The girls wrote the lesson.", "لڑکیوں نے سبق لکھا۔"], ["ذَهَبَ الطُّلَّابُ إِلَى الْمَكْتَبَةِ", "dhahaba ṭ-ṭullaabu ila l-maktabati", "The students went to the library.", "طلبہ لائبریری گئے۔"], ["أَيْنَ جَلَسْتُمْ؟", "ayna jalastum?", "Where did you all sit?", "تم سب کہاں بیٹھے؟"]],
+    practice: [{ en: "Say “We wrote the lesson.”", ur: "«ہم نے سبق لکھا» کہیں۔", a: "كَتَبْنَا الدَّرْسَ", tr: "katabnaa d-darsa" }, { en: "Say “They (m) went home.”", ur: "«وہ سب گھر گئے» کہیں۔", a: "ذَهَبُوا إِلَى الْبَيْتِ", tr: "dhahabuu ila l-bayti" }, { en: "Ask a group of men “Did you eat?”", ur: "مردوں کے گروہ سے پوچھیں «کیا تم نے کھانا کھایا؟»", a: "هَلْ أَكَلْتُمْ؟", tr: "hal akaltum?" }],
+  },
+  {
+    slug: "lesson-38-present-all", key: "يَكْتُبُونَ",
+    en: {
+      title: "The present tense for everyone", short: "نَكْتُبُ، تَكْتُبُونَ، يَكْتُبُونَ، يَكْتُبْنَ",
+      intro: "The present tense adds a letter at the start, and for some persons an ending too: {أَ} for I, {نَ} for we, {تَ} for you and she, {يَ} for he and they.",
+      points: ["Singular: {أَكْتُبُ} I · {تَكْتُبُ} you (m) · {تَكْتُبِينَ} you (f) · {يَكْتُبُ} he · {تَكْتُبُ} she.", "Plural: {نَكْتُبُ} we · {تَكْتُبُونَ} you all (m) · {تَكْتُبْنَ} you all (f) · {يَكْتُبُونَ} they (m) · {يَكْتُبْنَ} they (f).", "{تَكْتُبُ} can mean “you write” or “she writes”; the sentence tells you which."],
+    },
+    ur: {
+      title: "سب کے لیے مضارع", short: "نَكْتُبُ، تَكْتُبُونَ، يَكْتُبُونَ، يَكْتُبْنَ",
+      intro: "مضارع کے شروع میں ایک حرف لگتا ہے اور بعض صیغوں میں آخر میں بھی: {أَ} میں کے لیے، {نَ} ہم کے لیے، {تَ} تم اور «وہ عورت» کے لیے، {يَ} «وہ مرد» اور «وہ سب» کے لیے۔",
+      points: ["واحد: {أَكْتُبُ} میں · {تَكْتُبُ} تم (مذکر) · {تَكْتُبِينَ} تم (مؤنث) · {يَكْتُبُ} وہ (مرد) · {تَكْتُبُ} وہ (عورت)۔", "جمع: {نَكْتُبُ} ہم · {تَكْتُبُونَ} تم سب (مذکر) · {تَكْتُبْنَ} تم سب (مؤنث) · {يَكْتُبُونَ} وہ سب (مذکر) · {يَكْتُبْنَ} وہ سب (مؤنث)۔", "{تَكْتُبُ} کا مطلب «تم لکھتے ہو» بھی ہے اور «وہ لکھتی ہے» بھی؛ جملے سے پتا چلتا ہے۔"],
+    },
+    ex: [["مَاذَا تَدْرُسُونَ؟", "maadhaa tadrusuuna?", "What are you all studying?", "تم سب کیا پڑھ رہے ہو؟"], ["نَدْرُسُ اللُّغَةَ الْعَرَبِيَّةَ", "nadrusu l-lughata l-ʿarabiyyata", "We study the Arabic language.", "ہم عربی زبان پڑھتے ہیں۔"], ["الطُّلَّابُ يَلْعَبُونَ فِي الْمَلْعَبِ", "aṭ-ṭullaabu yalʿabuuna fil-malʿabi", "The students are playing in the playground.", "طلبہ میدان میں کھیل رہے ہیں۔"], ["الْأُمَّهَاتُ يَطْبُخْنَ الطَّعَامَ", "al-ummahaatu yaṭbukhna ṭ-ṭaʿaama", "The mothers are cooking the food.", "مائیں کھانا پکا رہی ہیں۔"], ["أَيْنَ تَسْكُنِينَ يَا فَاطِمَةُ؟", "ayna taskuniina yaa faaṭimatu?", "Where do you live, Fatima?", "فاطمہ، تم کہاں رہتی ہو؟"], ["هِيَ تَكْتُبُ رِسَالَةً", "hiya taktubu risaalatan", "She is writing a letter.", "وہ خط لکھ رہی ہے۔"]],
+    practice: [{ en: "Say “We drink tea.”", ur: "«ہم چائے پیتے ہیں» کہیں۔", a: "نَشْرَبُ الشَّايَ", tr: "nashrabu sh-shaaya" }, { en: "Say “They (m) read the Quran.”", ur: "«وہ سب قرآن پڑھتے ہیں» کہیں۔", a: "يَقْرَءُونَ الْقُرْآنَ", tr: "yaqra’uuna l-qur’aana" }, { en: "Ask a woman “What do you want?”", ur: "عورت سے پوچھیں «تم کیا چاہتی ہو؟»", a: "مَاذَا تُرِيدِينَ؟", tr: "maadhaa turiidiina?" }],
+  },
+  {
+    slug: "lesson-39-passive", key: "كُتِبَ",
+    en: {
+      title: "It was written: the passive", short: "Say what was done without saying who did it.",
+      intro: "When you don’t say who did something, use the passive. In the past the vowels become u–i: {كَتَبَ} (he wrote) → {كُتِبَ} (it was written). In the present they become u–a: {يَكْتُبُ} → {يُكْتَبُ} (it is written).",
+      points: ["{فُتِحَ الْبَابُ} the door was opened · {يُفْتَحُ الْبَابُ} the door is opened. The thing acted on becomes the subject and ends in -u.", "You will see the passive on signs and notices: {يُمْنَعُ التَّدْخِينُ} (smoking is forbidden), {أُغْلِقَ الْمَحَلُّ} (the shop was closed).", "In the Quran: {كُتِبَ عَلَيْكُمُ الصِّيَامُ} (fasting has been prescribed for you, 2:183)."],
+    },
+    ur: {
+      title: "لکھا گیا: فعلِ مجہول", short: "کام بتائیں، کرنے والا نہیں۔",
+      intro: "جب کام کرنے والے کا ذکر نہ کرنا ہو تو مجہول استعمال کریں۔ ماضی میں حرکات پیش اور زیر ہو جاتی ہیں: {كَتَبَ} (اس نے لکھا) ← {كُتِبَ} (لکھا گیا)۔ مضارع میں پیش اور زبر: {يَكْتُبُ} ← {يُكْتَبُ} (لکھا جاتا ہے)۔",
+      points: ["{فُتِحَ الْبَابُ} دروازہ کھولا گیا · {يُفْتَحُ الْبَابُ} دروازہ کھولا جاتا ہے۔ جس پر کام ہوا وہ نائبِ فاعل بن کر مرفوع ہو جاتا ہے۔", "سائن بورڈز اور اعلانات میں مجہول عام ہے: {يُمْنَعُ التَّدْخِينُ} (سگریٹ نوشی منع ہے)، {أُغْلِقَ الْمَحَلُّ} (دکان بند کر دی گئی)۔", "قرآن میں: {كُتِبَ عَلَيْكُمُ الصِّيَامُ} (تم پر روزے فرض کیے گئے، البقرہ ۱۸۳)۔"],
+    },
+    ex: [["كُتِبَ الدَّرْسُ عَلَى السَّبُّورَةِ", "kutiba d-darsu ʿala s-sabbuurati", "The lesson was written on the board.", "سبق تختے پر لکھا گیا۔"], ["فُتِحَ الْبَابُ", "futiḥa l-baabu", "The door was opened.", "دروازہ کھولا گیا۔"], ["يُمْنَعُ التَّدْخِينُ", "yumnaʿu t-tadkhiinu", "Smoking is forbidden.", "سگریٹ نوشی منع ہے۔"], ["تُفْتَحُ الْمَكْتَبَةُ فِي السَّاعَةِ الثَّامِنَةِ", "tuftaḥu l-maktabatu fis-saaʿati th-thaaminati", "The library is opened at eight o’clock.", "لائبریری آٹھ بجے کھولی جاتی ہے۔"], ["وُلِدْتُ فِي لَاهُورَ", "wulidtu fii laahuura", "I was born in Lahore.", "میں لاہور میں پیدا ہوا۔"], ["كُتِبَ عَلَيْكُمُ الصِّيَامُ", "kutiba ʿalaykumu ṣ-ṣiyaamu", "Fasting has been prescribed for you. (2:183)", "تم پر روزے فرض کیے گئے۔ (البقرہ ۱۸۳)"]],
+    practice: [{ en: "Say “The window was opened.”", ur: "«کھڑکی کھولی گئی» کہیں۔", a: "فُتِحَتِ النَّافِذَةُ", tr: "futiḥati n-naafidhatu" }, { en: "Make the passive of {شَرِبَ}.", ur: "{شَرِبَ} کا مجہول بنائیں۔", a: "شُرِبَ", tr: "shuriba", noteEn: "it was drunk", noteUr: "پیا گیا" }, { en: "Say “The book was read.”", ur: "«کتاب پڑھی گئی» کہیں۔", a: "قُرِئَ الْكِتَابُ", tr: "quri’a l-kitaabu" }],
+  },
+  {
+    slug: "lesson-40-kull-baad", key: "كُلُّ",
+    en: {
+      title: "Every, all and some: {كُلُّ} and {بَعْضُ}", short: "Every day, all the students, some of them.",
+      intro: "{كُلُّ} means “every” before a singular noun without al-: {كُلُّ يَوْمٍ} (every day). Before a plural or a noun with al- it means “all (of)”: {كُلُّ الطُّلَّابِ} (all the students). {بَعْضُ} means “some (of)”: {بَعْضُ الطُّلَّابِ} (some of the students).",
+      points: ["Both work like possession (lesson 6): the noun after them ends in -i, and their own ending shows their role: {رَأَيْتُ كُلَّ الطُّلَّابِ}.", "With pronouns: {كُلُّهُمْ} all of them · {بَعْضُهُمْ} some of them · {كُلُّنَا} all of us.", "Useful phrases: {كُلَّ يَوْمٍ} every day · {كُلُّ شَيْءٍ} everything · {كُلُّ وَاحِدٍ} everyone."],
+    },
+    ur: {
+      title: "ہر، سب اور کچھ: {كُلُّ} اور {بَعْضُ}", short: "ہر دن، سب طلبہ، ان میں سے کچھ۔",
+      intro: "{كُلُّ} بغیر الـ کے واحد اسم سے پہلے «ہر» کے معنی دیتا ہے: {كُلُّ يَوْمٍ} (ہر دن)۔ جمع یا الـ والے اسم سے پہلے «سب»: {كُلُّ الطُّلَّابِ} (سب طلبہ)۔ {بَعْضُ} کا مطلب ہے «کچھ»: {بَعْضُ الطُّلَّابِ} (کچھ طلبہ)۔",
+      points: ["دونوں اضافت کی طرح ہیں (سبق ۶): بعد والا اسم مجرور ہوتا ہے، اور ان کا اپنا اعراب جملے میں کردار کے مطابق بدلتا ہے: {رَأَيْتُ كُلَّ الطُّلَّابِ}۔", "ضمیر کے ساتھ: {كُلُّهُمْ} وہ سب · {بَعْضُهُمْ} ان میں سے کچھ · {كُلُّنَا} ہم سب۔", "کام کے جملے: {كُلَّ يَوْمٍ} ہر روز · {كُلُّ شَيْءٍ} ہر چیز · {كُلُّ وَاحِدٍ} ہر کوئی۔"],
+    },
+    ex: [["أَقْرَأُ الْقُرْآنَ كُلَّ يَوْمٍ", "aqra’u l-qur’aana kulla yawmin", "I read the Quran every day.", "میں ہر روز قرآن پڑھتا ہوں۔"], ["كُلُّ الطُّلَّابِ حَاضِرُونَ", "kullu ṭ-ṭullaabi ḥaaḍiruuna", "All the students are present.", "تمام طلبہ حاضر ہیں۔"], ["بَعْضُ الطُّلَّابِ غَائِبُونَ", "baʿḍu ṭ-ṭullaabi ghaa’ibuuna", "Some of the students are absent.", "کچھ طلبہ غیر حاضر ہیں۔"], ["كُلُّنَا نُحِبُّ الْعَرَبِيَّةَ", "kullunaa nuḥibbu l-ʿarabiyyata", "All of us love Arabic.", "ہم سب عربی سے محبت کرتے ہیں۔"], ["أَكَلْتُ بَعْضَ التُّفَّاحِ", "akaltu baʿḍa t-tuffaaḥi", "I ate some of the apples.", "میں نے کچھ سیب کھائے۔"], ["كُلُّ شَيْءٍ جَاهِزٌ", "kullu shay’in jaahizun", "Everything is ready.", "سب کچھ تیار ہے۔"]],
+    practice: [{ en: "Say “every week”.", ur: "«ہر ہفتے» کہیں۔", a: "كُلَّ أُسْبُوعٍ", tr: "kulla usbuuʿin" }, { en: "Say “all the books”.", ur: "«سب کتابیں» کہیں۔", a: "كُلُّ الْكُتُبِ", tr: "kullu l-kutubi" }, { en: "Say “some of them”.", ur: "«ان میں سے کچھ» کہیں۔", a: "بَعْضُهُمْ", tr: "baʿḍuhum" }],
+  },
+  {
+    slug: "lesson-41-ya", key: "يَا",
+    en: {
+      title: "Calling someone: {يَا}", short: "O Muhammad, Teacher!, O people.",
+      intro: "To call someone, put {يَا} before the name: {يَا مُحَمَّدُ} (Muhammad!). A single name or title after {يَا} ends in -u with no -n: {يَا أُسْتَاذُ} (Teacher!).",
+      points: ["If the name is two words joined by possession, the first ends in -a: {يَا عَبْدَ اللّٰهِ} · {يَا أَبَا خَالِدٍ} (from lesson 29).", "Before a noun with al- use {يَا أَيُّهَا} (m) or {يَا أَيَّتُهَا} (f): {يَا أَيُّهَا النَّاسُ} (O people), which is common in the Quran.", "With “my” the ending is often just -i: {يَا أَخِي} (my brother), {يَا رَبِّ} (O my Lord)."],
+    },
+    ur: {
+      title: "کسی کو پکارنا: {يَا}", short: "اے محمد، استاد صاحب!، اے لوگو۔",
+      intro: "کسی کو پکارنے کے لیے نام سے پہلے {يَا} لگائیں: {يَا مُحَمَّدُ} (اے محمد!)۔ {يَا} کے بعد اکیلا نام یا لقب بغیر تنوین کے پیش پر ختم ہوتا ہے: {يَا أُسْتَاذُ} (استاد صاحب!)۔",
+      points: ["اگر نام مضاف ہو تو پہلا لفظ زبر پر ختم ہوتا ہے: {يَا عَبْدَ اللّٰهِ} · {يَا أَبَا خَالِدٍ} (سبق ۲۹)۔", "الـ والے اسم سے پہلے {يَا أَيُّهَا} (مذکر) یا {يَا أَيَّتُهَا} (مؤنث) آتا ہے: {يَا أَيُّهَا النَّاسُ} (اے لوگو)، جو قرآن میں بار بار آیا ہے۔", "«میرے» کے ساتھ اکثر صرف زیر رہ جاتی ہے: {يَا أَخِي} (میرے بھائی)، {يَا رَبِّ} (اے میرے رب)۔"],
+    },
+    ex: [["يَا مُحَمَّدُ، تَعَالَ هُنَا", "yaa muḥammadu, taʿaala hunaa", "Muhammad, come here.", "محمد، یہاں آؤ۔"], ["يَا أُسْتَاذُ، عِنْدِي سُؤَالٌ", "yaa ustaadhu, ʿindii su’aalun", "Teacher, I have a question.", "استاد صاحب، میرا ایک سوال ہے۔"], ["يَا عَبْدَ اللّٰهِ", "yaa ʿabda llaahi", "O Abdullah", "اے عبداللہ"], ["يَا أَيُّهَا الطُّلَّابُ، اِسْمَعُوا", "yaa ayyuha ṭ-ṭullaabu, ismaʿuu", "Students, listen!", "اے طلبہ، سنو!"], ["يَا أَيُّهَا النَّاسُ", "yaa ayyuha n-naasu", "O people (Quran)", "اے لوگو (قرآن)"], ["يَا رَبِّ", "yaa rabbi", "O my Lord", "اے میرے رب"]],
+    practice: [{ en: "Say “Khalid, sit down.”", ur: "«خالد، بیٹھ جاؤ» کہیں۔", a: "يَا خَالِدُ، اِجْلِسْ", tr: "yaa khaalidu, ijlis" }, { en: "Say “O my brother”.", ur: "«اے میرے بھائی» کہیں۔", a: "يَا أَخِي", tr: "yaa akhii" }, { en: "Say “O believers”.", ur: "«اے ایمان والو» کہیں۔", a: "يَا أَيُّهَا الْمُؤْمِنُونَ", tr: "yaa ayyuha l-mu’minuuna" }],
+  },
+  {
+    slug: "lesson-42-illa", key: "إِلَّا",
+    en: {
+      title: "Except: {إِلَّا}", short: "Everyone except Khalid; only one riyal.",
+      intro: "{إِلَّا} means “except”. After a complete positive sentence the noun after it ends in -a: {حَضَرَ الطُّلَّابُ إِلَّا خَالِدًا} (the students came, except Khalid).",
+      points: ["After a negative sentence {إِلَّا} means “only”, and the noun keeps its normal ending: {مَا عِنْدِي إِلَّا رِيَالٌ} (I have only a riyal).", "The testimony of faith uses it: {لَا إِلٰهَ إِلَّا اللّٰهُ} (there is no god except Allah).", "{غَيْرَ} also means “except”, and the noun after it ends in -i: {حَضَرَ الطُّلَّابُ غَيْرَ خَالِدٍ}."],
+    },
+    ur: {
+      title: "سوائے: {إِلَّا}", short: "خالد کے سوا سب؛ صرف ایک ریال۔",
+      intro: "{إِلَّا} کا مطلب ہے «سوائے»۔ مکمل مثبت جملے کے بعد مستثنیٰ منصوب ہوتا ہے: {حَضَرَ الطُّلَّابُ إِلَّا خَالِدًا} (خالد کے سوا سب طلبہ آئے)۔",
+      points: ["منفی جملے کے بعد {إِلَّا} کا مطلب «صرف» ہوتا ہے اور اسم کا اعراب نہیں بدلتا: {مَا عِنْدِي إِلَّا رِيَالٌ} (میرے پاس صرف ایک ریال ہے)۔", "کلمۂ توحید میں یہی ہے: {لَا إِلٰهَ إِلَّا اللّٰهُ} (اللہ کے سوا کوئی معبود نہیں)۔", "{غَيْرَ} کا مطلب بھی «سوائے» ہے، اور اس کے بعد والا اسم مجرور ہوتا ہے: {حَضَرَ الطُّلَّابُ غَيْرَ خَالِدٍ}۔"],
+    },
+    ex: [["حَضَرَ الطُّلَّابُ إِلَّا خَالِدًا", "ḥaḍara ṭ-ṭullaabu illaa khaalidan", "The students came, except Khalid.", "خالد کے سوا سب طلبہ آئے۔"], ["قَرَأْتُ الْكِتَابَ إِلَّا صَفْحَةً", "qara’tu l-kitaaba illaa ṣafḥatan", "I read the book except one page.", "میں نے ایک صفحے کے سوا پوری کتاب پڑھی۔"], ["مَا عِنْدِي إِلَّا رِيَالٌ وَاحِدٌ", "maa ʿindii illaa riyaalun waaḥidun", "I have only one riyal.", "میرے پاس صرف ایک ریال ہے۔"], ["لَا إِلٰهَ إِلَّا اللّٰهُ", "laa ilaaha illa llaahu", "There is no god except Allah.", "اللہ کے سوا کوئی معبود نہیں۔"], ["الْمَحَلَّاتُ مَفْتُوحَةٌ إِلَّا يَوْمَ الْجُمُعَةِ", "al-maḥallaatu maftuuḥatun illaa yawma l-jumuʿati", "The shops are open except on Friday.", "دکانیں جمعہ کے سوا کھلی رہتی ہیں۔"], ["حَضَرَ الطُّلَّابُ غَيْرَ خَالِدٍ", "ḥaḍara ṭ-ṭullaabu ghayra khaalidin", "The students came, except Khalid.", "خالد کے علاوہ سب طلبہ آئے۔"]],
+    practice: [{ en: "Say “I ate the apples except one.”", ur: "«میں نے ایک کے سوا سب سیب کھا لیے» کہیں۔", a: "أَكَلْتُ التُّفَّاحَ إِلَّا وَاحِدَةً", tr: "akaltu t-tuffaaḥa illaa waaḥidatan" }, { en: "Say “I have only a book.”", ur: "«میرے پاس صرف ایک کتاب ہے» کہیں۔", a: "مَا عِنْدِي إِلَّا كِتَابٌ", tr: "maa ʿindii illaa kitaabun" }, { en: "Say “Everyone came except Ali.”", ur: "«علی کے سوا سب آئے» کہیں۔", a: "حَضَرَ الْجَمِيعُ إِلَّا عَلِيًّا", tr: "ḥaḍara l-jamiiʿu illaa ʿaliyyan" }],
+  },
+  {
+    slug: "lesson-43-sisters-of-inna", key: "لٰكِنَّ",
+    en: {
+      title: "But, as if, perhaps, if only: the sisters of {إِنَّ}", short: "لٰكِنَّ، كَأَنَّ، لَعَلَّ، لَيْتَ",
+      intro: "Four words work exactly like {إِنَّ} (lesson 21): the noun after them ends in -a and the rest of the sentence stays as it was. {لٰكِنَّ} but · {كَأَنَّ} as if · {لَعَلَّ} perhaps, hopefully · {لَيْتَ} if only.",
+      points: ["{الْبَيْتُ صَغِيرٌ لٰكِنَّ الْحَدِيقَةَ كَبِيرَةٌ} (the house is small but the garden is big).", "With pronouns: {لَعَلَّكَ} perhaps you · {كَأَنَّهُ} as if he · {لَيْتَنِي} if only I.", "{لَعَلَّ} can also come before a verb sentence: {لَعَلَّكُمْ تَتَّقُونَ} (so that you may be mindful of Allah, 2:183)."],
+    },
+    ur: {
+      title: "لیکن، گویا، شاید، کاش: {إِنَّ} کی بہنیں", short: "لٰكِنَّ، كَأَنَّ، لَعَلَّ، لَيْتَ",
+      intro: "چار الفاظ بالکل {إِنَّ} (سبق ۲۱) کی طرح عمل کرتے ہیں: بعد والا اسم منصوب ہوتا ہے اور باقی جملہ ویسا ہی رہتا ہے۔ {لٰكِنَّ} لیکن · {كَأَنَّ} گویا · {لَعَلَّ} شاید، امید ہے · {لَيْتَ} کاش۔",
+      points: ["{الْبَيْتُ صَغِيرٌ لٰكِنَّ الْحَدِيقَةَ كَبِيرَةٌ} (گھر چھوٹا ہے لیکن باغ بڑا ہے)۔", "ضمیر کے ساتھ: {لَعَلَّكَ} شاید تم · {كَأَنَّهُ} گویا وہ · {لَيْتَنِي} کاش میں۔", "{لَعَلَّ} کے بعد فعلیہ جملہ بھی آ سکتا ہے: {لَعَلَّكُمْ تَتَّقُونَ} (تاکہ تم پرہیزگار بنو، البقرہ ۱۸۳)۔"],
+    },
+    ex: [["الْجَوُّ بَارِدٌ لٰكِنَّ الشَّمْسَ مُشْرِقَةٌ", "al-jawwu baaridun laakinna sh-shamsa mushriqatun", "The weather is cold but the sun is shining.", "موسم ٹھنڈا ہے لیکن دھوپ نکلی ہوئی ہے۔"], ["كَأَنَّ الْقَمَرَ مِصْبَاحٌ", "ka’anna l-qamara miṣbaaḥun", "It is as if the moon were a lamp.", "گویا چاند ایک چراغ ہے۔"], ["لَعَلَّ الْمُدَرِّسَ مَرِيضٌ", "laʿalla l-mudarrisa mariiḍun", "Perhaps the teacher is ill.", "شاید استاد بیمار ہیں۔"], ["لَعَلَّكَ بِخَيْرٍ", "laʿallaka bikhayrin", "I hope you are well.", "امید ہے آپ خیریت سے ہوں گے۔"], ["لَيْتَ الشَّبَابَ يَعُودُ", "layta sh-shabaaba yaʿuudu", "If only youth would return.", "کاش جوانی لوٹ آئے۔"], ["لَيْتَنِي ذَهَبْتُ مَعَكُمْ", "laytanii dhahabtu maʿakum", "I wish I had gone with you.", "کاش میں تمہارے ساتھ چلا جاتا۔"]],
+    practice: [{ en: "Say “Perhaps the shop is open.”", ur: "«شاید دکان کھلی ہو» کہیں۔", a: "لَعَلَّ الْمَحَلَّ مَفْتُوحٌ", tr: "laʿalla l-maḥalla maftuuḥun" }, { en: "Say “The car is old but it is fast.”", ur: "«گاڑی پرانی ہے لیکن تیز ہے» کہیں۔", a: "السَّيَّارَةُ قَدِيمَةٌ لٰكِنَّهَا سَرِيعَةٌ", tr: "as-sayyaaratu qadiimatun laakinnahaa sariiʿatun" }, { en: "Say “If only I knew.”", ur: "«کاش میں جانتا» کہیں۔", a: "لَيْتَنِي أَعْرِفُ", tr: "laytanii aʿrifu" }],
+  },
+  {
+    slug: "lesson-44-sisters-of-kaana", key: "صَارَ",
+    en: {
+      title: "Became, still: the sisters of {كَانَ}", short: "أَصْبَحَ، صَارَ، مَا زَالَ، لَيْسَ",
+      intro: "Like {كَانَ} (lesson 25), these verbs make the second part end in -an: {صَارَ} became · {أَصْبَحَ} became (also: was in the morning) · {مَا زَالَ} is still · {لَيْسَ} is not (lesson 14).",
+      points: ["{صَارَ الْمَاءُ ثَلْجًا} (the water became ice) · {أَصْبَحَ الْجَوُّ حَارًّا} (the weather became hot).", "{مَا زَالَ} means “is still”: {مَا زَالَ مَرِيضًا} (he is still ill). In the present it is {لَا يَزَالُ}.", "They change like any past verb: {صِرْتُ} I became · {أَصْبَحْنَا} we became · {مَا زِلْتُ} I am still."],
+    },
+    ur: {
+      title: "ہو گیا، ابھی تک: {كَانَ} کی بہنیں", short: "أَصْبَحَ، صَارَ، مَا زَالَ، لَيْسَ",
+      intro: "{كَانَ} (سبق ۲۵) کی طرح یہ افعال بھی خبر کو منصوب کرتے ہیں: {صَارَ} ہو گیا · {أَصْبَحَ} ہو گیا (صبح کے وقت ہوا) · {مَا زَالَ} ابھی تک ہے · {لَيْسَ} نہیں ہے (سبق ۱۴)۔",
+      points: ["{صَارَ الْمَاءُ ثَلْجًا} (پانی برف بن گیا) · {أَصْبَحَ الْجَوُّ حَارًّا} (موسم گرم ہو گیا)۔", "{مَا زَالَ} یعنی «ابھی تک»: {مَا زَالَ مَرِيضًا} (وہ ابھی تک بیمار ہے)۔ مضارع میں {لَا يَزَالُ}۔", "ان کی گردان عام ماضی کی طرح ہے: {صِرْتُ} میں ہو گیا · {أَصْبَحْنَا} ہم ہو گئے · {مَا زِلْتُ} میں ابھی تک ہوں۔"],
+    },
+    ex: [["صَارَ الْمَاءُ ثَلْجًا", "ṣaara l-maa’u thaljan", "The water became ice.", "پانی برف بن گیا۔"], ["أَصْبَحَ الْجَوُّ حَارًّا", "aṣbaḥa l-jawwu ḥaarran", "The weather became hot.", "موسم گرم ہو گیا۔"], ["صَارَ أَخِي طَبِيبًا", "ṣaara akhii ṭabiiban", "My brother became a doctor.", "میرا بھائی ڈاکٹر بن گیا۔"], ["مَا زِلْتُ طَالِبًا", "maa ziltu ṭaaliban", "I am still a student.", "میں ابھی تک طالب علم ہوں۔"], ["لَا يَزَالُ الْمَحَلُّ مَفْتُوحًا", "laa yazaalu l-maḥallu maftuuḥan", "The shop is still open.", "دکان ابھی تک کھلی ہے۔"], ["لَيْسَ الطَّرِيقُ طَوِيلًا", "laysa ṭ-ṭariiqu ṭawiilan", "The road is not long.", "راستہ لمبا نہیں ہے۔"]],
+    practice: [{ en: "Say “The sky became dark.”", ur: "«آسمان تاریک ہو گیا» کہیں۔", a: "أَصْبَحَتِ السَّمَاءُ مُظْلِمَةً", tr: "aṣbaḥati s-samaa’u muẓlimatan" }, { en: "Say “I became a teacher.”", ur: "«میں استاد بن گیا» کہیں۔", a: "صِرْتُ مُدَرِّسًا", tr: "ṣirtu mudarrisan" }, { en: "Say “He is still ill.”", ur: "«وہ ابھی تک بیمار ہے» کہیں۔", a: "مَا زَالَ مَرِيضًا", tr: "maa zaala mariiḍan" }],
+  },
+  {
+    slug: "lesson-45-hollow-verbs", key: "قَالَ",
+    en: {
+      title: "Verbs with a long middle vowel: {قَالَ يَقُولُ}", short: "Say, sleep, sell, visit, stand.",
+      intro: "Some verbs have a long vowel in the middle: {قَالَ} (he said), {نَامَ} (he slept), {بَاعَ} (he sold). The middle letter is really {و} or {ي}, and it shows in the present: {يَقُولُ}, {يَبِيعُ}, {يَنَامُ}.",
+      points: ["The long aa becomes short when the next letter has no vowel: {قَالَ} but {قُلْتُ} (I said), {بِعْتُ} (I sold), {نِمْتُ} (I slept).", "Three types: {قَالَ يَقُولُ}, {زَارَ يَزُورُ} · {بَاعَ يَبِيعُ}, {عَاشَ يَعِيشُ} · {نَامَ يَنَامُ}, {خَافَ يَخَافُ}.", "Commands are short: {قُلْ} say! · {قُمْ} stand up! · {نَمْ} sleep! · {بِعْ} sell!"],
+    },
+    ur: {
+      title: "درمیان میں حرفِ علت والے افعال: {قَالَ يَقُولُ}", short: "کہنا، سونا، بیچنا، ملنے جانا، کھڑا ہونا۔",
+      intro: "بعض افعال کے درمیان میں الف ہوتا ہے: {قَالَ} (اس نے کہا)، {نَامَ} (وہ سویا)، {بَاعَ} (اس نے بیچا)۔ اصل میں یہ حرف {و} یا {ي} ہوتا ہے جو مضارع میں ظاہر ہوتا ہے: {يَقُولُ}، {يَبِيعُ}، {يَنَامُ}۔",
+      points: ["اگلا حرف ساکن ہو تو الف گر جاتا ہے: {قَالَ} مگر {قُلْتُ} (میں نے کہا)، {بِعْتُ} (میں نے بیچا)، {نِمْتُ} (میں سویا)۔", "تین قسمیں: {قَالَ يَقُولُ}، {زَارَ يَزُورُ} · {بَاعَ يَبِيعُ}، {عَاشَ يَعِيشُ} · {نَامَ يَنَامُ}، {خَافَ يَخَافُ}۔", "امر مختصر ہوتا ہے: {قُلْ} کہو · {قُمْ} کھڑے ہو · {نَمْ} سو جاؤ · {بِعْ} بیچو۔"],
+    },
+    ex: [["قَالَ الْمُدَرِّسُ: اِجْلِسُوا", "qaala l-mudarrisu: ijlisuu", "The teacher said: Sit down.", "استاد نے کہا: بیٹھ جاؤ۔"], ["قُلْتُ لَهُ: شُكْرًا", "qultu lahu: shukran", "I said to him: Thank you.", "میں نے اس سے کہا: شکریہ۔"], ["يَبِيعُ التَّاجِرُ التَّمْرَ", "yabiiʿu t-taajiru t-tamra", "The merchant sells dates.", "تاجر کھجوریں بیچتا ہے۔"], ["نِمْتُ مُبَكِّرًا", "nimtu mubakkiran", "I slept early.", "میں جلدی سو گیا۔"], ["يَزُورُنَا جَدِّي كُلَّ أُسْبُوعٍ", "yazuurunaa jaddii kulla usbuuʿin", "My grandfather visits us every week.", "میرے دادا ہر ہفتے ہم سے ملنے آتے ہیں۔"], ["قُمْ لِلصَّلَاةِ", "qum liṣ-ṣalaati", "Get up for the prayer.", "نماز کے لیے اٹھو۔"]],
+    practice: [{ en: "Say “I visited my friend.”", ur: "«میں اپنے دوست سے ملنے گیا» کہیں۔", a: "زُرْتُ صَدِيقِي", tr: "zurtu ṣadiiqii" }, { en: "Say “He says the truth.”", ur: "«وہ سچ کہتا ہے» کہیں۔", a: "يَقُولُ الْحَقَّ", tr: "yaquulu l-ḥaqqa" }, { en: "Tell a man “Sleep!”", ur: "مرد سے کہیں «سو جاؤ!»", a: "نَمْ", tr: "nam" }],
+  },
+  {
+    slug: "lesson-46-defective-verbs", key: "مَشَى",
+    en: {
+      title: "Verbs ending in a vowel: {مَشَى}, {دَعَا}, {نَسِيَ}", short: "Walk, call, forget, stay.",
+      intro: "Some verbs end in a long vowel: {مَشَى} (he walked), {دَعَا} (he called, prayed), {نَسِيَ} (he forgot). In the present they end in -ii, -uu or -aa: {يَمْشِي}, {يَدْعُو}, {يَنْسَى}.",
+      points: ["Three types: {مَشَى يَمْشِي} · {دَعَا يَدْعُو} · {نَسِيَ يَنْسَى}, {بَقِيَ يَبْقَى}.", "The last vowel drops after {لَمْ}, after {لَا} for “don’t”, and in commands: {لَمْ يَنْسَ} (he didn’t forget) · {لَا تَنْسَ} (don’t forget) · {اِمْشِ} (walk!).", "With “I” the hidden letter returns: {مَشَيْتُ} I walked · {دَعَوْتُ} I called · {نَسِيتُ} I forgot."],
+    },
+    ur: {
+      title: "آخر میں حرفِ علت والے افعال: {مَشَى}، {دَعَا}، {نَسِيَ}", short: "چلنا، پکارنا، بھولنا، رہنا۔",
+      intro: "بعض افعال حرفِ علت پر ختم ہوتے ہیں: {مَشَى} (وہ چلا)، {دَعَا} (اس نے پکارا، دعا کی)، {نَسِيَ} (وہ بھول گیا)۔ مضارع میں ان کا آخر ی، و یا الف ہوتا ہے: {يَمْشِي}، {يَدْعُو}، {يَنْسَى}۔",
+      points: ["تین قسمیں: {مَشَى يَمْشِي} · {دَعَا يَدْعُو} · {نَسِيَ يَنْسَى}، {بَقِيَ يَبْقَى}۔", "{لَمْ} کے بعد، نہی میں اور امر میں آخری حرفِ علت گر جاتا ہے: {لَمْ يَنْسَ} (وہ نہیں بھولا) · {لَا تَنْسَ} (مت بھولنا) · {اِمْشِ} (چلو!)۔", "«میں» کے صیغے میں اصل حرف لوٹ آتا ہے: {مَشَيْتُ} میں چلا · {دَعَوْتُ} میں نے پکارا · {نَسِيتُ} میں بھول گیا۔"],
+    },
+    ex: [["مَشَيْتُ إِلَى الْمَسْجِدِ", "mashaytu ila l-masjidi", "I walked to the mosque.", "میں پیدل مسجد گیا۔"], ["يَمْشِي جَدِّي كُلَّ صَبَاحٍ", "yamshii jaddii kulla ṣabaaḥin", "My grandfather walks every morning.", "میرے دادا ہر صبح چہل قدمی کرتے ہیں۔"], ["نَسِيتُ مِفْتَاحِي", "nasiitu miftaaḥii", "I forgot my key.", "میں اپنی چابی بھول گیا۔"], ["يَدْعُو اللّٰهَ", "yadʿu llaaha", "He prays to Allah.", "وہ اللہ سے دعا کرتا ہے۔"], ["لَا تَنْسَ وَاجِبَكَ", "laa tansa waajibaka", "Don’t forget your homework.", "اپنا ہوم ورک نہ بھولنا۔"], ["بَقِيتُ فِي الْبَيْتِ", "baqiitu fil-bayti", "I stayed at home.", "میں گھر پر رہا۔"]],
+    practice: [{ en: "Say “I called my friend.”", ur: "«میں نے اپنے دوست کو بلایا» کہیں۔", a: "دَعَوْتُ صَدِيقِي", tr: "daʿawtu ṣadiiqii" }, { en: "Say “He did not forget.”", ur: "«وہ نہیں بھولا» کہیں۔", a: "لَمْ يَنْسَ", tr: "lam yansa" }, { en: "Tell a man “Walk slowly.”", ur: "مرد سے کہیں «آہستہ چلو»۔", a: "اِمْشِ بِبُطْءٍ", tr: "imshi bibuṭ’in" }],
+  },
+  {
+    slug: "lesson-47-masdar", key: "كِتَابَةٌ",
+    en: {
+      title: "Reading, writing, going: the verbal noun", short: "The noun for the action itself.",
+      intro: "Every verb has a noun for the action itself, like “writing” or “going”: {كَتَبَ} → {كِتَابَةٌ} (writing), {ذَهَبَ} → {ذَهَابٌ} (going), {قَرَأَ} → {قِرَاءَةٌ} (reading). For simple verbs the shape has to be learned, so learn each verb together with its verbal noun.",
+      points: ["Common ones: {فَهْمٌ} understanding · {شُرْبٌ} drinking · {أَكْلٌ} eating · {نَوْمٌ} sleep · {خُرُوجٌ} going out · {جُلُوسٌ} sitting · {عَمَلٌ} work.", "Use it like any noun: {الْقِرَاءَةُ مُفِيدَةٌ} (reading is useful), {أُحِبُّ السِّبَاحَةَ} (I like swimming).", "It can replace {أَنْ} + verb from lesson 31: {أُرِيدُ الذَّهَابَ} means the same as {أُرِيدُ أَنْ أَذْهَبَ}."],
+    },
+    ur: {
+      title: "پڑھنا، لکھنا، جانا: مصدر", short: "خود کام کا نام۔",
+      intro: "ہر فعل کا ایک اسم ہوتا ہے جو خود کام کا نام ہے، جیسے «لکھنا» یا «جانا»: {كَتَبَ} ← {كِتَابَةٌ} (لکھنا)، {ذَهَبَ} ← {ذَهَابٌ} (جانا)، {قَرَأَ} ← {قِرَاءَةٌ} (پڑھنا)۔ ثلاثی افعال کے مصدر یاد کرنے پڑتے ہیں، اس لیے ہر فعل اس کے مصدر کے ساتھ یاد کریں۔",
+      points: ["عام مصادر: {فَهْمٌ} سمجھنا · {شُرْبٌ} پینا · {أَكْلٌ} کھانا · {نَوْمٌ} نیند · {خُرُوجٌ} نکلنا · {جُلُوسٌ} بیٹھنا · {عَمَلٌ} کام۔", "اسے عام اسم کی طرح استعمال کریں: {الْقِرَاءَةُ مُفِيدَةٌ} (پڑھنا مفید ہے)، {أُحِبُّ السِّبَاحَةَ} (مجھے تیراکی پسند ہے)۔", "یہ سبق ۳۱ کے {أَنْ} + فعل کی جگہ آ سکتا ہے: {أُرِيدُ الذَّهَابَ} اور {أُرِيدُ أَنْ أَذْهَبَ} کا ایک ہی مطلب ہے۔"],
+    },
+    ex: [["الْقِرَاءَةُ مُفِيدَةٌ", "al-qiraa’atu mufiidatun", "Reading is useful.", "پڑھنا مفید ہے۔"], ["أُحِبُّ السِّبَاحَةَ", "uḥibbu s-sibaaḥata", "I like swimming.", "مجھے تیراکی پسند ہے۔"], ["الْكِتَابَةُ بِالْعَرَبِيَّةِ سَهْلَةٌ", "al-kitaabatu bil-ʿarabiyyati sahlatun", "Writing in Arabic is easy.", "عربی میں لکھنا آسان ہے۔"], ["النَّوْمُ مُبَكِّرًا مُفِيدٌ", "an-nawmu mubakkiran mufiidun", "Sleeping early is good for you.", "جلدی سونا فائدہ مند ہے۔"], ["أُرِيدُ الذَّهَابَ إِلَى السُّوقِ", "uriidu dh-dhahaaba ila s-suuqi", "I want to go to the market.", "میں بازار جانا چاہتا ہوں۔"], ["بَعْدَ الْأَكْلِ نَشْرَبُ الشَّايَ", "baʿda l-akli nashrabu sh-shaaya", "After eating we drink tea.", "کھانے کے بعد ہم چائے پیتے ہیں۔"]],
+    practice: [{ en: "Give the verbal noun of {فَهِمَ}.", ur: "{فَهِمَ} کا مصدر بتائیں۔", a: "فَهْمٌ", tr: "fahmun" }, { en: "Say “Reading the Quran is easy.”", ur: "«قرآن پڑھنا آسان ہے» کہیں۔", a: "قِرَاءَةُ الْقُرْآنِ سَهْلَةٌ", tr: "qiraa’atu l-qur’aani sahlatun" }, { en: "Say “I like writing.”", ur: "«مجھے لکھنا پسند ہے» کہیں۔", a: "أُحِبُّ الْكِتَابَةَ", tr: "uḥibbu l-kitaabata" }],
+  },
+  {
+    slug: "lesson-48-hal", key: "مُسْرِعًا",
+    en: {
+      title: "How did he come? Describing the state ({الْحَال})", short: "He came hurrying; I went on foot.",
+      intro: "To say how someone did something, add a describing word ending in -an after the sentence: {جَاءَ الطَّالِبُ مُسْرِعًا} (the student came in a hurry). Grammarians call this the {حَال}, the state.",
+      points: ["It matches the person in gender and number: {جَاءَتِ الْبِنْتُ مُسْرِعَةً} · {جَاءُوا مُسْرِعِينَ}.", "Many are doer forms from lesson 35: {رَاكِبًا} riding · {مَاشِيًا} on foot · {ضَاحِكًا} laughing · {جَالِسًا} sitting.", "Ask about it with {كَيْفَ}: {كَيْفَ جِئْتَ؟ جِئْتُ مَاشِيًا} (How did you come? I came on foot.)"],
+    },
+    ur: {
+      title: "وہ کیسے آیا؟ حال", short: "وہ جلدی میں آیا؛ میں پیدل گیا۔",
+      intro: "یہ بتانے کے لیے کہ کسی نے کام کس حالت میں کیا، جملے کے بعد ایک منصوب صفت لگائیں: {جَاءَ الطَّالِبُ مُسْرِعًا} (طالب علم جلدی جلدی آیا)۔ اسے {حَال} کہتے ہیں۔",
+      points: ["حال مذکر مؤنث اور واحد جمع میں صاحبِ حال کے مطابق ہوتا ہے: {جَاءَتِ الْبِنْتُ مُسْرِعَةً} · {جَاءُوا مُسْرِعِينَ}۔", "اکثر حال سبق ۳۵ کے اسمِ فاعل ہوتے ہیں: {رَاكِبًا} سوار ہو کر · {مَاشِيًا} پیدل · {ضَاحِكًا} ہنستے ہوئے · {جَالِسًا} بیٹھ کر۔", "اس کے بارے میں {كَيْفَ} سے پوچھیں: {كَيْفَ جِئْتَ؟ جِئْتُ مَاشِيًا} (تم کیسے آئے؟ میں پیدل آیا۔)"],
+    },
+    ex: [["جَاءَ الطَّالِبُ مُسْرِعًا", "jaa’a ṭ-ṭaalibu musriʿan", "The student came in a hurry.", "طالب علم جلدی جلدی آیا۔"], ["رَجَعَتِ الْبِنْتُ فَرِحَةً", "rajaʿati l-bintu fariḥatan", "The girl came back happy.", "لڑکی خوش خوش واپس آئی۔"], ["ذَهَبْتُ إِلَى الْعَمَلِ مَاشِيًا", "dhahabtu ila l-ʿamali maashiyan", "I went to work on foot.", "میں پیدل کام پر گیا۔"], ["دَخَلَ الْأَطْفَالُ ضَاحِكِينَ", "dakhala l-aṭfaalu ḍaaḥikiina", "The children came in laughing.", "بچے ہنستے ہوئے اندر آئے۔"], ["أَكَلْتُ الطَّعَامَ جَالِسًا", "akaltu ṭ-ṭaʿaama jaalisan", "I ate the food sitting down.", "میں نے بیٹھ کر کھانا کھایا۔"], ["كَيْفَ جِئْتَ؟ جِئْتُ رَاكِبًا", "kayfa ji’ta? ji’tu raakiban", "How did you come? I came riding.", "تم کیسے آئے؟ میں سواری پر آیا۔"]],
+    practice: [{ en: "Say “He came on foot.”", ur: "«وہ پیدل آیا» کہیں۔", a: "جَاءَ مَاشِيًا", tr: "jaa’a maashiyan" }, { en: "Say “She came back happy.”", ur: "«وہ خوش خوش واپس آئی» کہیں۔", a: "رَجَعَتْ فَرِحَةً", tr: "rajaʿat fariḥatan" }, { en: "Say “I drank the water standing.”", ur: "«میں نے کھڑے ہو کر پانی پیا» کہیں۔", a: "شَرِبْتُ الْمَاءَ قَائِمًا", tr: "sharibtu l-maa’a qaa’iman" }],
+  },
+  {
+    slug: "lesson-49-form-2", key: "عَلَّمَ",
+    en: {
+      title: "Doubling the middle letter: {فَعَّلَ}", short: "عَلَّمَ، دَرَّسَ، نَظَّفَ، رَتَّبَ",
+      intro: "Doubling the middle letter of a verb often means “make someone do it” or “do it thoroughly”: {عَلِمَ} (he knew) → {عَلَّمَ} (he taught, made someone know); {دَرَسَ} (he studied) → {دَرَّسَ} (he taught a subject). Present: {يُعَلِّمُ}, {يُدَرِّسُ}.",
+      points: ["Pattern {فَعَّلَ يُفَعِّلُ}, verbal noun {تَفْعِيلٌ}: {تَعْلِيمٌ} education, {تَدْرِيسٌ} teaching.", "More: {نَظَّفَ} clean · {رَتَّبَ} arrange · {صَلَّى} pray · {سَلَّمَ} greet · {قَدَّمَ} offer, present.", "The doer starts with {مُـ}: {مُعَلِّمٌ} and {مُدَرِّسٌ} (teacher), words you already know."],
+    },
+    ur: {
+      title: "درمیانی حرف مشدد: {فَعَّلَ}", short: "عَلَّمَ، دَرَّسَ، نَظَّفَ، رَتَّبَ",
+      intro: "فعل کے درمیانی حرف پر شد لگانے سے اکثر «کسی سے کروانا» یا «خوب کرنا» کا مطلب پیدا ہوتا ہے: {عَلِمَ} (اس نے جانا) ← {عَلَّمَ} (اس نے سکھایا)؛ {دَرَسَ} (اس نے پڑھا) ← {دَرَّسَ} (اس نے پڑھایا)۔ مضارع: {يُعَلِّمُ}، {يُدَرِّسُ}۔",
+      points: ["وزن {فَعَّلَ يُفَعِّلُ}، مصدر {تَفْعِيلٌ}: {تَعْلِيمٌ} تعلیم، {تَدْرِيسٌ} تدریس۔", "مزید: {نَظَّفَ} صاف کرنا · {رَتَّبَ} ترتیب دینا · {صَلَّى} نماز پڑھنا · {سَلَّمَ} سلام کرنا · {قَدَّمَ} پیش کرنا۔", "اسمِ فاعل {مُـ} سے شروع ہوتا ہے: {مُعَلِّمٌ} اور {مُدَرِّسٌ} (استاد)، جو آپ پہلے سے جانتے ہیں۔"],
+    },
+    ex: [["عَلَّمَنِي أَبِي الْقُرْآنَ", "ʿallamanii abii l-qur’aana", "My father taught me the Quran.", "میرے والد نے مجھے قرآن سکھایا۔"], ["يُدَرِّسُ الْعَرَبِيَّةَ فِي الْجَامِعَةِ", "yudarrisu l-ʿarabiyyata fil-jaamiʿati", "He teaches Arabic at the university.", "وہ یونیورسٹی میں عربی پڑھاتا ہے۔"], ["نَظَّفْتُ الْغُرْفَةَ", "naẓẓaftu l-ghurfata", "I cleaned the room.", "میں نے کمرہ صاف کیا۔"], ["رَتِّبْ كُتُبَكَ", "rattib kutubaka", "Arrange your books.", "اپنی کتابیں ترتیب سے رکھو۔"], ["قَدَّمَ لَنَا الْقَهْوَةَ", "qaddama lanaa l-qahwata", "He offered us coffee.", "اس نے ہمیں قہوہ پیش کیا۔"], ["التَّعْلِيمُ مُهِمٌّ", "at-taʿliimu muhimmun", "Education is important.", "تعلیم اہم ہے۔"]],
+    practice: [{ en: "Say “I taught my son.”", ur: "«میں نے اپنے بیٹے کو سکھایا» کہیں۔", a: "عَلَّمْتُ ابْنِي", tr: "ʿallamtu bnii" }, { en: "Give the present of {نَظَّفَ}.", ur: "{نَظَّفَ} کا مضارع بتائیں۔", a: "يُنَظِّفُ", tr: "yunaẓẓifu" }, { en: "Give the doer of {دَرَّسَ}.", ur: "{دَرَّسَ} کا اسمِ فاعل بتائیں۔", a: "مُدَرِّسٌ", tr: "mudarrisun" }],
+  },
+  {
+    slug: "lesson-50-form-4", key: "أَرْسَلَ",
+    en: {
+      title: "Adding {أَ}: {أَفْعَلَ}", short: "أَخْرَجَ، أَرْسَلَ، أَغْلَقَ، أَسْلَمَ",
+      intro: "Adding {أَ} at the start also often means “make it happen”: {خَرَجَ} (he went out) → {أَخْرَجَ} (he took out); {دَخَلَ} (he entered) → {أَدْخَلَ} (he brought in). Present: {يُخْرِجُ}, {يُدْخِلُ}.",
+      points: ["Pattern {أَفْعَلَ يُفْعِلُ}, verbal noun {إِفْعَالٌ}: {إِرْسَالٌ} sending, {إِسْلَامٌ} submission.", "More: {أَرْسَلَ} send · {أَغْلَقَ} close · {أَكْرَمَ} honour · {أَسْلَمَ} become Muslim · {أَحْسَنَ} do good.", "The doer starts with {مُـ}: {مُسْلِمٌ} Muslim (one who submits) · {مُحْسِنٌ} one who does good."],
+    },
+    ur: {
+      title: "شروع میں {أَ}: {أَفْعَلَ}", short: "أَخْرَجَ، أَرْسَلَ، أَغْلَقَ، أَسْلَمَ",
+      intro: "شروع میں {أَ} لگانے سے بھی اکثر «کروانا» کا مطلب آتا ہے: {خَرَجَ} (وہ نکلا) ← {أَخْرَجَ} (اس نے نکالا)؛ {دَخَلَ} (وہ داخل ہوا) ← {أَدْخَلَ} (اس نے داخل کیا)۔ مضارع: {يُخْرِجُ}، {يُدْخِلُ}۔",
+      points: ["وزن {أَفْعَلَ يُفْعِلُ}، مصدر {إِفْعَالٌ}: {إِرْسَالٌ} بھیجنا، {إِسْلَامٌ} فرمانبرداری۔", "مزید: {أَرْسَلَ} بھیجنا · {أَغْلَقَ} بند کرنا · {أَكْرَمَ} عزت کرنا · {أَسْلَمَ} اسلام لانا · {أَحْسَنَ} نیکی کرنا۔", "اسمِ فاعل {مُـ} سے: {مُسْلِمٌ} مسلمان (فرمانبردار) · {مُحْسِنٌ} نیکی کرنے والا۔"],
+    },
+    ex: [["أَرْسَلْتُ رِسَالَةً إِلَى أُمِّي", "arsaltu risaalatan ilaa ummii", "I sent a letter to my mother.", "میں نے امی کو خط بھیجا۔"], ["أَغْلِقِ الْبَابَ مِنْ فَضْلِكَ", "aghliqi l-baaba min faḍlika", "Close the door, please.", "براہ کرم دروازہ بند کر دو۔"], ["أَخْرَجَ الْمُدَرِّسُ الْكِتَابَ مِنَ الْحَقِيبَةِ", "akhraja l-mudarrisu l-kitaaba mina l-ḥaqiibati", "The teacher took the book out of the bag.", "استاد نے بستے سے کتاب نکالی۔"], ["يُكْرِمُ الضَّيْفَ", "yukrimu ḍ-ḍayfa", "He honours the guest.", "وہ مہمان کی عزت کرتا ہے۔"], ["أَسْلَمَ كَثِيرٌ مِنَ النَّاسِ", "aslama kathiirun mina n-naasi", "Many people became Muslim.", "بہت سے لوگ مسلمان ہوئے۔"], ["إِنَّ اللّٰهَ يُحِبُّ الْمُحْسِنِينَ", "inna llaaha yuḥibbu l-muḥsiniina", "Allah loves those who do good. (2:195)", "بے شک اللہ نیکی کرنے والوں کو پسند کرتا ہے۔ (البقرہ ۱۹۵)"]],
+    practice: [{ en: "Say “I closed the window.”", ur: "«میں نے کھڑکی بند کی» کہیں۔", a: "أَغْلَقْتُ النَّافِذَةَ", tr: "aghlaqtu n-naafidhata" }, { en: "Give the present of {أَرْسَلَ}.", ur: "{أَرْسَلَ} کا مضارع بتائیں۔", a: "يُرْسِلُ", tr: "yursilu" }, { en: "Give the verbal noun of {أَسْلَمَ}.", ur: "{أَسْلَمَ} کا مصدر بتائیں۔", a: "إِسْلَامٌ", tr: "islaamun" }],
+  },
+  {
+    slug: "lesson-51-forms-5-6", key: "تَعَلَّمَ",
+    en: {
+      title: "Learning and cooperating: {تَفَعَّلَ} and {تَفَاعَلَ}", short: "تَعَلَّمَ، تَكَلَّمَ، تَعَاوَنَ، تَقَابَلَ",
+      intro: "Adding {تَـ} to the doubled form gives a verb you do to or for yourself: {عَلَّمَ} (he taught) → {تَعَلَّمَ} (he learned). The pattern {تَفَاعَلَ} means doing something together: {تَعَاوَنَ} (they cooperated).",
+      points: ["{تَفَعَّلَ يَتَفَعَّلُ}: {تَعَلَّمَ} learn · {تَكَلَّمَ} speak · {تَأَخَّرَ} be late · {تَوَضَّأَ} make wudu.", "{تَفَاعَلَ يَتَفَاعَلُ}: {تَعَاوَنَ} cooperate · {تَقَابَلَ} meet each other · {تَنَاوَلَ} have (a meal).", "You met several of these earlier: {يَتَأَخَّرُ}, {أَتَوَضَّأُ}, {تَتَكَلَّمُ}. Now you know their family."],
+    },
+    ur: {
+      title: "سیکھنا اور تعاون: {تَفَعَّلَ} اور {تَفَاعَلَ}", short: "تَعَلَّمَ، تَكَلَّمَ، تَعَاوَنَ، تَقَابَلَ",
+      intro: "مشدد وزن پر {تَـ} لگانے سے ایسا فعل بنتا ہے جو آدمی اپنے لیے کرتا ہے: {عَلَّمَ} (اس نے سکھایا) ← {تَعَلَّمَ} (اس نے سیکھا)۔ وزن {تَفَاعَلَ} مل کر کام کرنے کا مطلب دیتا ہے: {تَعَاوَنَ} (انہوں نے تعاون کیا)۔",
+      points: ["{تَفَعَّلَ يَتَفَعَّلُ}: {تَعَلَّمَ} سیکھنا · {تَكَلَّمَ} بولنا · {تَأَخَّرَ} دیر کرنا · {تَوَضَّأَ} وضو کرنا۔", "{تَفَاعَلَ يَتَفَاعَلُ}: {تَعَاوَنَ} تعاون کرنا · {تَقَابَلَ} آپس میں ملنا · {تَنَاوَلَ} (کھانا) کھانا۔", "ان میں سے کئی پہلے آ چکے ہیں: {يَتَأَخَّرُ}، {أَتَوَضَّأُ}، {تَتَكَلَّمُ}۔ اب آپ ان کا خاندان جانتے ہیں۔"],
+    },
+    ex: [["تَعَلَّمْتُ الْعَرَبِيَّةَ فِي الْمَدِينَةِ", "taʿallamtu l-ʿarabiyyata fil-madiinati", "I learned Arabic in Madinah.", "میں نے عربی مدینہ میں سیکھی۔"], ["هَلْ تَتَكَلَّمُ الْعَرَبِيَّةَ؟", "hal tatakallamu l-ʿarabiyyata?", "Do you speak Arabic?", "کیا آپ عربی بولتے ہیں؟"], ["تَعَاوَنَ الطُّلَّابُ فِي الْعَمَلِ", "taʿaawana ṭ-ṭullaabu fil-ʿamali", "The students cooperated in the work.", "طلبہ نے کام میں ایک دوسرے کی مدد کی۔"], ["تَقَابَلْنَا فِي الْمَطَارِ", "taqaabalnaa fil-maṭaari", "We met at the airport.", "ہم ہوائی اڈے پر ملے۔"], ["تَنَاوَلْنَا الْعَشَاءَ مَعًا", "tanaawalnaa l-ʿashaa’a maʿan", "We had dinner together.", "ہم نے مل کر رات کا کھانا کھایا۔"], ["وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَى", "wa-taʿaawanuu ʿala l-birri wat-taqwaa", "Cooperate in goodness and piety. (5:2)", "نیکی اور تقویٰ میں ایک دوسرے کی مدد کرو۔ (المائدہ ۲)"]],
+    practice: [{ en: "Say “I am learning Arabic.”", ur: "«میں عربی سیکھ رہا ہوں» کہیں۔", a: "أَتَعَلَّمُ الْعَرَبِيَّةَ", tr: "ataʿallamu l-ʿarabiyyata" }, { en: "Say “We cooperated.”", ur: "«ہم نے تعاون کیا» کہیں۔", a: "تَعَاوَنَّا", tr: "taʿaawannaa" }, { en: "Ask a woman “Do you speak Arabic?”", ur: "عورت سے پوچھیں «کیا آپ عربی بولتی ہیں؟»", a: "هَلْ تَتَكَلَّمِينَ الْعَرَبِيَّةَ؟", tr: "hal tatakallamiina l-ʿarabiyyata?" }],
+  },
+  {
+    slug: "lesson-52-forms-8-10", key: "اِسْتَغْفَرَ",
+    en: {
+      title: "Meet, wait, ask forgiveness: {اِفْتَعَلَ} and {اِسْتَفْعَلَ}", short: "اِجْتَمَعَ، اِنْتَظَرَ، اِسْتَغْفَرَ، اِسْتَقْبَلَ",
+      intro: "Two more common patterns. {اِفْتَعَلَ} adds {ت} after the first root letter: {جَمَعَ} (gather) → {اِجْتَمَعَ} (meet, get together). {اِسْتَفْعَلَ} adds {اِسْتَـ} and often means asking for something: {غَفَرَ} (forgive) → {اِسْتَغْفَرَ} (ask forgiveness).",
+      points: ["{اِفْتَعَلَ}: {اِجْتَمَعَ} meet · {اِسْتَمَعَ} listen · {اِنْتَظَرَ} wait · {اِشْتَرَى} buy · {اِحْتَرَمَ} respect.", "{اِسْتَفْعَلَ}: {اِسْتَغْفَرَ} ask forgiveness · {اِسْتَقْبَلَ} welcome · {اِسْتَعْمَلَ} use · {اِسْتَطَاعَ} be able (lesson 31).", "The first alif is silent inside a sentence: {ثُمَّ اسْتَغْفَرَ} is read “thumma staghfara”."],
+    },
+    ur: {
+      title: "ملنا، انتظار، مغفرت مانگنا: {اِفْتَعَلَ} اور {اِسْتَفْعَلَ}", short: "اِجْتَمَعَ، اِنْتَظَرَ، اِسْتَغْفَرَ، اِسْتَقْبَلَ",
+      intro: "دو اور عام اوزان۔ {اِفْتَعَلَ} میں پہلے حرف کے بعد {ت} آتی ہے: {جَمَعَ} (جمع کرنا) ← {اِجْتَمَعَ} (جمع ہونا، ملنا)۔ {اِسْتَفْعَلَ} میں {اِسْتَـ} لگتا ہے اور اکثر «مانگنے» کا مطلب ہوتا ہے: {غَفَرَ} (معاف کرنا) ← {اِسْتَغْفَرَ} (مغفرت مانگنا)۔",
+      points: ["{اِفْتَعَلَ}: {اِجْتَمَعَ} ملنا · {اِسْتَمَعَ} سننا · {اِنْتَظَرَ} انتظار کرنا · {اِشْتَرَى} خریدنا · {اِحْتَرَمَ} احترام کرنا۔", "{اِسْتَفْعَلَ}: {اِسْتَغْفَرَ} مغفرت مانگنا · {اِسْتَقْبَلَ} استقبال کرنا · {اِسْتَعْمَلَ} استعمال کرنا · {اِسْتَطَاعَ} سکنا (سبق ۳۱)۔", "جملے کے درمیان پہلا الف پڑھا نہیں جاتا: {ثُمَّ اسْتَغْفَرَ} کو «ثُمَّسْتَغْفَرَ» پڑھیں۔"],
+    },
+    ex: [["اِجْتَمَعَ الطُّلَّابُ فِي الْقَاعَةِ", "ijtamaʿa ṭ-ṭullaabu fil-qaaʿati", "The students gathered in the hall.", "طلبہ ہال میں جمع ہوئے۔"], ["اِنْتَظِرْنِي هُنَا", "intaẓirnii hunaa", "Wait for me here.", "یہاں میرا انتظار کرو۔"], ["اِشْتَرَيْتُ سَيَّارَةً جَدِيدَةً", "ishtaraytu sayyaaratan jadiidatan", "I bought a new car.", "میں نے نئی گاڑی خریدی۔"], ["أَسْتَغْفِرُ اللّٰهَ", "astaghfiru llaaha", "I ask Allah’s forgiveness.", "میں اللہ سے مغفرت مانگتا ہوں۔"], ["اِسْتَقْبَلَنَا فِي الْمَطَارِ", "istaqbalanaa fil-maṭaari", "He welcomed us at the airport.", "اس نے ہوائی اڈے پر ہمارا استقبال کیا۔"], ["أَسْتَعْمِلُ الْحَاسُوبَ كُلَّ يَوْمٍ", "astaʿmilu l-ḥaasuuba kulla yawmin", "I use the computer every day.", "میں روز کمپیوٹر استعمال کرتا ہوں۔"]],
+    practice: [{ en: "Say “I listened to the lesson.”", ur: "«میں نے سبق سنا» کہیں۔", a: "اِسْتَمَعْتُ إِلَى الدَّرْسِ", tr: "istamaʿtu ila d-darsi" }, { en: "Say “We waited.”", ur: "«ہم نے انتظار کیا» کہیں۔", a: "اِنْتَظَرْنَا", tr: "intaẓarnaa" }, { en: "Give the present of {اِسْتَعْمَلَ}.", ur: "{اِسْتَعْمَلَ} کا مضارع بتائیں۔", a: "يَسْتَعْمِلُ", tr: "yastaʿmilu" }],
+  },
+  {
+    slug: "lesson-53-purpose", key: "لِأَتَعَلَّمَ",
+    en: {
+      title: "In order to: {لِـ} and {لِكَيْ}", short: "I came to learn; we go to pray.",
+      intro: "To say why you do something, put {لِـ} or {لِكَيْ} (in order to) before the present verb and end it in -a: {جِئْتُ لِأَتَعَلَّمَ} (I came to learn).",
+      points: ["They work like {أَنْ}: {يَذْهَبُ لِيَعْمَلَ} (he goes to work). Verbs in -uuna lose the -na: {جَاءُوا لِيَدْرُسُوا}.", "A verbal noun ending in -an can also give the reason: {سَافَرَ طَلَبًا لِلْعِلْمِ} (he travelled seeking knowledge).", "Compare {لِأَنَّ} (because) + a sentence: {لَمْ أَحْضُرْ لِأَنِّي مَرِيضٌ} (I didn’t attend because I am ill)."],
+    },
+    ur: {
+      title: "تاکہ: {لِـ} اور {لِكَيْ}", short: "میں سیکھنے آیا؛ ہم نماز پڑھنے جاتے ہیں۔",
+      intro: "کام کا مقصد بتانے کے لیے مضارع سے پہلے {لِـ} یا {لِكَيْ} (تاکہ) لگائیں اور آخر زبر کریں: {جِئْتُ لِأَتَعَلَّمَ} (میں سیکھنے آیا)۔",
+      points: ["یہ {أَنْ} کی طرح عمل کرتے ہیں: {يَذْهَبُ لِيَعْمَلَ} (وہ کام کرنے جاتا ہے)۔ {ـونَ} والے افعال کا نون گر جاتا ہے: {جَاءُوا لِيَدْرُسُوا}۔", "منصوب مصدر بھی وجہ بتا سکتا ہے: {سَافَرَ طَلَبًا لِلْعِلْمِ} (اس نے علم کی تلاش میں سفر کیا)۔", "موازنہ کریں: {لِأَنَّ} (کیونکہ) + جملہ: {لَمْ أَحْضُرْ لِأَنِّي مَرِيضٌ} (میں حاضر نہیں ہوا کیونکہ میں بیمار ہوں)۔"],
+    },
+    ex: [["جِئْتُ إِلَى السُّعُودِيَّةِ لِأَعْمَلَ", "ji’tu ila s-suʿuudiyyati li-aʿmala", "I came to Saudi Arabia to work.", "میں سعودی عرب کام کرنے آیا۔"], ["نَذْهَبُ إِلَى الْمَسْجِدِ لِنُصَلِّيَ", "nadhhabu ila l-masjidi li-nuṣalliya", "We go to the mosque to pray.", "ہم نماز پڑھنے مسجد جاتے ہیں۔"], ["اِقْرَأْ كَثِيرًا لِكَيْ تَتَعَلَّمَ", "iqra’ kathiiran likay tataʿallama", "Read a lot so that you learn.", "خوب پڑھو تاکہ سیکھو۔"], ["سَافَرَ طَلَبًا لِلْعِلْمِ", "saafara ṭalaban lil-ʿilmi", "He travelled seeking knowledge.", "اس نے علم کی تلاش میں سفر کیا۔"], ["لَمْ أَحْضُرْ لِأَنِّي كُنْتُ مَرِيضًا", "lam aḥḍur li’annii kuntu mariiḍan", "I didn’t attend because I was ill.", "میں حاضر نہیں ہوا کیونکہ میں بیمار تھا۔"], ["ذَهَبُوا إِلَى السُّوقِ لِيَشْتَرُوا طَعَامًا", "dhahabuu ila s-suuqi li-yashtaruu ṭaʿaaman", "They went to the market to buy food.", "وہ کھانا خریدنے بازار گئے۔"]],
+    practice: [{ en: "Say “I study to learn.”", ur: "«میں سیکھنے کے لیے پڑھتا ہوں» کہیں۔", a: "أَدْرُسُ لِأَتَعَلَّمَ", tr: "adrusu li-ataʿallama" }, { en: "Say “He went to the market to buy dates.”", ur: "«وہ کھجوریں خریدنے بازار گیا» کہیں۔", a: "ذَهَبَ إِلَى السُّوقِ لِيَشْتَرِيَ تَمْرًا", tr: "dhahaba ila s-suuqi li-yashtariya tamran" }, { en: "Say “because I am tired” ({تَعْبَانُ}).", ur: "«کیونکہ میں تھکا ہوا ہوں» کہیں ({تَعْبَانُ})۔", a: "لِأَنِّي تَعْبَانُ", tr: "li’annii taʿbaanu" }],
+  },
+  {
+    slug: "lesson-54-diptotes", key: "مَسَاجِدُ",
+    en: {
+      title: "Words without -un: {مَكَّةُ}, {أَحْمَدُ}, {مَسَاجِدُ}", short: "Names and plurals that never take tanween.",
+      intro: "Some nouns never take the -un or -in endings, and after a preposition they end in -a instead of -i: {هٰذَا أَحْمَدُ} (not “aḥmadun”), {فِي مَكَّةَ} (in Makkah). Grammarians call them {مَمْنُوعٌ مِنَ الصَّرْفِ}.",
+      points: ["Most names of cities and women: {مَكَّةُ}, {فَاطِمَةُ}, {زَيْنَبُ}; and men’s names on the pattern {أَفْعَلُ} or ending in {ـانُ}: {أَحْمَدُ}, {عُثْمَانُ}.", "Some plural shapes: {مَسَاجِدُ} mosques · {مَدَارِسُ} schools · {مَفَاتِيحُ} keys.", "Colours (lesson 32) and comparatives (lesson 22) are the same: {أَحْمَرُ}, {أَكْبَرُ}. With al- they behave normally again: {فِي الْمَسَاجِدِ}."],
+    },
+    ur: {
+      title: "تنوین کے بغیر الفاظ: {مَكَّةُ}، {أَحْمَدُ}، {مَسَاجِدُ}", short: "وہ نام اور جمعیں جن پر تنوین نہیں آتی۔",
+      intro: "بعض اسموں پر تنوین نہیں آتی اور حرفِ جر کے بعد ان پر زیر کی جگہ زبر آتا ہے: {هٰذَا أَحْمَدُ} («أَحْمَدٌ» نہیں)، {فِي مَكَّةَ} (مکہ میں)۔ انہیں {مَمْنُوعٌ مِنَ الصَّرْفِ} کہتے ہیں۔",
+      points: ["اکثر شہروں اور عورتوں کے نام: {مَكَّةُ}، {فَاطِمَةُ}، {زَيْنَبُ}؛ اور {أَفْعَلُ} کے وزن پر یا {ـانُ} پر ختم ہونے والے مردوں کے نام: {أَحْمَدُ}، {عُثْمَانُ}۔", "بعض جمع کے اوزان: {مَسَاجِدُ} مسجدیں · {مَدَارِسُ} مدرسے · {مَفَاتِيحُ} چابیاں۔", "رنگ (سبق ۳۲) اور اسمِ تفضیل (سبق ۲۲) بھی ایسے ہی ہیں: {أَحْمَرُ}، {أَكْبَرُ}۔ الـ کے ساتھ یہ عام اسم کی طرح ہو جاتے ہیں: {فِي الْمَسَاجِدِ}۔"],
+    },
+    ex: [["ذَهَبْتُ إِلَى مَكَّةَ", "dhahabtu ilaa makkata", "I went to Makkah.", "میں مکہ گیا۔"], ["هٰذَا أَحْمَدُ", "haadhaa aḥmadu", "This is Ahmad.", "یہ احمد ہیں۔"], ["سَلَّمْتُ عَلَى فَاطِمَةَ", "sallamtu ʿalaa faaṭimata", "I greeted Fatima.", "میں نے فاطمہ کو سلام کیا۔"], ["فِي الْمَدِينَةِ مَسَاجِدُ كَثِيرَةٌ", "fil-madiinati masaajidu kathiiratun", "There are many mosques in Madinah.", "مدینہ میں بہت سی مسجدیں ہیں۔"], ["صَلَّيْتُ فِي مَسَاجِدَ كَثِيرَةٍ", "ṣallaytu fii masaajida kathiiratin", "I prayed in many mosques.", "میں نے بہت سی مسجدوں میں نماز پڑھی۔"], ["صَلَّيْتُ فِي الْمَسَاجِدِ", "ṣallaytu fil-masaajidi", "I prayed in the mosques.", "میں نے مسجدوں میں نماز پڑھی۔"]],
+    practice: [{ en: "Say “from Makkah to Madinah”.", ur: "«مکہ سے مدینہ تک» کہیں۔", a: "مِنْ مَكَّةَ إِلَى الْمَدِينَةِ", tr: "min makkata ila l-madiinati" }, { en: "Say “I saw Zaynab.”", ur: "«میں نے زینب کو دیکھا» کہیں۔", a: "رَأَيْتُ زَيْنَبَ", tr: "ra’aytu zaynaba" }, { en: "Say “many schools”.", ur: "«بہت سے مدرسے» کہیں۔", a: "مَدَارِسُ كَثِيرَةٌ", tr: "madaarisu kathiiratun" }],
+  },
+  {
+    slug: "lesson-55-qad", key: "قَدْ",
+    en: {
+      title: "Already, may: {قَدْ}", short: "The prayer has begun; it may rain.",
+      intro: "{قَدْ} before a past verb means “already” or “indeed”: {قَدْ وَصَلَ الضُّيُوفُ} (the guests have arrived). Before a present verb it means “may” or “sometimes”: {قَدْ يَتَأَخَّرُ} (he may be late).",
+      points: ["{لَقَدْ} is stronger: {لَقَدْ نَجَحْتُ!} (I really did pass!).", "You hear it in the iqama before the prayer: {قَدْ قَامَتِ الصَّلَاةُ} (the prayer has begun).", "Another way to stress an action is to repeat it as a verbal noun: {فَرِحْتُ فَرَحًا كَبِيرًا} (I was overjoyed; literally “I rejoiced a great rejoicing”)."],
+    },
+    ur: {
+      title: "ہو چکا، ہو سکتا ہے: {قَدْ}", short: "نماز کھڑی ہو چکی؛ بارش ہو سکتی ہے۔",
+      intro: "ماضی سے پہلے {قَدْ} کا مطلب ہے «ہو چکا» یا «یقیناً»: {قَدْ وَصَلَ الضُّيُوفُ} (مہمان پہنچ چکے ہیں)۔ مضارع سے پہلے «ہو سکتا ہے» یا «کبھی کبھی»: {قَدْ يَتَأَخَّرُ} (ہو سکتا ہے وہ دیر کرے)۔",
+      points: ["{لَقَدْ} زیادہ زور دار ہے: {لَقَدْ نَجَحْتُ!} (میں واقعی کامیاب ہو گیا!)۔", "اقامت میں یہی آتا ہے: {قَدْ قَامَتِ الصَّلَاةُ} (نماز کھڑی ہو چکی)۔", "زور دینے کا ایک اور طریقہ فعل کے بعد اس کا مصدر لانا ہے: {فَرِحْتُ فَرَحًا كَبِيرًا} (میں بہت زیادہ خوش ہوا)۔"],
+    },
+    ex: [["قَدْ وَصَلَ الضُّيُوفُ", "qad waṣala ḍ-ḍuyuufu", "The guests have arrived.", "مہمان پہنچ چکے ہیں۔"], ["قَدْ قَامَتِ الصَّلَاةُ", "qad qaamati ṣ-ṣalaatu", "The prayer has begun.", "نماز کھڑی ہو چکی ہے۔"], ["قَدْ يَنْزِلُ الْمَطَرُ الْيَوْمَ", "qad yanzilu l-maṭaru l-yawma", "It may rain today.", "آج بارش ہو سکتی ہے۔"], ["لَقَدْ نَجَحْتُ فِي الِامْتِحَانِ", "laqad najaḥtu fil-imtiḥaani", "I really did pass the exam!", "میں امتحان میں کامیاب ہو گیا!"], ["فَرِحْتُ فَرَحًا كَبِيرًا", "fariḥtu faraḥan kabiiran", "I was overjoyed.", "میں بہت زیادہ خوش ہوا۔"], ["قَدْ أَفْلَحَ الْمُؤْمِنُونَ", "qad aflaḥa l-mu’minuuna", "The believers have succeeded. (23:1)", "یقیناً ایمان والے کامیاب ہو گئے۔ (المؤمنون ۱)"]],
+    practice: [{ en: "Say “The lesson has begun.”", ur: "«سبق شروع ہو چکا ہے» کہیں۔", a: "قَدْ بَدَأَ الدَّرْسُ", tr: "qad bada’a d-darsu" }, { en: "Say “He may come tomorrow.”", ur: "«ہو سکتا ہے وہ کل آئے» کہیں۔", a: "قَدْ يَأْتِي غَدًا", tr: "qad ya’tii ghadan" }, { en: "Say “I really did learn!”", ur: "«میں نے واقعی سیکھ لیا!» کہیں۔", a: "لَقَدْ تَعَلَّمْتُ", tr: "laqad taʿallamtu" }],
+  },
+  {
+    slug: "lesson-56-conditions", key: "إِذَا",
+    en: {
+      title: "If: {إِذَا}, {إِنْ} and {لَوْ}", short: "If he comes…; if you had studied…",
+      intro: "{إِذَا} (if, when) is the everyday “if” for things that are likely, and it is followed by a past verb even about the future: {إِذَا جَاءَ أَحْمَدُ فَأَخْبِرْنِي} (if Ahmad comes, tell me).",
+      points: ["{إِنْ} is a more formal “if”; both verbs take the silent ending: {إِنْ تَدْرُسْ تَنْجَحْ} (if you study, you will succeed).", "{لَوْ} is for things that did not or will not happen, and the answer starts with {لَـ}: {لَوْ دَرَسْتَ لَنَجَحْتَ} (if you had studied, you would have passed).", "When the answer is a command or a noun sentence it starts with {فَـ}: {إِذَا تَعِبْتَ فَنَمْ} (if you get tired, sleep)."],
+    },
+    ur: {
+      title: "اگر: {إِذَا}، {إِنْ} اور {لَوْ}", short: "اگر وہ آئے…؛ اگر تم پڑھتے…",
+      intro: "{إِذَا} (اگر، جب) روزمرہ کا «اگر» ہے جو متوقع باتوں کے لیے آتا ہے، اور مستقبل کے لیے بھی اس کے بعد ماضی آتا ہے: {إِذَا جَاءَ أَحْمَدُ فَأَخْبِرْنِي} (اگر احمد آئے تو مجھے بتانا)۔",
+      points: ["{إِنْ} رسمی «اگر» ہے؛ دونوں فعل مجزوم ہوتے ہیں: {إِنْ تَدْرُسْ تَنْجَحْ} (اگر تم پڑھو گے تو کامیاب ہو گے)۔", "{لَوْ} ان باتوں کے لیے ہے جو نہیں ہوئیں یا نہیں ہوں گی، اور جواب {لَـ} سے شروع ہوتا ہے: {لَوْ دَرَسْتَ لَنَجَحْتَ} (اگر تم پڑھتے تو کامیاب ہو جاتے)۔", "جب جواب امر یا جملہ اسمیہ ہو تو {فَـ} سے شروع ہوتا ہے: {إِذَا تَعِبْتَ فَنَمْ} (اگر تھک جاؤ تو سو جاؤ)۔"],
+    },
+    ex: [["إِذَا جَاءَ أَحْمَدُ فَأَخْبِرْنِي", "idhaa jaa’a aḥmadu fa-akhbirnii", "If Ahmad comes, tell me.", "اگر احمد آئے تو مجھے بتانا۔"], ["إِذَا تَعِبْتَ فَنَمْ", "idhaa taʿibta fa-nam", "If you get tired, sleep.", "اگر تھک جاؤ تو سو جاؤ۔"], ["إِنْ تَدْرُسْ تَنْجَحْ", "in tadrus tanjaḥ", "If you study, you will succeed.", "اگر تم پڑھو گے تو کامیاب ہو گے۔"], ["لَوْ دَرَسْتَ لَنَجَحْتَ", "law darasta la-najaḥta", "If you had studied, you would have passed.", "اگر تم پڑھتے تو کامیاب ہو جاتے۔"], ["لَوْ كَانَ عِنْدِي مَالٌ لَحَجَجْتُ", "law kaana ʿindii maalun la-ḥajajtu", "If I had money, I would perform Hajj.", "اگر میرے پاس پیسہ ہوتا تو میں حج کرتا۔"], ["إِذَا جَاءَ نَصْرُ اللّٰهِ وَالْفَتْحُ", "idhaa jaa’a naṣru llaahi wal-fatḥu", "When the help of Allah and the victory come (110:1)", "جب اللہ کی مدد اور فتح آ جائے (النصر ۱)"]],
+    practice: [{ en: "Say “If you are hungry, eat.” ({جُعْتَ})", ur: "«اگر بھوک لگے تو کھاؤ» کہیں ({جُعْتَ})۔", a: "إِذَا جُعْتَ فَكُلْ", tr: "idhaa juʿta fa-kul" }, { en: "Say “If it rains, I will stay at home.”", ur: "«اگر بارش ہوئی تو میں گھر پر رہوں گا» کہیں۔", a: "إِذَا نَزَلَ الْمَطَرُ بَقِيتُ فِي الْبَيْتِ", tr: "idhaa nazala l-maṭaru baqiitu fil-bayti" }, { en: "Say “If I were rich, I would travel.”", ur: "«اگر میں امیر ہوتا تو سفر کرتا» کہیں۔", a: "لَوْ كُنْتُ غَنِيًّا لَسَافَرْتُ", tr: "law kuntu ghaniyyan la-saafartu" }],
+  },
+  {
+    slug: "lesson-57-doubled-verbs", key: "رَدَّ",
+    en: {
+      title: "Verbs with a shadda: {رَدَّ}, {ظَنَّ}, {أَحَبَّ}", short: "Reply, think, love, count, show.",
+      intro: "Some verbs have the same second and third letter, written once with a shadda: {رَدَّ} (reply, return), {ظَنَّ} (think), {عَدَّ} (count). Present: {يَرُدُّ}, {يَظُنُّ}, {يَعُدُّ}.",
+      points: ["When an ending that starts with a consonant is added, the two letters separate: {رَدَّ} but {رَدَدْتُ} (I replied), {ظَنَنْتُ} (I thought).", "More: {أَحَبَّ يُحِبُّ} love · {دَلَّ يَدُلُّ} show the way · {مَدَّ يَمُدُّ} stretch out · {شَدَّ يَشُدُّ} pull.", "The command keeps the shadda in everyday use: {رُدَّ} reply! · {دُلَّنِي} show me!"],
+    },
+    ur: {
+      title: "شد والے افعال: {رَدَّ}، {ظَنَّ}، {أَحَبَّ}", short: "جواب دینا، سمجھنا، محبت کرنا، گننا، راستہ بتانا۔",
+      intro: "بعض افعال کا دوسرا اور تیسرا حرف ایک ہوتا ہے جو شد کے ساتھ ایک بار لکھا جاتا ہے: {رَدَّ} (جواب دینا، لوٹانا)، {ظَنَّ} (گمان کرنا)، {عَدَّ} (گننا)۔ مضارع: {يَرُدُّ}، {يَظُنُّ}، {يَعُدُّ}۔",
+      points: ["جب ایسی علامت لگے جو ساکن حرف سے شروع ہو تو دونوں حرف الگ ہو جاتے ہیں: {رَدَّ} مگر {رَدَدْتُ} (میں نے جواب دیا)، {ظَنَنْتُ} (میں نے سمجھا)۔", "مزید: {أَحَبَّ يُحِبُّ} محبت کرنا · {دَلَّ يَدُلُّ} راستہ بتانا · {مَدَّ يَمُدُّ} پھیلانا · {شَدَّ يَشُدُّ} کھینچنا۔", "روزمرہ امر میں شد باقی رہتی ہے: {رُدَّ} جواب دو! · {دُلَّنِي} مجھے راستہ بتاؤ!"],
+    },
+    ex: [["رَدَدْتُ عَلَى رِسَالَتِهِ", "radadtu ʿalaa risaalatihi", "I replied to his letter.", "میں نے اس کے خط کا جواب دیا۔"], ["ظَنَنْتُ أَنَّكَ مُسَافِرٌ", "ẓanantu annaka musaafirun", "I thought you were travelling.", "میں سمجھا کہ تم سفر پر ہو۔"], ["يُحِبُّ الْأَطْفَالُ الْحَلْوَى", "yuḥibbu l-aṭfaalu l-ḥalwaa", "Children love sweets.", "بچوں کو مٹھائی پسند ہے۔"], ["دُلَّنِي عَلَى الطَّرِيقِ مِنْ فَضْلِكَ", "dullanii ʿala ṭ-ṭariiqi min faḍlika", "Show me the way, please.", "براہ کرم مجھے راستہ بتا دیں۔"], ["عَدَدْتُ النُّقُودَ", "ʿadadtu n-nuquuda", "I counted the money.", "میں نے پیسے گنے۔"], ["مَدَّ يَدَهُ لِلسَّلَامِ", "madda yadahu lis-salaami", "He held out his hand to greet.", "اس نے سلام کے لیے ہاتھ بڑھایا۔"]],
+    practice: [{ en: "Say “I loved the book.”", ur: "«مجھے کتاب پسند آئی» کہیں۔", a: "أَحْبَبْتُ الْكِتَابَ", tr: "aḥbabtu l-kitaaba" }, { en: "Give the present of {رَدَّ}.", ur: "{رَدَّ} کا مضارع بتائیں۔", a: "يَرُدُّ", tr: "yaruddu" }, { en: "Say “I thought it was easy.”", ur: "«میں نے اسے آسان سمجھا» کہیں۔", a: "ظَنَنْتُهُ سَهْلًا", tr: "ẓanantuhu sahlan" }],
+  },
+  {
+    slug: "lesson-58-hamza-verbs", key: "أَكَلَ",
+    en: {
+      title: "Verbs with hamza: {أَكَلَ}, {أَخَذَ}, {سَأَلَ}", short: "Eat, take, ask, read, command.",
+      intro: "Verbs with a hamza are mostly regular: {سَأَلَ يَسْأَلُ} (ask), {قَرَأَ يَقْرَأُ} (read), {أَكَلَ يَأْكُلُ} (eat). Only the seat of the hamza changes with the vowels around it.",
+      points: ["Three short commands to memorise: {كُلْ} eat! · {خُذْ} take! · {مُرْ} order! (from {أَكَلَ}, {أَخَذَ}, {أَمَرَ}).", "With “I” in the present the two hamzas merge into {آ}: {آكُلُ} (I eat), {آخُذُ} (I take).", "The seat follows the vowels: {سَأَلَ} (on alif) · {سُئِلَ} (on ya, he was asked) · {يَقْرَءُونَ} (they read)."],
+    },
+    ur: {
+      title: "ہمزہ والے افعال: {أَكَلَ}، {أَخَذَ}، {سَأَلَ}", short: "کھانا، لینا، پوچھنا، پڑھنا، حکم دینا۔",
+      intro: "ہمزہ والے افعال زیادہ تر عام افعال کی طرح ہیں: {سَأَلَ يَسْأَلُ} (پوچھنا)، {قَرَأَ يَقْرَأُ} (پڑھنا)، {أَكَلَ يَأْكُلُ} (کھانا)۔ صرف ہمزہ کی کرسی آس پاس کی حرکات کے مطابق بدلتی ہے۔",
+      points: ["تین مختصر امر یاد کر لیں: {كُلْ} کھاؤ · {خُذْ} لو · {مُرْ} حکم دو ({أَكَلَ}، {أَخَذَ}، {أَمَرَ} سے)۔", "«میں» کے مضارع میں دونوں ہمزہ مل کر {آ} بن جاتے ہیں: {آكُلُ} (میں کھاتا ہوں)، {آخُذُ} (میں لیتا ہوں)۔", "کرسی حرکات کے مطابق: {سَأَلَ} (الف پر) · {سُئِلَ} (یا پر، اس سے پوچھا گیا) · {يَقْرَءُونَ} (وہ پڑھتے ہیں)۔"],
+    },
+    ex: [["سَأَلْتُ الْمُدَرِّسَ سُؤَالًا", "sa’altu l-mudarrisa su’aalan", "I asked the teacher a question.", "میں نے استاد سے ایک سوال پوچھا۔"], ["كُلْ بِيَمِينِكَ", "kul biyamiinika", "Eat with your right hand.", "دائیں ہاتھ سے کھاؤ۔"], ["خُذْ هٰذَا الْكِتَابَ", "khudh haadha l-kitaaba", "Take this book.", "یہ کتاب لے لو۔"], ["آكُلُ التَّمْرَ كُلَّ يَوْمٍ", "aakulu t-tamra kulla yawmin", "I eat dates every day.", "میں روز کھجور کھاتا ہوں۔"], ["قَرَأْنَا سُورَةَ الْمُلْكِ", "qara’naa suurata l-mulki", "We read Surah al-Mulk.", "ہم نے سورہ ملک پڑھی۔"], ["يَأْمُرُنَا الْإِسْلَامُ بِالصِّدْقِ", "ya’murunaa l-islaamu biṣ-ṣidqi", "Islam commands us to be truthful.", "اسلام ہمیں سچ بولنے کا حکم دیتا ہے۔"]],
+    practice: [{ en: "Tell a man “Take the key.”", ur: "مرد سے کہیں «چابی لے لو»۔", a: "خُذِ الْمِفْتَاحَ", tr: "khudhi l-miftaaḥa" }, { en: "Say “I eat bread.”", ur: "«میں روٹی کھاتا ہوں» کہیں۔", a: "آكُلُ الْخُبْزَ", tr: "aakulu l-khubza" }, { en: "Say “He asked me.”", ur: "«اس نے مجھ سے پوچھا» کہیں۔", a: "سَأَلَنِي", tr: "sa’alanii" }],
+  },
+  {
+    slug: "lesson-59-dual-verbs", key: "يَكْتُبَانِ",
+    en: {
+      title: "Two people doing something: dual verbs", short: "كَتَبَا، يَكْتُبَانِ، أَنْتُمَا، هُمَا",
+      intro: "When two people do something, the verb has its own ending: {كَتَبَا} (the two of them wrote), {يَكْتُبَانِ} (the two of them write). For two women: {كَتَبَتَا}, {تَكْتُبَانِ}.",
+      points: ["You two: {كَتَبْتُمَا} (past) · {تَكْتُبَانِ} (present). Pronouns: {هُمَا} they two · {أَنْتُمَا} you two.", "After {أَنْ}, {لَنْ} and {لَمْ}, and in commands, the final -ni drops: {لَمْ يَكْتُبَا} · {اُكْتُبَا}.", "Their possessions: {كِتَابُهُمَا} the book of the two of them. For dual nouns, see lesson 15."],
+    },
+    ur: {
+      title: "دو افراد کا کام: تثنیہ کے افعال", short: "كَتَبَا، يَكْتُبَانِ، أَنْتُمَا، هُمَا",
+      intro: "جب دو افراد کوئی کام کریں تو فعل کی اپنی علامت ہوتی ہے: {كَتَبَا} (ان دونوں نے لکھا)، {يَكْتُبَانِ} (وہ دونوں لکھتے ہیں)۔ دو عورتوں کے لیے: {كَتَبَتَا}، {تَكْتُبَانِ}۔",
+      points: ["تم دونوں: {كَتَبْتُمَا} (ماضی) · {تَكْتُبَانِ} (مضارع)۔ ضمیریں: {هُمَا} وہ دونوں · {أَنْتُمَا} تم دونوں۔", "{أَنْ}، {لَنْ}، {لَمْ} کے بعد اور امر میں آخری نون گر جاتا ہے: {لَمْ يَكْتُبَا} · {اُكْتُبَا}۔", "ملکیت: {كِتَابُهُمَا} ان دونوں کی کتاب۔ اسم کے تثنیہ کے لیے سبق ۱۵ دیکھیں۔"],
+    },
+    ex: [["الطَّالِبَانِ يَدْرُسَانِ", "aṭ-ṭaalibaani yadrusaani", "The two students are studying.", "دونوں طالب علم پڑھ رہے ہیں۔"], ["الْبِنْتَانِ كَتَبَتَا الدَّرْسَ", "al-bintaani katabataa d-darsa", "The two girls wrote the lesson.", "دونوں لڑکیوں نے سبق لکھا۔"], ["هَلْ أَنْتُمَا مُسْتَعِدَّانِ؟", "hal antumaa mustaʿiddaani?", "Are you two ready?", "کیا تم دونوں تیار ہو؟"], ["هُمَا أَخَوَانِ", "humaa akhawaani", "They are two brothers.", "وہ دونوں بھائی ہیں۔"], ["اِجْلِسَا هُنَا", "ijlisaa hunaa", "Sit here, you two.", "تم دونوں یہاں بیٹھو۔"], ["لَمْ يَحْضُرَا الدَّرْسَ", "lam yaḥḍuraa d-darsa", "The two of them didn’t attend the lesson.", "وہ دونوں سبق میں حاضر نہیں ہوئے۔"]],
+    practice: [{ en: "Say “The two men went.”", ur: "«دونوں آدمی گئے» کہیں۔", a: "الرَّجُلَانِ ذَهَبَا", tr: "ar-rajulaani dhahabaa" }, { en: "Ask two people “What are you two doing?”", ur: "دو افراد سے پوچھیں «تم دونوں کیا کر رہے ہو؟»", a: "مَاذَا تَفْعَلَانِ؟", tr: "maadhaa tafʿalaani?" }, { en: "Say “The two of them did not write.”", ur: "«ان دونوں نے نہیں لکھا» کہیں۔", a: "لَمْ يَكْتُبَا", tr: "lam yaktubaa" }],
+  },
+  {
+    slug: "lesson-60-place-tool-nouns", key: "مَكْتَبٌ",
+    en: {
+      title: "Place and tool words: {مَسْجِدٌ} and {مِفْتَاحٌ}", short: "The patterns behind mosque, office, kitchen and key.",
+      intro: "Two patterns build hundreds of everyday words. {مَفْعَلٌ} or {مَفْعِلٌ} names the place of an action: {كَتَبَ} → {مَكْتَبٌ} (office, desk), {سَجَدَ} → {مَسْجِدٌ} (mosque, the place of prostration). {مِفْعَالٌ} or {مِفْعَلٌ} names the tool: {فَتَحَ} → {مِفْتَاحٌ} (key, the opener).",
+      points: ["Places: {مَطْبَخٌ} kitchen ({طَبَخَ} cook) · {مَلْعَبٌ} playground ({لَعِبَ} play) · {مَطْعَمٌ} restaurant ({طَعِمَ} eat) · {مَدْرَسَةٌ} school ({دَرَسَ} study) · {مَطَارٌ} airport ({طَارَ} fly).", "Tools: {مِفْتَاحٌ} key · {مِقَصٌّ} scissors · {مِيزَانٌ} scales · {مِصْبَاحٌ} lamp · {مِكْنَسَةٌ} broom.", "Look back at lesson 1: {مَسْجِدٌ}, {مَكْتَبٌ} and {مِفْتَاحٌ} were among your first words. The root behind each word is the key to Arabic."],
+    },
+    ur: {
+      title: "جگہ اور آلے کے نام: {مَسْجِدٌ} اور {مِفْتَاحٌ}", short: "مسجد، دفتر، باورچی خانہ اور چابی کے پیچھے اوزان۔",
+      intro: "دو اوزان سے سیکڑوں روزمرہ الفاظ بنتے ہیں۔ {مَفْعَلٌ} یا {مَفْعِلٌ} کام کی جگہ کا نام ہے (اسمِ ظرف): {كَتَبَ} ← {مَكْتَبٌ} (دفتر، میز)، {سَجَدَ} ← {مَسْجِدٌ} (سجدے کی جگہ)۔ {مِفْعَالٌ} یا {مِفْعَلٌ} آلے کا نام ہے (اسمِ آلہ): {فَتَحَ} ← {مِفْتَاحٌ} (کھولنے کا آلہ، چابی)۔",
+      points: ["جگہیں: {مَطْبَخٌ} باورچی خانہ ({طَبَخَ} پکانا) · {مَلْعَبٌ} کھیل کا میدان ({لَعِبَ} کھیلنا) · {مَطْعَمٌ} ریستوران ({طَعِمَ} کھانا) · {مَدْرَسَةٌ} مدرسہ ({دَرَسَ} پڑھنا) · {مَطَارٌ} ہوائی اڈا ({طَارَ} اڑنا)۔", "آلات: {مِفْتَاحٌ} چابی · {مِقَصٌّ} قینچی · {مِيزَانٌ} ترازو · {مِصْبَاحٌ} چراغ · {مِكْنَسَةٌ} جھاڑو۔", "سبق ۱ پر نظر ڈالیں: {مَسْجِدٌ}، {مَكْتَبٌ} اور {مِفْتَاحٌ} آپ کے پہلے الفاظ میں تھے۔ ہر لفظ کا مادہ ہی عربی کی کنجی ہے۔"],
+    },
+    ex: [["صَلَّيْنَا فِي الْمَسْجِدِ", "ṣallaynaa fil-masjidi", "We prayed in the mosque.", "ہم نے مسجد میں نماز پڑھی۔"], ["أُمِّي فِي الْمَطْبَخِ", "ummii fil-maṭbakhi", "My mother is in the kitchen.", "امی باورچی خانے میں ہیں۔"], ["تَغَدَّيْنَا فِي مَطْعَمٍ", "taghaddaynaa fii maṭʿamin", "We had lunch in a restaurant.", "ہم نے ایک ریستوران میں دوپہر کا کھانا کھایا۔"], ["وَصَلْنَا إِلَى الْمَطَارِ", "waṣalnaa ila l-maṭaari", "We arrived at the airport.", "ہم ہوائی اڈے پہنچے۔"], ["أَيْنَ الْمِفْتَاحُ؟", "ayna l-miftaaḥu?", "Where is the key?", "چابی کہاں ہے؟"], ["يَلْعَبُ الْأَوْلَادُ فِي الْمَلْعَبِ", "yalʿabu l-awlaadu fil-malʿabi", "The boys play in the playground.", "لڑکے میدان میں کھیلتے ہیں۔"]],
+    practice: [{ en: "Make the place word from {جَلَسَ} (sit).", ur: "{جَلَسَ} (بیٹھنا) سے اسمِ ظرف بنائیں۔", a: "مَجْلِسٌ", tr: "majlisun", noteEn: "a sitting room, a council", noteUr: "بیٹھک، مجلس" }, { en: "Make the place word from {نَزَلَ} (stay, go down).", ur: "{نَزَلَ} (اترنا، ٹھہرنا) سے اسمِ ظرف بنائیں۔", a: "مَنْزِلٌ", tr: "manzilun", noteEn: "a home, a stopping place", noteUr: "گھر، منزل" }, { en: "Make the tool word from {نَشَرَ} (to saw).", ur: "{نَشَرَ} (آری چلانا) سے اسمِ آلہ بنائیں۔", a: "مِنْشَارٌ", tr: "minshaarun", noteEn: "a saw", noteUr: "آری" }],
+  },
 ];
 
 // ---------------------------------------------------------------- interface text
@@ -2685,6 +3045,7 @@ const ICONS = {
   no: '<circle cx="50" cy="50" r="10" fill="#fff" stroke="var(--bad)" stroke-width="3"/><path d="M43 57l14-14" stroke="var(--bad)" stroke-width="3"/>',
   arrow: '<path d="M8 32h40M38 22l10 10-10 10" stroke-width="3"/>',
   kaaba: '<path d="M6 56h52" stroke-opacity=".5"/><path class="s" d="M12 22l20-7 20 7v28l-20 7-20-7z" style="fill:#1d2724"/><path d="M12 22l20 7 20-7M32 29v28" stroke="#3a4a44"/><path class="g" d="M12 28l20 7 20-7v5l-20 7-20-7z"/><path class="g" d="M37 42l6-2v11l-6 2z"/>',
+  rain: '<path class="s" d="M17 40a9 9 0 0 1 1-18 13 13 0 0 1 25 1 8.5 8.5 0 0 1 3 17z"/><path d="M22 46l-3 7M32 46l-3 7M42 46l-3 7" stroke="#5b8fd6"/>',
   hand: '<path class="s" d="M20 56V30a4 4 0 0 1 8 0v-14a4 4 0 0 1 8 0v12a4 4 0 0 1 8 0v4a4 4 0 0 1 8 0v12c0 8-6 12-14 12H20z"/><path class="g" d="M14 10c0 4 4 4 4 8M8 16c0 4 4 4 4 8" stroke-opacity=".7"/>',
 };
 const clockIcon = (h, m) => {
@@ -2748,6 +3109,30 @@ const LESSON_PICS = {
   'lesson-34-before-after': [['hand', 'اِغْسِلْ يَدَيْكَ قَبْلَ الْأَكْلِ', 'Wash your hands before eating.', 'کھانے سے پہلے ہاتھ دھوؤ۔'], ['mosque', 'قَبْلَ الصَّلَاةِ', 'before the prayer', 'نماز سے پہلے'], ['tea', 'بَعْدَ الْغَدَاءِ', 'after lunch', 'دوپہر کے کھانے کے بعد'], ['calendar', 'بَعْدَ غَدٍ', 'the day after tomorrow', 'پرسوں']],
   'lesson-35-doer-done': [[[['man', -10, 0, 1], ['paper', 30, 24, .5]], 'كَاتِبٌ', 'a writer', 'لکھنے والا'], ['paper', 'مَكْتُوبٌ', 'written; a letter', 'لکھا ہوا؛ خط'], ['doorOpen', 'مَفْتُوحٌ', 'open (opened)', 'کھلا ہوا'], ['penBroken', 'مَكْسُورٌ', 'broken', 'ٹوٹا ہوا'], ['cup', 'مَشْرُوبٌ', 'a drink', 'مشروب'], ['chair', 'مَصْنُوعٌ مِنَ الْخَشَبِ', 'made of wood', 'لکڑی سے بنا ہوا']],
   'lesson-36-hijri-months': [['moon', 'الْهِلَالُ', 'the new crescent', 'نیا چاند'], [[['moon', -4, 0, .8], ['star', 34, 4, .4], ['star', 40, 30, .3]], 'رَمَضَانُ', 'Ramadan', 'رمضان'], ['kaaba', 'ذُو الْحِجَّةِ', 'Dhul-Hijjah, the month of Hajj', 'ذوالحجہ، حج کا مہینہ'], ['calendar', 'مُحَرَّمٌ أَوَّلُ شَهْرٍ', 'Muharram is the first month.', 'محرم پہلا مہینہ ہے۔']],
+  "lesson-37-past-all": [[[["boy", -14, 0, 1], ["boy", 0, 0, 1], ["boy", 14, 0, 1], ["mosque", 36, 30, 0.45]], "ذَهَبُوا إِلَى الْمَسْجِدِ", "They went to the mosque.", "وہ سب مسجد گئے۔"], [[["girl", -14, 0, 1], ["girl", 8, 0, 1], ["paper", 38, 26, 0.45]], "كَتَبْنَ الدَّرْسَ", "They (f) wrote the lesson.", "انہوں نے (لڑکیوں نے) سبق لکھا۔"], ["food", "أَكَلْنَا الطَّعَامَ", "We ate the food.", "ہم نے کھانا کھایا۔"], [[["school", 0, 0, 1]], "خَرَجُوا مِنَ الْمَدْرَسَةِ", "They left the school.", "وہ اسکول سے نکلے۔"]],
+  "lesson-38-present-all": [[[["boy", -14, 0, 1], ["boy", 0, 0, 1], ["boy", 14, 0, 1], ["ball", 36, 34, 0.4]], "يَلْعَبُونَ", "They are playing.", "وہ کھیل رہے ہیں۔"], [[["woman", -12, 0, 1], ["woman", 10, 0, 1], ["food", 30, 34, 0.45]], "يَطْبُخْنَ الطَّعَامَ", "They (f) are cooking.", "وہ کھانا پکا رہی ہیں۔"], ["tea", "نَشْرَبُ الشَّايَ", "We drink tea.", "ہم چائے پیتے ہیں۔"], [[["woman", -10, 0, 1], ["paper", 30, 24, 0.5]], "هِيَ تَكْتُبُ رِسَالَةً", "She is writing a letter.", "وہ خط لکھ رہی ہے۔"]],
+  "lesson-39-passive": [[[["paper", -4, 0, 1], ["pen", 18, 10, 0.7]], "كُتِبَ الدَّرْسُ", "The lesson was written.", "سبق لکھا گیا۔"], ["doorOpen", "فُتِحَ الْبَابُ", "The door was opened.", "دروازہ کھولا گیا۔"], ["window", "فُتِحَتِ النَّافِذَةُ", "The window was opened.", "کھڑکی کھولی گئی۔"], [[["school", 0, 0, 1], ["no", 0, 0, 1]], "أُغْلِقَتِ الْمَدْرَسَةُ", "The school was closed.", "اسکول بند کر دیا گیا۔"]],
+  "lesson-40-kull-baad": [["books", "كُلُّ الْكُتُبِ", "all the books", "سب کتابیں"], [[["apple", -4, 10, 0.55], ["apple", 26, 10, 0.55]], "بَعْضُ التُّفَّاحِ", "some of the apples", "کچھ سیب"], ["calendar", "كُلَّ يَوْمٍ", "every day", "ہر روز"], [[["boy", -14, 0, 1], ["boy", 0, 0, 1], ["boy", 14, 0, 1]], "كُلُّهُمْ طُلَّابٌ", "All of them are students.", "وہ سب طالب علم ہیں۔"]],
+  "lesson-41-ya": [["boy", "يَا خَالِدُ", "Khalid!", "اے خالد!"], [[["man", -10, 0, 1], ["book", 30, 26, 0.5]], "يَا أُسْتَاذُ", "Teacher!", "استاد صاحب!"], [[["boy", -14, 0, 1], ["boy", 0, 0, 1], ["boy", 14, 0, 1]], "يَا أَيُّهَا الطُّلَّابُ", "O students!", "اے طلبہ!"], ["kaaba", "يَا رَبِّ", "O my Lord!", "اے میرے رب!"]],
+  "lesson-42-illa": [[[["boy", -14, 0, 1], ["boy", 0, 0, 1], ["boy", 14, 0, 1], ["no", 0, 0, 1]], "حَضَرُوا إِلَّا خَالِدًا", "They came, except Khalid.", "خالد کے سوا سب آئے۔"], [[["apple", -4, -2, 0.5], ["apple", 28, -2, 0.5], ["apple", -4, 30, 0.5], ["apple", 28, 30, 0.5], ["no", 0, 0, 1]], "إِلَّا وَاحِدَةً", "except one", "ایک کے سوا"], ["book", "مَا عِنْدِي إِلَّا كِتَابٌ", "I have only a book.", "میرے پاس صرف ایک کتاب ہے۔"], ["calendar", "إِلَّا يَوْمَ الْجُمُعَةِ", "except on Friday", "جمعہ کے سوا"]],
+  "lesson-43-sisters-of-inna": [[[["house", -4, 22, 0.55], ["tree", 22, 0, 1]], "الْبَيْتُ صَغِيرٌ لٰكِنَّ الشَّجَرَةَ كَبِيرَةٌ", "The house is small but the tree is big.", "گھر چھوٹا ہے لیکن درخت بڑا ہے۔"], ["moon", "كَأَنَّ الْقَمَرَ مِصْبَاحٌ", "As if the moon were a lamp.", "گویا چاند ایک چراغ ہے۔"], [[["bed", 0, 8, 1]], "لَعَلَّهُ مَرِيضٌ", "Perhaps he is ill.", "شاید وہ بیمار ہے۔"], ["car", "قَدِيمَةٌ لٰكِنَّهَا سَرِيعَةٌ", "Old, but fast.", "پرانی لیکن تیز۔"]],
+  "lesson-44-sisters-of-kaana": [["cup@#d6ecff", "صَارَ الْمَاءُ ثَلْجًا", "The water became ice.", "پانی برف بن گیا۔"], ["sun", "أَصْبَحَ الْجَوُّ حَارًّا", "The weather became hot.", "موسم گرم ہو گیا۔"], [[["boy", -16, 0, 1], ["arrow", 18, 10, 0.45], ["man", 22, 0, 0.75]], "صَارَ الطِّفْلُ رَجُلًا", "The child became a man.", "بچہ مرد بن گیا۔"], ["doorOpen", "لَا يَزَالُ الْمَحَلُّ مَفْتُوحًا", "The shop is still open.", "دکان ابھی تک کھلی ہے۔"]],
+  "lesson-45-hollow-verbs": [[[["man", -10, 0, 1], ["book", 30, 26, 0.5]], "قَالَ الْمُدَرِّسُ", "The teacher said…", "استاد نے کہا…"], ["palm", "يَبِيعُ التَّاجِرُ التَّمْرَ", "The merchant sells dates.", "تاجر کھجوریں بیچتا ہے۔"], [[["bed", 0, 8, 1], ["moon", 34, -2, 0.4]], "نِمْتُ مُبَكِّرًا", "I slept early.", "میں جلدی سو گیا۔"], ["mosque", "قُمْ لِلصَّلَاةِ", "Get up for the prayer.", "نماز کے لیے اٹھو۔"]],
+  "lesson-46-defective-verbs": [[[["man", -12, 4, 0.85], ["arrow", 14, 0, 0.45], ["mosque", 30, 18, 0.55]], "مَشَيْتُ إِلَى الْمَسْجِدِ", "I walked to the mosque.", "میں پیدل مسجد گیا۔"], [[["key", 0, 0, 1], ["no", 0, 0, 1]], "نَسِيتُ مِفْتَاحِي", "I forgot my key.", "میں اپنی چابی بھول گیا۔"], ["house", "بَقِيتُ فِي الْبَيْتِ", "I stayed at home.", "میں گھر پر رہا۔"], ["kaaba", "يَدْعُو اللّٰهَ", "He prays to Allah.", "وہ اللہ سے دعا کرتا ہے۔"]],
+  "lesson-47-masdar": [["book", "الْقِرَاءَةُ", "reading", "پڑھنا"], [[["paper", -4, 0, 1], ["pen", 18, 10, 0.7]], "الْكِتَابَةُ", "writing", "لکھنا"], [[["bed", 0, 8, 1], ["moon", 34, -2, 0.4]], "النَّوْمُ", "sleep", "نیند"], ["food", "الْأَكْلُ", "eating", "کھانا"], ["cup", "الشُّرْبُ", "drinking", "پینا"], ["ball", "اللَّعِبُ", "playing", "کھیلنا"]],
+  "lesson-48-hal": [[[["boy", -14, 0, 1], ["arrow", 16, 8, 0.5]], "جَاءَ مُسْرِعًا", "He came in a hurry.", "وہ جلدی جلدی آیا۔"], ["girl", "رَجَعَتْ فَرِحَةً", "She came back happy.", "وہ خوش خوش واپس آئی۔"], [[["man", -12, 4, 0.85], ["arrow", 14, 0, 0.45], ["building", 34, 18, 0.45]], "ذَهَبْتُ مَاشِيًا", "I went on foot.", "میں پیدل گیا۔"], ["car", "جِئْتُ رَاكِبًا", "I came riding.", "میں سواری پر آیا۔"]],
+  "lesson-49-form-2": [[[["man", -14, 0, 1], ["boy", 10, 0, 1], ["book", 36, 30, 0.4]], "عَلَّمَنِي أَبِي", "My father taught me.", "میرے والد نے مجھے سکھایا۔"], ["school", "يُدَرِّسُ فِي الْمَدْرَسَةِ", "He teaches at the school.", "وہ اسکول میں پڑھاتا ہے۔"], ["books", "رَتِّبْ كُتُبَكَ", "Arrange your books.", "اپنی کتابیں ترتیب سے رکھو۔"], ["tea", "قَدَّمَ لَنَا الْقَهْوَةَ", "He offered us coffee.", "اس نے ہمیں قہوہ پیش کیا۔"]],
+  "lesson-50-form-4": [[[["paper", -4, 0, 1], ["arrow", 24, 14, 0.5]], "أَرْسَلْتُ رِسَالَةً", "I sent a letter.", "میں نے خط بھیجا۔"], ["door", "أَغْلِقِ الْبَابَ", "Close the door.", "دروازہ بند کرو۔"], [[["bag", 0, 10, 0.9], ["book", 14, -8, 0.5]], "أَخْرَجَ الْكِتَابَ", "He took out the book.", "اس نے کتاب نکالی۔"], ["mosque", "أَسْلَمَ", "He became Muslim.", "وہ مسلمان ہوا۔"]],
+  "lesson-51-forms-5-6": [[[["boy", -12, 0, 1], ["book", 28, 24, 0.5]], "تَعَلَّمْتُ الْعَرَبِيَّةَ", "I learned Arabic.", "میں نے عربی سیکھی۔"], [[["man", -12, 0, 1], ["man", 12, 0, 1]], "تَكَلَّمْنَا", "We talked.", "ہم نے بات کی۔"], [[["boy", -14, 0, 1], ["boy", 0, 0, 1], ["boy", 14, 0, 1]], "تَعَاوَنَ الطُّلَّابُ", "The students cooperated.", "طلبہ نے تعاون کیا۔"], ["food", "تَنَاوَلْنَا الْعَشَاءَ", "We had dinner.", "ہم نے رات کا کھانا کھایا۔"]],
+  "lesson-52-forms-8-10": [[[["boy", -14, 0, 1], ["boy", 0, 0, 1], ["boy", 14, 0, 1], ["building", 38, 22, 0.4]], "اِجْتَمَعَ الطُّلَّابُ", "The students gathered.", "طلبہ جمع ہوئے۔"], ["clock:4:0", "اِنْتَظِرْنِي", "Wait for me.", "میرا انتظار کرو۔"], ["car", "اِشْتَرَيْتُ سَيَّارَةً", "I bought a car.", "میں نے گاڑی خریدی۔"], [[["plane", -4, -4, 0.7], ["man", 24, 14, 0.7]], "اِسْتَقْبَلَنَا فِي الْمَطَارِ", "He welcomed us at the airport.", "اس نے ہوائی اڈے پر ہمارا استقبال کیا۔"]],
+  "lesson-53-purpose": [[[["plane", -4, -4, 0.7], ["building", 30, 14, 0.6]], "جِئْتُ لِأَعْمَلَ", "I came to work.", "میں کام کرنے آیا۔"], ["mosque", "لِنُصَلِّيَ", "in order to pray", "نماز پڑھنے کے لیے"], ["book", "لِكَيْ تَتَعَلَّمَ", "so that you learn", "تاکہ تم سیکھو"], ["bag", "لِيَشْتَرُوا طَعَامًا", "to buy food", "کھانا خریدنے کے لیے"]],
+  "lesson-54-diptotes": [["kaaba", "فِي مَكَّةَ", "in Makkah", "مکہ میں"], [[["mosque", -2, 4, 0.5], ["mosque", 30, 4, 0.5], ["mosque", 14, 32, 0.5]], "مَسَاجِدُ", "mosques", "مسجدیں"], [[["key", -2, 4, 0.5], ["key", 30, 4, 0.5], ["key", 14, 32, 0.5]], "مَفَاتِيحُ", "keys", "چابیاں"], [[["school", -2, 4, 0.5], ["school", 30, 4, 0.5], ["school", 14, 32, 0.5]], "مَدَارِسُ", "schools", "مدرسے"]],
+  "lesson-55-qad": [["mosque", "قَدْ قَامَتِ الصَّلَاةُ", "The prayer has begun.", "نماز کھڑی ہو چکی ہے۔"], ["rain", "قَدْ يَنْزِلُ الْمَطَرُ", "It may rain.", "بارش ہو سکتی ہے۔"], [[["paper", -4, 0, 1], ["star", 26, 26, 0.5]], "لَقَدْ نَجَحْتُ", "I really did pass!", "میں کامیاب ہو گیا!"], [[["man", -12, 0, 1], ["man", 12, 0, 1]], "قَدْ وَصَلَ الضُّيُوفُ", "The guests have arrived.", "مہمان پہنچ چکے ہیں۔"]],
+  "lesson-56-conditions": [[[["rain", -4, -6, 0.7], ["house", 22, 22, 0.6]], "إِذَا نَزَلَ الْمَطَرُ", "If it rains…", "اگر بارش ہوئی…"], [[["bed", 0, 8, 1], ["moon", 34, -2, 0.4]], "إِذَا تَعِبْتَ فَنَمْ", "If you get tired, sleep.", "اگر تھک جاؤ تو سو جاؤ۔"], [[["book", -4, 0, 1], ["star", 30, 28, 0.45]], "إِنْ تَدْرُسْ تَنْجَحْ", "If you study, you will succeed.", "اگر تم پڑھو گے تو کامیاب ہو گے۔"], ["kaaba", "لَوْ كَانَ عِنْدِي مَالٌ لَحَجَجْتُ", "If I had money, I would perform Hajj.", "اگر میرے پاس پیسہ ہوتا تو میں حج کرتا۔"]],
+  "lesson-57-doubled-verbs": [[[["paper", -4, 0, 1], ["arrow", 24, 14, 0.5]], "رَدَدْتُ عَلَى رِسَالَتِهِ", "I replied to his letter.", "میں نے اس کے خط کا جواب دیا۔"], ["num:١٢٣", "عَدَدْتُ النُّقُودَ", "I counted the money.", "میں نے پیسے گنے۔"], ["hand", "مَدَّ يَدَهُ", "He held out his hand.", "اس نے ہاتھ بڑھایا۔"], [[["man", -12, 4, 0.85], ["arrow", 14, 0, 0.45], ["mosque", 30, 18, 0.55]], "دُلَّنِي عَلَى الطَّرِيقِ", "Show me the way.", "مجھے راستہ بتاؤ۔"]],
+  "lesson-58-hamza-verbs": [[[["boy", -12, 0, 1], ["man", 12, 0, 1]], "سَأَلْتُ الْمُدَرِّسَ", "I asked the teacher.", "میں نے استاد سے پوچھا۔"], ["food", "كُلْ بِيَمِينِكَ", "Eat with your right hand.", "دائیں ہاتھ سے کھاؤ۔"], [[["book", -4, -4, 0.8], ["hand", 22, 18, 0.6]], "خُذْ هٰذَا الْكِتَابَ", "Take this book.", "یہ کتاب لے لو۔"], ["palm", "آكُلُ التَّمْرَ", "I eat dates.", "میں کھجور کھاتا ہوں۔"]],
+  "lesson-59-dual-verbs": [[[["boy", -14, 0, 1], ["boy", 8, 0, 1], ["book", 36, 30, 0.4]], "الطَّالِبَانِ يَدْرُسَانِ", "The two students are studying.", "دونوں طالب علم پڑھ رہے ہیں۔"], [[["girl", -14, 0, 1], ["girl", 8, 0, 1], ["paper", 38, 26, 0.45]], "الْبِنْتَانِ كَتَبَتَا", "The two girls wrote.", "دونوں لڑکیوں نے لکھا۔"], [[["man", -12, 0, 1], ["man", 12, 0, 1]], "هُمَا أَخَوَانِ", "They are two brothers.", "وہ دونوں بھائی ہیں۔"], [[["chair", -4, 10, 0.6], ["chair", 28, 10, 0.6]], "اِجْلِسَا هُنَا", "Sit here, you two.", "تم دونوں یہاں بیٹھو۔"]],
+  "lesson-60-place-tool-nouns": [["mosque", "مَسْجِدٌ", "a mosque (place of prostration)", "مسجد (سجدے کی جگہ)"], ["desk", "مَكْتَبٌ", "a desk, an office", "میز، دفتر"], ["key", "مِفْتَاحٌ", "a key (opener)", "چابی (کھولنے کا آلہ)"], ["plane", "مَطَارٌ", "an airport (place of flying)", "ہوائی اڈا (اڑنے کی جگہ)"], ["school", "مَدْرَسَةٌ", "a school (place of study)", "مدرسہ (پڑھنے کی جگہ)"], ["ball", "مَلْعَبٌ", "a playground (place of play)", "کھیل کا میدان"]],
 };
 function picBoard(lang, slug) {
   const items = LESSON_PICS[slug];
@@ -2766,8 +3151,8 @@ function lessonsPage(lang) {
   const ur = lang === 'ur';
   const item = (l, i) => `<li><a href="${link(lang, l.slug + '.html')}"><span class="num">${num(lang, i + 1)}</span><span><strong>${fmt(l[lang].title)}</strong><p>${fmt(l[lang].short)}</p></span><span class="ar" lang="ar">${l.key}</span></a></li>`;
   const parts = ur
-    ? [[0, 8, 'حصہ اول: پہلے جملے'], [8, 16, 'حصہ دوم: صفت، گنتی اور روزمرہ کے افعال'], [16, 24, 'حصہ سوم: حکم، مستقبل، وجہ اور وقت'], [24, 32, 'حصہ چہارم: تھا، نہیں کرے گا، نہی، تعجب، خواہش اور رنگ'], [32, 40, 'حصہ پنجم: بڑی گنتی، پہلے اور بعد، اوزان اور اسلامی مہینے']]
-    : [[0, 8, 'Part 1: First sentences'], [8, 16, 'Part 2: Describing, counting and everyday verbs'], [16, 24, 'Part 3: Instructions, the future, reasons and time'], [24, 32, 'Part 4: Was, will not, don’t, wonder, wanting and colours'], [32, 40, 'Part 5: Big numbers, before and after, word patterns and the Islamic months']];
+    ? [[0, 8, 'حصہ اول: پہلے جملے'], [8, 16, 'حصہ دوم: صفت، گنتی اور روزمرہ کے افعال'], [16, 24, 'حصہ سوم: حکم، مستقبل، وجہ اور وقت'], [24, 32, 'حصہ چہارم: تھا، نہیں کرے گا، نہی، تعجب، خواہش اور رنگ'], [32, 36, 'حصہ پنجم: بڑی گنتی، پہلے اور بعد، اوزان اور اسلامی مہینے'], [36, 42, 'حصہ ششم: پوری گردان، مجہول، کل و بعض، ندا اور استثناء'], [42, 48, 'حصہ ہفتم: إنّ اور کان کی بہنیں، معتل افعال، مصدر اور حال'], [48, 54, 'حصہ ہشتم: مزید فیہ کے ابواب، مقصد اور غیر منصرف'], [54, 60, 'حصہ نہم: قد، شرط، مضاعف و مہموز، تثنیہ اور اسمِ ظرف و آلہ']]
+    : [[0, 8, 'Part 1: First sentences'], [8, 16, 'Part 2: Describing, counting and everyday verbs'], [16, 24, 'Part 3: Instructions, the future, reasons and time'], [24, 32, 'Part 4: Was, will not, don’t, wonder, wanting and colours'], [32, 36, 'Part 5: Big numbers, before and after, word patterns and the Islamic months'], [36, 42, 'Part 6: Full verb tables, the passive, every and some, calling and except'], [42, 48, 'Part 7: Sisters of inna and kaana, weak verbs, verbal nouns and state'], [48, 54, 'Part 8: Verb forms II to X, purpose and words without tanween'], [54, 60, 'Part 9: Qad, conditions, special verbs, the dual and place and tool words']];
   const list = parts.filter(([a]) => a < LESSONS.length).map(([a, b, h], k) => `<h2 class="part-h">${h}</h2>
 <ol class="lesson-list">
   ${LESSONS.slice(a, k === parts.length - 1 ? LESSONS.length : b).map((l, i) => item(l, a + i)).join('\n  ')}
