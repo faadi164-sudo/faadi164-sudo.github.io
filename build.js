@@ -21,7 +21,7 @@ const SITE_URL = 'https://faadi164-sudo.github.io';
 const KOFI_URL = 'https://ko-fi.com/164fawad';
 const ADSENSE_CLIENT = '';
 const CONTACT_EMAIL = '';
-const GA_ID = '';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
+const GA_ID = 'G-DYRQWLHBQB';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
 const GSC_VERIFY = '';  // Google Search Console verification code (only the content="..." value)
 const UPDATED = { en: '2 November 2026', ur: '۲ نومبر ۲۰۲۶' };
 const YEAR = '2026';
