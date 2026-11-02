@@ -1884,6 +1884,211 @@ const LESSONS = [
       { en: 'Say “How beautiful it is!” (masculine)', ur: '«یہ کتنا خوبصورت ہے!» (مذکر) کہیں۔', a: 'مَا أَجْمَلَهُ!', tr: 'maa ajmalahu!' },
     ],
   },
+  {
+    slug: 'lesson-31-an', key: 'أَنْ',
+    en: {
+      title: 'I want to…: {أَنْ} + verb', short: 'Join two verbs: want to, like to, can, must.',
+      intro: 'To join two verbs, as in “I want to go”, put {أَنْ} (an, to) before the second verb and change its last vowel from -u to -a: {أُرِيدُ أَنْ أَذْهَبَ} (I want to go). Both verbs match the person: {يُرِيدُ أَنْ يَذْهَبَ} (he wants to go).',
+      points: [
+        'Verbs that often come before {أَنْ}: {أُرِيدُ} I want · {أُحِبُّ} I like · {أَسْتَطِيعُ} I can · {أُحَاوِلُ} I try · {يَجِبُ عَلَيَّ} I must.',
+        'Verbs ending in -uuna lose the -na after {أَنْ}: {يُرِيدُونَ أَنْ يَنَامُوا} (they want to sleep).',
+        '{يَجِبُ عَلَى} + person means “must”: {يَجِبُ عَلَيْكَ أَنْ تَدْرُسَ} (you must study).',
+      ],
+    },
+    ur: {
+      title: 'میں … چاہتا ہوں: {أَنْ} + فعل', short: 'دو فعل جوڑیں: چاہنا، پسند کرنا، سکنا، لازم ہونا۔',
+      intro: '«میں جانا چاہتا ہوں» جیسے جملے میں دو فعل جوڑنے کے لیے دوسرے فعل سے پہلے {أَنْ} لگائیں اور اس کا آخری پیش زبر سے بدل دیں: {أُرِيدُ أَنْ أَذْهَبَ} (میں جانا چاہتا ہوں)۔ دونوں فعل ایک ہی شخص کے صیغے میں ہوتے ہیں: {يُرِيدُ أَنْ يَذْهَبَ} (وہ جانا چاہتا ہے)۔',
+      points: [
+        '{أَنْ} سے پہلے اکثر آنے والے افعال: {أُرِيدُ} میں چاہتا ہوں · {أُحِبُّ} مجھے پسند ہے · {أَسْتَطِيعُ} میں سکتا ہوں · {أُحَاوِلُ} میں کوشش کرتا ہوں · {يَجِبُ عَلَيَّ} مجھ پر لازم ہے۔',
+        '{ـونَ} والے افعال کا نون {أَنْ} کے بعد گر جاتا ہے: {يُرِيدُونَ أَنْ يَنَامُوا} (وہ سونا چاہتے ہیں)۔',
+        '{يَجِبُ عَلَى} کا مطلب ہے «لازم ہے»: {يَجِبُ عَلَيْكَ أَنْ تَدْرُسَ} (تمہیں پڑھنا چاہیے)۔',
+      ],
+    },
+    ex: [
+      ['أُرِيدُ أَنْ أَشْرَبَ الْمَاءَ', 'uriidu an ashraba l-maa’a', 'I want to drink water.', 'میں پانی پینا چاہتا ہوں۔'],
+      ['هَلْ تَسْتَطِيعُ أَنْ تَكْتُبَ بِالْعَرَبِيَّةِ؟', 'hal tastaṭiiʿu an taktuba bil-ʿarabiyyati?', 'Can you write in Arabic?', 'کیا تم عربی میں لکھ سکتے ہو؟'],
+      ['أُحِبُّ أَنْ أَقْرَأَ الْقِصَصَ', 'uḥibbu an aqra’a l-qiṣaṣa', 'I like to read stories.', 'مجھے کہانیاں پڑھنا پسند ہے۔'],
+      ['يَجِبُ عَلَيْنَا أَنْ نُصَلِّيَ', 'yajibu ʿalaynaa an nuṣalliya', 'We must pray.', 'ہم پر نماز پڑھنا لازم ہے۔'],
+      ['يُرِيدُ أَنْ يُسَافِرَ إِلَى الْمَدِينَةِ', 'yuriidu an yusaafira ila l-madiinati', 'He wants to travel to Madinah.', 'وہ مدینہ کا سفر کرنا چاہتا ہے۔'],
+      ['يُرِيدُونَ أَنْ يَنَامُوا', 'yuriiduuna an yanaamuu', 'They want to sleep.', 'وہ سونا چاہتے ہیں۔'],
+    ],
+    practice: [
+      { en: 'Say “I want to go to the mosque.”', ur: '«میں مسجد جانا چاہتا ہوں» کہیں۔', a: 'أُرِيدُ أَنْ أَذْهَبَ إِلَى الْمَسْجِدِ', tr: 'uriidu an adhhaba ila l-masjidi' },
+      { en: 'Say “She wants to read.”', ur: '«وہ پڑھنا چاہتی ہے» کہیں۔', a: 'تُرِيدُ أَنْ تَقْرَأَ', tr: 'turiidu an taqra’a' },
+      { en: 'Ask “Can you open the door?”', ur: 'پوچھیں «کیا تم دروازہ کھول سکتے ہو؟»', a: 'هَلْ تَسْتَطِيعُ أَنْ تَفْتَحَ الْبَابَ؟', tr: 'hal tastaṭiiʿu an taftaḥa l-baaba?' },
+    ],
+  },
+  {
+    slug: 'lesson-32-colours', key: 'أَحْمَرُ',
+    en: {
+      title: 'Colours: {أَحْمَرُ} and {حَمْرَاءُ}', short: 'Red, blue, green… for masculine and feminine.',
+      intro: 'The main colour words have one form for masculine nouns and another for feminine nouns: {قَلَمٌ أَحْمَرُ} (a red pen) but {سَيَّارَةٌ حَمْرَاءُ} (a red car). Colour words never take the -un ending: say {أَحْمَرُ}, not “aḥmarun”.',
+      points: [
+        '{أَحْمَرُ / حَمْرَاءُ} red · {أَزْرَقُ / زَرْقَاءُ} blue · {أَخْضَرُ / خَضْرَاءُ} green · {أَصْفَرُ / صَفْرَاءُ} yellow · {أَبْيَضُ / بَيْضَاءُ} white · {أَسْوَدُ / سَوْدَاءُ} black.',
+        'Ask about colour with {مَا لَوْنُ…؟}: {مَا لَوْنُ السَّيَّارَةِ؟} (What colour is the car?)',
+        'Other colours are made by adding {ـيٌّ} to a thing: {بُنِّيٌّ} brown (from {بُنٌّ}, coffee beans), {رَمَادِيٌّ} grey (from {رَمَادٌ}, ash), {بُرْتُقَالِيٌّ} orange.',
+      ],
+    },
+    ur: {
+      title: 'رنگ: {أَحْمَرُ} اور {حَمْرَاءُ}', short: 'لال، نیلا، سبز… مذکر اور مؤنث کے لیے۔',
+      intro: 'بنیادی رنگوں کی ایک شکل مذکر کے لیے اور دوسری مؤنث کے لیے ہوتی ہے: {قَلَمٌ أَحْمَرُ} (لال قلم) مگر {سَيَّارَةٌ حَمْرَاءُ} (لال گاڑی)۔ رنگوں پر تنوین نہیں آتی: {أَحْمَرُ} کہیں، «أَحْمَرٌ» نہیں۔',
+      points: [
+        '{أَحْمَرُ / حَمْرَاءُ} لال · {أَزْرَقُ / زَرْقَاءُ} نیلا · {أَخْضَرُ / خَضْرَاءُ} سبز · {أَصْفَرُ / صَفْرَاءُ} پیلا · {أَبْيَضُ / بَيْضَاءُ} سفید · {أَسْوَدُ / سَوْدَاءُ} کالا۔',
+        'رنگ پوچھنے کے لیے {مَا لَوْنُ…؟}: {مَا لَوْنُ السَّيَّارَةِ؟} (گاڑی کس رنگ کی ہے؟)',
+        'دوسرے رنگ کسی چیز کے نام پر {ـيٌّ} لگا کر بنتے ہیں: {بُنِّيٌّ} بھورا ({بُنٌّ} یعنی کافی کے دانے سے)، {رَمَادِيٌّ} سرمئی ({رَمَادٌ} یعنی راکھ سے)، {بُرْتُقَالِيٌّ} نارنجی۔',
+      ],
+    },
+    ex: [
+      ['قَلَمٌ أَحْمَرُ', 'qalamun aḥmaru', 'a red pen', 'لال قلم'],
+      ['سَيَّارَةٌ حَمْرَاءُ', 'sayyaaratun ḥamraa’u', 'a red car', 'لال گاڑی'],
+      ['السَّمَاءُ زَرْقَاءُ', 'as-samaa’u zarqaa’u', 'The sky is blue.', 'آسمان نیلا ہے۔'],
+      ['الشَّجَرَةُ خَضْرَاءُ', 'ash-shajaratu khaḍraa’u', 'The tree is green.', 'درخت سبز ہے۔'],
+      ['مَا لَوْنُ قَمِيصِكَ؟', 'maa lawnu qamiiṣika?', 'What colour is your shirt?', 'تمہاری قمیص کس رنگ کی ہے؟'],
+      ['قَمِيصِي أَبْيَضُ', 'qamiiṣii abyaḍu', 'My shirt is white.', 'میری قمیص سفید ہے۔'],
+    ],
+    practice: [
+      { en: 'Say “a black bag” ({حَقِيبَةٌ} is feminine).', ur: '«کالا بستہ» کہیں ({حَقِيبَةٌ} مؤنث ہے)۔', a: 'حَقِيبَةٌ سَوْدَاءُ', tr: 'ḥaqiibatun sawdaa’u' },
+      { en: 'Say “The book is green.”', ur: '«کتاب سبز ہے» کہیں۔', a: 'الْكِتَابُ أَخْضَرُ', tr: 'al-kitaabu akhḍaru' },
+      { en: 'Say “a yellow apple” ({تُفَّاحَةٌ} is feminine).', ur: '«پیلا سیب» کہیں ({تُفَّاحَةٌ} مؤنث ہے)۔', a: 'تُفَّاحَةٌ صَفْرَاءُ', tr: 'tuffaaḥatun ṣafraa’u' },
+    ],
+  },
+  {
+    slug: 'lesson-33-numbers-11-100', key: 'عِشْرُونَ',
+    en: {
+      title: 'Numbers 11 to 100', short: 'Eleven, twenty, twenty-five, a hundred.',
+      intro: '11 is {أَحَدَ عَشَرَ} and 12 is {اثْنَا عَشَرَ}. For 13 to 19, join a unit to {عَشَرَ}: {ثَلَاثَةَ عَشَرَ} (13). After any number from 11 to 99 the noun is singular and ends in -an: {خَمْسَةَ عَشَرَ طَالِبًا} (15 students).',
+      points: [
+        'Tens: {عِشْرُونَ} 20 · {ثَلَاثُونَ} 30 · {أَرْبَعُونَ} 40 · {خَمْسُونَ} 50 · {سِتُّونَ} 60 · {سَبْعُونَ} 70 · {ثَمَانُونَ} 80 · {تِسْعُونَ} 90 · {مِائَةٌ} 100.',
+        'For 21 to 99 say the unit first, then {وَ}, then the tens, just as Urdu says «پچیس»: {خَمْسَةٌ وَعِشْرُونَ} (25, “five and twenty”).',
+        'After 100 the noun ends in -i: {مِائَةُ رِيَالٍ} (a hundred riyals). After a preposition the tens end in -iina: {بِعِشْرِينَ رِيَالًا} (for twenty riyals).',
+      ],
+    },
+    ur: {
+      title: 'گیارہ سے سو تک گنتی', short: 'گیارہ، بیس، پچیس، سو۔',
+      intro: '۱۱ ہے {أَحَدَ عَشَرَ} اور ۱۲ ہے {اثْنَا عَشَرَ}۔ ۱۳ سے ۱۹ تک اکائی کو {عَشَرَ} سے جوڑیں: {ثَلَاثَةَ عَشَرَ} (۱۳)۔ ۱۱ سے ۹۹ تک کے کسی بھی عدد کے بعد اسم واحد اور منصوب ہوتا ہے: {خَمْسَةَ عَشَرَ طَالِبًا} (پندرہ طالب علم)۔',
+      points: [
+        'دہائیاں: {عِشْرُونَ} ۲۰ · {ثَلَاثُونَ} ۳۰ · {أَرْبَعُونَ} ۴۰ · {خَمْسُونَ} ۵۰ · {سِتُّونَ} ۶۰ · {سَبْعُونَ} ۷۰ · {ثَمَانُونَ} ۸۰ · {تِسْعُونَ} ۹۰ · {مِائَةٌ} ۱۰۰۔',
+        '۲۱ سے ۹۹ تک پہلے اکائی، پھر {وَ}، پھر دہائی، بالکل اردو کے «پچیس» کی طرح: {خَمْسَةٌ وَعِشْرُونَ} (۲۵، «پانچ اور بیس»)۔',
+        '۱۰۰ کے بعد اسم مجرور ہوتا ہے: {مِائَةُ رِيَالٍ} (سو ریال)۔ حرفِ جر کے بعد دہائی {ـِينَ} پر ختم ہوتی ہے: {بِعِشْرِينَ رِيَالًا} (بیس ریال میں)۔',
+      ],
+    },
+    ex: [
+      ['أَحَدَ عَشَرَ كَوْكَبًا', 'aḥada ʿashara kawkaban', 'eleven stars (Quran 12:4)', 'گیارہ ستارے (سورہ یوسف ۴)'],
+      ['اثْنَا عَشَرَ شَهْرًا', 'ithnaa ʿashara shahran', 'twelve months', 'بارہ مہینے'],
+      ['فِي الْفَصْلِ خَمْسَةَ عَشَرَ طَالِبًا', 'fil-faṣli khamsata ʿashara ṭaaliban', 'There are fifteen students in the class.', 'کلاس میں پندرہ طالب علم ہیں۔'],
+      ['عُمْرِي عِشْرُونَ سَنَةً', 'ʿumrii ʿishruuna sanatan', 'I am twenty years old.', 'میری عمر بیس سال ہے۔'],
+      ['الشَّهْرُ ثَلَاثُونَ يَوْمًا', 'ash-shahru thalaathuuna yawman', 'The month is thirty days long.', 'مہینہ تیس دن کا ہے۔'],
+      ['بِخَمْسَةٍ وَعِشْرِينَ رِيَالًا', 'bi-khamsatin wa-ʿishriina riyaalan', 'for twenty-five riyals', 'پچیس ریال میں'],
+      ['مِائَةُ رِيَالٍ', 'mi’atu riyaalin', 'a hundred riyals', 'سو ریال'],
+    ],
+    practice: [
+      { en: 'Say “twelve students”.', ur: '«بارہ طالب علم» کہیں۔', a: 'اثْنَا عَشَرَ طَالِبًا', tr: 'ithnaa ʿashara ṭaaliban' },
+      { en: 'Say “thirty riyals”.', ur: '«تیس ریال» کہیں۔', a: 'ثَلَاثُونَ رِيَالًا', tr: 'thalaathuuna riyaalan' },
+      { en: 'Say “I am forty years old.”', ur: '«میری عمر چالیس سال ہے» کہیں۔', a: 'عُمْرِي أَرْبَعُونَ سَنَةً', tr: 'ʿumrii arbaʿuuna sanatan' },
+    ],
+  },
+  {
+    slug: 'lesson-34-before-after', key: 'قَبْلَ',
+    en: {
+      title: 'Before and after: {قَبْلَ} and {بَعْدَ}', short: 'Before the prayer, after the lesson, a week ago.',
+      intro: '{قَبْلَ} (before) and {بَعْدَ} (after) work like {عِنْدَ}: the noun after them ends in -i. {قَبْلَ الصَّلَاةِ} means “before the prayer” and {بَعْدَ الدَّرْسِ} means “after the lesson”.',
+      points: [
+        'With pronouns: {قَبْلَهُ} before him · {بَعْدَكَ} after you · {قَبْلَنَا} before us.',
+        'Before a verb add {أَنْ}: {قَبْلَ أَنْ تَنَامَ} (before you sleep), {بَعْدَ أَنْ أَكَلْتُ} (after I ate).',
+        'Useful time phrases: {قَبْلَ الظُّهْرِ} before noon · {بَعْدَ الظُّهْرِ} in the afternoon · {بَعْدَ غَدٍ} the day after tomorrow · {قَبْلَ أُسْبُوعٍ} a week ago.',
+      ],
+    },
+    ur: {
+      title: 'پہلے اور بعد: {قَبْلَ} اور {بَعْدَ}', short: 'نماز سے پہلے، سبق کے بعد، ایک ہفتہ پہلے۔',
+      intro: '{قَبْلَ} (پہلے) اور {بَعْدَ} (بعد) {عِنْدَ} کی طرح استعمال ہوتے ہیں: ان کے بعد والا اسم مجرور ہوتا ہے۔ {قَبْلَ الصَّلَاةِ} یعنی «نماز سے پہلے» اور {بَعْدَ الدَّرْسِ} یعنی «سبق کے بعد»۔',
+      points: [
+        'ضمیر کے ساتھ: {قَبْلَهُ} اس سے پہلے · {بَعْدَكَ} تمہارے بعد · {قَبْلَنَا} ہم سے پہلے۔',
+        'فعل سے پہلے {أَنْ} لگائیں: {قَبْلَ أَنْ تَنَامَ} (سونے سے پہلے)، {بَعْدَ أَنْ أَكَلْتُ} (کھانے کے بعد)۔',
+        'کام کے جملے: {قَبْلَ الظُّهْرِ} دوپہر سے پہلے · {بَعْدَ الظُّهْرِ} سہ پہر · {بَعْدَ غَدٍ} پرسوں · {قَبْلَ أُسْبُوعٍ} ایک ہفتہ پہلے۔',
+      ],
+    },
+    ex: [
+      ['أَتَوَضَّأُ قَبْلَ الصَّلَاةِ', 'atawaḍḍa’u qabla ṣ-ṣalaati', 'I make wudu before the prayer.', 'میں نماز سے پہلے وضو کرتا ہوں۔'],
+      ['نَشْرَبُ الشَّايَ بَعْدَ الْغَدَاءِ', 'nashrabu sh-shaaya baʿda l-ghadaa’i', 'We drink tea after lunch.', 'ہم دوپہر کے کھانے کے بعد چائے پیتے ہیں۔'],
+      ['جِئْتُ قَبْلَكَ', 'ji’tu qablaka', 'I came before you.', 'میں تم سے پہلے آیا۔'],
+      ['اِغْسِلْ يَدَيْكَ قَبْلَ أَنْ تَأْكُلَ', 'ighsil yadayka qabla an ta’kula', 'Wash your hands before you eat.', 'کھانے سے پہلے ہاتھ دھوؤ۔'],
+      ['سَأُسَافِرُ بَعْدَ غَدٍ', 'sa-usaafiru baʿda ghadin', 'I will travel the day after tomorrow.', 'میں پرسوں سفر کروں گا۔'],
+      ['وَصَلْتُ قَبْلَ أُسْبُوعٍ', 'waṣaltu qabla usbuuʿin', 'I arrived a week ago.', 'میں ایک ہفتہ پہلے پہنچا۔'],
+    ],
+    practice: [
+      { en: 'Say “after the lesson”.', ur: '«سبق کے بعد» کہیں۔', a: 'بَعْدَ الدَّرْسِ', tr: 'baʿda d-darsi' },
+      { en: 'Say “before you sleep”.', ur: '«سونے سے پہلے» کہیں۔', a: 'قَبْلَ أَنْ تَنَامَ', tr: 'qabla an tanaama' },
+      { en: 'Say “I came after him.”', ur: '«میں اس کے بعد آیا» کہیں۔', a: 'جِئْتُ بَعْدَهُ', tr: 'ji’tu baʿdahu' },
+    ],
+  },
+  {
+    slug: 'lesson-35-doer-done', key: 'كَاتِبٌ',
+    en: {
+      title: 'Writer and written: {فَاعِلٌ} and {مَفْعُولٌ}', short: 'Make the doer and the thing done from a root.',
+      intro: 'From a three-letter root you can make the person who does the action on the pattern {فَاعِلٌ}, and the thing it is done to on the pattern {مَفْعُولٌ}. From k-t-b (writing) come {كَاتِبٌ} (writer) and {مَكْتُوبٌ} (written; a letter).',
+      points: [
+        '{فَاتِحٌ / مَفْتُوحٌ} opener / open · {صَانِعٌ / مَصْنُوعٌ} maker / made · {عَالِمٌ / مَعْلُومٌ} scholar / known · {سَامِعٌ / مَسْمُوعٌ} listener / heard.',
+        'Many everyday words follow these patterns: {طَالِبٌ} student (one who seeks) · {جَالِسٌ} sitting · {مَشْرُوبٌ} a drink · {مَكْسُورٌ} broken.',
+        'Urdu speakers already know many of them: {مَعْلُومٌ}, {مَشْهُورٌ}, {مَكْتُوبٌ}, {حَاكِمٌ}, {عَالِمٌ}.',
+      ],
+    },
+    ur: {
+      title: 'کاتب اور مکتوب: {فَاعِلٌ} اور {مَفْعُولٌ}', short: 'ایک مادے سے اسمِ فاعل اور اسمِ مفعول بنائیں۔',
+      intro: 'تین حرفی مادے سے کام کرنے والے کے لیے {فَاعِلٌ} کا وزن اور جس پر کام ہو اس کے لیے {مَفْعُولٌ} کا وزن استعمال ہوتا ہے۔ ک ت ب (لکھنا) سے {كَاتِبٌ} (لکھنے والا) اور {مَكْتُوبٌ} (لکھا ہوا؛ خط) بنتے ہیں۔',
+      points: [
+        '{فَاتِحٌ / مَفْتُوحٌ} کھولنے والا / کھلا · {صَانِعٌ / مَصْنُوعٌ} بنانے والا / بنا ہوا · {عَالِمٌ / مَعْلُومٌ} جاننے والا / معلوم · {سَامِعٌ / مَسْمُوعٌ} سننے والا / سنا ہوا۔',
+        'روزمرہ کے بہت سے الفاظ انہی اوزان پر ہیں: {طَالِبٌ} طالب علم (طلب کرنے والا) · {جَالِسٌ} بیٹھا ہوا · {مَشْرُوبٌ} مشروب · {مَكْسُورٌ} ٹوٹا ہوا۔',
+        'اردو بولنے والے ان میں سے بہت سے پہلے ہی جانتے ہیں: {مَعْلُومٌ}، {مَشْهُورٌ}، {مَكْتُوبٌ}، {حَاكِمٌ}، {عَالِمٌ}۔',
+      ],
+    },
+    ex: [
+      ['الْبَابُ مَفْتُوحٌ', 'al-baabu maftuuḥun', 'The door is open.', 'دروازہ کھلا ہے۔'],
+      ['هٰذَا الْكُرْسِيُّ مَصْنُوعٌ مِنَ الْخَشَبِ', 'haadha l-kursiyyu maṣnuuʿun mina l-khashabi', 'This chair is made of wood.', 'یہ کرسی لکڑی سے بنی ہے۔'],
+      ['أَبِي كَاتِبٌ مَشْهُورٌ', 'abii kaatibun mashhuurun', 'My father is a famous writer.', 'میرے والد مشہور مصنف ہیں۔'],
+      ['الْقَلَمُ مَكْسُورٌ', 'al-qalamu maksuurun', 'The pen is broken.', 'قلم ٹوٹا ہوا ہے۔'],
+      ['الطَّالِبُ جَالِسٌ', 'aṭ-ṭaalibu jaalisun', 'The student is sitting.', 'طالب علم بیٹھا ہے۔'],
+      ['اسْمُهُ مَكْتُوبٌ عَلَى الْبَابِ', 'ismuhu maktuubun ʿala l-baabi', 'His name is written on the door.', 'اس کا نام دروازے پر لکھا ہے۔'],
+    ],
+    practice: [
+      { en: 'Make the “doer” from {ذَهَبَ} (go).', ur: '{ذَهَبَ} (جانا) سے اسمِ فاعل بنائیں۔', a: 'ذَاهِبٌ', tr: 'dhaahibun', noteEn: 'going / one who goes', noteUr: 'جانے والا' },
+      { en: 'Make the “thing done” from {شَرِبَ} (drink).', ur: '{شَرِبَ} (پینا) سے اسمِ مفعول بنائیں۔', a: 'مَشْرُوبٌ', tr: 'mashruubun', noteEn: 'a drink (something drunk)', noteUr: 'مشروب (پی جانے والی چیز)' },
+      { en: 'Say “The window is open.” ({نَافِذَةٌ} is feminine)', ur: '«کھڑکی کھلی ہے» کہیں ({نَافِذَةٌ} مؤنث ہے)۔', a: 'النَّافِذَةُ مَفْتُوحَةٌ', tr: 'an-naafidhatu maftuuḥatun' },
+    ],
+  },
+  {
+    slug: 'lesson-36-hijri-months', key: 'رَمَضَانُ',
+    en: {
+      title: 'The Islamic months', short: 'Muharram to Dhul-Hijjah, and saying dates.',
+      intro: 'The Islamic year has twelve months that follow the moon. Each month starts when the new crescent, {الْهِلَالُ}, is seen. To say “in Ramadan”, use {فِي رَمَضَانَ} or {فِي شَهْرِ رَمَضَانَ}.',
+      points: [
+        '{مُحَرَّمٌ} · {صَفَرٌ} · {رَبِيعٌ الْأَوَّلُ} · {رَبِيعٌ الْآخِرُ} · {جُمَادَى الْأُولَى} · {جُمَادَى الْآخِرَةُ} · {رَجَبٌ} · {شَعْبَانُ} · {رَمَضَانُ} · {شَوَّالٌ} · {ذُو الْقَعْدَةِ} · {ذُو الْحِجَّةِ}',
+        'Dates use order words from lesson 28: {الْيَوْمُ الْعَاشِرُ مِنْ مُحَرَّمٍ} (the tenth of Muharram).',
+        'Notice {ذُو} from lesson 29: after {فِي} it becomes {ذِي}, as in {فِي ذِي الْحِجَّةِ}. In Saudi Arabia Hijri dates are marked with {هـ}.',
+      ],
+    },
+    ur: {
+      title: 'اسلامی مہینے', short: 'محرم سے ذوالحجہ تک، اور تاریخ بتانا۔',
+      intro: 'اسلامی سال کے بارہ مہینے چاند کے حساب سے چلتے ہیں۔ ہر مہینہ نیا چاند، {الْهِلَالُ}، نظر آنے پر شروع ہوتا ہے۔ «رمضان میں» کہنے کے لیے {فِي رَمَضَانَ} یا {فِي شَهْرِ رَمَضَانَ}۔',
+      points: [
+        '{مُحَرَّمٌ} · {صَفَرٌ} · {رَبِيعٌ الْأَوَّلُ} · {رَبِيعٌ الْآخِرُ} · {جُمَادَى الْأُولَى} · {جُمَادَى الْآخِرَةُ} · {رَجَبٌ} · {شَعْبَانُ} · {رَمَضَانُ} · {شَوَّالٌ} · {ذُو الْقَعْدَةِ} · {ذُو الْحِجَّةِ}',
+        'تاریخ میں سبق ۲۸ کے ترتیبی اعداد آتے ہیں: {الْيَوْمُ الْعَاشِرُ مِنْ مُحَرَّمٍ} (دس محرم)۔',
+        'سبق ۲۹ کا {ذُو} یاد کریں: {فِي} کے بعد یہ {ذِي} بن جاتا ہے، جیسے {فِي ذِي الْحِجَّةِ}۔ سعودی عرب میں ہجری تاریخ کے ساتھ {هـ} لکھا جاتا ہے۔',
+      ],
+    },
+    ex: [
+      ['نَصُومُ فِي شَهْرِ رَمَضَانَ', 'naṣuumu fii shahri ramaḍaana', 'We fast in the month of Ramadan.', 'ہم رمضان کے مہینے میں روزے رکھتے ہیں۔'],
+      ['عِيدُ الْفِطْرِ فِي شَوَّالٍ', 'ʿiidu l-fiṭri fii shawwaalin', 'Eid al-Fitr is in Shawwal.', 'عید الفطر شوال میں ہوتی ہے۔'],
+      ['الْحَجُّ فِي ذِي الْحِجَّةِ', 'al-ḥajju fii dhi l-ḥijjati', 'Hajj is in Dhul-Hijjah.', 'حج ذوالحجہ میں ہوتا ہے۔'],
+      ['رَأَيْنَا الْهِلَالَ', 'ra’aynaa l-hilaala', 'We saw the new crescent.', 'ہم نے نیا چاند دیکھا۔'],
+      ['مُحَرَّمٌ أَوَّلُ شَهْرٍ فِي السَّنَةِ', 'muḥarramun awwalu shahrin fis-sanati', 'Muharram is the first month of the year.', 'محرم سال کا پہلا مہینہ ہے۔'],
+      ['فِي أَيِّ شَهْرٍ نَحْنُ؟', 'fii ayyi shahrin naḥnu?', 'Which month are we in?', 'ہم کس مہینے میں ہیں؟'],
+    ],
+    practice: [
+      { en: 'Say “in Rajab”.', ur: '«رجب میں» کہیں۔', a: 'فِي رَجَبٍ', tr: 'fii rajabin' },
+      { en: 'Say “the first day of Ramadan”.', ur: '«رمضان کا پہلا دن» کہیں۔', a: 'الْيَوْمُ الْأَوَّلُ مِنْ رَمَضَانَ', tr: 'al-yawmu l-awwalu min ramaḍaana' },
+      { en: 'Ask “Which month is Hajj in?”', ur: 'پوچھیں «حج کس مہینے میں ہے؟»', a: 'فِي أَيِّ شَهْرٍ الْحَجُّ؟', tr: 'fii ayyi shahrin al-ḥajju?' },
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------- interface text
@@ -2479,6 +2684,8 @@ const ICONS = {
   food: '<path class="s" d="M6 40h52a26 13 0 0 1-52 0z"/><path class="g" d="M14 40c2-10 34-10 36 0z"/><path d="M24 30c-2-3 2-5 0-8M32 29c-2-3 2-5 0-8M40 30c-2-3 2-5 0-8" stroke-opacity=".6"/><path d="M4 54h56"/>',
   no: '<circle cx="50" cy="50" r="10" fill="#fff" stroke="var(--bad)" stroke-width="3"/><path d="M43 57l14-14" stroke="var(--bad)" stroke-width="3"/>',
   arrow: '<path d="M8 32h40M38 22l10 10-10 10" stroke-width="3"/>',
+  kaaba: '<path d="M6 56h52" stroke-opacity=".5"/><path class="s" d="M12 22l20-7 20 7v28l-20 7-20-7z" style="fill:#1d2724"/><path d="M12 22l20 7 20-7M32 29v28" stroke="#3a4a44"/><path class="g" d="M12 28l20 7 20-7v5l-20 7-20-7z"/><path class="g" d="M37 42l6-2v11l-6 2z"/>',
+  hand: '<path class="s" d="M20 56V30a4 4 0 0 1 8 0v-14a4 4 0 0 1 8 0v12a4 4 0 0 1 8 0v4a4 4 0 0 1 8 0v12c0 8-6 12-14 12H20z"/><path class="g" d="M14 10c0 4 4 4 4 8M8 16c0 4 4 4 4 8" stroke-opacity=".7"/>',
 };
 const clockIcon = (h, m) => {
   const a = (deg, len) => { const r = (deg - 90) * Math.PI / 180; return `${(32 + len * Math.cos(r)).toFixed(1)} ${(32 + len * Math.sin(r)).toFixed(1)}`; };
@@ -2489,9 +2696,14 @@ const clockIcon = (h, m) => {
 function picSvg(spec) {
   const parts = typeof spec === 'string' ? [[spec, 0, 0, 1]] : spec;
   const inner = parts.map(([ic, x = 0, y = 0, k = 1]) => {
-    const body = ic.startsWith('clock:') ? clockIcon(...ic.slice(6).split(':').map(Number)) : ICONS[ic];
+    let style = '';
+    if (ic.includes('@')) { const [name, col] = ic.split('@'); ic = name; style = col.startsWith('g:') ? `--gfill:${col.slice(2)}` : `--fill:${col}`; }
+    const body = ic.startsWith('clock:') ? clockIcon(...ic.slice(6).split(':').map(Number))
+      : ic.startsWith('num:') ? `<g transform="translate(32 32)"><rect class="g" x="-21" y="-21" width="42" height="42"/><rect class="g" x="-21" y="-21" width="42" height="42" transform="rotate(45)"/><circle class="s" r="17"/></g><text x="32" y="${ic.length > 6 ? 39 : 41}" text-anchor="middle" font-family="Amiri, serif" font-weight="700" font-size="${ic.length > 6 ? 17 : 22}" fill="currentColor" stroke="none">${ic.slice(4)}</text>`
+      : ICONS[ic];
     if (!body) throw new Error('missing icon ' + ic);
-    return x || y || k !== 1 ? `<g transform="translate(${x} ${y}) scale(${k})">${body}</g>` : body;
+    const g = x || y || k !== 1 || style;
+    return g ? `<g${x || y || k !== 1 ? ` transform="translate(${x} ${y}) scale(${k})"` : ''}${style ? ` style="${style}"` : ''}>${body}</g>` : body;
   }).join('');
   return `<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${inner}</g></svg>`;
 }
@@ -2529,6 +2741,13 @@ const LESSON_PICS = {
   'lesson-28-ordinals-days': [['building', 'الطَّابِقُ الثَّالِثُ', 'the third floor', 'تیسری منزل'], ['book', 'الدَّرْسُ الْأَوَّلُ', 'the first lesson', 'پہلا سبق'], ['calendar', 'الْيَوْمُ يَوْمُ الْخَمِيسِ', 'Today is Thursday.', 'آج جمعرات ہے۔'], ['mosque', 'يَوْمُ الْجُمُعَةِ', 'Friday', 'جمعہ کا دن']],
   'lesson-29-abu-akhu': [[[['man', -10, 0, 1], ['boy', 14, 0, 1]], 'هٰذَا أَبُو خَالِدٍ', 'This is Khalid’s father.', 'یہ خالد کے والد ہیں۔'], [[['boy', -12, 0, 1], ['boy', 12, 0, 1]], 'هٰذَا أَخُوكَ', 'This is your brother.', 'یہ تمہارا بھائی ہے۔'], [[['man', -10, 0, 1], ['mosque', 26, 22, .55]], 'رَأَيْتُ أَبَاكَ فِي الْمَسْجِدِ', 'I saw your father in the mosque.', 'میں نے تمہارے والد کو مسجد میں دیکھا۔'], [[['man', -10, 0, 1], ['books', 26, 24, .55]], 'رَجُلٌ ذُو عِلْمٍ', 'a man of knowledge', 'علم والا آدمی']],
   'lesson-30-how-beautiful': [[[['palm', -10, 0, .9], ['flower', 30, 20, .6]], 'مَا أَجْمَلَ الْحَدِيقَةَ!', 'How beautiful the garden is!', 'باغ کتنا خوبصورت ہے!'], ['mountain', 'مَا أَكْبَرَ الْجَبَلَ!', 'How big the mountain is!', 'پہاڑ کتنا بڑا ہے!'], ['cup', 'مَا أَبْرَدَ الْمَاءَ!', 'How cold the water is!', 'پانی کتنا ٹھنڈا ہے!'], ['food', 'مَا أَطْيَبَ الطَّعَامَ!', 'How delicious the food is!', 'کھانا کتنا مزیدار ہے!']],
+
+  'lesson-31-an': [['cup', 'أُرِيدُ أَنْ أَشْرَبَ', 'I want to drink.', 'میں پینا چاہتا ہوں۔'], ['plane', 'أُرِيدُ أَنْ أُسَافِرَ', 'I want to travel.', 'میں سفر کرنا چاہتا ہوں۔'], ['book', 'أُحِبُّ أَنْ أَقْرَأَ', 'I like to read.', 'مجھے پڑھنا پسند ہے۔'], [[['bed', 0, 8, 1], ['moon', 34, -2, .4]], 'يُرِيدُ أَنْ يَنَامَ', 'He wants to sleep.', 'وہ سونا چاہتا ہے۔']],
+  'lesson-32-colours': [['car@#e05a4e', 'سَيَّارَةٌ حَمْرَاءُ', 'a red car', 'لال گاڑی'], ['pen@#5b8fd6', 'قَلَمٌ أَزْرَقُ', 'a blue pen', 'نیلا قلم'], ['book@#5fae7a', 'كِتَابٌ أَخْضَرُ', 'a green book', 'سبز کتاب'], ['apple@g:#f2cf3c', 'تُفَّاحَةٌ صَفْرَاءُ', 'a yellow apple', 'پیلا سیب'], ['bag@#2b2f2e', 'حَقِيبَةٌ سَوْدَاءُ', 'a black bag', 'کالا بستہ'], ['house@#ffffff', 'بَيْتٌ أَبْيَضُ', 'a white house', 'سفید گھر']],
+  'lesson-33-numbers-11-100': [['num:١١', 'أَحَدَ عَشَرَ', 'eleven', 'گیارہ'], ['num:١٢', 'اثْنَا عَشَرَ', 'twelve', 'بارہ'], ['num:٢٠', 'عِشْرُونَ', 'twenty', 'بیس'], ['num:٢٥', 'خَمْسَةٌ وَعِشْرُونَ', 'twenty-five', 'پچیس'], ['num:١٠٠', 'مِائَةٌ', 'a hundred', 'سو'], ['calendar', 'ثَلَاثُونَ يَوْمًا', 'thirty days', 'تیس دن']],
+  'lesson-34-before-after': [['hand', 'اِغْسِلْ يَدَيْكَ قَبْلَ الْأَكْلِ', 'Wash your hands before eating.', 'کھانے سے پہلے ہاتھ دھوؤ۔'], ['mosque', 'قَبْلَ الصَّلَاةِ', 'before the prayer', 'نماز سے پہلے'], ['tea', 'بَعْدَ الْغَدَاءِ', 'after lunch', 'دوپہر کے کھانے کے بعد'], ['calendar', 'بَعْدَ غَدٍ', 'the day after tomorrow', 'پرسوں']],
+  'lesson-35-doer-done': [[[['man', -10, 0, 1], ['paper', 30, 24, .5]], 'كَاتِبٌ', 'a writer', 'لکھنے والا'], ['paper', 'مَكْتُوبٌ', 'written; a letter', 'لکھا ہوا؛ خط'], ['doorOpen', 'مَفْتُوحٌ', 'open (opened)', 'کھلا ہوا'], ['penBroken', 'مَكْسُورٌ', 'broken', 'ٹوٹا ہوا'], ['cup', 'مَشْرُوبٌ', 'a drink', 'مشروب'], ['chair', 'مَصْنُوعٌ مِنَ الْخَشَبِ', 'made of wood', 'لکڑی سے بنا ہوا']],
+  'lesson-36-hijri-months': [['moon', 'الْهِلَالُ', 'the new crescent', 'نیا چاند'], [[['moon', -4, 0, .8], ['star', 34, 4, .4], ['star', 40, 30, .3]], 'رَمَضَانُ', 'Ramadan', 'رمضان'], ['kaaba', 'ذُو الْحِجَّةِ', 'Dhul-Hijjah, the month of Hajj', 'ذوالحجہ، حج کا مہینہ'], ['calendar', 'مُحَرَّمٌ أَوَّلُ شَهْرٍ', 'Muharram is the first month.', 'محرم پہلا مہینہ ہے۔']],
 };
 function picBoard(lang, slug) {
   const items = LESSON_PICS[slug];
@@ -2547,8 +2766,8 @@ function lessonsPage(lang) {
   const ur = lang === 'ur';
   const item = (l, i) => `<li><a href="${link(lang, l.slug + '.html')}"><span class="num">${num(lang, i + 1)}</span><span><strong>${fmt(l[lang].title)}</strong><p>${fmt(l[lang].short)}</p></span><span class="ar" lang="ar">${l.key}</span></a></li>`;
   const parts = ur
-    ? [[0, 8, 'حصہ اول: پہلے جملے'], [8, 16, 'حصہ دوم: صفت، گنتی اور روزمرہ کے افعال'], [16, 24, 'حصہ سوم: حکم، مستقبل، وجہ اور وقت'], [24, 32, 'حصہ چہارم: تھا، نہیں کرے گا، نہی اور تعجب']]
-    : [[0, 8, 'Part 1: First sentences'], [8, 16, 'Part 2: Describing, counting and everyday verbs'], [16, 24, 'Part 3: Instructions, the future, reasons and time'], [24, 32, 'Part 4: Was, will not, don’t and wonder']];
+    ? [[0, 8, 'حصہ اول: پہلے جملے'], [8, 16, 'حصہ دوم: صفت، گنتی اور روزمرہ کے افعال'], [16, 24, 'حصہ سوم: حکم، مستقبل، وجہ اور وقت'], [24, 32, 'حصہ چہارم: تھا، نہیں کرے گا، نہی، تعجب، خواہش اور رنگ'], [32, 40, 'حصہ پنجم: بڑی گنتی، پہلے اور بعد، اوزان اور اسلامی مہینے']]
+    : [[0, 8, 'Part 1: First sentences'], [8, 16, 'Part 2: Describing, counting and everyday verbs'], [16, 24, 'Part 3: Instructions, the future, reasons and time'], [24, 32, 'Part 4: Was, will not, don’t, wonder, wanting and colours'], [32, 40, 'Part 5: Big numbers, before and after, word patterns and the Islamic months']];
   const list = parts.filter(([a]) => a < LESSONS.length).map(([a, b, h], k) => `<h2 class="part-h">${h}</h2>
 <ol class="lesson-list">
   ${LESSONS.slice(a, k === parts.length - 1 ? LESSONS.length : b).map((l, i) => item(l, a + i)).join('\n  ')}
@@ -3864,12 +4083,13 @@ html[lang="ur"] .hero .eyebrow{font-size:14px;letter-spacing:0}
 .pic[data-say]::before{display:none}
 .pic:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--gold-2)}
 .pic svg{width:104px;height:104px;color:var(--accent);margin-bottom:6px;padding:8px;border-radius:50%;background:radial-gradient(circle,rgba(201,151,58,.12),transparent 70%);overflow:visible}
-.pic svg .s{fill:var(--accent-soft)}
-.pic svg .g{fill:var(--gold-3);stroke:var(--gold)}
+.pic svg .s{fill:var(--fill,var(--accent-soft))}
+.pic svg .g{fill:var(--gfill,var(--gold-3));stroke:var(--gold)}
 .pic .ar{font-size:24px;line-height:1.7}
 .pic .mean{font-size:14px;color:var(--muted);line-height:1.4}
 html[lang="ur"] .pic .mean{line-height:2}
 .pic:active svg{transform:scale(.96)}
+@media (min-width:521px){.pics:has(> .pic:nth-child(6):last-child),.pics:has(> .pic:nth-child(3):last-child){grid-template-columns:repeat(3,1fr);max-width:690px}}
 @media (max-width:520px){.pics{grid-template-columns:1fr 1fr;gap:10px}.pic svg{width:84px;height:84px}.pic .ar{font-size:21px}}
 @media (prefers-reduced-motion: reduce){ .card,.btn,.lt,.lesson-list a{transition:none} a.card:hover,.btn:hover{transform:none} }
 `;
