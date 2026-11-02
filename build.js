@@ -295,6 +295,248 @@ const PHRASES = [
   ['إن شاء الله', 'in shaa’ allaah', 'God willing', 'ان شاء اللہ', '', ''],
 ];
 
+// ---------------------------------------------------------------- Quran
+// Quran text: Tanzil Project (tanzil.net), quran-simple. Word meanings and translations are written for Harf.
+const SURAHS = [
+  { slug: 'al-fatiha', n: 1, name: 'الْفَاتِحَة', en: 'Al-Fatiha', ur: 'سورہ فاتحہ', meanEn: 'The Opening', meanUr: 'آغاز',
+    introEn: 'Al-Fatiha, “The Opening”, is the first surah of the Quran. Muslims recite it in every rakʿah of every prayer, so it is the best place to start understanding the Quran.',
+    introUr: 'سورہ فاتحہ یعنی «آغاز» قرآن کی پہلی سورت ہے۔ یہ ہر نماز کی ہر رکعت میں پڑھی جاتی ہے، اس لیے قرآن سمجھنے کا آغاز اسی سے کرنا بہترین ہے۔',
+    v: [
+      { w: [['بِسْمِ', 'bismi', 'In the name', 'نام سے'], ['اللَّهِ', 'llaahi', 'of Allah', 'اللہ کے'], ['الرَّحْمَٰنِ', 'r-raḥmaani', 'the Most Gracious', 'جو بڑا مہربان'], ['الرَّحِيمِ', 'r-raḥiim', 'the Most Merciful', 'نہایت رحم والا']],
+        en: 'In the name of Allah, the Most Gracious, the Most Merciful.', ur: 'اللہ کے نام سے جو بڑا مہربان، نہایت رحم والا ہے۔' },
+      { w: [['الْحَمْدُ', 'al-ḥamdu', 'All praise', 'تمام تعریف'], ['لِلَّهِ', 'lillaahi', 'is for Allah', 'اللہ کے لیے ہے'], ['رَبِّ', 'rabbi', 'Lord', 'رب'], ['الْعَالَمِينَ', 'l-ʿaalamiin', 'of all the worlds', 'تمام جہانوں کا']],
+        en: 'All praise is for Allah, Lord of all the worlds.', ur: 'تمام تعریف اللہ کے لیے ہے جو تمام جہانوں کا رب ہے۔' },
+      { w: [['الرَّحْمَٰنِ', 'ar-raḥmaani', 'the Most Gracious', 'بڑا مہربان'], ['الرَّحِيمِ', 'r-raḥiim', 'the Most Merciful', 'نہایت رحم والا']],
+        en: 'The Most Gracious, the Most Merciful.', ur: 'جو بڑا مہربان، نہایت رحم والا ہے۔' },
+      { w: [['مَالِكِ', 'maaliki', 'Master', 'مالک'], ['يَوْمِ', 'yawmi', 'of the Day', 'دن کا'], ['الدِّينِ', 'd-diin', 'of Judgement', 'جزا کے']],
+        en: 'Master of the Day of Judgement.', ur: 'جزا کے دن کا مالک ہے۔' },
+      { w: [['إِيَّاكَ', 'iyyaaka', 'You alone', 'صرف تیری'], ['نَعْبُدُ', 'naʿbudu', 'we worship', 'ہم عبادت کرتے ہیں'], ['وَإِيَّاكَ', 'wa-iyyaaka', 'and You alone', 'اور صرف تجھ سے'], ['نَسْتَعِينُ', 'nastaʿiin', 'we ask for help', 'ہم مدد مانگتے ہیں']],
+        en: 'You alone we worship, and You alone we ask for help.', ur: 'ہم صرف تیری ہی عبادت کرتے ہیں اور صرف تجھ ہی سے مدد مانگتے ہیں۔' },
+      { w: [['اهْدِنَا', 'ihdinaa', 'Guide us', 'ہمیں دکھا'], ['الصِّرَاطَ', 'ṣ-ṣiraaṭa', 'to the path', 'راستہ'], ['الْمُسْتَقِيمَ', 'l-mustaqiim', 'the straight', 'سیدھا']],
+        en: 'Guide us to the straight path,', ur: 'ہمیں سیدھا راستہ دکھا،' },
+      { w: [['صِرَاطَ', 'ṣiraaṭa', 'the path', 'راستہ'], ['الَّذِينَ', 'lladhiina', 'of those', 'ان لوگوں کا'], ['أَنْعَمْتَ', 'anʿamta', 'You have blessed', 'تو نے انعام کیا'], ['عَلَيْهِمْ', 'ʿalayhim', 'upon them', 'جن پر'], ['غَيْرِ', 'ghayri', 'not', 'نہ کہ'], ['الْمَغْضُوبِ', 'l-maghḍuubi', 'those who earned anger', 'جن پر غضب ہوا'], ['عَلَيْهِمْ', 'ʿalayhim', 'upon them', 'ان پر'], ['وَلَا', 'wa-laa', 'and not', 'اور نہ'], ['الضَّالِّينَ', 'ḍ-ḍaalliin', 'those who went astray', 'گمراہوں کا']],
+        en: 'the path of those You have blessed, not of those who earned Your anger, nor of those who went astray.', ur: 'ان لوگوں کا راستہ جن پر تو نے انعام کیا، نہ ان کا جن پر غضب ہوا اور نہ گمراہوں کا۔' },
+    ] },
+  { slug: 'al-asr', n: 103, name: 'الْعَصْر', en: 'Al-Asr', ur: 'سورہ عصر', meanEn: 'Time', meanUr: 'زمانہ',
+    introEn: 'Al-Asr, “Time”, is one of the shortest surahs. In three verses it sums up what saves a person from loss: faith, good deeds, and urging one another to truth and patience.',
+    introUr: 'سورہ عصر یعنی «زمانہ» قرآن کی مختصر ترین سورتوں میں سے ہے۔ تین آیتوں میں یہ بتاتی ہے کہ انسان کو خسارے سے کیا بچاتا ہے: ایمان، نیک عمل، اور ایک دوسرے کو حق اور صبر کی تلقین۔',
+    v: [
+      { w: [['وَالْعَصْرِ', 'wal-ʿaṣr', 'By time', 'زمانے کی قسم']],
+        en: 'By time,', ur: 'زمانے کی قسم،' },
+      { w: [['إِنَّ', 'inna', 'Indeed', 'بے شک'], ['الْإِنْسَانَ', 'l-insaana', 'mankind', 'انسان'], ['لَفِي', 'lafii', 'is surely in', 'یقیناً میں ہے'], ['خُسْرٍ', 'khusr', 'loss', 'خسارے']],
+        en: 'indeed, mankind is in loss,', ur: 'بے شک انسان خسارے میں ہے،' },
+      { w: [['إِلَّا', 'illaa', 'except', 'سوائے'], ['الَّذِينَ', 'lladhiina', 'those who', 'ان لوگوں کے جو'], ['آمَنُوا', 'aamanuu', 'believe', 'ایمان لائے'], ['وَعَمِلُوا', 'wa-ʿamiluu', 'and do', 'اور عمل کیے'], ['الصَّالِحَاتِ', 'ṣ-ṣaaliḥaati', 'good deeds', 'نیک'], ['وَتَوَاصَوْا', 'wa-tawaaṣaw', 'and urge one another', 'اور ایک دوسرے کو تلقین کی'], ['بِالْحَقِّ', 'bil-ḥaqqi', 'to the truth', 'حق کی'], ['وَتَوَاصَوْا', 'wa-tawaaṣaw', 'and urge one another', 'اور ایک دوسرے کو تلقین کی'], ['بِالصَّبْرِ', 'biṣ-ṣabr', 'to patience', 'صبر کی']],
+        en: 'except those who believe and do good deeds, and urge one another to the truth, and urge one another to patience.', ur: 'سوائے ان لوگوں کے جو ایمان لائے اور نیک عمل کیے، اور ایک دوسرے کو حق کی تلقین کی اور ایک دوسرے کو صبر کی تلقین کی۔' },
+    ] },
+  { slug: 'al-kawthar', n: 108, name: 'الْكَوْثَر', en: 'Al-Kawthar', ur: 'سورہ کوثر', meanEn: 'Abundant Good', meanUr: 'خیرِ کثیر',
+    introEn: 'Al-Kawthar, “Abundant Good”, is the shortest surah in the Quran: three short verses and only ten words.',
+    introUr: 'سورہ کوثر یعنی «خیرِ کثیر» قرآن کی سب سے چھوٹی سورت ہے: تین مختصر آیتیں اور صرف دس الفاظ۔',
+    v: [
+      { w: [['إِنَّا', 'innaa', 'Indeed We', 'بے شک ہم نے'], ['أَعْطَيْنَاكَ', 'aʿṭaynaaka', 'have given you', 'آپ کو عطا کیا'], ['الْكَوْثَرَ', 'l-kawthar', 'al-Kawthar (abundant good)', 'کوثر (بہت بھلائی)']],
+        en: 'Indeed, We have given you al-Kawthar (abundant good).', ur: 'بے شک ہم نے آپ کو کوثر (بہت بھلائی) عطا کی۔' },
+      { w: [['فَصَلِّ', 'fa-ṣalli', 'So pray', 'پس نماز پڑھیں'], ['لِرَبِّكَ', 'li-rabbika', 'to your Lord', 'اپنے رب کے لیے'], ['وَانْحَرْ', 'wa-nḥar', 'and sacrifice', 'اور قربانی کریں']],
+        en: 'So pray to your Lord and sacrifice.', ur: 'پس اپنے رب کے لیے نماز پڑھیں اور قربانی کریں۔' },
+      { w: [['إِنَّ', 'inna', 'Indeed', 'بے شک'], ['شَانِئَكَ', 'shaani’aka', 'your enemy', 'آپ کا دشمن'], ['هُوَ', 'huwa', 'he is', 'وہی'], ['الْأَبْتَرُ', 'l-abtar', 'the one cut off', 'جڑ کٹا']],
+        en: 'Indeed, it is your enemy who is cut off.', ur: 'بے شک آپ کا دشمن ہی جڑ کٹا (بے نام و نشان) ہے۔' },
+    ] },
+  { slug: 'al-ikhlas', n: 112, name: 'الْإِخْلَاص', en: 'Al-Ikhlas', ur: 'سورہ اخلاص', meanEn: 'Sincerity', meanUr: 'اخلاص',
+    introEn: 'Al-Ikhlas, “Sincerity”, describes Allah in four short verses: One, needing no one, with no child and no equal.',
+    introUr: 'سورہ اخلاص چار مختصر آیتوں میں اللہ کی صفات بیان کرتی ہے: وہ ایک ہے، کسی کا محتاج نہیں، نہ اس کی اولاد ہے اور نہ کوئی اس کے برابر ہے۔',
+    v: [
+      { w: [['قُلْ', 'qul', 'Say', 'کہہ دیجیے'], ['هُوَ', 'huwa', 'He is', 'وہ'], ['اللَّهُ', 'llaahu', 'Allah', 'اللہ'], ['أَحَدٌ', 'aḥad', 'the One', 'ایک ہے']],
+        en: 'Say: He is Allah, the One.', ur: 'کہہ دیجیے: وہ اللہ ایک ہے۔' },
+      { w: [['اللَّهُ', 'allaahu', 'Allah', 'اللہ'], ['الصَّمَدُ', 'ṣ-ṣamad', 'the Self-Sufficient, on whom all depend', 'بے نیاز، جس کے سب محتاج ہیں']],
+        en: 'Allah, the Self-Sufficient, on whom all depend.', ur: 'اللہ بے نیاز ہے، سب اسی کے محتاج ہیں۔' },
+      { w: [['لَمْ', 'lam', 'not', 'نہ'], ['يَلِدْ', 'yalid', 'He begets', 'اس نے جنا'], ['وَلَمْ', 'wa-lam', 'and not', 'اور نہ'], ['يُولَدْ', 'yuulad', 'was He born', 'وہ جنا گیا']],
+        en: 'He has no child, and He was not born.', ur: 'نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد ہے۔' },
+      { w: [['وَلَمْ', 'wa-lam', 'and not', 'اور نہیں'], ['يَكُنْ', 'yakun', 'is', 'ہے'], ['لَهُ', 'lahuu', 'to Him', 'اس کا'], ['كُفُوًا', 'kufuwan', 'equal', 'ہمسر'], ['أَحَدٌ', 'aḥad', 'anyone', 'کوئی']],
+        en: 'And there is none equal to Him.', ur: 'اور کوئی اس کا ہمسر نہیں۔' },
+    ] },
+  { slug: 'al-falaq', n: 113, name: 'الْفَلَق', en: 'Al-Falaq', ur: 'سورہ فلق', meanEn: 'Daybreak', meanUr: 'صبح',
+    introEn: 'Al-Falaq, “Daybreak”, and An-Nas are the two surahs of seeking refuge (al-muʿawwidhatayn). Many Muslims recite them in the morning, in the evening and before sleep.',
+    introUr: 'سورہ فلق یعنی «صبح» اور سورہ ناس کو معوذتین (پناہ کی دو سورتیں) کہا جاتا ہے۔ بہت سے مسلمان انہیں صبح، شام اور سونے سے پہلے پڑھتے ہیں۔',
+    v: [
+      { w: [['قُلْ', 'qul', 'Say', 'کہہ دیجیے'], ['أَعُوذُ', 'aʿuudhu', 'I seek refuge', 'میں پناہ مانگتا ہوں'], ['بِرَبِّ', 'bi-rabbi', 'in the Lord', 'رب کی'], ['الْفَلَقِ', 'l-falaq', 'of daybreak', 'صبح کے']],
+        en: 'Say: I seek refuge in the Lord of daybreak', ur: 'کہہ دیجیے: میں صبح کے رب کی پناہ مانگتا ہوں' },
+      { w: [['مِنْ', 'min', 'from', 'سے'], ['شَرِّ', 'sharri', 'the evil', 'شر'], ['مَا', 'maa', 'of what', 'اس کے جو'], ['خَلَقَ', 'khalaq', 'He created', 'اس نے پیدا کیا']],
+        en: 'from the evil of what He has created,', ur: 'ہر اس چیز کے شر سے جو اس نے پیدا کی،' },
+      { w: [['وَمِنْ', 'wa-min', 'and from', 'اور سے'], ['شَرِّ', 'sharri', 'the evil', 'شر'], ['غَاسِقٍ', 'ghaasiqin', 'of darkness', 'اندھیری رات کے'], ['إِذَا', 'idhaa', 'when', 'جب'], ['وَقَبَ', 'waqab', 'it settles', 'وہ چھا جائے']],
+        en: 'and from the evil of darkness when it settles,', ur: 'اور اندھیری رات کے شر سے جب وہ چھا جائے،' },
+      { w: [['وَمِنْ', 'wa-min', 'and from', 'اور سے'], ['شَرِّ', 'sharri', 'the evil', 'شر'], ['النَّفَّاثَاتِ', 'n-naffaathaati', 'of those who blow', 'پھونکنے والیوں کے'], ['فِي', 'fii', 'on', 'میں'], ['الْعُقَدِ', 'l-ʿuqad', 'knots', 'گرہوں']],
+        en: 'and from the evil of those who blow on knots,', ur: 'اور گرہوں میں پھونکنے والیوں کے شر سے،' },
+      { w: [['وَمِنْ', 'wa-min', 'and from', 'اور سے'], ['شَرِّ', 'sharri', 'the evil', 'شر'], ['حَاسِدٍ', 'ḥaasidin', 'of an envier', 'حسد کرنے والے کے'], ['إِذَا', 'idhaa', 'when', 'جب'], ['حَسَدَ', 'ḥasad', 'he envies', 'وہ حسد کرے']],
+        en: 'and from the evil of an envier when he envies.', ur: 'اور حسد کرنے والے کے شر سے جب وہ حسد کرے۔' },
+    ] },
+  { slug: 'an-nas', n: 114, name: 'النَّاس', en: 'An-Nas', ur: 'سورہ ناس', meanEn: 'Mankind', meanUr: 'انسان',
+    introEn: 'An-Nas, “Mankind”, is the last surah of the Quran. It asks Allah for protection from the whisperer who puts evil thoughts into people’s hearts.',
+    introUr: 'سورہ ناس یعنی «انسان» قرآن کی آخری سورت ہے۔ اس میں اللہ سے اس وسوسہ ڈالنے والے سے پناہ مانگی گئی ہے جو لوگوں کے دلوں میں برے خیالات ڈالتا ہے۔',
+    v: [
+      { w: [['قُلْ', 'qul', 'Say', 'کہہ دیجیے'], ['أَعُوذُ', 'aʿuudhu', 'I seek refuge', 'میں پناہ مانگتا ہوں'], ['بِرَبِّ', 'bi-rabbi', 'in the Lord', 'رب کی'], ['النَّاسِ', 'n-naas', 'of mankind', 'لوگوں کے']],
+        en: 'Say: I seek refuge in the Lord of mankind,', ur: 'کہہ دیجیے: میں لوگوں کے رب کی پناہ مانگتا ہوں،' },
+      { w: [['مَلِكِ', 'maliki', 'the King', 'بادشاہ'], ['النَّاسِ', 'n-naas', 'of mankind', 'لوگوں کے']],
+        en: 'the King of mankind,', ur: 'لوگوں کے بادشاہ کی،' },
+      { w: [['إِلَٰهِ', 'ilaahi', 'the God', 'معبود'], ['النَّاسِ', 'n-naas', 'of mankind', 'لوگوں کے']],
+        en: 'the God of mankind,', ur: 'لوگوں کے معبود کی،' },
+      { w: [['مِنْ', 'min', 'from', 'سے'], ['شَرِّ', 'sharri', 'the evil', 'شر'], ['الْوَسْوَاسِ', 'l-waswaasi', 'of the whisperer', 'وسوسہ ڈالنے والے کے'], ['الْخَنَّاسِ', 'l-khannaas', 'who withdraws', 'جو پیچھے ہٹ جاتا ہے']],
+        en: 'from the evil of the whisperer who withdraws,', ur: 'وسوسہ ڈالنے والے کے شر سے جو پیچھے ہٹ جاتا ہے،' },
+      { w: [['الَّذِي', 'alladhii', 'who', 'جو'], ['يُوَسْوِسُ', 'yuwaswisu', 'whispers', 'وسوسہ ڈالتا ہے'], ['فِي', 'fii', 'into', 'میں'], ['صُدُورِ', 'ṣuduuri', 'the hearts', 'سینوں'], ['النَّاسِ', 'n-naas', 'of people', 'لوگوں کے']],
+        en: 'who whispers into the hearts of people,', ur: 'جو لوگوں کے سینوں میں وسوسہ ڈالتا ہے،' },
+      { w: [['مِنَ', 'mina', 'from among', 'میں سے'], ['الْجِنَّةِ', 'l-jinnati', 'the jinn', 'جنوں'], ['وَالنَّاسِ', 'wan-naas', 'and people', 'اور انسانوں']],
+        en: 'from among the jinn and people.', ur: 'جنوں میں سے بھی اور انسانوں میں سے بھی۔' },
+    ] },
+];
+
+// Words said in the prayer. Wordings differ slightly between traditions; these are widely used forms.
+const PRAYER = [
+  { en: 'Takbir', ur: 'تکبیر', whenEn: 'To start the prayer, and at each change of position', whenUr: 'نماز شروع کرتے وقت اور ہر رکن بدلتے وقت',
+    a: 'اللَّهُ أَكْبَرُ', tr: 'allaahu akbar', mEn: 'Allah is the Greatest.', mUr: 'اللہ سب سے بڑا ہے۔' },
+  { en: 'Opening praise (thanaa’)', ur: 'ثنا', whenEn: 'After the first takbir', whenUr: 'پہلی تکبیر کے بعد',
+    a: 'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَٰهَ غَيْرُكَ', tr: 'subḥaanaka llaahumma wa-biḥamdika, wa-tabaaraka smuka, wa-taʿaalaa jadduka, wa-laa ilaaha ghayruk',
+    mEn: 'Glory be to You, O Allah, and praise. Blessed is Your name, high is Your majesty, and there is no god but You.', mUr: 'اے اللہ! تو پاک ہے اور سب تعریف تیری ہے۔ تیرا نام بابرکت ہے، تیری شان بلند ہے اور تیرے سوا کوئی معبود نہیں۔' },
+  { en: 'Seeking refuge (taʿawwudh)', ur: 'تعوذ', whenEn: 'Before reciting the Quran', whenUr: 'قرآن پڑھنے سے پہلے',
+    a: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ', tr: 'aʿuudhu billaahi mina sh-shayṭaani r-rajiim', mEn: 'I seek refuge in Allah from Satan, the rejected.', mUr: 'میں مردود شیطان سے اللہ کی پناہ مانگتا ہوں۔' },
+  { en: 'Basmala', ur: 'تسمیہ', whenEn: 'Before Al-Fatiha', whenUr: 'سورہ فاتحہ سے پہلے',
+    a: 'BASMALA', tr: 'bismi llaahi r-raḥmaani r-raḥiim', mEn: 'In the name of Allah, the Most Gracious, the Most Merciful.', mUr: 'اللہ کے نام سے جو بڑا مہربان، نہایت رحم والا ہے۔' },
+  { en: 'In rukuʿ (bowing)', ur: 'رکوع میں', whenEn: 'While bowing, usually three times', whenUr: 'رکوع میں، عموماً تین بار',
+    a: 'سُبْحَانَ رَبِّيَ الْعَظِيمِ', tr: 'subḥaana rabbiya l-ʿaẓiim', mEn: 'Glory be to my Lord, the Most Great.', mUr: 'پاک ہے میرا رب جو بڑی عظمت والا ہے۔' },
+  { en: 'Rising from rukuʿ', ur: 'رکوع سے اٹھتے ہوئے', whenEn: 'While standing up from bowing', whenUr: 'رکوع سے سیدھے کھڑے ہوتے ہوئے',
+    a: 'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ', tr: 'samiʿa llaahu liman ḥamidah', mEn: 'Allah hears the one who praises Him.', mUr: 'اللہ نے اس کی سن لی جس نے اس کی تعریف کی۔' },
+  { en: 'Standing after rukuʿ', ur: 'رکوع کے بعد کھڑے ہو کر', whenEn: 'Once standing straight (also said without {وَ})', whenUr: 'سیدھے کھڑے ہو کر (بغیر {وَ} کے بھی کہا جاتا ہے)',
+    a: 'رَبَّنَا وَلَكَ الْحَمْدُ', tr: 'rabbanaa wa-laka l-ḥamd', mEn: 'Our Lord, and to You belongs all praise.', mUr: 'اے ہمارے رب! اور سب تعریف تیرے ہی لیے ہے۔' },
+  { en: 'In sujud (prostration)', ur: 'سجدے میں', whenEn: 'In each prostration, usually three times', whenUr: 'ہر سجدے میں، عموماً تین بار',
+    a: 'سُبْحَانَ رَبِّيَ الْأَعْلَى', tr: 'subḥaana rabbiya l-aʿlaa', mEn: 'Glory be to my Lord, the Most High.', mUr: 'پاک ہے میرا رب جو سب سے بلند ہے۔' },
+  { en: 'Between the two prostrations', ur: 'دو سجدوں کے درمیان', whenEn: 'Sitting between the two prostrations', whenUr: 'دونوں سجدوں کے درمیان بیٹھ کر',
+    a: 'رَبِّ اغْفِرْ لِي', tr: 'rabbi ghfir lii', mEn: 'My Lord, forgive me.', mUr: 'اے میرے رب! مجھے بخش دے۔' },
+  { en: 'Tashahhud', ur: 'تشہد (التحیات)', whenEn: 'Sitting after the second rakʿah and at the end of the prayer', whenUr: 'دوسری رکعت کے بعد اور نماز کے آخر میں بیٹھ کر',
+    a: 'التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ',
+    tr: 'at-taḥiyyaatu lillaahi waṣ-ṣalawaatu waṭ-ṭayyibaat, as-salaamu ʿalayka ayyuha n-nabiyyu wa-raḥmatu llaahi wa-barakaatuh, as-salaamu ʿalaynaa wa-ʿalaa ʿibaadi llaahi ṣ-ṣaaliḥiin, ashhadu an laa ilaaha illa llaah, wa-ashhadu anna muḥammadan ʿabduhuu wa-rasuuluh',
+    mEn: 'All greetings, prayers and good things are for Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no god but Allah, and I bear witness that Muhammad is His servant and messenger.',
+    mUr: 'تمام آداب، تمام نمازیں اور تمام پاکیزہ باتیں اللہ ہی کے لیے ہیں۔ اے نبی! آپ پر سلام ہو اور اللہ کی رحمت اور اس کی برکتیں۔ ہم پر اور اللہ کے نیک بندوں پر سلام ہو۔ میں گواہی دیتا ہوں کہ اللہ کے سوا کوئی معبود نہیں، اور میں گواہی دیتا ہوں کہ محمد اس کے بندے اور رسول ہیں۔' },
+  { en: 'Durood (prayer for the Prophet ﷺ)', ur: 'درود شریف', whenEn: 'In the last sitting, after the tashahhud', whenUr: 'آخری قعدے میں تشہد کے بعد',
+    a: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ',
+    tr: 'allaahumma ṣalli ʿalaa muḥammadin wa-ʿalaa aali muḥammad, kamaa ṣallayta ʿalaa ibraahiima wa-ʿalaa aali ibraahiim, innaka ḥamiidun majiid. allaahumma baarik ʿalaa muḥammadin wa-ʿalaa aali muḥammad, kamaa baarakta ʿalaa ibraahiima wa-ʿalaa aali ibraahiim, innaka ḥamiidun majiid',
+    mEn: 'O Allah, send Your grace on Muhammad and on the family of Muhammad, as You sent Your grace on Ibrahim and on the family of Ibrahim; You are Praiseworthy, Glorious. O Allah, bless Muhammad and the family of Muhammad, as You blessed Ibrahim and the family of Ibrahim; You are Praiseworthy, Glorious.',
+    mUr: 'اے اللہ! محمد اور آلِ محمد پر رحمت نازل فرما، جیسے تو نے ابراہیم اور آلِ ابراہیم پر رحمت نازل فرمائی، بے شک تو قابلِ تعریف، بزرگی والا ہے۔ اے اللہ! محمد اور آلِ محمد پر برکت نازل فرما، جیسے تو نے ابراہیم اور آلِ ابراہیم پر برکت نازل فرمائی، بے شک تو قابلِ تعریف، بزرگی والا ہے۔' },
+  { en: 'Ending the prayer (taslim)', ur: 'سلام', whenEn: 'Turning the head to the right, then to the left', whenUr: 'پہلے دائیں، پھر بائیں طرف منہ پھیرتے ہوئے',
+    a: 'السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ', tr: 'as-salaamu ʿalaykum wa-raḥmatu llaah', mEn: 'Peace and the mercy of Allah be upon you.', mUr: 'آپ پر سلامتی اور اللہ کی رحمت ہو۔' },
+];
+
+// Common words of the Quran: [Arabic, transliteration, English, Urdu]
+const QWORDS = [
+  ['اللَّهُ', 'allaah', 'Allah', 'اللہ'],
+  ['رَبٌّ', 'rabb', 'Lord', 'رب، پالنے والا'],
+  ['إِلَٰهٌ', 'ilaah', 'god, one who is worshipped', 'معبود'],
+  ['قَالَ', 'qaala', 'he said', 'اس نے کہا'],
+  ['كَانَ', 'kaana', 'he was', 'وہ تھا'],
+  ['آمَنُوا', 'aamanuu', 'they believed', 'وہ ایمان لائے'],
+  ['كَفَرُوا', 'kafaruu', 'they disbelieved', 'انہوں نے انکار کیا'],
+  ['عَمِلُوا', 'ʿamiluu', 'they did', 'انہوں نے عمل کیا'],
+  ['يَعْلَمُونَ', 'yaʿlamuun', 'they know', 'وہ جانتے ہیں'],
+  ['الَّذِينَ', 'alladhiina', 'those who', 'وہ لوگ جو'],
+  ['النَّاسُ', 'an-naas', 'people, mankind', 'لوگ'],
+  ['قَوْمٌ', 'qawm', 'a people, a nation', 'قوم'],
+  ['نَفْسٌ', 'nafs', 'soul, self', 'جان، نفس'],
+  ['قَلْبٌ', 'qalb', 'heart', 'دل'],
+  ['رَسُولٌ', 'rasuul', 'messenger', 'رسول، پیغمبر'],
+  ['كِتَابٌ', 'kitaab', 'book, scripture', 'کتاب'],
+  ['آيَةٌ', 'aaya', 'sign, verse', 'نشانی، آیت'],
+  ['يَوْمٌ', 'yawm', 'day', 'دن'],
+  ['الْأَرْضُ', 'al-arḍ', 'the earth', 'زمین'],
+  ['السَّمَاءُ', 'as-samaa’', 'the sky, heaven', 'آسمان'],
+  ['شَيْءٌ', 'shay’', 'thing', 'چیز'],
+  ['حَقٌّ', 'ḥaqq', 'truth, right', 'حق، سچ'],
+  ['عِلْمٌ', 'ʿilm', 'knowledge', 'علم'],
+  ['هُدًى', 'hudan', 'guidance', 'ہدایت'],
+  ['رَحْمَةٌ', 'raḥma', 'mercy', 'رحمت'],
+  ['عَذَابٌ', 'ʿadhaab', 'punishment', 'عذاب'],
+  ['الْجَنَّةُ', 'al-janna', 'Paradise (the Garden)', 'جنت'],
+  ['النَّارُ', 'an-naar', 'the Fire', 'آگ، دوزخ'],
+  ['الصَّلَاةُ', 'aṣ-ṣalaah', 'prayer', 'نماز'],
+  ['الزَّكَاةُ', 'az-zakaah', 'zakat (purifying charity)', 'زکوٰۃ'],
+  ['خَيْرٌ', 'khayr', 'good; better', 'بھلائی؛ بہتر'],
+  ['الْآخِرَةُ', 'al-aakhira', 'the Hereafter', 'آخرت'],
+  ['الدُّنْيَا', 'ad-dunyaa', 'this world', 'دنیا'],
+  ['سَبِيلٌ', 'sabiil', 'way, path', 'راستہ'],
+  ['غَفُورٌ', 'ghafuur', 'Most Forgiving', 'بہت بخشنے والا'],
+  ['رَحِيمٌ', 'raḥiim', 'Most Merciful', 'نہایت رحم والا'],
+  ['عَلِيمٌ', 'ʿaliim', 'All-Knowing', 'سب کچھ جاننے والا'],
+  ['حَكِيمٌ', 'ḥakiim', 'All-Wise', 'حکمت والا'],
+  ['إِنَّ', 'inna', 'indeed, surely', 'بے شک'],
+  ['لَا', 'laa', 'no, not', 'نہیں'],
+];
+
+// ---------------------------------------------------------------- Saudi Arabic
+// [Saudi form, transliteration, English, Urdu, standard Arabic form if different]
+const SAUDI = [
+  { en: 'Greetings and polite words', ur: 'سلام اور آداب', items: [
+    ['هلا والله', 'hala wallaah', 'Hello! (a warm welcome)', 'خوش آمدید! (گرم جوشی سے)', 'أهلًا وسهلًا'],
+    ['وش لونك؟', 'wish loonak?', 'How are you? (to a man)', 'آپ کیسے ہیں؟ (مرد سے)', 'كيف حالك؟'],
+    ['كيفك؟', 'keefak?', 'How are you? (to a man)', 'کیا حال ہے؟ (مرد سے)', 'كيف حالك؟'],
+    ['الحمد لله، تمام', 'al-ḥamdu lillaah, tamaam', 'Fine, thank God', 'الحمد للہ، ٹھیک ہوں', 'الحمد لله، بخير'],
+    ['يعطيك العافية', 'yaʿṭiik al-ʿaafya', 'Thanks for your effort (lit. God give you health)', 'اللہ آپ کو صحت دے (کام کرنے والے کا شکریہ)', ''],
+    ['الله يعافيك', 'allaah yʿaafiik', 'And you too (the reply)', 'اللہ آپ کو بھی عافیت دے (جواب)', ''],
+    ['مشكور', 'mashkuur', 'Thanks', 'شکریہ', 'شكرًا'],
+    ['العفو', 'al-ʿafw', 'You’re welcome', 'کوئی بات نہیں', 'عفوًا'],
+    ['تفضل', 'tfaḍḍal', 'Please, go ahead / here you are', 'جی، تشریف لائیں / یہ لیجیے', ''],
+    ['أبشر', 'abshir', 'Sure, consider it done', 'جی ضرور، ابھی کر دیتا ہوں', ''],
+    ['معليش', 'maʿleesh', 'Sorry / never mind', 'معاف کیجیے / کوئی بات نہیں', 'عذرًا'],
+    ['مع السلامة', 'maʿa s-salaama', 'Goodbye', 'خدا حافظ', ''],
+  ] },
+  { en: 'Questions', ur: 'سوال', items: [
+    ['وش؟', 'wish?', 'What?', 'کیا؟', 'ماذا؟'],
+    ['وين؟', 'wayn?', 'Where?', 'کہاں؟', 'أين؟'],
+    ['متى؟', 'mita?', 'When?', 'کب؟', ''],
+    ['ليش؟', 'leesh?', 'Why?', 'کیوں؟', 'لماذا؟'],
+    ['كم؟', 'kam?', 'How much? How many?', 'کتنا؟ کتنے؟', ''],
+    ['مين؟', 'miin?', 'Who?', 'کون؟', 'من؟'],
+    ['وش اسمك؟', 'wish ismak?', 'What’s your name? (to a man)', 'آپ کا نام کیا ہے؟ (مرد سے)', 'ما اسمك؟'],
+    ['تبي شي؟', 'tibi shay?', 'Do you want anything? (to a man)', 'کچھ چاہیے؟ (مرد سے)', 'هل تريد شيئًا؟'],
+  ] },
+  { en: 'Taxi and directions', ur: 'ٹیکسی اور راستہ', items: [
+    ['ودني … لو سمحت', 'waddinii … law samaḥt', 'Take me to … please', 'مجھے … لے چلیں، مہربانی', 'خذني إلى … من فضلك'],
+    ['يمين', 'yamiin', 'Right', 'دائیں', ''],
+    ['يسار', 'yasaar', 'Left', 'بائیں', ''],
+    ['على طول', 'ʿala ṭuul', 'Straight on', 'سیدھا چلیں', 'إلى الأمام'],
+    ['وقف هنا', 'wagif hina', 'Stop here', 'یہاں روک دیں', 'قف هنا'],
+    ['بكم المشوار؟', 'bikam al-mishwaar?', 'How much is the ride?', 'کرایہ کتنا ہوگا؟', 'كم الأجرة؟'],
+    ['قريب', 'gariib', 'Near', 'قریب', ''],
+    ['بعيد', 'baʿiid', 'Far', 'دور', ''],
+    ['الإشارة', 'al-ishaara', 'The traffic light', 'سگنل', ''],
+  ] },
+  { en: 'Shopping', ur: 'خریداری', items: [
+    ['بكم هذا؟', 'bikam haadha?', 'How much is this?', 'یہ کتنے کا ہے؟', ''],
+    ['غالي', 'ghaali', 'Expensive', 'مہنگا', ''],
+    ['فيه خصم؟', 'fiih khaṣm?', 'Is there a discount?', 'کوئی رعایت ہے؟', 'هل يوجد خصم؟'],
+    ['أبي هذا', 'abi haadha', 'I want this', 'مجھے یہ چاہیے', 'أريد هذا'],
+    ['عندك …؟', 'ʿindak …?', 'Do you have …? (to a man)', 'کیا آپ کے پاس … ہے؟', 'هل عندك …؟'],
+    ['كاش ولا شبكة؟', 'kaash walla shabaka?', 'Cash or card?', 'نقد یا کارڈ؟', 'نقدًا أم بالبطاقة؟'],
+    ['الفاتورة لو سمحت', 'al-faatuura law samaḥt', 'The receipt, please', 'رسید دے دیں، مہربانی', ''],
+  ] },
+  { en: 'At work', ur: 'دفتر اور کام', items: [
+    ['الدوام', 'ad-dawaam', 'Working hours, the work shift', 'ڈیوٹی کے اوقات', ''],
+    ['متى يبدأ الدوام؟', 'mita yibda ad-dawaam?', 'When does work start?', 'ڈیوٹی کب شروع ہوتی ہے؟', ''],
+    ['عندنا اجتماع', 'ʿindana jtimaaʿ', 'We have a meeting', 'ہماری میٹنگ ہے', ''],
+    ['إجازة', 'ijaaza', 'Leave, holiday', 'چھٹی', ''],
+    ['الراتب', 'ar-raatib', 'The salary', 'تنخواہ', ''],
+    ['المدير', 'al-mudiir', 'The manager', 'منیجر', ''],
+    ['خلصت؟', 'khallaṣt?', 'Have you finished? (to a man)', 'کام ختم کر لیا؟ (مرد سے)', 'هل انتهيت؟'],
+    ['الحين', 'al-ḥiin', 'Now', 'ابھی', 'الآن'],
+    ['بكرة', 'bukra', 'Tomorrow', 'کل (آنے والا)', 'غدًا'],
+  ] },
+  { en: 'Food and coffee', ur: 'کھانا اور قہوہ', items: [
+    ['قهوة عربية', 'gahwa ʿarabiyya', 'Arabic coffee', 'عربی قہوہ', ''],
+    ['شاهي', 'shaahi', 'Tea', 'چائے', 'شاي'],
+    ['بدون سكر', 'biduun sukkar', 'Without sugar', 'چینی کے بغیر', ''],
+    ['الحساب لو سمحت', 'al-ḥisaab law samaḥt', 'The bill, please', 'بل لے آئیں، مہربانی', ''],
+  ] },
+  { en: 'At the doctor', ur: 'ڈاکٹر کے پاس', items: [
+    ['تعبان', 'taʿbaan', 'I’m tired / unwell (said by a man)', 'میں تھکا ہوا / بیمار ہوں (مرد)', 'أنا متعب'],
+    ['عندي صداع', 'ʿindi ṣudaaʿ', 'I have a headache', 'میرے سر میں درد ہے', ''],
+    ['وين الصيدلية؟', 'wayn aṣ-ṣaydaliyya?', 'Where is the pharmacy?', 'فارمیسی کہاں ہے؟', 'أين الصيدلية؟'],
+    ['أبي موعد', 'abi mawʿid', 'I want an appointment', 'مجھے اپائنٹمنٹ چاہیے', 'أريد موعدًا'],
+  ] },
+];
+
 // ---------------------------------------------------------------- grammar lessons
 // Order inspired by classic courses for non-Arabic speakers such as the Madinah books.
 // All explanations and example sentences here are original.
@@ -594,7 +836,7 @@ const LESSONS = [
 const T = {
   en: {
     dir: 'ltr', brand: 'Harf', skip: 'Skip to content', navLabel: 'Sections',
-    nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', vocabulary: 'Vocabulary', phrases: 'Phrases', quiz: 'Quiz' },
+    nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', vocabulary: 'Vocabulary', quran: 'Quran', phrases: 'Phrases', quiz: 'Quiz' },
     switchLabel: 'اردو', switchTitle: 'یہ صفحہ اردو میں پڑھیں', switchLang: 'ur',
     about: 'About', contact: 'Contact', privacy: 'Privacy policy', support: 'Support Harf',
     listen: '🔊 Listen', sep: '›', prev: '← Previous', next: 'Next →',
@@ -602,7 +844,7 @@ const T = {
   },
   ur: {
     dir: 'rtl', brand: 'حرف', skip: 'مواد پر جائیں', navLabel: 'حصے',
-    nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', vocabulary: 'الفاظ', phrases: 'جملے', quiz: 'کوئز' },
+    nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', vocabulary: 'الفاظ', quran: 'قرآن', phrases: 'جملے', quiz: 'کوئز' },
     switchLabel: 'English', switchTitle: 'Read this page in English', switchLang: 'en',
     about: 'ہمارے بارے میں', contact: 'رابطہ', privacy: 'رازداری کی پالیسی', support: 'حرف کی مدد کریں',
     listen: '🔊 سنیں', sep: '‹', prev: '→ پچھلا', next: 'اگلا ←',
@@ -624,6 +866,11 @@ const link = (lang, file) => (lang === 'en' ? file : file === 'index.html' ? 'ur
 const pageUrl = (file) => SITE_URL + '/' + (file === 'index.html' ? '' : file);
 const say = (lang, text, label) => `<button class="btn sm" type="button" data-say="${esc(text)}">${label || T[lang].listen}</button>`;
 const totalWords = TOPICS.reduce((n, t) => n + t.words.length, 0);
+const deckTotal = totalWords + QWORDS.length;
+const arNum = (n) => String(n).replace(/[0-9]/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
+const BASMALA = SURAHS[0].v[0].w.map((x) => x[0]).join(' ');
+PRAYER.forEach((p) => { if (p.a === 'BASMALA') p.a = BASMALA; });
+const surahWords = (s) => s.v.reduce((n, v) => n + v.w.length, 0);
 
 const FONTS = {
   en: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap',
@@ -635,7 +882,7 @@ function layout(lang, o) {
   const t = T[lang];
   const self = link(lang, o.file);
   const other = link(t.switchLang, o.file);
-  const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['vocabulary.html', 'vocabulary'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
+  const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['vocabulary.html', 'vocabulary'], ['quran.html', 'quran'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
     .map(([f, k]) => `<a href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${t.nav[k]}</a>`).join('');
   const ads = ADSENSE_CLIENT
     ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n` : '';
@@ -719,7 +966,9 @@ function homePage(lang) {
       ['alphabet.html', 'حروفِ تہجی', `تمام ${n(28)} حروف، ان کی چاروں شکلیں، تلفظ کی رہنمائی اور ہر حرف کی ایک مثال۔`],
       ['lessons.html', 'گرامر کے اسباق', `${n(LESSONS.length)} مختصر اسباق، پہلے جملے سے اپنے بارے میں بات کرنے تک۔`],
       ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے رنگوں تک، فلیش کارڈز کے ساتھ۔`],
+      ['quran.html', 'قرآنی عربی', `سورہ فاتحہ اور ${n(SURAHS.length - 1)} مختصر سورتیں لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
       ['phrases.html', 'جملے', `ملنے جلنے، خریداری اور راستہ پوچھنے کے لیے ${n(PHRASES.length)} جملے۔`],
+      ['saudi-arabic.html', 'سعودی بول چال', `سعودی عرب میں روزمرہ استعمال ہونے والے ${n(SAUDI.reduce((k, g) => k + g.items.length, 0))} جملے: دفتر، دکان، ٹیکسی اور ڈاکٹر۔`],
       ['quiz.html', 'کوئز', 'حروف اور الفاظ پر دس مختصر سوال، ہر بار نیا سیٹ۔'],
     ],
     howH: 'حرف سے کیسے سیکھیں',
@@ -743,7 +992,9 @@ function homePage(lang) {
       ['alphabet.html', 'Alphabet', 'All 28 letters with their four shapes, pronunciation tips and an example word for each.'],
       ['lessons.html', 'Grammar lessons', `${LESSONS.length} short lessons, from your first sentence to talking about yourself.`],
       ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to colours, with flashcards.`],
+      ['quran.html', 'Quranic Arabic', `Al-Fatiha and ${SURAHS.length - 1} short surahs word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
       ['phrases.html', 'Phrases', `${PHRASES.length} sentences for meeting people, shopping and getting around.`],
+      ['saudi-arabic.html', 'Saudi Arabic', `${SAUDI.reduce((k, g) => k + g.items.length, 0)} phrases Saudis use every day: at work, in shops, in taxis and at the doctor.`],
       ['quiz.html', 'Quiz', 'Ten quick questions on letters and words, with a new set every time.'],
     ],
     howH: 'How to use Harf',
@@ -770,9 +1021,9 @@ function homePage(lang) {
       <a class="btn" href="${link(lang, 'lessons.html')}">${C.cta2}</a>
     </div>
   </div>
-  <div class="stats" id="stats" data-letters="28" data-words="${totalWords}">
+  <div class="stats" id="stats" data-letters="28" data-words="${deckTotal}">
     <div class="stat"><strong id="sLetters">${n(0)}/${n(28)}</strong><span>${C.s1}</span><div class="meter"><i id="mLetters"></i></div></div>
-    <div class="stat"><strong id="sWords">${n(0)}/${n(totalWords)}</strong><span>${C.s2}</span><div class="meter"><i id="mWords"></i></div></div>
+    <div class="stat"><strong id="sWords">${n(0)}/${n(deckTotal)}</strong><span>${C.s2}</span><div class="meter"><i id="mWords"></i></div></div>
     <div class="stat"><strong id="sBest">–</strong><span>${C.s3}</span><div class="meter"><i id="mBest"></i></div></div>
   </div>
 </section>
@@ -953,7 +1204,7 @@ function lessonPage(lang, i) {
   const desc = ur ? `${plainTitle}۔ ${L.short.replace(/[{}]/g, '')} اردو میں وضاحت، مثالیں، آواز اور مشق۔`
     : `${plainTitle}. ${L.short.replace(/[{}]/g, '')} Clear explanation, examples with audio and practice.`;
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['lessons.html', T[lang].nav.lessons], [null, `${C.label} ${n}`]])}
-<p class="eyebrow">${C.label} ${n} · <span class="ar" lang="ar">${l.key}</span></p>
+<p class="eyebrow">${C.label} ${n}${ur ? '،' : ' ·'} <span class="ar" lang="ar">${l.key}</span></p>
 <h1>${fmt(L.title)}</h1>
 <p class="lead">${fmt(L.intro)}</p>
 <section>
@@ -999,23 +1250,16 @@ function vocabularyPage(lang) {
   return layout(lang, { file: 'vocabulary.html', section: 'vocabulary', title: C.title, desc: C.desc, body });
 }
 
-function topicPage(lang, i) {
+// Flashcards plus the full word list. Words: [Arabic, transliteration, English, Urdu]
+function deckHtml(lang, slug, words) {
   const ur = lang === 'ur';
-  const t = TOPICS[i];
-  const prev = TOPICS[i - 1], next = TOPICS[i + 1];
   const C = ur ? { ar: 'عربی', tr: 'رومن تلفظ', m: 'مطلب', flip: 'پلٹنے کے لیے ٹیپ کریں', prev: 'پچھلا', next: 'اگلا', known: 'یاد ہے؟ نشان لگائیں', listen: '🔊 سنیں', list: 'تمام الفاظ' }
     : { ar: 'Arabic', tr: 'Pronunciation', m: 'Meaning', flip: 'Tap or press Space to flip', prev: 'Previous', next: 'Next', known: 'Mark as known', listen: '🔊 Listen', list: 'All words' };
-  const rows = t.words.map(([a, tr, en, u]) => {
+  const rows = words.map(([a, tr, en, u]) => {
     const m = ur ? u : en;
-    return `<tr data-ar="${esc(a)}" data-tr="${esc(tr)}" data-m="${esc(m)}" data-key="${esc(t.slug + '|' + a)}"><td class="a"><span class="ar" lang="ar">${a}</span></td><td class="latin">${esc(tr)}</td><td>${esc(m)}</td><td>${say(lang, a)}</td></tr>`;
+    return `<tr data-ar="${esc(a)}" data-tr="${esc(tr)}" data-m="${esc(m)}" data-key="${esc(slug + '|' + a)}"><td class="a"><span class="ar" lang="ar">${a}</span></td><td class="latin">${esc(tr)}</td><td>${esc(m)}</td><td>${say(lang, a)}</td></tr>`;
   }).join('\n      ');
-  const title = ur ? t.titleUr : t.titleEn;
-  const desc = ur ? `${t.titleUr}: ${ud(t.words.length)} الفاظ اردو معنی، رومن تلفظ، آواز اور فلیش کارڈز کے ساتھ۔`
-    : `${t.titleEn}: ${t.words.length} words with meanings, pronunciation, audio and flashcards.`;
-  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['vocabulary.html', T[lang].nav.vocabulary], [null, ur ? t.ur : t.en]])}
-<h1>${title}</h1>
-<p class="lead">${fmt(ur ? t.introUr : t.introEn)}</p>
-<div class="cardzone">
+  return `<div class="cardzone">
   <div class="flash" id="flash" tabindex="0" role="button" aria-label="${ur ? 'کارڈ پلٹیں' : 'Flip card'}">
     <div class="flash-in">
       <div class="face front"><span class="ar" lang="ar" id="fAr"></span><span class="hint">${C.flip}</span></div>
@@ -1036,7 +1280,20 @@ function topicPage(lang, i) {
       ${rows}
     </tbody>
   </table>
-</div>
+</div>`;
+}
+
+function topicPage(lang, i) {
+  const ur = lang === 'ur';
+  const t = TOPICS[i];
+  const prev = TOPICS[i - 1], next = TOPICS[i + 1];
+  const title = ur ? t.titleUr : t.titleEn;
+  const desc = ur ? `${t.titleUr}: ${ud(t.words.length)} الفاظ اردو معنی، رومن تلفظ، آواز اور فلیش کارڈز کے ساتھ۔`
+    : `${t.titleEn}: ${t.words.length} words with meanings, pronunciation, audio and flashcards.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['vocabulary.html', T[lang].nav.vocabulary], [null, ur ? t.ur : t.en]])}
+<h1>${title}</h1>
+<p class="lead">${fmt(ur ? t.introUr : t.introEn)}</p>
+${deckHtml(lang, t.slug, t.words)}
 <nav class="pager" aria-label="${T[lang].nav.vocabulary}">
   ${prev ? `<a class="btn" href="${link(lang, 'vocab-' + prev.slug + '.html')}">${T[lang].prev}: ${ur ? prev.ur : prev.en}</a>` : '<span></span>'}
   ${next ? `<a class="btn primary" href="${link(lang, 'vocab-' + next.slug + '.html')}">${ur ? 'اگلا' : 'Next'}: ${ur ? next.ur + ' ←' : next.en + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quiz.html')}">${ur ? 'کوئز دیں ←' : 'Take the quiz →'}</a>`}
@@ -1064,7 +1321,10 @@ function phrasesPage(lang) {
 <p class="lead">${C.lead}</p>
 <div class="phr">
   ${list}
-</div>`;
+</div>
+<section class="box" style="margin-top:28px">
+  <p>${ur ? `سعودی عرب میں رہتے ہیں؟ وہاں لوگ روزمرہ میں سعودی لہجہ بولتے ہیں۔ <a href="${link(lang, 'saudi-arabic.html')}">سعودی بول چال کے جملے سیکھیں ←</a>` : `Living in Saudi Arabia? People there speak their own dialect day to day. <a href="${link(lang, 'saudi-arabic.html')}">Learn Saudi Arabic for daily life →</a>`}</p>
+</section>`;
   return layout(lang, { file: 'phrases.html', section: 'phrases', title: C.title, desc: C.desc, body });
 }
 
@@ -1073,15 +1333,16 @@ function quizPage(lang) {
   const data = {
     letters: LETTERS.map((x) => [x.c, ur ? x.ur : x.en]),
     words: TOPICS.flatMap((t) => t.words.map((w) => [w[0], ur ? w[3] : w[2]])),
+    quran: QWORDS.map((w) => [w[0], ur ? w[3] : w[2]]),
   };
   const C = ur ? {
     title: 'عربی کوئز: حروف اور الفاظ | حرف', desc: 'عربی حروف اور الفاظ پر مفت کوئز۔ دس سوال، ہر بار نیا سیٹ۔',
     h1: 'عربی کوئز: حروف اور الفاظ', lead: 'حرف کے حروف اور الفاظ پر دس سوال۔ ہر بار نیا سیٹ۔',
-    modes: [['mixed', 'ملا جلا'], ['letters', 'صرف حروف'], ['words', 'صرف الفاظ']],
+    modes: [['mixed', 'ملا جلا'], ['letters', 'صرف حروف'], ['words', 'صرف الفاظ'], ['quran', 'قرآنی الفاظ']],
   } : {
     title: 'Arabic quiz: letters and words | Harf', desc: 'A free Arabic quiz on letters and words. Ten questions, a new set every time.',
     h1: 'Arabic quiz: letters and words', lead: 'Ten questions on the letters and words from Harf. You get a new set every time.',
-    modes: [['mixed', 'Mixed'], ['letters', 'Letters only'], ['words', 'Words only']],
+    modes: [['mixed', 'Mixed'], ['letters', 'Letters only'], ['words', 'Words only'], ['quran', 'Quran words']],
   };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.quiz]])}
 <h1>${C.h1}</h1>
@@ -1092,6 +1353,191 @@ function quizPage(lang) {
 <div class="quiz" id="quizbox" aria-live="polite"></div>
 <script type="application/json" id="quiz-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
   return layout(lang, { file: 'quiz.html', section: 'quiz', title: C.title, desc: C.desc, body });
+}
+
+// ---------------------------------------------------------------- Quran pages
+const QURAN_NOTE = {
+  en: 'Quran text from the <a href="https://tanzil.net">Tanzil Project</a>. Word meanings and translations are written by Harf to help learners; they are not a full translation or tafsir. The Listen button uses your device’s voice for single words. It is not a recitation, so listen to a qari for proper tajweed.',
+  ur: 'قرآن کا متن <a href="https://tanzil.net">تنزیل پروجیکٹ</a> سے لیا گیا ہے۔ الفاظ کے معانی اور ترجمہ حرف نے سیکھنے والوں کی مدد کے لیے لکھے ہیں؛ یہ مکمل ترجمہ یا تفسیر نہیں۔ «سنیں» کا بٹن آپ کے آلے کی مشینی آواز میں الگ الگ لفظ سناتا ہے؛ یہ تلاوت نہیں، اس لیے درست تجوید کے لیے کسی قاری کی تلاوت سنیں۔',
+};
+
+function verseHtml(lang, v, k) {
+  const ur = lang === 'ur';
+  const tiles = v.w.map(([a, tr, en, u]) => `<button class="w" type="button" data-say="${esc(a)}"><span class="ar" lang="ar">${a}</span><span class="tr latin">${esc(tr)}</span><span class="m"${ur ? '' : ' dir="ltr"'}>${esc(ur ? u : en)}</span></button>`).join('');
+  return `<section class="verse" id="v${k}">
+  <p class="ayah ar" lang="ar">${v.w.map((x) => x[0]).join(' ')} <span class="anum">${arNum(k)}</span></p>
+  <div class="wbw" dir="rtl">${tiles}</div>
+  <p class="vmean"><span class="vn">${num(lang, k)}.</span> ${esc(ur ? v.ur : v.en)}</p>
+</section>`;
+}
+
+function quranPage(lang) {
+  const ur = lang === 'ur';
+  const n = (v) => num(lang, v);
+  const cards = SURAHS.map((s) => `<a class="card" href="${link(lang, 'quran-' + s.slug + '.html')}"><h3>${ur ? s.ur : 'Surah ' + s.en}</h3><p><span class="ar" lang="ar">${s.name}</span></p><p>${ur ? `${s.meanUr}، ${n(s.v.length)} آیات` : `${s.meanEn} · ${s.v.length} verses`}</p></a>`).join('\n    ');
+  const C = ur ? {
+    title: 'قرآنی عربی: لفظ بہ لفظ ترجمہ اور نماز کے الفاظ | حرف', desc: 'سورہ فاتحہ اور آخری سورتوں کا لفظ بہ لفظ اردو ترجمہ، نماز میں پڑھے جانے والے اذکار کا مطلب، اور قرآن کے عام الفاظ فلیش کارڈز کے ساتھ۔',
+    h1: 'قرآنی عربی: جو پڑھتے ہیں اسے سمجھیں',
+    lead: 'ہم روزانہ نماز میں سورہ فاتحہ اور چھوٹی سورتیں پڑھتے ہیں۔ یہاں ہر لفظ کا مطلب الگ الگ سیکھیں، تاکہ اگلی بار پڑھتے ہوئے آپ جانتے ہوں کہ کیا کہہ رہے ہیں۔',
+    sH: 'سورتیں لفظ بہ لفظ', moreH: 'نماز اور عام الفاظ',
+    prayer: ['quran-prayer-words.html', 'نماز کے اذکار', 'تکبیر سے سلام تک: نماز میں پڑھی جانے والی ہر دعا، تلفظ اور اردو ترجمے کے ساتھ۔'],
+    common: ['quran-common-words.html', 'قرآن کے عام الفاظ', `قرآن میں بار بار آنے والے ${n(QWORDS.length)} الفاظ، فلیش کارڈز اور کوئز کے ساتھ۔`],
+    howH: 'کیسے سیکھیں',
+    how: ['ایک وقت میں ایک آیت لیں۔ ہر لفظ پر ٹیپ کر کے اس کی آواز سنیں اور اس کا مطلب پڑھیں۔', 'پھر پوری آیت کا ترجمہ پڑھیں اور دیکھیں کہ الفاظ کیسے جڑتے ہیں۔', 'اگلی نماز میں انہی معانی کو ذہن میں رکھ کر پڑھیں۔'],
+    start: 'سورہ فاتحہ سے شروع کریں',
+  } : {
+    title: 'Quranic Arabic: word-by-word meanings and prayer words | Harf', desc: 'Understand what you recite: Al-Fatiha and the short surahs word by word, the words of the prayer with meanings, and common Quran words with flashcards.',
+    h1: 'Quranic Arabic: understand what you recite',
+    lead: 'Many of us recite Al-Fatiha and the short surahs every day without knowing what each word means. Learn them here word by word, so that next time you pray you know what you are saying.',
+    sH: 'Surahs word by word', moreH: 'Prayer and common words',
+    prayer: ['quran-prayer-words.html', 'Words of the prayer', 'From the takbir to the salam: everything said in the prayer, with pronunciation and meaning.'],
+    common: ['quran-common-words.html', 'Common Quran words', `${QWORDS.length} words that appear again and again in the Quran, with flashcards and a quiz.`],
+    howH: 'How to use these pages',
+    how: ['Take one verse at a time. Tap each word to hear it and read its meaning.', 'Then read the meaning of the whole verse and see how the words fit together.', 'In your next prayer, recite it with those meanings in mind.'],
+    start: 'Start with Al-Fatiha',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.quran]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<p><a class="btn primary" href="${link(lang, 'quran-al-fatiha.html')}">${C.start}</a></p>
+<section>
+  <h2>${C.sH}</h2>
+  <div class="cards">
+    ${cards}
+  </div>
+</section>
+<section>
+  <h2>${C.moreH}</h2>
+  <div class="cards">
+    ${[C.prayer, C.common].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
+  </div>
+</section>
+<section class="box">
+  <h2>${C.howH}</h2>
+  <ol class="steps">${C.how.map((x) => `<li>${x}</li>`).join('')}</ol>
+</section>
+<p class="note">${QURAN_NOTE[lang]}</p>`;
+  return layout(lang, { file: 'quran.html', section: 'quran', title: C.title, desc: C.desc, body });
+}
+
+function surahPage(lang, i) {
+  const ur = lang === 'ur';
+  const s = SURAHS[i], prev = SURAHS[i - 1], next = SURAHS[i + 1];
+  const nV = s.v.length, nW = surahWords(s);
+  const title = ur ? `${s.ur} لفظ بہ لفظ ترجمہ اور تلفظ` : `Surah ${s.en} word by word: meaning and pronunciation`;
+  const desc = ur ? `${s.ur} (${s.meanUr}) کا لفظ بہ لفظ اردو ترجمہ، رومن تلفظ اور ہر آیت کا مطلب۔ ${ud(nV)} آیات، ${ud(nW)} الفاظ۔`
+    : `Surah ${s.en} (${s.meanEn}) word by word: the meaning and pronunciation of every word, and the meaning of each verse. ${nV} verses, ${nW} words.`;
+  const eyebrow = ur ? `سورت ${ud(s.n)}، ${ud(nV)} آیات، ${ud(nW)} الفاظ` : `Surah ${s.n} · ${nV} verses · ${nW} words`;
+  const name = (x) => (ur ? x.ur : x.en);
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, name(s)]])}
+<p class="eyebrow">${eyebrow}</p>
+<h1>${title}</h1>
+<p class="lead">${fmt(ur ? s.introUr : s.introEn)}</p>
+<p class="row"><a class="btn" href="https://quran.com/${s.n}" target="_blank" rel="noopener">${ur ? 'Quran.com پر تلاوت سنیں' : 'Listen to a recitation on Quran.com ↗'}</a><span class="note">${ur ? 'کسی بھی لفظ پر ٹیپ کر کے اس کی آواز سنیں۔' : 'Tap any word to hear it on its own.'}</span></p>
+<p class="surah-name ar" lang="ar">سُورَةُ ${s.name}</p>
+${s.n === 1 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
+${s.v.map((v, k) => verseHtml(lang, v, k + 1)).join('\n')}
+<p class="note">${QURAN_NOTE[lang]}</p>
+<nav class="pager" aria-label="${T[lang].nav.quran}">
+  ${prev ? `<a class="btn" href="${link(lang, 'quran-' + prev.slug + '.html')}">${T[lang].prev}: ${name(prev)}</a>` : `<a class="btn" href="${link(lang, 'quran.html')}">${T[lang].prev}: ${T[lang].nav.quran}</a>`}
+  ${next ? `<a class="btn primary" href="${link(lang, 'quran-' + next.slug + '.html')}">${ur ? 'اگلا: ' + name(next) + ' ←' : 'Next: ' + name(next) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran-prayer-words.html')}">${ur ? 'اگلا: نماز کے اذکار ←' : 'Next: words of the prayer →'}</a>`}
+</nav>`;
+  return layout(lang, { file: 'quran-' + s.slug + '.html', section: 'quran', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+}
+
+function prayerPage(lang) {
+  const ur = lang === 'ur';
+  const rows = PRAYER.map((p, k) => `<div class="pw">
+  <h3><span class="vn">${num(lang, k + 1)}.</span> ${ur ? p.ur : p.en}</h3>
+  <span class="when">${fmt(ur ? p.whenUr : p.whenEn)}</span>
+  <span class="ar" lang="ar">${p.a}</span>
+  <span class="tr latin">${esc(p.tr)}</span>
+  <span class="mean">${esc(ur ? p.mUr : p.mEn)}</span>
+  <span>${say(lang, p.a)}</span>
+</div>`).join('\n');
+  const C = ur ? {
+    title: 'نماز کے اذکار ترجمے کے ساتھ: ثنا، تشہد، درود | حرف', desc: 'نماز میں پڑھے جانے والے تمام اذکار عربی متن، رومن تلفظ اور اردو ترجمے کے ساتھ: تکبیر، ثنا، رکوع و سجود کی تسبیح، تشہد، درود اور سلام۔',
+    h1: 'نماز کے اذکار اور ان کا مطلب',
+    lead: 'تکبیر سے سلام تک، نماز میں جو کچھ پڑھا جاتا ہے، ترتیب سے۔ مختلف مسالک میں الفاظ میں معمولی فرق ہو سکتا ہے؛ یہاں عام طور پر پڑھی جانے والی صورتیں دی گئی ہیں۔ نماز کے احکام کے لیے کسی معتبر عالم سے رجوع کریں۔',
+    fat: 'سورہ فاتحہ کا لفظ بہ لفظ ترجمہ دیکھیں ←',
+  } : {
+    title: 'Words of the prayer with meaning: thanaa’, tashahhud, durood | Harf', desc: 'Everything said in the Muslim prayer with Arabic text, pronunciation and meaning: takbir, opening praise, the words of rukuʿ and sujud, tashahhud, durood and salam.',
+    h1: 'Words of the prayer and what they mean',
+    lead: 'Everything said in the prayer, in order, from the takbir to the salam. Wordings differ slightly between schools; these are widely used forms. For the rules of prayer, ask a scholar you trust.',
+    fat: 'See Al-Fatiha word by word →',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, ur ? 'نماز کے اذکار' : 'Words of the prayer']])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<p><a href="${link(lang, 'quran-al-fatiha.html')}">${C.fat}</a></p>
+<div class="pws">
+${rows}
+</div>
+<nav class="pager" aria-label="${T[lang].nav.quran}">
+  <a class="btn" href="${link(lang, 'quran.html')}">${T[lang].prev}: ${T[lang].nav.quran}</a>
+  <a class="btn primary" href="${link(lang, 'quran-common-words.html')}">${ur ? 'اگلا: قرآن کے عام الفاظ ←' : 'Next: common Quran words →'}</a>
+</nav>`;
+  return layout(lang, { file: 'quran-prayer-words.html', section: 'quran', title: C.title, desc: C.desc, body });
+}
+
+function quranWordsPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'قرآن کے عام الفاظ اردو معنی کے ساتھ | حرف', desc: `قرآن میں بار بار آنے والے ${ud(QWORDS.length)} الفاظ اردو معنی، رومن تلفظ، آواز اور فلیش کارڈز کے ساتھ۔`,
+    h1: 'قرآن کے عام الفاظ',
+    lead: 'یہ الفاظ قرآن میں بار بار آتے ہیں۔ انہیں یاد کر لیں تو تلاوت کے دوران بہت سی آیات کا مطلب پہچاننے لگیں گے۔ فلیش کارڈز سے مشق کریں، پھر کوئز میں «قرآنی الفاظ» چن کر خود کو جانچیں۔',
+    quiz: 'قرآنی الفاظ کا کوئز دیں ←',
+  } : {
+    title: 'Common Quran words with meanings | Harf', desc: `${QWORDS.length} words that appear again and again in the Quran, with meanings, pronunciation, audio and flashcards.`,
+    h1: 'Common words of the Quran',
+    lead: 'These words come up again and again in the Quran. Once you know them, you will start to recognise the meaning of many verses as you recite. Practise with the flashcards, then pick “Quran words” in the quiz to test yourself.',
+    quiz: 'Take the Quran words quiz →',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+${deckHtml(lang, 'quran', QWORDS)}
+<nav class="pager" aria-label="${T[lang].nav.quran}">
+  <a class="btn" href="${link(lang, 'quran-prayer-words.html')}">${T[lang].prev}: ${ur ? 'نماز کے اذکار' : 'words of the prayer'}</a>
+  <a class="btn primary" href="${link(lang, 'quiz.html')}">${C.quiz}</a>
+</nav>`;
+  return layout(lang, { file: 'quran-common-words.html', section: 'quran', title: C.title, desc: C.desc, body });
+}
+
+function saudiPage(lang) {
+  const ur = lang === 'ur';
+  const total = SAUDI.reduce((k, g) => k + g.items.length, 0);
+  const groups = SAUDI.map((g) => `<section>
+  <h2>${ur ? g.ur : g.en}</h2>
+  <div class="phr">
+  ${g.items.map(([a, tr, en, u, msa]) => `<div class="ph"><span class="ar" lang="ar">${a}</span><span class="tr latin">${esc(tr)}</span><span class="mean">${esc(ur ? u : en)}${msa ? ` · <em>${ur ? 'فصیح عربی' : 'Standard Arabic'}: ${fmt('{' + msa + '}')}</em>` : ''}</span>${say(lang, a)}</div>`).join('\n  ')}
+  </div>
+</section>`).join('\n');
+  const C = ur ? {
+    title: 'سعودی عربی بول چال: روزمرہ کے جملے اردو ترجمے کے ساتھ | حرف', desc: `سعودی عرب میں روزمرہ بولے جانے والے ${ud(total)} جملے اردو ترجمے اور آواز کے ساتھ: سلام، دفتر، خریداری، ٹیکسی اور ڈاکٹر۔`,
+    h1: 'سعودی عربی: روزمرہ بول چال',
+    lead: 'سعودی عرب میں لوگ روزمرہ زندگی میں کتابوں والی فصیح عربی کے بجائے اپنا لہجہ بولتے ہیں۔ یہ وہ جملے ہیں جو آپ دفتر، دکان اور ٹیکسی میں روز سنیں گے۔ جہاں فصیح عربی مختلف ہے، وہ بھی ساتھ لکھی ہے۔',
+    tipsH: 'سننے میں کیا فرق ہے',
+    tips: ['بہت سے سعودی {ق} کو «گ» بولتے ہیں: {قهوة} (قہوہ) «گہوہ» سنائی دیتا ہے۔', 'ریاض اور مشرقی صوبے میں «میں چاہتا ہوں» کے لیے {أبي} (ابی) بولتے ہیں، جبکہ جدہ اور مکہ میں {أبغى} (ابغا)۔', 'یہ جملے مرد سے بات کرنے کی شکل میں ہیں۔ عورت سے بات کرتے ہوئے آخر کی آواز بدل جاتی ہے: {كيفك} علاقے کے لحاظ سے «کیفِک» یا «کیفِچ» بولا جاتا ہے۔'],
+    base: 'بنیاد مضبوط کرنی ہے؟ پہلے فصیح عربی کے روزمرہ جملے دیکھیں ←',
+  } : {
+    title: 'Saudi Arabic phrases for daily life, with audio | Harf', desc: `${total} everyday Saudi Arabic phrases with pronunciation and audio: greetings, work, shopping, taxis and the doctor.`,
+    h1: 'Saudi Arabic for daily life',
+    lead: 'In daily life Saudis speak their own dialect, not the standard Arabic of books. These are phrases you will hear every day at work, in shops and in taxis. Where standard Arabic is different, it is shown too.',
+    tipsH: 'What sounds different',
+    tips: ['Many Saudis say {ق} like a hard g: {قهوة} (coffee) sounds like “gahwa”.', 'In Riyadh and the Eastern Province “I want” is {أبي} (abi); in Jeddah and Makkah it is {أبغى} (abgha).', 'These phrases are for speaking to a man. Speaking to a woman the ending changes too: {كيفك} becomes “keefik” or “keefich”, depending on the region.'],
+    base: 'Want a solid base first? See everyday phrases in standard Arabic →',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['phrases.html', T[lang].nav.phrases], [null, ur ? 'سعودی بول چال' : 'Saudi Arabic']])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<section class="box">
+  <h2>${C.tipsH}</h2>
+  <ul class="points">${C.tips.map((x) => `<li>${fmt(x)}</li>`).join('')}</ul>
+</section>
+${groups}
+<p><a href="${link(lang, 'phrases.html')}">${C.base}</a></p>`;
+  return layout(lang, { file: 'saudi-arabic.html', section: 'phrases', title: C.title, desc: C.desc, body });
 }
 
 function aboutPage(lang) {
@@ -1243,6 +1689,7 @@ a{color:var(--accent)}
 .ar{font-family:var(--arabic);direction:rtl;unicode-bidi:isolate;line-height:1.8;font-weight:400}
 .latin{font-family:var(--body);direction:ltr;unicode-bidi:isolate}
 p .ar,li .ar,summary .ar,em .ar{font-size:1.2em;line-height:1.4}
+em .ar{font-style:normal}
 .nw{white-space:nowrap}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 button{font:inherit;cursor:pointer}
@@ -1408,6 +1855,28 @@ table.words{width:100%;border-collapse:collapse;background:var(--surface);border
 .qfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px;flex-wrap:wrap}
 .score{font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
 
+.surah-name{font-size:30px;text-align:center;margin:18px 0 0;color:var(--accent);font-weight:600}
+.basmala{font-size:28px;text-align:center;margin:0 0 18px}
+.verse{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 18px 14px;margin:0 0 14px}
+.ayah{font-size:32px;line-height:2.1;margin:0 0 8px;text-align:right}
+.anum{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;padding:0 4px;border:1.5px solid var(--gold);border-radius:50%;color:var(--gold);font-size:18px;line-height:1;vertical-align:middle}
+.wbw{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.w{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:2px 10px 8px;min-width:74px;max-width:180px;text-align:center}
+.w:hover{border-color:var(--accent)}
+.w .ar{font-size:26px;line-height:1.8}
+.w .tr{font-size:13px;color:var(--gold);font-weight:600;line-height:1.3}
+.w .m{font-size:13px;color:var(--muted);line-height:1.35;margin-top:2px}
+html[lang="ur"] .w .m{line-height:2}
+.vmean{margin:0;max-width:75ch}
+.vn{color:var(--gold);font-weight:700}
+.pws{display:grid;gap:12px;max-width:860px}
+.pw{display:grid;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 18px}
+.pw h3{margin:0;font-size:18px}
+.pw .when{font-size:14px;color:var(--muted)}
+.pw > .ar{font-size:27px;line-height:2;text-align:right}
+.pw .tr{color:var(--gold);font-weight:600;line-height:1.6}
+.pw .mean{margin-bottom:6px}
+
 footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);font-size:14px}
 .foot p{margin:0 0 6px}
 .foot-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
@@ -1426,7 +1895,10 @@ footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);f
   .opts{grid-template-columns:1fr}
   .lesson-list a{grid-template-columns:36px 1fr}
   .lesson-list > li > a > .ar{display:none}
-  nav.tabs{order:3;width:100%;margin-inline-start:0}
+  nav.tabs{order:3;width:100%;margin-inline-start:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  nav.tabs a{white-space:nowrap}
+  .ayah{font-size:27px}
+  .w{min-width:64px}
   .lang{margin-inline-start:auto}
 }
 @media (prefers-reduced-motion: reduce){ .flash-in{transition:none} }
@@ -1554,7 +2026,7 @@ const APP_JS = String.raw`(function () {
           ? { p: S.q1, big: pick[0][0], bigAr: true, opts: pick.map(function (l) { return l[1]; }), ans: pick[0][1], optAr: false }
           : { p: S.q2, big: pick[0][1], bigAr: false, opts: pick.map(function (l) { return l[0]; }), ans: pick[0][0], optAr: true };
       }
-      pick = shuffle(data.words).slice(0, 4);
+      pick = shuffle(type === 'quran' ? data.quran : data.words).slice(0, 4);
       return Math.random() < 0.5
         ? { p: S.q3, big: pick[0][0], bigAr: true, opts: pick.map(function (w) { return w[1]; }), ans: pick[0][1], optAr: false }
         : { p: S.q4, big: pick[0][1], bigAr: false, opts: pick.map(function (w) { return w[0]; }), ans: pick[0][0], optAr: true };
@@ -1562,7 +2034,7 @@ const APP_JS = String.raw`(function () {
     var renderQ;
     var start = function () {
       qs = [];
-      for (var i = 0; i < 10; i++) qs.push(makeQ(mode === 'letters' ? 'letter' : mode === 'words' ? 'word' : (i % 2 ? 'word' : 'letter')));
+      for (var i = 0; i < 10; i++) qs.push(makeQ(mode === 'letters' ? 'letter' : mode === 'words' ? 'word' : mode === 'quran' ? 'quran' : (i % 2 ? 'word' : 'letter')));
       qi = 0; score = 0; renderQ();
     };
     renderQ = function () {
@@ -1618,7 +2090,12 @@ function build() {
     LESSONS.forEach((l, i) => add(lang, l.slug + '.html', lessonPage(lang, i)));
     add(lang, 'vocabulary.html', vocabularyPage(lang));
     TOPICS.forEach((t, i) => add(lang, 'vocab-' + t.slug + '.html', topicPage(lang, i)));
+    add(lang, 'quran.html', quranPage(lang));
+    SURAHS.forEach((x, i) => add(lang, 'quran-' + x.slug + '.html', surahPage(lang, i)));
+    add(lang, 'quran-prayer-words.html', prayerPage(lang));
+    add(lang, 'quran-common-words.html', quranWordsPage(lang));
     add(lang, 'phrases.html', phrasesPage(lang));
+    add(lang, 'saudi-arabic.html', saudiPage(lang));
     add(lang, 'quiz.html', quizPage(lang));
     add(lang, 'about.html', aboutPage(lang));
     add(lang, 'contact.html', contactPage(lang));
