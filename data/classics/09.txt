@@ -1,0 +1,96 @@
+=== three-brothers-and-the-camel | 3 | الْإِخْوَةُ الثَّلَاثَةُ وَالْجَمَلُ | The Three Brothers and the Camel | تین بھائی اور اونٹ | A traditional tale told across the Arab and Persian worlds about the power of careful observation, retold here in simple Arabic. | غور سے مشاہدہ کرنے کی طاقت کے بارے میں یہ روایتی قصہ عرب اور فارسی دنیا میں سنایا جاتا ہے؛ یہاں آسان عربی میں بیان کیا گیا ہے۔
+كَانَ ثَلَاثَةُ إِخْوَةٍ يَمْشُونَ فِي الصَّحْرَاءِ فَرَأَوْا آثَارَ جَمَلٍ. | Three brothers were walking in the desert, and they saw the tracks of a camel. | تین بھائی صحرا میں چل رہے تھے کہ انہیں ایک اونٹ کے قدموں کے نشان نظر آئے۔
+قَالَ الْأَوَّلُ: «هٰذَا الْجَمَلُ أَعْوَرُ». | The first said, "This camel is blind in one eye." | پہلے نے کہا: «یہ اونٹ کانا ہے۔»
+قَالَ الثَّانِي: «وَهُوَ أَعْرَجُ أَيْضًا». | The second said, "And he is also lame." | دوسرے نے کہا: «اور وہ لنگڑا بھی ہے۔»
+قَالَ الثَّالِثُ: «وَيَحْمِلُ عَسَلًا وَزَيْتًا». | The third said, "And he is carrying honey and oil." | تیسرے نے کہا: «اور وہ شہد اور تیل لادے ہوئے ہے۔»
+قَابَلُوا رَجُلًا يَبْحَثُ عَنْ جَمَلِهِ فَأَخْبَرُوهُ بِمَا قَالُوا. | They met a man who was looking for his camel, and they told him what they had said. | انہیں ایک آدمی ملا جو اپنا اونٹ ڈھونڈ رہا تھا تو انہوں نے اسے وہ بات بتا دی جو کہی تھی۔
+ظَنَّ الرَّجُلُ أَنَّهُمْ سَرَقُوا الْجَمَلَ وَأَخَذَهُمْ إِلَى الْقَاضِي. | The man thought they had stolen the camel and took them to the judge. | آدمی نے سمجھا کہ انہوں نے اونٹ چرایا ہے اور انہیں قاضی کے پاس لے گیا۔
+سَأَلَهُمُ الْقَاضِي: «كَيْفَ عَرَفْتُمْ وَلَمْ تَرَوْهُ؟» | The judge asked them, "How did you know, when you have not seen him?" | قاضی نے ان سے پوچھا: «تم نے کیسے جانا جب کہ تم نے اسے دیکھا ہی نہیں؟»
+قَالَ الْأَوَّلُ: «رَأَيْتُ أَنَّهُ يَأْكُلُ الْعُشْبَ مِنْ جَانِبٍ وَاحِدٍ فَقَطْ». | The first said, "I saw that he ate grass from one side only." | پہلے نے کہا: «میں نے دیکھا کہ اس نے گھاس صرف ایک طرف سے کھائی ہے۔»
+قَالَ الثَّانِي: «وَكَانَتْ إِحْدَى رِجْلَيْهِ تَتْرُكُ أَثَرًا أَخَفَّ». | The second said, "And one of his feet left a lighter print." | دوسرے نے کہا: «اور اس کا ایک پاؤں ہلکا نشان چھوڑتا تھا۔»
+قَالَ الثَّالِثُ: «وَرَأَيْتُ النَّمْلَ عَلَى الْعَسَلِ الْمَسْكُوبِ وَالذُّبَابَ عَلَى الزَّيْتِ». | The third said, "And I saw ants on the spilled honey and flies on the oil." | تیسرے نے کہا: «اور میں نے گرے ہوئے شہد پر چیونٹیاں اور تیل پر مکھیاں دیکھیں۔»
+عَرَفَ الْقَاضِي أَنَّهُمْ أَذْكِيَاءُ وَلَيْسُوا لُصُوصًا. | The judge knew that they were clever, not thieves. | قاضی سمجھ گیا کہ وہ ذہین ہیں، چور نہیں۔
+
+=== the-honest-boy | 2 | الْوَلَدُ الْأَمِينُ | The Honest Boy | ایماندار لڑکا | A traditional moral tale about honesty, told in many cultures and retold here in simple Arabic. | ایمانداری کے بارے میں ایک روایتی اخلاقی کہانی جو کئی ثقافتوں میں سنائی جاتی ہے؛ یہاں آسان عربی میں بیان کی گئی ہے۔
+وَجَدَ وَلَدٌ فَقِيرٌ كِيسَ نُقُودٍ عَلَى الطَّرِيقِ. | A poor boy found a purse of money on the road. | ایک غریب لڑکے کو راستے میں پیسوں کی تھیلی ملی۔
+كَانَ جَائِعًا وَلَمْ يَجِدْ فِي بَيْتِهِ خُبْزًا. | He was hungry and had found no bread at home. | وہ بھوکا تھا اور گھر میں اسے روٹی نہیں ملی تھی۔
+لٰكِنَّهُ قَالَ: «هٰذَا الْمَالُ لَيْسَ مَالِي». | But he said, "This money is not mine." | لیکن اس نے کہا: «یہ مال میرا نہیں ہے۔»
+سَأَلَ النَّاسَ فِي السُّوقِ: «مَنْ فَقَدَ كِيسًا؟» | He asked the people in the market, "Who has lost a purse?" | اس نے بازار میں لوگوں سے پوچھا: «کس کی تھیلی کھوئی ہے؟»
+جَاءَ تَاجِرٌ يَبْكِي وَقَالَ: «ضَاعَ كِيسِي!» | A merchant came, crying, and said, "My purse is lost!" | ایک تاجر روتا ہوا آیا اور بولا: «میری تھیلی کھو گئی!»
+أَعْطَاهُ الْوَلَدُ الْكِيسَ بِفَرَحٍ. | The boy gave him the purse happily. | لڑکے نے خوشی سے اسے تھیلی دے دی۔
+فَرِحَ التَّاجِرُ وَأَعْطَى الْوَلَدَ جَائِزَةً وَعَمَلًا فِي دُكَّانِهِ. | The merchant was delighted and gave the boy a reward and a job in his shop. | تاجر خوش ہوا اور لڑکے کو انعام اور اپنی دکان میں نوکری دے دی۔
+الصِّدْقُ يَفْتَحُ الْأَبْوَابَ. | Honesty opens doors. | سچائی دروازے کھولتی ہے۔
+
+=== parrot-and-the-merchant | 2 | الْبَبَّغَاءُ وَالتَّاجِرُ | The Parrot and the Merchant | طوطا اور سوداگر | A tale from the Mathnawi of the poet Rumi (13th century), retold here in simple Arabic. | یہ قصہ شاعر رومی کی مثنوی (تیرہویں صدی) سے ہے، جو یہاں آسان عربی میں بیان کیا گیا ہے۔
+كَانَ لِتَاجِرٍ بَبَّغَاءُ جَمِيلَةٌ فِي قَفَصٍ. | A merchant had a beautiful parrot in a cage. | ایک تاجر کے پاس پنجرے میں ایک خوبصورت طوطی تھی۔
+سَافَرَ التَّاجِرُ إِلَى الْهِنْدِ وَسَأَلَ الْبَبَّغَاءَ: «مَاذَا أُحْضِرُ لَكِ؟» | The merchant travelled to India and asked the parrot, "What shall I bring you?" | تاجر ہندوستان گیا اور طوطی سے پوچھا: «میں تمہارے لیے کیا لاؤں؟»
+قَالَتْ: «سَلِّمْ عَلَى الْبَبَّغَاوَاتِ هُنَاكَ وَقُلْ لَهُنَّ: أَنَا فِي قَفَصٍ». | She said, "Greet the parrots there and tell them: I am in a cage." | اس نے کہا: «وہاں کے طوطوں کو سلام کہنا اور بتانا: میں پنجرے میں ہوں۔»
+فِي الْهِنْدِ قَالَ التَّاجِرُ ذٰلِكَ لِبَبَّغَاءَ عَلَى شَجَرَةٍ فَسَقَطَتْ وَلَمْ تَتَحَرَّكْ. | In India the merchant said that to a parrot in a tree, and she fell and did not move. | ہندوستان میں تاجر نے یہ بات ایک درخت پر بیٹھی طوطی سے کہی تو وہ گر گئی اور ہلی نہیں۔
+حَزِنَ التَّاجِرُ وَرَجَعَ إِلَى بَيْتِهِ وَحَكَى لِبَبَّغَائِهِ. | The merchant was sad; he went back home and told his parrot. | تاجر اداس ہوا، گھر لوٹا اور اپنی طوطی کو بتایا۔
+سَقَطَتْ بَبَّغَاؤُهُ فِي الْقَفَصِ وَلَمْ تَتَحَرَّكْ. | His parrot fell in her cage and did not move. | اس کی طوطی پنجرے میں گر گئی اور ہلی نہیں۔
+أَخْرَجَهَا التَّاجِرُ حَزِينًا لِيَدْفِنَهَا فَطَارَتْ إِلَى الشَّجَرَةِ فَجْأَةً! | The merchant took her out, sad, to bury her, and suddenly she flew to the tree! | تاجر اداس ہو کر اسے دفنانے کے لیے باہر لایا تو وہ اچانک اڑ کر درخت پر جا بیٹھی!
+قَالَتْ: «تِلْكَ الْبَبَّغَاءُ عَلَّمَتْنِي كَيْفَ أَنْجُو». | She said, "That parrot taught me how to escape." | اس نے کہا: «اس طوطی نے مجھے سکھایا کہ کیسے نجات پاؤں۔»
+
+=== ant-and-the-dove | 1 | النَّمْلَةُ وَالْحَمَامَةُ | The Ant and the Dove | چیونٹی اور کبوتری | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+سَقَطَتْ نَمْلَةٌ فِي النَّهْرِ وَصَرَخَتْ: «سَاعِدُونِي!» | An ant fell into the river and cried, "Help me!" | ایک چیونٹی ندی میں گر گئی اور چلائی: «میری مدد کرو!»
+رَأَتْهَا حَمَامَةٌ عَلَى شَجَرَةٍ فَأَلْقَتْ إِلَيْهَا وَرَقَةً. | A dove saw her from a tree and threw her a leaf. | ایک کبوتری نے اسے درخت سے دیکھا اور اس کی طرف ایک پتا پھینک دیا۔
+تَسَلَّقَتِ النَّمْلَةُ الْوَرَقَةَ وَنَجَتْ. | The ant climbed onto the leaf and was saved. | چیونٹی پتے پر چڑھ گئی اور بچ گئی۔
+بَعْدَ أَيَّامٍ جَاءَ صَيَّادٌ لِيَصِيدَ الْحَمَامَةَ. | Some days later a hunter came to catch the dove. | کچھ دن بعد ایک شکاری کبوتری کو پکڑنے آیا۔
+رَأَتْهُ النَّمْلَةُ فَلَدَغَتْ قَدَمَهُ. | The ant saw him and bit his foot. | چیونٹی نے اسے دیکھا اور اس کے پاؤں پر کاٹ لیا۔
+صَرَخَ الصَّيَّادُ فَطَارَتِ الْحَمَامَةُ. | The hunter cried out, and the dove flew away. | شکاری چیخ اٹھا اور کبوتری اڑ گئی۔
+الْمَعْرُوفُ يَرْجِعُ إِلَى صَاحِبِهِ. | A kindness returns to the one who did it. | نیکی کرنے والے کو لوٹ کر ملتی ہے۔
+
+=== crab-and-his-mother | 1 | السَّرَطَانُ وَأُمُّهُ | The Crab and His Mother | کیکڑا اور اس کی ماں | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+قَالَتْ أُمُّ السَّرَطَانِ لِابْنِهَا: «لِمَاذَا تَمْشِي بِجَانِبِكَ؟ اِمْشِ مُسْتَقِيمًا!» | A mother crab said to her son, "Why do you walk sideways? Walk straight!" | کیکڑے کی ماں نے اپنے بیٹے سے کہا: «تم ٹیڑھے کیوں چلتے ہو؟ سیدھے چلو!»
+قَالَ الِابْنُ: «أَرِنِي كَيْفَ يَا أُمِّي». | The son said, "Show me how, Mother." | بیٹے نے کہا: «امی! مجھے دکھائیں کیسے۔»
+حَاوَلَتِ الْأُمُّ أَنْ تَمْشِيَ مُسْتَقِيمًا فَلَمْ تَسْتَطِعْ. | The mother tried to walk straight but could not. | ماں نے سیدھا چلنے کی کوشش کی مگر نہ چل سکی۔
+ضَحِكَ الِابْنُ وَقَالَ: «أَنْتِ أَيْضًا تَمْشِينَ مِثْلِي». | The son laughed and said, "You also walk like me." | بیٹا ہنسا اور بولا: «آپ بھی تو میری طرح چلتی ہیں۔»
+لَا تَطْلُبْ مِنْ غَيْرِكَ مَا لَا تَفْعَلُهُ. | Do not ask of others what you do not do yourself. | دوسروں سے وہ نہ مانگو جو تم خود نہیں کرتے۔
+
+=== cat-and-the-fox | 2 | الْقِطَّةُ وَالثَّعْلَبُ | The Cat and the Fox | بلی اور لومڑی | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+قَالَ الثَّعْلَبُ لِلْقِطَّةِ: «أَنَا أَعْرِفُ مِئَةَ حِيلَةٍ وَأَنْتِ؟» | The fox said to the cat, "I know a hundred tricks. And you?" | لومڑی نے بلی سے کہا: «میں سو چالیں جانتی ہوں، اور تم؟»
+قَالَتِ الْقِطَّةُ: «أَنَا أَعْرِفُ حِيلَةً وَاحِدَةً فَقَطْ: أَتَسَلَّقُ الشَّجَرَةَ». | The cat said, "I know only one trick: I climb the tree." | بلی نے کہا: «میں صرف ایک ترکیب جانتی ہوں: میں درخت پر چڑھ جاتی ہوں۔»
+ضَحِكَ الثَّعْلَبُ مِنْهَا. | The fox laughed at her. | لومڑی اس پر ہنسی۔
+فَجْأَةً سَمِعَا نُبَاحَ كِلَابِ الصَّيْدِ. | Suddenly they heard the barking of hunting dogs. | اچانک انہوں نے شکاری کتوں کے بھونکنے کی آواز سنی۔
+تَسَلَّقَتِ الْقِطَّةُ الشَّجَرَةَ بِسُرْعَةٍ وَنَجَتْ. | The cat climbed the tree quickly and was saved. | بلی تیزی سے درخت پر چڑھ گئی اور بچ گئی۔
+وَقَفَ الثَّعْلَبُ يُفَكِّرُ أَيَّ حِيلَةٍ يَسْتَعْمِلُ فَأَمْسَكَتْهُ الْكِلَابُ. | The fox stood thinking which trick to use, and the dogs caught him. | لومڑی کھڑی سوچتی رہی کہ کون سی چال چلے، اور کتوں نے اسے پکڑ لیا۔
+حِيلَةٌ وَاحِدَةٌ تَنْفَعُ خَيْرٌ مِنْ مِئَةٍ لَا تَنْفَعُ. | One trick that works is better than a hundred that do not. | ایک کارگر ترکیب سو بے کار ترکیبوں سے بہتر ہے۔
+
+=== tortoise-and-the-eagle | 2 | السُّلَحْفَاةُ وَالنَّسْرُ | The Tortoise and the Eagle | کچھوا اور عقاب | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+قَالَتْ سُلَحْفَاةٌ: «أُرِيدُ أَنْ أَطِيرَ مِثْلَ الطُّيُورِ!» | A tortoise said, "I want to fly like the birds!" | ایک کچھوے نے کہا: «میں پرندوں کی طرح اڑنا چاہتا ہوں!»
+طَلَبَتْ مِنْ نَسْرٍ أَنْ يُعَلِّمَهَا. | She asked an eagle to teach her. | اس نے ایک عقاب سے کہا کہ وہ اسے سکھائے۔
+قَالَ النَّسْرُ: «لَمْ تُخْلَقِي لِلطَّيَرَانِ». | The eagle said, "You were not made for flying." | عقاب نے کہا: «تم اڑنے کے لیے نہیں بنائی گئیں۔»
+أَصَرَّتِ السُّلَحْفَاةُ وَقَالَتْ: «سَأُعْطِيكَ كُلَّ مَا عِنْدِي». | The tortoise insisted and said, "I will give you everything I have." | کچھوے نے ضد کی اور کہا: «میں تمہیں اپنا سب کچھ دے دوں گی۔»
+حَمَلَهَا النَّسْرُ إِلَى السَّمَاءِ ثُمَّ تَرَكَهَا. | The eagle carried her up into the sky and then let her go. | عقاب اسے آسمان میں لے گیا اور پھر چھوڑ دیا۔
+سَقَطَتْ فِي بُحَيْرَةٍ فَنَجَتْ وَتَعِبَتْ كَثِيرًا. | She fell into a lake and survived, very tired. | وہ ایک جھیل میں گری، بچ گئی اور بہت تھک گئی۔
+قَالَتْ: «كَانَ الْمَشْيُ أَحْسَنَ لِي». | She said, "Walking was better for me." | اس نے کہا: «میرے لیے چلنا ہی بہتر تھا۔»
+اِرْضَ بِمَا خُلِقْتَ لَهُ. | Be content with what you were made for. | جس کے لیے تم بنائے گئے ہو اس پر راضی رہو۔
+
+=== frogs-who-wanted-a-king | 2 | الضَّفَادِعُ وَالْمَلِكُ | The Frogs Who Wanted a King | بادشاہ چاہنے والے مینڈک | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+عَاشَتِ الضَّفَادِعُ فِي بِرْكَةٍ هَادِئَةٍ وَلٰكِنَّهَا قَالَتْ: «نُرِيدُ مَلِكًا!» | The frogs lived in a quiet pond, but they said, "We want a king!" | مینڈک ایک پرسکون تالاب میں رہتے تھے مگر بولے: «ہمیں ایک بادشاہ چاہیے!»
+سَقَطَتْ فِي الْبِرْكَةِ قِطْعَةُ خَشَبٍ كَبِيرَةٌ. | A big piece of wood fell into the pond. | تالاب میں لکڑی کا ایک بڑا ٹکڑا آ گرا۔
+خَافَتِ الضَّفَادِعُ ثُمَّ اعْتَادَتْ عَلَيْهَا. | The frogs were afraid, and then they got used to it. | مینڈک ڈرے، پھر اس کے عادی ہو گئے۔
+قَالَتْ: «هٰذَا مَلِكٌ ضَعِيفٌ لَا يَتَحَرَّكُ نُرِيدُ مَلِكًا قَوِيًّا!» | They said, "This is a weak king who does not move; we want a strong king!" | انہوں نے کہا: «یہ کمزور بادشاہ ہے جو ہلتا ہی نہیں، ہمیں طاقتور بادشاہ چاہیے!»
+جَاءَ لَقْلَقٌ طَوِيلُ الْمِنْقَارِ وَقَالَ: «أَنَا مَلِكُكُمُ الْجَدِيدُ». | A long-beaked stork came and said, "I am your new king." | ایک لمبی چونچ والا لق لق آیا اور بولا: «میں تمہارا نیا بادشاہ ہوں۔»
+بَدَأَ اللَّقْلَقُ يَأْكُلُ الضَّفَادِعَ وَاحِدَةً بَعْدَ أُخْرَى. | The stork began to eat the frogs one after another. | لق لق ایک ایک کر کے مینڈکوں کو کھانے لگا۔
+نَدِمَتِ الضَّفَادِعُ عَلَى طَلَبِهَا. | The frogs regretted what they had asked for. | مینڈک اپنی مانگ پر پچھتانے لگے۔
+اِرْضَ بِحَالِكَ قَبْلَ أَنْ يَأْتِيَكَ الْأَسْوَأُ. | Be content with your situation before something worse comes. | اپنے حال پر راضی رہو، اس سے پہلے کہ اس سے برا آ جائے۔
+
+=== the-sparrows-three-advices | 3 | نَصَائِحُ الْعُصْفُورِ | The Sparrow's Three Pieces of Advice | چڑیا کی تین نصیحتیں | A traditional tale told in the Arab and Persian worlds, retold here in simple Arabic. | یہ ایک روایتی قصہ ہے جو عرب اور فارسی دنیا میں سنایا جاتا ہے؛ یہاں آسان عربی میں بیان کیا گیا ہے۔
+أَمْسَكَ رَجُلٌ عُصْفُورًا صَغِيرًا فَقَالَ الْعُصْفُورُ: «أَطْلِقْنِي وَسَأُعَلِّمُكَ ثَلَاثَ نَصَائِحَ». | A man caught a small sparrow, and the sparrow said, "Let me go and I will teach you three pieces of advice." | ایک آدمی نے ایک چھوٹی چڑیا پکڑی تو چڑیا نے کہا: «مجھے چھوڑ دو، میں تمہیں تین نصیحتیں سکھاؤں گی۔»
+قَالَ الرَّجُلُ: «قُلْ أَوَّلًا». | The man said, "Tell me first." | آدمی نے کہا: «پہلے بتاؤ۔»
+قَالَ الْعُصْفُورُ: «لَا تَنْدَمْ عَلَى مَا فَاتَ». | The sparrow said, "Do not regret what has passed." | چڑیا نے کہا: «جو گزر گیا اس پر نہ پچھتاؤ۔»
+«وَلَا تُصَدِّقْ مَا لَا يُعْقَلُ». | "And do not believe what makes no sense." | «اور جو بات عقل میں نہ آئے اس پر یقین نہ کرو۔»
+«وَلَا تُحَاوِلْ مَا لَا تَسْتَطِيعُ». | "And do not attempt what you cannot do." | «اور وہ کوشش نہ کرو جو تم نہیں کر سکتے۔»
+أَطْلَقَهُ الرَّجُلُ فَطَارَ الْعُصْفُورُ إِلَى شَجَرَةٍ وَقَالَ: «فِي جَوْفِي لُؤْلُؤَةٌ كَبِيرَةٌ!» | The man let him go, and the sparrow flew to a tree and said, "Inside me there is a big pearl!" | آدمی نے اسے چھوڑ دیا تو چڑیا اڑ کر درخت پر جا بیٹھی اور بولی: «میرے پیٹ میں ایک بڑا موتی ہے!»
+نَدِمَ الرَّجُلُ وَحَاوَلَ أَنْ يَصْعَدَ الشَّجَرَةَ لِيُمْسِكَهُ فَسَقَطَ. | The man regretted it and tried to climb the tree to catch it, and he fell. | آدمی پچھتایا اور اسے پکڑنے کے لیے درخت پر چڑھنے کی کوشش کی تو گر پڑا۔
+ضَحِكَ الْعُصْفُورُ: «نَسِيتَ نَصَائِحِي كُلَّهَا! كَيْفَ تَكُونُ لُؤْلُؤَةٌ كَبِيرَةٌ فِي جَسَدِي الصَّغِيرِ؟» | The sparrow laughed, "You forgot all my advice! How can a big pearl be in my small body?" | چڑیا ہنسی: «تم میری ساری نصیحتیں بھول گئے! میرے چھوٹے سے جسم میں بڑا موتی کیسے ہو سکتا ہے؟»
+
+=== treasure-in-the-field | 2 | الْكَنْزُ فِي الْحَقْلِ | The Treasure in the Field | کھیت میں خزانہ | A fable credited to Aesop, retold here in simple Arabic. | یہ ایسوپ سے منسوب ایک حکایت ہے؛ یہاں آسان عربی میں دوبارہ بیان کی گئی ہے۔
+كَانَ لِفَلَّاحٍ عَجُوزٍ ثَلَاثَةُ أَبْنَاءٍ كُسَالَى. | An old farmer had three lazy sons. | ایک بوڑھے کسان کے تین سست بیٹے تھے۔
+قَبْلَ أَنْ يَمُوتَ قَالَ لَهُمْ: «تَرَكْتُ لَكُمْ كَنْزًا فِي الْحَقْلِ». | Before he died he said to them, "I have left you a treasure in the field." | مرنے سے پہلے اس نے ان سے کہا: «میں نے تمہارے لیے کھیت میں ایک خزانہ چھوڑا ہے۔»
+بَعْدَ مَوْتِهِ حَفَرُوا الْحَقْلَ كُلَّهُ بَحْثًا عَنِ الْكَنْزِ. | After his death they dug up the whole field looking for the treasure. | اس کی موت کے بعد انہوں نے خزانے کی تلاش میں سارا کھیت کھود ڈالا۔
+لَمْ يَجِدُوا ذَهَبًا. | They found no gold. | انہیں سونا نہیں ملا۔
+وَلٰكِنَّ الْأَرْضَ صَارَتْ مَحْرُوثَةً فَزَرَعُوا فِيهَا الْقَمْحَ. | But the land had now been ploughed, so they planted wheat in it. | لیکن زمین اب جوتی ہوئی تھی تو انہوں نے اس میں گندم بو دی۔
+كَانَ الْحَصَادُ كَبِيرًا جِدًّا وَبَاعُوهُ بِمَالٍ كَثِيرٍ. | The harvest was very big, and they sold it for a lot of money. | فصل بہت بڑی ہوئی اور انہوں نے اسے بہت سے مال کے بدلے بیچا۔
+فَهِمُوا أَنَّ الْكَنْزَ هُوَ الْعَمَلُ. | They understood that the treasure was hard work. | وہ سمجھ گئے کہ خزانہ محنت ہی تھی۔
