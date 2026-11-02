@@ -1739,9 +1739,11 @@ PRAYER.forEach((p) => { if (p.a === 'BASMALA') p.a = BASMALA; });
 const surahWords = (s) => s.v.reduce((n, v) => n + v.w.length, 0);
 
 const FONTS = {
-  en: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap',
-  ur: 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap',
+  en: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap',
+  ur: 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap',
 };
+const PATTERN_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><g fill="none" stroke="#e3ac45" stroke-width="1" stroke-opacity=".30"><rect x="18" y="18" width="36" height="36"/><rect x="18" y="18" width="36" height="36" transform="rotate(45 36 36)"/><circle cx="36" cy="36" r="9"/><path d="M0 0l9 9M72 0l-9 9M0 72l9-9M72 72l-9-9" stroke-opacity=".22"/></g></svg>';
+const PATTERN = 'url("data:image/svg+xml,' + encodeURIComponent(PATTERN_SVG) + '")';
 const FAVICON = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0d6b57"/><text x="32" y="46" font-size="38" text-anchor="middle" fill="#ffffff" font-family="serif">ح</text></svg>');
 
 function layout(lang, o) {
@@ -1887,32 +1889,35 @@ function homePage(lang) {
   <p>آپ عربی رسم الخط پہلے ہی پڑھ سکتے ہیں، اس لیے آپ کا آدھا سفر طے ہو چکا ہے۔ اصل فرق تلفظ کا ہے: ${fmt('{ث ح ذ ص ض ط ظ ع ق}')} عربی میں اردو سے مختلف بولے جاتے ہیں۔ ہر حرف کے صفحے پر یہ فرق تفصیل سے بتایا گیا ہے۔</p>
 </section>` : '';
   const body = `<section class="hero">
-  <div>
+  <div class="hero-text">
     <p class="eyebrow">${C.eyebrow}</p>
     <h1>${C.h1}</h1>
     <p class="lead">${C.lead}</p>
     <div class="row">
-      <a class="btn primary" href="${link(lang, 'alphabet.html')}">${C.cta1}</a>
-      <a class="btn" href="${link(lang, 'lessons.html')}">${C.cta2}</a>
+      <a class="btn gold" href="${link(lang, 'alphabet.html')}">${C.cta1}</a>
+      <a class="btn ghost" href="${link(lang, 'lessons.html')}">${C.cta2}</a>
     </div>
-    <p class="note" style="margin-top:12px"><a href="${link(lang, 'level-test.html')}">${ur ? 'معلوم نہیں کہاں سے شروع کریں؟ دو منٹ کا لیول ٹیسٹ دیں ←' : 'Not sure where to start? Take the two-minute level test →'}</a></p>
+    <p class="hero-note"><a href="${link(lang, 'level-test.html')}">${ur ? 'معلوم نہیں کہاں سے شروع کریں؟ دو منٹ کا لیول ٹیسٹ دیں ←' : 'Not sure where to start? Take the two-minute level test →'}</a></p>
   </div>
-  <div class="stats" id="stats" data-letters="28" data-words="${deckTotal}">
-    <div class="stat"><strong id="sLetters">${n(0)}/${n(28)}</strong><span>${C.s1}</span><div class="meter"><i id="mLetters"></i></div></div>
-    <div class="stat"><strong id="sWords">${n(0)}/${n(deckTotal)}</strong><span>${C.s2}</span><div class="meter"><i id="mWords"></i></div></div>
-    <div class="stat"><strong id="sBest">–</strong><span>${C.s3}</span><div class="meter"><i id="mBest"></i></div></div>
+  <div class="mihrab" aria-hidden="true">
+    <div class="mihrab-in"><span class="calli" lang="ar">اِقْرَأْ</span><small>${ur ? 'پڑھیے' : 'Read'}</small></div>
   </div>
 </section>
+<div class="stats" id="stats" data-letters="28" data-words="${deckTotal}">
+  <div class="stat"><strong id="sLetters">${n(0)}/${n(28)}</strong><span>${C.s1}</span><div class="meter"><i id="mLetters"></i></div></div>
+  <div class="stat"><strong id="sWords">${n(0)}/${n(deckTotal)}</strong><span>${C.s2}</span><div class="meter"><i id="mWords"></i></div></div>
+  <div class="stat"><strong id="sBest">–</strong><span>${C.s3}</span><div class="meter"><i id="mBest"></i></div></div>
+</div>
 ${urBox}
 <section>
-  <h2>${C.insideH}</h2>
+  <h2 class="orn">${C.insideH}</h2>
   <div class="cards">
     ${C.cards.map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
   </div>
 </section>
 <section class="split">
   <div>
-    <h2>${C.howH}</h2>
+    <h2 class="orn">${C.howH}</h2>
     <ol class="steps">${C.steps.map((s) => `<li>${s}</li>`).join('')}</ol>
   </div>
   <div>
@@ -2748,7 +2753,6 @@ html[lang="ur"] .eyebrow{letter-spacing:0;text-transform:none;font-size:14px}
 .prose h2{margin-top:1.4em}
 .note{font-size:15px;color:var(--muted)}
 
-.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center;margin-bottom:36px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
 .stat strong{display:block;font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums;line-height:1.5}
@@ -2940,6 +2944,58 @@ html[lang="ur"] .w .m{line-height:2}
 .gloss .ar{font-size:24px;line-height:1.5}
 h1 .ar{font-size:.85em;color:var(--accent);margin-inline-start:8px}
 
+/* Islamic geometric design: star pattern, mihrab arch, calligraphy, gold accents */
+.hero{position:relative;display:grid;grid-template-columns:1.35fr 1fr;gap:28px;align-items:center;margin:0 0 20px;padding:44px 40px;border-radius:24px;color:#f3efe2;overflow:hidden;
+  background:radial-gradient(120% 140% at 85% 20%,#14866c 0%,#0d6b57 38%,#08423a 100%);box-shadow:0 18px 40px -22px rgba(8,66,58,.7)}
+.hero::before{content:"";position:absolute;inset:0;background-image:__PAT__;background-size:72px 72px;opacity:.9;pointer-events:none;-webkit-mask-image:linear-gradient(100deg,transparent 15%,#000 85%);mask-image:linear-gradient(100deg,transparent 15%,#000 85%)}
+html[lang="ur"] .hero::before{-webkit-mask-image:linear-gradient(260deg,transparent 15%,#000 85%);mask-image:linear-gradient(260deg,transparent 15%,#000 85%)}
+.hero::after{content:"";position:absolute;inset:10px;border:1px solid rgba(227,172,69,.45);border-radius:16px;pointer-events:none}
+.hero > *{position:relative;z-index:1}
+.hero h1{color:#fff;margin-bottom:.35em}
+.hero .eyebrow{color:#e3ac45}
+.hero .lead{color:#dce9e2;font-size:18px}
+html[lang="ur"] .hero .lead{font-size:16px}
+.hero .ar{color:#ffe8b0}
+.hero-note{margin:14px 0 0;font-size:15px}
+.hero-note a{color:#f3d58a}
+.btn.gold{background:#e3ac45;border-color:#e3ac45;color:#2a1c02}
+.btn.gold:hover{background:#f0bd5c}
+.btn.ghost{background:transparent;border-color:rgba(255,255,255,.55);color:#fff}
+.btn.ghost:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.mihrab{justify-self:center;width:min(300px,100%);aspect-ratio:3/4;padding:7px;border-radius:999px 999px 18px 18px;background:linear-gradient(180deg,#f3d58a,#b57b16);box-shadow:0 14px 30px -12px rgba(0,0,0,.5)}
+.mihrab-in{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:999px 999px 12px 12px;border:2px solid rgba(8,66,58,.35);
+  background:radial-gradient(90% 70% at 50% 28%,#115f4e 0%,#08423a 75%);position:relative;overflow:hidden}
+.mihrab-in::before{content:"";position:absolute;inset:0;background-image:__PAT__;background-size:54px 54px;opacity:.7}
+.mihrab-in > *{position:relative}
+.calli{font-family:"Aref Ruqaa","Noto Naskh Arabic",serif;font-weight:700;font-size:92px;line-height:1.35;color:#f6d98f;text-shadow:0 3px 0 rgba(0,0,0,.35),0 0 24px rgba(243,213,138,.35);direction:rtl}
+.mihrab-in small{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:#bcd9cf}
+html[lang="ur"] .mihrab-in small{letter-spacing:0;text-transform:none;font-size:16px}
+.stats{margin:0 0 36px}
+.stat{border-top:3px solid var(--gold)}
+h2.orn{display:flex;align-items:center;gap:14px}
+h2.orn::before,h2.orn::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+h2.orn::after{background:linear-gradient(270deg,transparent,var(--gold))}
+h2.orn{text-align:center}
+h2.orn > span{display:none}
+.split h2.orn{justify-content:flex-start}
+.split h2.orn::before{display:none}
+.cards .card{position:relative;overflow:hidden;border-radius:16px}
+.cards .card::after{content:"";position:absolute;inset-inline-end:-26px;top:-26px;width:72px;height:72px;background-image:__PAT__;background-size:36px 36px;opacity:.55;transform:rotate(12deg);transition:opacity .2s,transform .3s}
+a.card:hover::after{opacity:1;transform:rotate(30deg) scale(1.1)}
+header.top{border-bottom:0;box-shadow:0 1px 0 var(--line)}
+header.top::after{content:"";display:block;height:4px;background-image:__PAT__;background-size:36px 36px;background-color:#0d6b57;background-position:center}
+footer{position:relative;border-top:0;padding-top:34px}
+footer::before{content:"";position:absolute;inset-inline:0;top:0;height:10px;background-color:#0d6b57;background-image:__PAT__;background-size:36px 36px}
+.brand .ar{font-family:"Aref Ruqaa","Noto Naskh Arabic",serif;font-size:32px}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding:32px 22px}
+  .mihrab{width:210px;order:-1}
+  .calli{font-size:64px}
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .cards .card::after{opacity:.35}
+}
+
 footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);font-size:14px}
 .foot p{margin:0 0 6px}
 .foot-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
@@ -2948,7 +3004,7 @@ footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);f
 .toast.show{display:block}
 
 @media (max-width:820px){
-  .hero,.split,.letter-top{grid-template-columns:1fr}
+  .split,.letter-top{grid-template-columns:1fr}
   .big-letter{font-size:100px}
 }
 @media (max-width:520px){
@@ -3273,7 +3329,7 @@ function build() {
     add(lang, 'privacy.html', privacyPage(lang));
   }
   files['404.html'] = notFoundPage();
-  files['style.css'] = STYLE_CSS;
+  files['style.css'] = STYLE_CSS.replace(/__PAT__/g, PATTERN);
   files['app.js'] = APP_JS;
   files['googleba7aa79e24dbfa47.html'] = 'google-site-verification: googleba7aa79e24dbfa47.html'; // Google Search Console ownership, keep this
   files['robots.txt'] = `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
