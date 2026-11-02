@@ -2615,6 +2615,7 @@ function build() {
   files['404.html'] = notFoundPage();
   files['style.css'] = STYLE_CSS;
   files['app.js'] = APP_JS;
+  files['googleba7aa79e24dbfa47.html'] = 'google-site-verification: googleba7aa79e24dbfa47.html'; // Google Search Console ownership, keep this
   files['robots.txt'] = `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
   files['sitemap.xml'] = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + pages.map((f) => `  <url><loc>${pageUrl(f)}</loc></url>`).join('\n') + '\n</urlset>\n';
