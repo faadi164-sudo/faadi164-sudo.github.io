@@ -1738,6 +1738,139 @@ const BASMALA = SURAHS[0].v[0].w.map((x) => x[0]).join(' ');
 PRAYER.forEach((p) => { if (p.a === 'BASMALA') p.a = BASMALA; });
 const surahWords = (s) => s.v.reduce((n, v) => n + v.w.length, 0);
 
+const translit = (() => {
+// Transliterate fully vowelled Arabic into the Latin style used on Harf. Shared by build.js (copied in) and tests.
+const MAP = { 'ب': 'b', 'ت': 't', 'ث': 'th', 'ج': 'j', 'ح': 'ḥ', 'خ': 'kh', 'د': 'd', 'ذ': 'dh', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'sh', 'ص': 'ṣ', 'ض': 'ḍ', 'ط': 'ṭ', 'ظ': 'ẓ', 'ع': 'ʿ', 'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n', 'ه': 'h' };
+const SUN = new Set('تثدذرزسشصضطظلن'.split(''));
+const HAMZA = new Set(['ء', 'أ', 'إ', 'ؤ', 'ئ']);
+const FATHA = 'َ', DAMMA = 'ُ', KASRA = 'ِ', SUKUN = 'ْ', SHADDA = 'ّ', TF = 'ً', TD = 'ٌ', TK = 'ٍ', DAGGER = 'ٰ', MADDA = 'ٓ';
+const isMark = (c) => /[ً-ٰٟ]/.test(c);
+
+function clusters(word) {
+  const out = [];
+  for (const ch of word.replace(/ـ/g, '')) {
+    if (isMark(ch)) { if (out.length) out[out.length - 1].m.push(ch); }
+    else out.push({ b: ch, m: [] });
+  }
+  return out;
+}
+
+function translit(word) {
+  const cs = clusters(word.replace(/[،؛؟.!?:,"«»()]/g, ''));
+  let out = '';
+  let prev = ''; // last short vowel written: a, i, u, or '' (also 'an' for tanween fatha)
+  for (let i = 0; i < cs.length; i++) {
+    const { b, m } = cs[i];
+    const has = (x) => m.includes(x);
+    const shadda = has(SHADDA);
+    let v = has(FATHA) ? 'a' : has(DAMMA) ? 'u' : has(KASRA) ? 'i' : '';
+    const tan = has(TF) ? 'an' : has(TD) ? 'un' : has(TK) ? 'in' : '';
+    const dag = has(DAGGER);
+    // definite article: alif + lam (no vowel) at the start, or after a one-letter prefix with a vowel
+    if (b === 'ا' && m.length === 0 && cs[i + 1] && cs[i + 1].b === 'ل' && !cs[i + 1].m.some((x) => x === SHADDA || x === FATHA || x === DAMMA || x === KASRA) && cs[i + 2] && (i === 0 || prev)) {
+      const nx = cs[i + 2];
+      if (SUN.has(nx.b) && nx.m.includes(SHADDA)) {
+        out += (i === 0 ? 'a' : '') + (MAP[nx.b]) + '-';
+        // write the sun letter once; its doubling was done here
+        nx.m = nx.m.filter((x) => x !== SHADDA);
+        i += 1; prev = ''; continue;
+      }
+      out += (i === 0 ? 'a' : '') + 'l-'; i += 1; prev = ''; continue;
+    }
+    // li + al-: لِلْبَيْتِ -> lil-bayti, لِلشِّتَاءِ -> lish-shitaa'i
+    if (i === 0 && b === 'ل' && v === 'i' && cs.length > 2 && cs[1].b === 'ل' && cs[1].m.every((x) => x === SUKUN)) {
+      const nx = cs[2];
+      if (SUN.has(nx.b) && nx.m.includes(SHADDA)) { out += 'li' + MAP[nx.b] + '-'; nx.m = nx.m.filter((x) => x !== SHADDA); i += 1; prev = ''; continue; }
+      if (cs[1].m.includes(SUKUN)) { out += 'lil-'; i += 1; prev = ''; continue; }
+    }
+    if (b === 'ا') {
+      if (m.length === 0) { if (i === 0) out += 'a'; else if (prev === 'a') out += 'a'; prev = ''; continue; } // long aa; silent otherwise
+      if (i === 0) { out += v || ''; prev = v; continue; } // hamzat wasl or initial alif with a vowel
+      out += v; prev = v; continue;
+    }
+    if (b === 'آ') { out += (i === 0 ? '' : '’') + 'aa'; prev = ''; continue; }
+    if (b === 'ى') { if (prev === 'a' || !prev) out += 'a'; else if (prev === 'i') out += 'i'; prev = ''; continue; }
+    if (b === 'و' || b === 'ي') {
+      const ch = b === 'و' ? 'w' : 'y';
+      if (shadda) { out += ch + ch + v + tan; prev = tan ? '' : v; continue; }
+      if (v || tan) { out += ch + v + tan; prev = tan ? '' : v; continue; }
+      // no vowel: long vowel after matching short vowel, otherwise a glide (aw / ay)
+      if (b === 'و' && prev === 'u') { out += 'u'; prev = ''; continue; }
+      if (b === 'ي' && prev === 'i') { out += 'i'; prev = ''; continue; }
+      out += ch; prev = ''; continue;
+    }
+    if (b === 'ة') {
+      if (v || tan) { out += 't' + v + tan; prev = ''; continue; }
+      out += 'a'; prev = ''; continue;
+    }
+    let cons;
+    if (HAMZA.has(b)) cons = (i === 0 || out.endsWith('-') ? '' : '’'); else if (MAP[b]) cons = MAP[b]; else { out += b; prev = ''; continue; }
+    out += cons + (shadda && cons ? cons : '');
+    if (dag) { out += 'aa'; prev = ''; continue; }
+    out += v + tan;
+    prev = tan ? '' : v;
+    if (tan === 'an') prev = ''; // the following alif is silent
+  }
+  return out.replace(/al-lah/g, 'allaah').replace(/allah/g, 'allaah').replace(/llah/g, 'llaah').replace(/allaahh/g, 'allaah');
+}
+  return translit;
+})();
+
+// ---------------------------------------------------------------- classic tales (data/ folder)
+// data/lexicon.txt:  token | English | Urdu | root letters (or -) | origin note EN | origin note UR
+// data/classics/*.txt:  "=== slug | level | Arabic title | English title | Urdu title | about EN | about UR" then "arabic | english | urdu" lines.
+const PUNCT = /[،؛؟.!?:,"«»()]/g;
+const stripP = (w) => w.replace(PUNCT, '');
+const baseForm = (w) => stripP(w).replace(/[ً-ٰٟـ]/g, '');
+const stemKey = (w) => baseForm(w).replace(/^[وف]?[بلك]?(?:ال)?/, '').replace(/[ةهى]$/, '');
+function loadClassics() {
+  const dir = path.join(__dirname, 'data');
+  const lines = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split(/\r?\n/) : []);
+  const lex = new Map();
+  for (const ln of lines(path.join(dir, 'lexicon.txt'))) {
+    if (!ln.trim() || ln.startsWith('#')) continue;
+    const [t, en, ur, root, oen, our] = ln.split('|').map((x) => x.trim());
+    lex.set(t, { en, ur, root: root && root !== '-' ? root : '', oen: oen || '', our: our || '' });
+  }
+  const byRoot = new Map();
+  for (const [t, e] of lex) if (e.root) { if (!byRoot.has(e.root)) byRoot.set(e.root, []); byRoot.get(e.root).push(t); }
+  const tales = [];
+  const cdir = path.join(dir, 'classics');
+  const files = fs.existsSync(cdir) ? fs.readdirSync(cdir).filter((f) => f.endsWith('.txt')).sort() : [];
+  const missing = new Set();
+  for (const f of files) {
+    let cur = null;
+    for (const ln of lines(path.join(cdir, f))) {
+      if (!ln.trim() || ln.startsWith('#')) continue;
+      if (ln.startsWith('===')) {
+        const [slug, level, ar, en, ur, srcEn, srcUr] = ln.slice(3).split('|').map((x) => x.trim());
+        cur = { slug, level: +level, ar, en, ur, srcEn: srcEn || '', srcUr: srcUr || '', s: [] };
+        tales.push(cur);
+        continue;
+      }
+      const [ar, en, ur] = ln.split('|').map((x) => x.trim());
+      const w = ar.split(/\s+/).map((raw) => {
+        const a = stripP(raw), e = lex.get(a);
+        if (!e) { missing.add(a); return { raw, a, tr: translit(a), en: '?', ur: '?', root: '', oen: '', our: '', rel: '' }; }
+        const seenK = new Set([stemKey(a)]);
+        const rel = e.root ? (byRoot.get(e.root) || []).filter((t) => { const k = stemKey(t); if (seenK.has(k)) return false; seenK.add(k); return true; }).slice(0, 3).map((t) => ({ a: t, en: lex.get(t).en, ur: lex.get(t).ur })) : [];
+        return { raw, a, tr: translit(a), en: e.en, ur: e.ur, root: e.root, oen: e.oen, our: e.our, rel };
+      });
+      cur.s.push({ w, tr: w.map((x) => x.tr).join(' '), en, ur });
+    }
+  }
+  if (missing.size && process.env.HARF_ALLOW_MISSING !== '1') {
+    fs.writeFileSync(path.join(__dirname, 'missing-words.txt'), [...missing].join('\n') + '\n');
+    throw new Error(`${missing.size} words are missing from data/lexicon.txt (listed in missing-words.txt)`);
+  }
+  return tales;
+}
+let CLASSICS = [];
+const LEVELS = {
+  en: { 1: 'Level 1: very short and simple', 2: 'Level 2: everyday sentences', 3: 'Level 3: longer tales' },
+  ur: { 1: 'درجہ ۱: بہت مختصر اور آسان', 2: 'درجہ ۲: روزمرہ جملے', 3: 'درجہ ۳: لمبی کہانیاں' },
+};
+
 const FONTS = {
   en: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap',
   ur: 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&family=Reem+Kufi:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap',
@@ -1839,6 +1972,7 @@ function homePage(lang) {
       ['alphabet.html', 'حروفِ تہجی', `تمام ${n(28)} حروف، ان کی چاروں شکلیں، تلفظ کی رہنمائی اور ہر حرف کی ایک مثال۔`],
       ['writing.html', 'لکھنے کی مشق', 'ہر حرف اسکرین پر انگلی سے لکھیں، یا مفت ورک شیٹس پرنٹ کریں۔'],
       ['lessons.html', 'گرامر کے اسباق', `${n(LESSONS.length)} مختصر اسباق، پہلے جملے سے افعال، گنتی اور وقت بتانے تک۔`],
+      ...(CLASSICS.length ? [['classic-tales.html', 'کلاسیکی کہانیاں', `${n(CLASSICS.length)} پرانی حکایتیں، لفظ بہ لفظ ترجمے، تلفظ اور لفظ کے ماخذ کے ساتھ۔`]] : []),
       ['reading.html', 'آسان کہانیاں', `${n(STORIES.length)} مختصر کہانیاں اعراب کے ساتھ؛ ہر لفظ پر ٹیپ کر کے مطلب دیکھیں۔`],
       ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے پیشوں اور جسم تک، فلیش کارڈز کے ساتھ۔`],
       ['quran.html', 'قرآنی عربی', `سورہ فاتحہ اور ${n(SURAHS.length - 1)} مختصر سورتیں لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
@@ -1867,6 +2001,7 @@ function homePage(lang) {
       ['alphabet.html', 'Alphabet', 'All 28 letters with their four shapes, pronunciation tips and an example word for each.'],
       ['writing.html', 'Writing practice', 'Trace every letter on screen with your finger, or print free tracing worksheets.'],
       ['lessons.html', 'Grammar lessons', `${LESSONS.length} short lessons, from your first sentence to verbs, numbers and telling the time.`],
+      ...(CLASSICS.length ? [['classic-tales.html', 'Classic tales', `${CLASSICS.length} old fables and folk tales with word-by-word translation, pronunciation and word origins.`]] : []),
       ['reading.html', 'Easy stories', `${STORIES.length} short vowelled stories; tap any word to see what it means.`],
       ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to jobs and the body, with flashcards.`],
       ['quran.html', 'Quranic Arabic', `Al-Fatiha and ${SURAHS.length - 1} short surahs word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
@@ -2491,7 +2626,8 @@ function readingPage(lang) {
 <p class="lead">${C.lead}</p>
 <div class="cards">
     ${cards}
-</div>`;
+</div>
+${CLASSICS.length ? `<section class="box" style="margin-top:28px"><h2>${ur ? 'کلاسیکی کہانیاں' : 'Classic tales'}</h2><p>${ur ? `${num(lang, CLASSICS.length)} پرانی کہانیاں لفظ بہ لفظ ترجمے، تلفظ اور لفظ کے مادے کے ساتھ۔ <a href="${link(lang, 'classic-tales.html')}">کلاسیکی کہانیاں پڑھیں ←</a>` : `${CLASSICS.length} old tales with word-by-word translation, pronunciation and word origins. <a href="${link(lang, 'classic-tales.html')}">Read the classic tales →</a>`}</p></section>` : ''}`;
   return layout(lang, { file: 'reading.html', section: 'lessons', title: C.title, desc: C.desc, body });
 }
 
@@ -2524,6 +2660,69 @@ function storyPage(lang, i) {
   ${next ? `<a class="btn primary" href="${link(lang, 'reading-' + next.slug + '.html')}">${ur ? 'اگلی: ' + next.ur + ' ←' : 'Next: ' + next.en + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran.html')}">${ur ? 'اب قرآنی عربی آزمائیں ←' : 'Now try Quranic Arabic →'}</a>`}
 </nav>`;
   return layout(lang, { file: 'reading-' + st.slug + '.html', section: 'lessons', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+}
+
+
+function classicsPage(lang) {
+  const ur = lang === 'ur';
+  const n = (v) => num(lang, v);
+  const cards = CLASSICS.map((t, i) => `<a class="card tcard" href="${link(lang, 'tale-' + t.slug + '.html')}" data-lv="${t.level}" data-q="${esc((t.en + ' ' + t.ur + ' ' + t.ar).toLowerCase())}"><p class="eyebrow">${ur ? 'درجہ ' + n(t.level) : 'Level ' + t.level}${ur ? '، ' : ' · '}${n(t.s.length)} ${ur ? 'جملے' : 'sentences'}</p><h3>${ur ? t.ur : t.en}</h3><p><span class="ar" lang="ar">${t.ar}</span></p></a>`).join('\n    ');
+  const C = ur ? {
+    title: 'کلاسیکی عربی کہانیاں: لفظ بہ لفظ ترجمہ | حرف', desc: `${ud(CLASSICS.length)} کلاسیکی کہانیاں اعراب کے ساتھ، ہر لفظ کا مطلب، تلفظ، جملوں کا ترجمہ اور لفظ کا مادہ۔ مبتدی سے متوسط تک۔`,
+    h1: 'کلاسیکی عربی کہانیاں', lead: `کلیلہ و دمنہ کی حکایتوں، الف لیلہ کے قصوں، جحا کے لطیفوں اور دوسری پرانی کہانیوں کا آسان عربی میں اپنا بیان، ${n(CLASSICS.length)} کہانیاں۔ ہر لفظ پر ٹیپ کریں تو اس کا مطلب اور تلفظ سامنے آئے گا؛ لفظ کا مادہ اور ماخذ دیکھنے کا اختیار بھی ہے۔`,
+    all: 'تمام', search: 'کہانی تلاش کریں', none: 'کوئی کہانی نہیں ملی۔', easy: 'مختصر مشقی کہانیاں بھی دیکھیں ←',
+    note: 'یہ کہانیاں قدیم اور عوامی روایات پر مبنی ہیں؛ عبارت اور ترجمہ حرف نے سیکھنے والوں کے لیے اپنے الفاظ میں لکھا ہے۔',
+  } : {
+    title: 'Classic Arabic stories with word-by-word translation | Harf', desc: `${CLASSICS.length} classic tales in vowelled Arabic with the meaning and pronunciation of every word, sentence translations and word origins. Beginner to intermediate.`,
+    h1: 'Classic Arabic stories', lead: `${CLASSICS.length} retellings of old fables, tales from the Arabian Nights, Juha jokes and other traditional stories, in simple Arabic. Tap any word to hear it and see its meaning and pronunciation. You can also turn on word origins to see each word’s root.`,
+    all: 'All', search: 'Search stories', none: 'No stories found.', easy: 'See the short practice stories too →',
+    note: 'These tales come from old, traditional sources. The Arabic text and translations are written by Harf for learners.',
+  };
+  const chips = [['', C.all], ['1', (ur ? 'درجہ ' : 'Level ') + n(1)], ['2', (ur ? 'درجہ ' : 'Level ') + n(2)], ['3', (ur ? 'درجہ ' : 'Level ') + n(3)]];
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['reading.html', ur ? 'آسان کہانیاں' : 'Easy stories'], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tfilter" id="tf"><div class="chips" role="group" aria-label="${ur ? 'درجہ' : 'Level'}">${chips.map(([v, l], k) => `<button class="chip" type="button" data-lv="${v}" aria-pressed="${k === 0}">${l}</button>`).join('')}</div>
+<input class="tsearch" id="tsearch" type="search" placeholder="${C.search}" aria-label="${C.search}"></div>
+<p class="note">${LEVELS[lang][1]}${ur ? '۔ ' : '. '}${LEVELS[lang][2]}${ur ? '۔ ' : '. '}${LEVELS[lang][3]}${ur ? '۔' : '.'}</p>
+<div class="cards" id="tcards">
+    ${cards}
+</div>
+<p class="note" id="tnone" hidden>${C.none}</p>
+<p><a href="${link(lang, 'reading.html')}">${C.easy}</a></p>
+<p class="note">${C.note}</p>`;
+  return layout(lang, { file: 'classic-tales.html', section: 'lessons', title: C.title, desc: C.desc, body });
+}
+
+function classicPage(lang, i) {
+  const ur = lang === 'ur';
+  const n = (v) => num(lang, v);
+  const t = CLASSICS[i], prev = CLASSICS[i - 1], next = CLASSICS[i + 1];
+  const text = t.s.map((x) => x.w.map((w) => w.a).join(' ')).join(' ');
+  const sents = t.s.map((x) => {
+    const words = x.w.map((w) => `<button class="rw" type="button" data-w="${esc(w.a)}" data-m="${esc(ur ? w.ur : w.en)}" data-tr="${esc(w.tr)}"${w.root ? ` data-root="${esc(w.root)}"` : ''}${(ur ? w.our : w.oen) ? ` data-o="${esc(ur ? w.our : w.oen)}"` : ''}${w.rel && w.rel.length ? ` data-rel="${esc(w.rel.map((r) => r.a + '=' + (ur ? r.ur : r.en)).join(';;'))}"` : ''}>${esc(w.raw)}</button>`).join(' ');
+    return `<div class="st"><span class="ar" lang="ar">${words}</span><span class="st-tr latin">${esc(x.tr)}</span><span class="st-m">${esc(ur ? x.ur : x.en)}</span><button class="btn sm st-play" type="button" data-say="${esc(x.w.map((w) => w.a).join(' '))}" aria-label="${T[lang].listen}">🔊</button></div>`;
+  }).join('\n  ');
+  const C = ur ? { listen: '▶ پوری کہانی سنیں', showTr: 'تلفظ دکھائیں', showM: 'جملوں کا ترجمہ', showO: 'لفظ کا مادہ اور ماخذ', tap: 'کسی لفظ پر ٹیپ کریں تو اس کی آواز اور مطلب یہاں نظر آئے گا۔ «لفظ کا مادہ اور ماخذ» آن کریں تو مادہ اور اسی مادے کے دوسرے الفاظ بھی ملیں گے۔', all: 'تمام کہانیاں', about: 'اس کہانی کے بارے میں', lvl: 'درجہ' }
+    : { listen: '▶ Listen to the tale', showTr: 'Show pronunciation', showM: 'Show sentence translation', showO: 'Word origins', tap: 'Tap a word to hear it and see its meaning here. Turn on “Word origins” to see its root and related words.', all: 'All tales', about: 'About this tale', lvl: 'Level' };
+  const title = ur ? `کلاسیکی عربی کہانی: ${t.ur}` : `Classic Arabic story: ${t.en}`;
+  const desc = ur ? `${t.ur} (${t.ar}): اعراب والی آسان عربی کہانی، ہر لفظ کا مطلب، تلفظ اور جملوں کا اردو ترجمہ۔`
+    : `${t.en} (${t.ar}): a classic tale in vowelled Arabic with the meaning and pronunciation of every word and sentence translations.`;
+  const links = [prev && ['<', prev], next && ['>', next]];
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['classic-tales.html', ur ? 'کلاسیکی کہانیاں' : 'Classic tales'], [null, ur ? t.ur : t.en]])}
+<p class="eyebrow">${C.lvl} ${n(t.level)}${ur ? '، ' : ' · '}${n(i + 1)}/${n(CLASSICS.length)}</p>
+<h1>${ur ? t.ur : t.en} <span class="ar" lang="ar">${t.ar}</span></h1>
+<div class="row story-tools">${say(lang, text, C.listen)}<button class="btn" type="button" data-tog="show-tr" aria-pressed="false">${C.showTr}</button><button class="btn" type="button" data-tog="show-m" aria-pressed="false">${C.showM}</button><button class="btn" type="button" data-tog="show-o" aria-pressed="false">${C.showO}</button></div>
+<div class="story" id="story">
+  ${sents}
+</div>
+<p class="gloss" id="gloss" aria-live="polite">${C.tap}</p>
+${(ur ? t.srcUr : t.srcEn) ? `<section class="box"><h2>${C.about}</h2><p>${esc(ur ? t.srcUr : t.srcEn)}</p></section>` : ''}
+<nav class="pager" aria-label="${C.all}">
+  ${prev ? `<a class="btn" href="${link(lang, 'tale-' + prev.slug + '.html')}">${T[lang].prev}: ${esc(ur ? prev.ur : prev.en)}</a>` : `<a class="btn" href="${link(lang, 'classic-tales.html')}">${C.all}</a>`}
+  ${next ? `<a class="btn primary" href="${link(lang, 'tale-' + next.slug + '.html')}">${ur ? 'اگلی: ' + esc(next.ur) + ' ←' : 'Next: ' + esc(next.en) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'classic-tales.html')}">${C.all}</a>`}
+</nav>`;
+  return layout(lang, { file: 'tale-' + t.slug + '.html', section: 'lessons', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
 }
 
 function levelPage(lang) {
@@ -2996,6 +3195,16 @@ footer::before{content:"";position:absolute;inset-inline:0;top:0;height:10px;bac
   :root:not([data-theme="light"]) .cards .card::after{opacity:.35}
 }
 
+.tfilter{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.tfilter .chips{margin:0}
+.tsearch{font:inherit;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);min-width:200px}
+.tcard[hidden]{display:none}
+.tcard .eyebrow{margin-bottom:4px}
+.st-play{justify-self:start;margin:2px 0 6px}
+.og{display:inline-block;margin-top:4px;margin-inline-end:12px;color:#d7e6df;font-size:15px}
+.og .ar{color:#ffe8b0}
+.gloss .latin{color:#f3d58a;font-size:15px}
+
 footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);font-size:14px}
 .foot p{margin:0 0 6px}
 .foot-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
@@ -3033,7 +3242,7 @@ const APP_JS = String.raw`(function () {
     learned: '✓ سیکھ لیا', markLearned: 'سیکھ لیا؟ نشان لگائیں',
     known: '✓ یاد ہے', markKnown: 'یاد ہے؟ نشان لگائیں',
     score: 'اسکور', next: 'اگلا ←', finished: 'مکمل', youScored: 'آپ کا اسکور',
-    again: 'نیا سیٹ', question: 'سوال', hideGuide: 'رہنما حرف چھپائیں', showGuide: 'رہنما حرف دکھائیں',
+    again: 'نیا سیٹ', question: 'سوال', hideGuide: 'رہنما حرف چھپائیں', showGuide: 'رہنما حرف دکھائیں', root: 'مادہ', origin: 'ماخذ', related: 'اسی مادے سے',
     q1: 'یہ کون سا حرف ہے؟', q2: 'یہ حرف تلاش کریں:', q3: 'اس کا مطلب کیا ہے؟', q4: 'اسے عربی میں کیسے کہیں گے؟', q5: 'تصویر کے لیے صحیح لفظ چنیں:',
     great: 'بہت خوب! اب کوئی نیا موضوع آزمائیں۔', good: 'اچھی پیش رفت۔ فلیش کارڈز دہرائیں اور دوبارہ کوشش کریں۔', keep: 'ہمت نہ ہاریں۔ حروف دہرائیں اور پھر کوشش کریں۔'
   } : {
@@ -3042,7 +3251,7 @@ const APP_JS = String.raw`(function () {
     learned: '✓ Learned', markLearned: 'Mark as learned',
     known: '✓ Known', markKnown: 'Mark as known',
     score: 'Score', next: 'Next →', finished: 'Finished', youScored: 'You scored',
-    again: 'Try another set', question: 'Question', hideGuide: 'Hide guide', showGuide: 'Show guide',
+    again: 'Try another set', question: 'Question', hideGuide: 'Hide guide', showGuide: 'Show guide', root: 'Root', origin: 'Origin', related: 'Same root',
     q1: 'Which letter is this?', q2: 'Find the letter called…', q3: 'What does this mean?', q4: 'How do you say this in Arabic?', q5: 'Which word matches the picture?',
     great: 'Excellent work. Try a new topic next.', good: 'Good progress. Review the flashcards and go again.', keep: 'Keep going. Practise the alphabet, then try again.'
   };
@@ -3186,21 +3395,56 @@ const APP_JS = String.raw`(function () {
 
   var story = $('#story');
   if (story) {
-    var gl = $('#gloss');
+    var gl = $('#gloss'), curW = null;
+    var showGloss = function (b) {
+      var h = '<span class="ar" lang="ar">' + esc(b.getAttribute('data-w')) + '</span>';
+      var tr = b.getAttribute('data-tr'); if (tr) h += ' <span class="latin">' + esc(tr) + '</span>';
+      h += ' — ' + esc(b.getAttribute('data-m'));
+      if (story.classList.contains('show-o')) {
+        var root = b.getAttribute('data-root'), og = b.getAttribute('data-o'), rel = b.getAttribute('data-rel'), x = '';
+        if (root) x += '<span class="og">' + S.root + ': <span class="ar" lang="ar">' + esc(root.split(' ').join(' - ')) + '</span></span>';
+        if (og) x += '<span class="og">' + S.origin + ': ' + esc(og) + '</span>';
+        if (rel) x += '<span class="og">' + S.related + ': ' + rel.split(';;').map(function (r) { var p = r.split('='); return '<span class="ar" lang="ar">' + esc(p[0]) + '</span> ' + esc(p[1] || ''); }).join(' · ') + '</span>';
+        if (x) h += '<br>' + x;
+      }
+      gl.innerHTML = h;
+    };
     $$('.rw', story).forEach(function (b) {
       b.addEventListener('click', function () {
         $$('.rw.on', story).forEach(function (x) { x.classList.remove('on'); });
-        b.classList.add('on');
+        b.classList.add('on'); curW = b;
         speak(b.getAttribute('data-w'));
-        gl.innerHTML = '<span class="ar" lang="ar">' + esc(b.getAttribute('data-w')) + '</span> — ' + esc(b.getAttribute('data-m'));
+        showGloss(b);
       });
     });
     $$('[data-tog]').forEach(function (t) {
       t.addEventListener('click', function () {
         var c = t.getAttribute('data-tog'), on = !story.classList.contains(c);
         story.classList.toggle(c, on); t.setAttribute('aria-pressed', on ? 'true' : 'false'); t.classList.toggle('on', on);
+        if (curW) showGloss(curW);
       });
     });
+  }
+
+  var tf = $('#tf');
+  if (tf) {
+    var lvSel = '', qSel = '';
+    var applyF = function () {
+      var shown = 0;
+      $$('.tcard').forEach(function (c) {
+        var ok = (!lvSel || c.getAttribute('data-lv') === lvSel) && (!qSel || c.getAttribute('data-q').indexOf(qSel) > -1);
+        c.hidden = !ok; if (ok) shown++;
+      });
+      $('#tnone').hidden = shown > 0;
+    };
+    $$('.chip', tf).forEach(function (b) {
+      b.addEventListener('click', function () {
+        lvSel = b.getAttribute('data-lv');
+        $$('.chip', tf).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        applyF();
+      });
+    });
+    $('#tsearch').addEventListener('input', function (e) { qSel = e.target.value.trim().toLowerCase(); applyF(); });
   }
 
   var lv = $('#lvlbox');
@@ -3302,6 +3546,7 @@ const APP_JS = String.raw`(function () {
 
 // ---------------------------------------------------------------- build
 function build() {
+  CLASSICS = loadClassics();
   const files = {};
   const pages = [];
   const add = (lang, file, html) => { const f = link(lang, file); files[f] = html; pages.push(f); };
@@ -3314,6 +3559,7 @@ function build() {
     LESSONS.forEach((l, i) => add(lang, l.slug + '.html', lessonPage(lang, i)));
     add(lang, 'reading.html', readingPage(lang));
     STORIES.forEach((x, i) => add(lang, 'reading-' + x.slug + '.html', storyPage(lang, i)));
+    if (CLASSICS.length) { add(lang, 'classic-tales.html', classicsPage(lang)); CLASSICS.forEach((x, i) => add(lang, 'tale-' + x.slug + '.html', classicPage(lang, i))); }
     add(lang, 'level-test.html', levelPage(lang));
     add(lang, 'vocabulary.html', vocabularyPage(lang));
     TOPICS.forEach((t, i) => add(lang, 'vocab-' + t.slug + '.html', topicPage(lang, i)));
