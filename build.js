@@ -9,6 +9,8 @@
   - Moving to your own domain: change SITE_URL below.
   - Google AdSense approved: put your publisher ID in ADSENSE_CLIENT, e.g. 'ca-pub-1234567890123456'.
   - Contact email: set CONTACT_EMAIL.
+  - Visitor stats: put your Google Analytics 4 measurement ID in GA_ID, e.g. 'G-ABC123XYZ9'.
+  - Google Search Console: put the content="..." code from its HTML-tag method in GSC_VERIFY.
   - New words: add rows to TOPICS. New phrases: add rows to PHRASES. New lessons: add to LESSONS.
 */
 const fs = require('fs');
@@ -19,6 +21,8 @@ const SITE_URL = 'https://faadi164-sudo.github.io';
 const KOFI_URL = 'https://ko-fi.com/164fawad';
 const ADSENSE_CLIENT = '';
 const CONTACT_EMAIL = '';
+const GA_ID = '';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
+const GSC_VERIFY = '';  // Google Search Console verification code (only the content="..." value)
 const UPDATED = { en: '2 November 2026', ur: '۲ نومبر ۲۰۲۶' };
 const YEAR = '2026';
 const OUT = path.join(__dirname, '_site');
@@ -830,152 +834,6 @@ const LESSONS = [
       { en: 'Make “my car” from {سَيَّارَةٌ}.', ur: '{سَيَّارَةٌ} سے «میری گاڑی» بنائیں۔', a: 'سَيَّارَتِي', tr: 'sayyaaratii', noteEn: 'The {ة} turns into an ordinary {ت}.', noteUr: '{ة} عام {ت} بن جاتی ہے۔' },
     ],
   },
-  {
-    slug: 'lesson-9-adjectives', key: 'كَبِيرٌ',
-    en: {
-      title: 'Describing things: a big house, the big house', short: 'Adjectives come after the noun and match it.',
-      intro: 'In Arabic the describing word comes after the noun: {بَيْتٌ كَبِيرٌ} (baytun kabiirun) is “a big house”. The adjective copies the noun: if the noun has {الـ}, so does the adjective, and if the noun is feminine, the adjective takes {ـة} too.',
-      points: [
-        '{بَيْتٌ كَبِيرٌ} a big house · {الْبَيْتُ الْكَبِيرُ} the big house · {الْبَيْتُ كَبِيرٌ} the house is big',
-        'The only difference between “the big house” and “the house is big” is the {الـ} on the adjective. Without it, you have a full sentence.',
-        'For a feminine noun, add {ـة} to the adjective as well: {سَيَّارَةٌ جَدِيدَةٌ} (a new car), {الْمَدْرَسَةُ كَبِيرَةٌ} (the school is big).',
-      ],
-    },
-    ur: {
-      title: 'صفت: بڑا گھر، وہ بڑا گھر', short: 'صفت اسم کے بعد آتی ہے اور اسی کے مطابق بدلتی ہے۔',
-      intro: 'عربی میں صفت اسم کے بعد آتی ہے: {بَيْتٌ كَبِيرٌ} یعنی «ایک بڑا گھر»۔ صفت اپنے اسم کی نقل کرتی ہے: اسم پر {الـ} ہو تو صفت پر بھی ہوگا، اور اسم مؤنث ہو تو صفت پر بھی {ـة} آئے گی۔',
-      points: [
-        '{بَيْتٌ كَبِيرٌ} ایک بڑا گھر · {الْبَيْتُ الْكَبِيرُ} وہ بڑا گھر · {الْبَيْتُ كَبِيرٌ} گھر بڑا ہے',
-        '«وہ بڑا گھر» اور «گھر بڑا ہے» میں فرق صرف صفت پر {الـ} کا ہے۔ صفت پر {الـ} نہ ہو تو پورا جملہ بن جاتا ہے۔',
-        'مؤنث اسم کی صفت پر بھی {ـة} لگائیں: {سَيَّارَةٌ جَدِيدَةٌ} (نئی گاڑی)، {الْمَدْرَسَةُ كَبِيرَةٌ} (اسکول بڑا ہے)۔',
-      ],
-    },
-    ex: [
-      ['بَيْتٌ كَبِيرٌ', 'baytun kabiirun', 'a big house', 'ایک بڑا گھر'],
-      ['الْبَيْتُ الْكَبِيرُ', 'al-baytu l-kabiiru', 'the big house', 'وہ بڑا گھر'],
-      ['الْبَيْتُ كَبِيرٌ', 'al-baytu kabiirun', 'The house is big.', 'گھر بڑا ہے۔'],
-      ['قَلَمٌ جَدِيدٌ', 'qalamun jadiidun', 'a new pen', 'ایک نیا قلم'],
-      ['السَّيَّارَةُ جَدِيدَةٌ', 'as-sayyaaratu jadiidatun', 'The car is new.', 'گاڑی نئی ہے۔'],
-      ['هٰذَا طَالِبٌ مُجْتَهِدٌ', 'haadhaa ṭaalibun mujtahidun', 'This is a hard-working student.', 'یہ ایک محنتی طالب علم ہے۔'],
-      ['الْمَاءُ بَارِدٌ', 'al-maa’u baaridun', 'The water is cold.', 'پانی ٹھنڈا ہے۔'],
-      ['الْقَهْوَةُ حَارَّةٌ', 'al-qahwatu ḥaarratun', 'The coffee is hot.', 'قہوہ گرم ہے۔'],
-    ],
-    practice: [
-      { en: 'Say “a small book”. Small is {صَغِيرٌ}.', ur: '«ایک چھوٹی کتاب» کہیں۔ چھوٹا: {صَغِيرٌ}۔', a: 'كِتَابٌ صَغِيرٌ', tr: 'kitaabun ṣaghiirun' },
-      { en: 'Say “The book is small.”', ur: '«کتاب چھوٹی ہے» کہیں۔', a: 'الْكِتَابُ صَغِيرٌ', tr: 'al-kitaabu ṣaghiirun', noteEn: 'No {الـ} on the adjective, so it is a full sentence.', noteUr: 'صفت پر {الـ} نہیں، اس لیے یہ پورا جملہ ہے۔' },
-      { en: 'Say “the new car”.', ur: '«وہ نئی گاڑی» کہیں۔', a: 'السَّيَّارَةُ الْجَدِيدَةُ', tr: 'as-sayyaaratu l-jadiidatu', noteEn: 'Both words take {الـ}, and the adjective takes {ـة} because {سَيَّارَة} is feminine.', noteUr: 'دونوں پر {الـ} ہے، اور {سَيَّارَة} مؤنث ہے اس لیے صفت پر بھی {ـة} ہے۔' },
-    ],
-  },
-  {
-    slug: 'lesson-10-plurals', key: 'هٰؤُلَاءِ',
-    en: {
-      title: 'More than one: plurals and “these”', short: 'Plurals with endings, broken plurals, and {هٰؤُلَاءِ}.',
-      intro: 'Arabic makes plurals in two ways. Many words for people add an ending: {مُسْلِمٌ} becomes {مُسْلِمُونَ} (Muslim men) and {مُسْلِمَةٌ} becomes {مُسْلِمَاتٌ} (Muslim women). Most other words change their inside pattern instead, a bit like English man → men: {كِتَابٌ} becomes {كُتُبٌ} (books). To point at people, use {هٰؤُلَاءِ} (haa’ulaa’i, these).',
-      points: [
-        'Men: add {ـُونَ} (-uuna). {مُدَرِّسٌ} becomes {مُدَرِّسُونَ} (teachers).',
-        'Women: change {ـَةٌ} to {ـَاتٌ} (-aat). {طَالِبَةٌ} becomes {طَالِبَاتٌ} (female students).',
-        'Broken plurals have to be learned word by word: {بَيْتٌ} → {بُيُوتٌ} (houses), {قَلَمٌ} → {أَقْلَامٌ} (pens), {رَجُلٌ} → {رِجَالٌ} (men).',
-        'The plural of a thing is treated as feminine singular: {هٰذِهِ كُتُبٌ} (these are books), not {هٰؤُلَاءِ}.',
-      ],
-    },
-    ur: {
-      title: 'ایک سے زیادہ: جمع اور «یہ سب»', short: 'لاحقے والی جمع، جمع مکسر اور {هٰؤُلَاءِ}۔',
-      intro: 'عربی میں جمع دو طرح بنتی ہے۔ لوگوں کے لیے بہت سے الفاظ پر لاحقہ لگتا ہے: {مُسْلِمٌ} سے {مُسْلِمُونَ} (مسلمان مرد) اور {مُسْلِمَةٌ} سے {مُسْلِمَاتٌ} (مسلمان عورتیں)۔ زیادہ تر دوسرے الفاظ کی اندرونی شکل بدل جاتی ہے: {كِتَابٌ} سے {كُتُبٌ} (کتابیں)۔ لوگوں کی طرف اشارے کے لیے {هٰؤُلَاءِ} (یہ سب) استعمال کریں۔',
-      points: [
-        'مردوں کے لیے {ـُونَ} لگائیں: {مُدَرِّسٌ} سے {مُدَرِّسُونَ} (اساتذہ)۔',
-        'عورتوں کے لیے {ـَةٌ} کو {ـَاتٌ} سے بدلیں: {طَالِبَةٌ} سے {طَالِبَاتٌ} (طالبات)۔',
-        'جمع مکسر لفظ بہ لفظ یاد کرنی پڑتی ہے: {بَيْتٌ} سے {بُيُوتٌ} (گھر)، {قَلَمٌ} سے {أَقْلَامٌ} (قلم)، {رَجُلٌ} سے {رِجَالٌ} (مرد)۔',
-        'بے جان چیزوں کی جمع واحد مؤنث کی طرح استعمال ہوتی ہے: {هٰذِهِ كُتُبٌ} (یہ کتابیں ہیں)، {هٰؤُلَاءِ} نہیں۔',
-      ],
-    },
-    ex: [
-      ['هٰؤُلَاءِ مُسْلِمُونَ', 'haa’ulaa’i muslimuuna', 'These are Muslims.', 'یہ مسلمان ہیں۔'],
-      ['هٰؤُلَاءِ طَالِبَاتٌ', 'haa’ulaa’i ṭaalibaatun', 'These are (female) students.', 'یہ طالبات ہیں۔'],
-      ['الْمُدَرِّسُونَ فِي الْفَصْلِ', 'al-mudarrisuuna fil-faṣli', 'The teachers are in the classroom.', 'اساتذہ کلاس میں ہیں۔'],
-      ['هٰذِهِ كُتُبٌ', 'haadhihi kutubun', 'These are books.', 'یہ کتابیں ہیں۔'],
-      ['الْبُيُوتُ كَبِيرَةٌ', 'al-buyuutu kabiiratun', 'The houses are big.', 'گھر بڑے ہیں۔'],
-      ['أَيْنَ الْأَقْلَامُ؟', 'ayna l-aqlaamu?', 'Where are the pens?', 'قلم کہاں ہیں؟'],
-      ['هٰؤُلَاءِ رِجَالٌ', 'haa’ulaa’i rijaalun', 'These are men.', 'یہ مرد ہیں۔'],
-      ['الْمُسْلِمَاتُ فِي الْمَسْجِدِ', 'al-muslimaatu fil-masjidi', 'The Muslim women are in the mosque.', 'مسلمان خواتین مسجد میں ہیں۔'],
-    ],
-    practice: [
-      { en: 'Make “engineers” (men) from {مُهَنْدِسٌ}.', ur: '{مُهَنْدِسٌ} سے «انجینئر» (مرد، جمع) بنائیں۔', a: 'مُهَنْدِسُونَ', tr: 'muhandisuuna' },
-      { en: 'Make “nurses” (women) from {مُمَرِّضَةٌ}.', ur: '{مُمَرِّضَةٌ} سے «نرسیں» بنائیں۔', a: 'مُمَرِّضَاتٌ', tr: 'mumarriḍaatun' },
-      { en: 'Say “These are houses.”', ur: '«یہ گھر ہیں» کہیں۔', a: 'هٰذِهِ بُيُوتٌ', tr: 'haadhihi buyuutun', noteEn: 'Houses are things, so use {هٰذِهِ}, not {هٰؤُلَاءِ}.', noteUr: 'گھر بے جان چیز ہے، اس لیے {هٰذِهِ} آئے گا، {هٰؤُلَاءِ} نہیں۔' },
-    ],
-  },
-  {
-    slug: 'lesson-11-past-tense', key: 'ذَهَبَ',
-    en: {
-      title: 'Talking about the past: I went, you went', short: 'Past tense verbs and their endings.',
-      intro: 'A past tense verb starts from the “he” form, which is also how dictionaries list verbs: {ذَهَبَ} (dhahaba, he went). To change the person, add an ending: {ذَهَبْتُ} (dhahabtu) is “I went”. The ending already shows who did it, so you usually don’t need a separate word for “I” or “you”.',
-      points: [
-        '{ذَهَبَ} he went · {ذَهَبَتْ} she went · {ذَهَبْتَ} you went (man) · {ذَهَبْتِ} you went (woman) · {ذَهَبْتُ} I went · {ذَهَبْنَا} we went · {ذَهَبُوا} they went',
-        'The verb often comes first in the sentence: {ذَهَبَ الْوَلَدُ إِلَى الْمَدْرَسَةِ} (The boy went to school).',
-        'These verbs work the same way: {خَرَجَ} (went out), {دَخَلَ} (went in), {جَلَسَ} (sat), {كَتَبَ} (wrote), {فَتَحَ} (opened).',
-      ],
-    },
-    ur: {
-      title: 'ماضی کی بات: میں گیا، آپ گئے', short: 'فعل ماضی اور اس کے لاحقے۔',
-      intro: 'فعل ماضی «وہ (مرد)» والی شکل سے شروع ہوتا ہے، اور لغت میں بھی فعل اسی شکل میں ملتا ہے: {ذَهَبَ} (وہ گیا)۔ کرنے والا بدلنے کے لیے آخر میں لاحقہ لگائیں: {ذَهَبْتُ} یعنی «میں گیا»۔ لاحقہ خود بتا دیتا ہے کہ کام کس نے کیا، اس لیے عموماً «میں» یا «آپ» الگ سے کہنے کی ضرورت نہیں ہوتی۔',
-      points: [
-        '{ذَهَبَ} وہ گیا · {ذَهَبَتْ} وہ گئی · {ذَهَبْتَ} آپ گئے (مرد) · {ذَهَبْتِ} آپ گئیں (عورت) · {ذَهَبْتُ} میں گیا · {ذَهَبْنَا} ہم گئے · {ذَهَبُوا} وہ سب گئے',
-        'فعل عموماً جملے کے شروع میں آتا ہے: {ذَهَبَ الْوَلَدُ إِلَى الْمَدْرَسَةِ} (لڑکا اسکول گیا)۔',
-        'یہ فعل بھی اسی طرح چلتے ہیں: {خَرَجَ} (باہر نکلا)، {دَخَلَ} (اندر گیا)، {جَلَسَ} (بیٹھا)، {كَتَبَ} (لکھا)، {فَتَحَ} (کھولا)۔',
-      ],
-    },
-    ex: [
-      ['ذَهَبْتُ إِلَى السُّوقِ', 'dhahabtu ila s-suuqi', 'I went to the market.', 'میں بازار گیا۔'],
-      ['أَيْنَ ذَهَبْتَ؟', 'ayna dhahabta?', 'Where did you go? (to a man)', 'آپ کہاں گئے؟'],
-      ['ذَهَبَتْ فَاطِمَةُ إِلَى الْجَامِعَةِ', 'dhahabat faaṭimatu ila l-jaamiʿati', 'Fatima went to the university.', 'فاطمہ یونیورسٹی گئی۔'],
-      ['خَرَجْنَا مِنَ الْبَيْتِ', 'kharajnaa mina l-bayti', 'We left the house.', 'ہم گھر سے نکلے۔'],
-      ['دَخَلَ الْمُدَرِّسُ الْفَصْلَ', 'dakhala l-mudarrisu l-faṣla', 'The teacher came into the classroom.', 'استاد کلاس میں داخل ہوئے۔'],
-      ['جَلَسْتُ عَلَى الْكُرْسِيِّ', 'jalastu ʿala l-kursiyyi', 'I sat on the chair.', 'میں کرسی پر بیٹھا۔'],
-      ['كَتَبُوا الدَّرْسَ', 'katabu d-darsa', 'They wrote the lesson.', 'انہوں نے سبق لکھا۔'],
-      ['هَلْ فَتَحْتِ الْبَابَ؟', 'hal fataḥti l-baaba?', 'Did you open the door? (to a woman)', 'کیا آپ نے دروازہ کھولا؟ (خاتون سے)'],
-    ],
-    practice: [
-      { en: 'Say “I wrote”.', ur: '«میں نے لکھا» کہیں۔', a: 'كَتَبْتُ', tr: 'katabtu' },
-      { en: 'Say “she sat”.', ur: '«وہ (خاتون) بیٹھی» کہیں۔', a: 'جَلَسَتْ', tr: 'jalasat' },
-      { en: 'Say “We went out.”', ur: '«ہم باہر نکلے» کہیں۔', a: 'خَرَجْنَا', tr: 'kharajnaa' },
-    ],
-  },
-  {
-    slug: 'lesson-12-present-tense', key: 'يَذْهَبُ',
-    en: {
-      title: 'Now and every day: I go, he goes', short: 'Present tense verbs, and how to say “not”.',
-      intro: 'The present tense adds a letter at the front of the verb: {يَذْهَبُ} (yadh-habu) means “he goes” or “he is going”. That first letter tells you who: {أَ} for I, {تَ} for you or she, {يَ} for he, {نَ} for we. To say “not”, put {لَا} (laa) before the verb: {لَا أَفْهَمُ} (I don’t understand).',
-      points: [
-        '{أَذْهَبُ} I go · {تَذْهَبُ} you go (man), she goes · {تَذْهَبِينَ} you go (woman) · {يَذْهَبُ} he goes · {نَذْهَبُ} we go · {يَذْهَبُونَ} they go',
-        'The middle vowel can change between past and present: {كَتَبَ} → {يَكْتُبُ} (writes), {جَلَسَ} → {يَجْلِسُ} (sits), {فَتَحَ} → {يَفْتَحُ} (opens). Learn each verb in both forms.',
-        'Ask yes/no questions with {هَلْ}: {هَلْ تَتَكَلَّمُ الْعَرَبِيَّةَ؟} (Do you speak Arabic?)',
-      ],
-    },
-    ur: {
-      title: 'حال کی بات: میں جاتا ہوں، وہ جاتا ہے', short: 'فعل مضارع، اور «نہیں» کیسے کہیں۔',
-      intro: 'فعل مضارع (حال) میں فعل کے شروع میں ایک حرف لگتا ہے: {يَذْهَبُ} یعنی «وہ جاتا ہے» یا «وہ جا رہا ہے»۔ یہ پہلا حرف بتاتا ہے کہ کون: {أَ} میں، {تَ} آپ یا وہ (عورت)، {يَ} وہ (مرد)، {نَ} ہم۔ «نہیں» کہنے کے لیے فعل سے پہلے {لَا} لگائیں: {لَا أَفْهَمُ} (میں نہیں سمجھتا)۔',
-      points: [
-        '{أَذْهَبُ} میں جاتا ہوں · {تَذْهَبُ} آپ جاتے ہیں (مرد)، وہ جاتی ہے · {تَذْهَبِينَ} آپ جاتی ہیں (عورت) · {يَذْهَبُ} وہ جاتا ہے · {نَذْهَبُ} ہم جاتے ہیں · {يَذْهَبُونَ} وہ سب جاتے ہیں',
-        'ماضی اور مضارع میں درمیانی حرکت بدل سکتی ہے: {كَتَبَ} سے {يَكْتُبُ} (لکھتا ہے)، {جَلَسَ} سے {يَجْلِسُ} (بیٹھتا ہے)، {فَتَحَ} سے {يَفْتَحُ} (کھولتا ہے)۔ ہر فعل دونوں شکلوں میں یاد کریں۔',
-        'ہاں یا نہیں والا سوال {هَلْ} سے پوچھیں: {هَلْ تَتَكَلَّمُ الْعَرَبِيَّةَ؟} (کیا آپ عربی بولتے ہیں؟)',
-      ],
-    },
-    ex: [
-      ['أَذْهَبُ إِلَى الْعَمَلِ', 'adh-habu ila l-ʿamali', 'I go to work.', 'میں کام پر جاتا ہوں۔'],
-      ['يَكْتُبُ الطَّالِبُ الدَّرْسَ', 'yaktubu ṭ-ṭaalibu d-darsa', 'The student is writing the lesson.', 'طالب علم سبق لکھ رہا ہے۔'],
-      ['هِيَ تَدْرُسُ فِي الْجَامِعَةِ', 'hiya tadrusu fil-jaamiʿati', 'She studies at the university.', 'وہ یونیورسٹی میں پڑھتی ہے۔'],
-      ['نَشْرَبُ الشَّايَ', 'nashrabu sh-shaaya', 'We drink tea.', 'ہم چائے پیتے ہیں۔'],
-      ['لَا أَفْهَمُ', 'laa afhamu', 'I don’t understand.', 'میں نہیں سمجھتا۔'],
-      ['هَلْ تَتَكَلَّمُ الْعَرَبِيَّةَ؟', 'hal tatakallamu l-ʿarabiyyata?', 'Do you speak Arabic? (to a man)', 'کیا آپ عربی بولتے ہیں؟'],
-      ['نَعَمْ، أَتَكَلَّمُ قَلِيلًا', 'naʿam, atakallamu qaliilan', 'Yes, I speak a little.', 'جی ہاں، تھوڑی سی بولتا ہوں۔'],
-      ['مَاذَا تَفْعَلُ؟', 'maadhaa tafʿalu?', 'What are you doing? (to a man)', 'آپ کیا کر رہے ہیں؟'],
-    ],
-    practice: [
-      { en: 'Say “I write”.', ur: '«میں لکھتا ہوں» کہیں۔', a: 'أَكْتُبُ', tr: 'aktubu' },
-      { en: 'Say “We don’t understand.”', ur: '«ہم نہیں سمجھتے» کہیں۔', a: 'لَا نَفْهَمُ', tr: 'laa nafhamu' },
-      { en: 'Ask a man “Do you drink coffee?” Coffee is {الْقَهْوَةَ}.', ur: 'کسی مرد سے پوچھیں: «کیا آپ قہوہ پیتے ہیں؟» قہوہ: {الْقَهْوَةَ}۔', a: 'هَلْ تَشْرَبُ الْقَهْوَةَ؟', tr: 'hal tashrabu l-qahwata?' },
-    ],
-  },
 ];
 
 // ---------------------------------------------------------------- interface text
@@ -1032,6 +890,10 @@ function layout(lang, o) {
     .map(([f, k]) => `<a href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${t.nav[k]}</a>`).join('');
   const ads = ADSENSE_CLIENT
     ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n` : '';
+  const verify = GSC_VERIFY ? `<meta name="google-site-verification" content="${esc(GSC_VERIFY)}">\n` : '';
+  const analytics = GA_ID
+    ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');</script>\n` : '';
   return `<!DOCTYPE html>
 <html lang="${lang}" dir="${t.dir}">
 <head>
@@ -1054,7 +916,7 @@ function layout(lang, o) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${esc(FONTS[lang])}">
 <link rel="stylesheet" href="style.css">
-${ads}</head>
+${verify}${analytics}${ads}</head>
 <body>
 <a class="skip" href="#main">${t.skip}</a>
 <header class="top">
@@ -1110,7 +972,6 @@ function homePage(lang) {
     insideH: 'یہاں آپ کیا سیکھیں گے',
     cards: [
       ['alphabet.html', 'حروفِ تہجی', `تمام ${n(28)} حروف، ان کی چاروں شکلیں، تلفظ کی رہنمائی اور ہر حرف کی ایک مثال۔`],
-      ['writing.html', 'لکھنے کی مشق', 'ہر حرف اسکرین پر انگلی سے لکھیں، یا مفت ورک شیٹس پرنٹ کریں۔'],
       ['lessons.html', 'گرامر کے اسباق', `${n(LESSONS.length)} مختصر اسباق، پہلے جملے سے اپنے بارے میں بات کرنے تک۔`],
       ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے رنگوں تک، فلیش کارڈز کے ساتھ۔`],
       ['quran.html', 'قرآنی عربی', `سورہ فاتحہ اور ${n(SURAHS.length - 1)} مختصر سورتیں لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
@@ -1137,7 +998,6 @@ function homePage(lang) {
     insideH: 'What you can learn here',
     cards: [
       ['alphabet.html', 'Alphabet', 'All 28 letters with their four shapes, pronunciation tips and an example word for each.'],
-      ['writing.html', 'Writing practice', 'Trace every letter on screen with your finger, or print free tracing worksheets.'],
       ['lessons.html', 'Grammar lessons', `${LESSONS.length} short lessons, from your first sentence to talking about yourself.`],
       ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to colours, with flashcards.`],
       ['quran.html', 'Quranic Arabic', `Al-Fatiha and ${SURAHS.length - 1} short surahs word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
@@ -1228,7 +1088,6 @@ function alphabetPage(lang) {
 <div class="letters">
     ${grid}
 </div>
-<p><a class="btn" href="${link(lang, 'writing.html')}">${ur ? '🖨 حروف لکھنے کی مفت ورک شیٹس' : '🖨 Free printable tracing worksheets'}</a></p>
 ${C.diff ? `<section><h2>${C.diffH}</h2><p class="prose">${fmt(C.diff)}</p></section>` : ''}
 <section><h2>${C.joinH}</h2><p class="prose">${fmt(C.join)}</p></section>
 <section><h2>${C.likeH}</h2><p class="prose">${C.like}</p><ul class="groups">${groups}</ul></section>
@@ -1300,15 +1159,6 @@ function letterPage(lang, i) {
   <div class="forms">${forms.map((f, k) => `<div><span class="ar" lang="ar">${f}</span><small>${labels[k]}</small></div>`).join('')}</div>
   <p class="note">${C.join}</p>
 </section>
-<section>
-  <h2>${ur ? 'لکھنے کی مشق' : 'Practise writing'}</h2>
-  <p class="note">${ur ? 'سرمئی حرف کے اوپر انگلی یا ماؤس سے لکھیں۔ عربی دائیں سے بائیں لکھی جاتی ہے۔' : 'Trace over the grey letter with your finger or mouse. Arabic is written from right to left.'}</p>
-  <div class="trace" data-forms="${esc(forms.join('|'))}">
-    <div class="chips" role="group" aria-label="${C.formsH}">${labels.map((l, k) => `<button class="chip" type="button" data-f="${k}" aria-pressed="${k === 0}">${l}</button>`).join('')}</div>
-    <canvas class="pad" aria-label="${ur ? 'لکھنے کی جگہ' : 'Writing pad'}"></canvas>
-    <div class="row"><button class="btn" type="button" data-act="clear">${ur ? 'صاف کریں' : 'Clear'}</button><button class="btn" type="button" data-act="guide" aria-pressed="true">${ur ? 'رہنما حرف چھپائیں' : 'Hide guide'}</button><a class="btn" href="${link(lang, 'writing.html')}?l=${x.slug}">${ur ? '🖨 پرنٹ کے لیے ورک شیٹ' : '🖨 Printable worksheet'}</a></div>
-  </div>
-</section>
 <div class="facts">
   <div class="fact"><h3>${C.dotsH}</h3><p>${dotsText(lang, x.dots)}</p></div>
   <div class="fact"><h3>${C.simH}</h3><p>${simHtml}</p></div>
@@ -1321,50 +1171,16 @@ function letterPage(lang, i) {
   return layout(lang, { file: 'letter-' + x.slug + '.html', section: 'alphabet', title: C.title, desc: C.desc, body });
 }
 
-function writingPage(lang) {
-  const ur = lang === 'ur';
-  const lab = ur ? ['اکیلا', 'شروع میں', 'درمیان میں', 'آخر میں', 'اکیلا / شروع میں', 'آخر / درمیان میں'] : ['Alone', 'Start', 'Middle', 'End', 'Alone / start', 'End / middle'];
-  const sections = LETTERS.map((x) => {
-    const forms = x.joins ? [[x.c, lab[0]], [x.c + TW, lab[1]], [TW + x.c + TW, lab[2]], [TW + x.c, lab[3]]] : [[x.c, lab[4]], [TW + x.c, lab[5]]];
-    const rows = forms.map(([f, l], k) => `<div class="ws-row f${k}"><span class="ws-label">${l}</span><div class="ws-cells" dir="rtl"><span class="ws-model ar" lang="ar">${f}</span>${`<span class="ws-trace ar" lang="ar">${f}</span>`.repeat(6)}</div></div>`).join('');
-    return `<section class="ws" data-slug="${x.slug}"><h2 class="ws-h"><span class="ar" lang="ar">${x.c}</span> ${letterName(lang, x)}</h2>${rows}</section>`;
-  }).join('\n');
-  const opts = LETTERS.map((x) => `<option value="${x.slug}">${x.c}  ${letterName(lang, x)}</option>`).join('');
-  const C = ur ? {
-    title: 'عربی حروف لکھنے کی مشق: مفت پرنٹ ایبل ورک شیٹس | حرف', desc: 'عربی حروفِ تہجی کی مفت ٹریسنگ ورک شیٹس: پورے حروف یا کسی ایک حرف کی چاروں شکلیں پرنٹ کریں۔ بچوں اور بڑوں دونوں کے لیے۔',
-    h1: 'عربی حروف لکھنے کی ورک شیٹس',
-    lead: 'یہ صفحہ پرنٹ کریں اور سرمئی حروف کے اوپر قلم سے لکھیں۔ ہر سطر میں پہلا (گہرا) حرف نمونہ ہے؛ عربی دائیں سے بائیں لکھی جاتی ہے۔ کوئی ایک حرف چنیں تو اس کی چاروں شکلوں کی مشق ملے گی۔',
-    pick: 'حرف', all: 'تمام حروف', print: '🖨 پرنٹ کریں', screen: 'اسکرین پر لکھنے کی مشق کے لیے کسی بھی حرف کا صفحہ کھولیں۔',
-  } : {
-    title: 'Arabic alphabet tracing worksheets: free and printable | Harf', desc: 'Free Arabic alphabet tracing worksheets. Print the whole alphabet, or all four shapes of one letter. For children and adults.',
-    h1: 'Arabic letter tracing worksheets',
-    lead: 'Print this page and trace over the grey letters with a pen. The first, darker letter in each row is the model; Arabic is written from right to left. Pick one letter to practise all four of its shapes.',
-    pick: 'Letter', all: 'All letters', print: '🖨 Print', screen: 'To practise on screen, open any letter’s page and trace with your finger.',
-  };
-  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['alphabet.html', T[lang].nav.alphabet], [null, ur ? 'لکھنے کی مشق' : 'Writing practice']])}
-<h1>${C.h1}</h1>
-<p class="lead no-print">${C.lead}</p>
-<div class="row no-print ws-controls">
-  <label>${C.pick} <select id="wsel"><option value="">${C.all}</option>${opts}</select></label>
-  <button class="btn primary" type="button" id="wprint">${C.print}</button>
-</div>
-<p class="note no-print">${C.screen}</p>
-<div id="ws" class="ws-all">
-${sections}
-</div>`;
-  return layout(lang, { file: 'writing.html', section: 'alphabet', title: C.title, desc: C.desc, body });
-}
-
 function lessonsPage(lang) {
   const ur = lang === 'ur';
   const list = LESSONS.map((l, i) => `<li><a href="${link(lang, l.slug + '.html')}"><span class="num">${num(lang, i + 1)}</span><span><strong>${fmt(l[lang].title)}</strong><p>${fmt(l[lang].short)}</p></span><span class="ar" lang="ar">${l.key}</span></a></li>`).join('\n  ');
   const C = ur ? {
-    title: 'ابتدائی عربی گرامر کے اسباق | حرف', desc: `اردو میں عربی گرامر کے ${ud(LESSONS.length)} ابتدائی اسباق: هٰذَا، الـ، حروفِ جر، مذکر و مؤنث، اضافت، ضمیریں، صفت، جمع، ماضی اور مضارع، مثالوں اور آواز کے ساتھ۔`,
+    title: 'ابتدائی عربی گرامر کے اسباق | حرف', desc: 'اردو میں عربی گرامر کے آٹھ ابتدائی اسباق: هٰذَا، الـ، حروفِ جر، مذکر و مؤنث، اضافت اور ضمیریں، مثالوں اور آواز کے ساتھ۔',
     h1: 'ابتدائی عربی گرامر کے اسباق',
     lead: `${num(lang, LESSONS.length)} مختصر اسباق جو آپ کو پہلے جملے سے اپنے بارے میں بات کرنے تک لے جاتے ہیں۔ ان کی ترتیب غیر عرب طلبہ کے کلاسیکی نصاب، جیسے مدینہ یونیورسٹی کی مشہور کتب، کے انداز پر ہے: ایک وقت میں ایک قاعدہ، اور بہت سی مثالیں۔`,
     first: 'ابھی حروف نہیں پہچانتے؟ پہلے حروفِ تہجی سیکھ لیں۔',
   } : {
-    title: 'Arabic grammar lessons for beginners | Harf', desc: `${LESSONS.length} beginner Arabic grammar lessons: this and that, al-, prepositions, masculine and feminine, possession, pronouns, adjectives, plurals and past and present verbs, with examples and audio.`,
+    title: 'Arabic grammar lessons for beginners | Harf', desc: 'Eight beginner Arabic grammar lessons: this and that, al-, prepositions, masculine and feminine, possession and pronouns, with examples and audio.',
     h1: 'Arabic grammar lessons for beginners',
     lead: `${LESSONS.length} short lessons that take you from your first sentence to talking about yourself. They follow the step-by-step order of classic courses for non-Arabic speakers, such as the well-known Madinah books: one small pattern at a time, with plenty of examples.`,
     first: 'Can’t read the letters yet? Start with the alphabet.',
@@ -1800,6 +1616,8 @@ function privacyPage(lang) {
 <p>تلفظ آپ کے آلے کی اپنی ٹیکسٹ ٹو اسپیچ آواز سے چلایا جاتا ہے۔ کوئی آواز یا متن ہمیں نہیں بھیجا جاتا۔</p>
 <h2>ہم کون سی سروسز استعمال کرتے ہیں</h2>
 <p>یہ ویب سائٹ GitHub Pages پر ہوسٹ ہے، جو سیکیورٹی کے لیے آپ کا IP ایڈریس جیسی تکنیکی معلومات ریکارڈ کر سکتا ہے۔ فونٹس Google Fonts سے لوڈ ہوتے ہیں، جسے صفحہ کھلنے پر آپ کا IP ایڈریس ملتا ہے۔ تفصیل کے لیے GitHub اور Google کی رازداری کی پالیسیاں دیکھیں۔</p>
+<h2>وزٹرز کے اعداد و شمار</h2>
+<p>حرف وزٹس گننے اور یہ جاننے کے لیے کہ کون سے صفحات زیادہ مفید ہیں، Google Analytics استعمال کرتا ہے۔ یہ کوکیز کے ذریعے دیکھے گئے صفحات، آپ کا اندازاً مقام اور آلے کی قسم جیسی معلومات جمع کرتا ہے۔ ان معلومات سے آپ کی شناخت نہیں کی جاتی۔ آپ اسے <a href="https://tools.google.com/dlpage/gaoptout">Google Analytics opt-out add-on</a> یا براؤزر کی سیٹنگز سے روک سکتے ہیں۔</p>
 <h2>اشتہارات</h2>
 <p>حرف پر Google AdSense کے اشتہارات دکھائے جا سکتے ہیں۔ Google سمیت تیسرے فریق کے ادارے کوکیز استعمال کرتے ہیں تاکہ اس ویب سائٹ اور دوسری ویب سائٹس پر آپ کے پچھلے وزٹس کی بنیاد پر اشتہارات دکھائیں۔ Google کی اشتہاری کوکیز اسے اور اس کے شراکت داروں کو یہ سہولت دیتی ہیں۔ آپ <a href="${ADS}">Google کی اشتہاری سیٹنگز</a> میں ذاتی نوعیت کے اشتہارات بند کر سکتے ہیں، اور <a href="https://www.aboutads.info">aboutads.info</a> پر مزید جان سکتے ہیں۔ Google ہماری جیسی ویب سائٹس سے ملنے والا ڈیٹا کیسے استعمال کرتا ہے، یہ <a href="${PARTNER}">یہاں</a> پڑھیں۔</p>
 <h2>بچے</h2>
@@ -1817,6 +1635,8 @@ function privacyPage(lang) {
 <p>Pronunciation is played by your device’s built-in text-to-speech voice. No audio or text is sent to us.</p>
 <h2>Services we use</h2>
 <p>The site is hosted on GitHub Pages, which may record technical data such as your IP address for security. Fonts are loaded from Google Fonts, which receives your IP address when a page loads. See the GitHub and Google privacy policies for details.</p>
+<h2>Visitor statistics</h2>
+<p>Harf uses Google Analytics to count visits and see which pages are most useful. It uses cookies to collect information such as the pages you view, your approximate location and the type of device you use. This information is not used to identify you. You can block it with the <a href="https://tools.google.com/dlpage/gaoptout">Google Analytics opt-out add-on</a> or your browser settings.</p>
 <h2>Advertising</h2>
 <p>Harf may show ads from Google AdSense. Third-party vendors, including Google, use cookies to serve ads based on your previous visits to this website and other websites. Google’s use of advertising cookies enables it and its partners to serve ads to you based on those visits. You can opt out of personalised advertising in <a href="${ADS}">Google’s Ads Settings</a>, and learn more at <a href="https://www.aboutads.info">aboutads.info</a>. Read <a href="${PARTNER}">how Google uses data from sites that use its services</a>.</p>
 <h2>Children</h2>
@@ -2069,29 +1889,6 @@ html[lang="ur"] .w .m{line-height:2}
 .pw .tr{color:var(--gold);font-weight:600;line-height:1.6}
 .pw .mean{margin-bottom:6px}
 
-.pad{display:block;width:100%;max-width:560px;height:260px;background:var(--surface);border:1px solid var(--line);border-radius:14px;touch-action:none;cursor:crosshair;margin:4px 0 12px}
-.ws-controls select{font:inherit;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);margin-inline-start:6px}
-.ws{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 14px 10px;margin:0 0 10px;break-inside:avoid}
-.ws-h{font-size:17px;margin:0}
-.ws-h .ar{font-size:24px;color:var(--accent)}
-.ws-row{display:flex;align-items:center;gap:10px;border-bottom:1.5px dashed var(--line)}
-.ws-label{width:92px;flex:none;font-size:12px;color:var(--muted);line-height:1.5}
-.ws-cells{display:flex;flex-wrap:wrap;gap:4px 10px;flex:1}
-.ws-model,.ws-trace{font-size:52px;line-height:1.55;min-width:58px;text-align:center}
-.ws-model{color:var(--ink)}
-.ws-trace{color:#c3cbc7;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.ws-all .ws-row:not(.f0){display:none}
-#ws.one .ws{display:none}
-#ws.one .ws.on{display:block}
-#ws.one .ws-row{min-height:96px}
-@media print{
-  header.top,footer,.no-print,.crumbs,.toast,.skip{display:none!important}
-  body{background:#fff;color:#000}
-  main.wrap{padding:0;max-width:none}
-  h1{font-size:22px}
-  .ws{border:0;border-bottom:1px solid #ccc;border-radius:0;padding:4px 0}
-}
-
 footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--muted);font-size:14px}
 .foot p{margin:0 0 6px}
 .foot-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px}
@@ -2129,7 +1926,7 @@ const APP_JS = String.raw`(function () {
     learned: '✓ سیکھ لیا', markLearned: 'سیکھ لیا؟ نشان لگائیں',
     known: '✓ یاد ہے', markKnown: 'یاد ہے؟ نشان لگائیں',
     score: 'اسکور', next: 'اگلا ←', finished: 'مکمل', youScored: 'آپ کا اسکور',
-    again: 'نیا سیٹ', question: 'سوال', hideGuide: 'رہنما حرف چھپائیں', showGuide: 'رہنما حرف دکھائیں',
+    again: 'نیا سیٹ', question: 'سوال',
     q1: 'یہ کون سا حرف ہے؟', q2: 'یہ حرف تلاش کریں:', q3: 'اس کا مطلب کیا ہے؟', q4: 'اسے عربی میں کیسے کہیں گے؟',
     great: 'بہت خوب! اب کوئی نیا موضوع آزمائیں۔', good: 'اچھی پیش رفت۔ فلیش کارڈز دہرائیں اور دوبارہ کوشش کریں۔', keep: 'ہمت نہ ہاریں۔ حروف دہرائیں اور پھر کوشش کریں۔'
   } : {
@@ -2138,7 +1935,7 @@ const APP_JS = String.raw`(function () {
     learned: '✓ Learned', markLearned: 'Mark as learned',
     known: '✓ Known', markKnown: 'Mark as known',
     score: 'Score', next: 'Next →', finished: 'Finished', youScored: 'You scored',
-    again: 'Try another set', question: 'Question', hideGuide: 'Hide guide', showGuide: 'Show guide',
+    again: 'Try another set', question: 'Question',
     q1: 'Which letter is this?', q2: 'Find the letter called…', q3: 'What does this mean?', q4: 'How do you say this in Arabic?',
     great: 'Excellent work. Try a new topic next.', good: 'Good progress. Review the flashcards and go again.', keep: 'Keep going. Practise the alphabet, then try again.'
   };
@@ -2228,57 +2025,6 @@ const APP_JS = String.raw`(function () {
     render();
   }
 
-
-  var trc = $('.trace');
-  if (trc) {
-    var forms = trc.getAttribute('data-forms').split('|'), fi = 0, guide = true, strokes = [], cur = null;
-    var cv = $('canvas', trc), cx = cv.getContext('2d');
-    var cssv = function (n) { return getComputedStyle(doc.documentElement).getPropertyValue(n).trim(); };
-    var draw = function () {
-      var w = cv.clientWidth, h = cv.clientHeight, base = h * 0.68;
-      cx.clearRect(0, 0, w, h);
-      cx.strokeStyle = cssv('--line'); cx.lineWidth = 1.5; cx.setLineDash([6, 6]);
-      cx.beginPath(); cx.moveTo(10, base); cx.lineTo(w - 10, base); cx.stroke(); cx.setLineDash([]);
-      if (guide) { cx.fillStyle = cssv('--line'); cx.font = Math.round(h * 0.72) + 'px "Noto Naskh Arabic", serif'; cx.textAlign = 'center'; try { cx.direction = 'rtl'; } catch (e) {} cx.fillText(forms[fi], w / 2, base); }
-      cx.strokeStyle = cssv('--accent'); cx.lineWidth = Math.max(6, h / 32); cx.lineCap = 'round'; cx.lineJoin = 'round';
-      strokes.forEach(function (st) { cx.beginPath(); cx.moveTo(st[0][0], st[0][1]); for (var i = 1; i < st.length; i++) cx.lineTo(st[i][0], st[i][1]); if (st.length === 1) cx.lineTo(st[0][0] + 0.1, st[0][1]); cx.stroke(); });
-    };
-    var fit = function () { var r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1; cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); cx.setTransform(d, 0, 0, d, 0, 0); draw(); };
-    var pos = function (e) { var r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-    cv.addEventListener('pointerdown', function (e) { e.preventDefault(); cur = [pos(e)]; strokes.push(cur); try { cv.setPointerCapture(e.pointerId); } catch (x) {} draw(); });
-    cv.addEventListener('pointermove', function (e) { if (!cur) return; cur.push(pos(e)); draw(); });
-    var stop = function () { cur = null; };
-    cv.addEventListener('pointerup', stop); cv.addEventListener('pointercancel', stop);
-    $$('[data-f]', trc).forEach(function (b) {
-      b.addEventListener('click', function () {
-        fi = +b.getAttribute('data-f'); strokes = [];
-        $$('[data-f]', trc).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-        draw();
-      });
-    });
-    $('[data-act="clear"]', trc).addEventListener('click', function () { strokes = []; draw(); });
-    var gb = $('[data-act="guide"]', trc);
-    gb.addEventListener('click', function () { guide = !guide; gb.textContent = guide ? S.hideGuide : S.showGuide; gb.setAttribute('aria-pressed', guide ? 'true' : 'false'); draw(); });
-    window.addEventListener('resize', fit);
-    fit();
-    try { doc.fonts.load('100px "Noto Naskh Arabic"').then(draw); } catch (e) {}
-  }
-
-  var wsel = $('#wsel');
-  if (wsel) {
-    var wbox = $('#ws');
-    var showWs = function (v) {
-      wbox.className = v ? 'one' : 'ws-all';
-      $$('.ws', wbox).forEach(function (sec) { sec.classList.toggle('on', sec.getAttribute('data-slug') === v); });
-      try { history.replaceState(null, '', v ? '?l=' + v : location.pathname); } catch (e) {}
-    };
-    var wm = /[?&]l=([a-z]+)/.exec(location.search);
-    if (wm && $('.ws[data-slug="' + wm[1] + '"]')) wsel.value = wm[1];
-    showWs(wsel.value);
-    wsel.addEventListener('change', function () { showWs(wsel.value); });
-    $('#wprint').addEventListener('click', function () { window.print(); });
-  }
-
   var qb = $('#quizbox');
   if (qb) {
     var data = JSON.parse($('#quiz-data').textContent);
@@ -2352,7 +2098,6 @@ function build() {
     add(lang, 'index.html', homePage(lang));
     add(lang, 'alphabet.html', alphabetPage(lang));
     LETTERS.forEach((x, i) => add(lang, 'letter-' + x.slug + '.html', letterPage(lang, i)));
-    add(lang, 'writing.html', writingPage(lang));
     add(lang, 'lessons.html', lessonsPage(lang));
     LESSONS.forEach((l, i) => add(lang, l.slug + '.html', lessonPage(lang, i)));
     add(lang, 'vocabulary.html', vocabularyPage(lang));
