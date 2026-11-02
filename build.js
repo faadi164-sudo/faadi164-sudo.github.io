@@ -1054,6 +1054,438 @@ const LESSONS = [
       { en: 'Ask a man “Do you drink coffee?” Coffee is {الْقَهْوَةَ}.', ur: 'کسی مرد سے پوچھیں: «کیا آپ قہوہ پیتے ہیں؟» قہوہ: {الْقَهْوَةَ}۔', a: 'هَلْ تَشْرَبُ الْقَهْوَةَ؟', tr: 'hal tashrabu l-qahwata?' },
     ],
   },
+  {
+    slug: 'lesson-13-i-have', key: 'عِنْدِي',
+    en: {
+      title: 'Having things: I have, you have', short: '{عِنْدَ} and {مَعَ} with the endings from Lesson 8.',
+      intro: 'Arabic has no verb “to have”. Instead you say “at me is…”: {عِنْدِي كِتَابٌ} (ʿindii kitaabun) means “I have a book”. Add the endings you learned in Lesson 8 to {عِنْدَ} (ʿinda, at) to change the person.',
+      points: [
+        '{عِنْدِي} I have · {عِنْدَكَ} you have (man) · {عِنْدَكِ} you have (woman) · {عِنْدَهُ} he has · {عِنْدَهَا} she has · {عِنْدَنَا} we have',
+        'Use {مَعِي} (maʿii, with me) for something you are carrying right now: {مَعِي قَلَمٌ} (I have a pen on me).',
+        'Ask with {هَلْ}: {هَلْ عِنْدَكَ سَيَّارَةٌ؟} (Do you have a car?). Say “I don’t have” with {لَيْسَ}: {لَيْسَ عِنْدِي سَيَّارَةٌ}. The next lesson explains {لَيْسَ}.',
+      ],
+    },
+    ur: {
+      title: 'میرے پاس ہے: ملکیت کا اظہار', short: '{عِنْدَ} اور {مَعَ} کے ساتھ سبق ۸ والے لاحقے۔',
+      intro: 'عربی میں «پاس ہونا» کے لیے کوئی فعل نہیں۔ اس کے بجائے کہتے ہیں «میرے پاس ہے»: {عِنْدِي كِتَابٌ} یعنی «میرے پاس ایک کتاب ہے»۔ سبق ۸ والے لاحقے {عِنْدَ} (پاس) کے ساتھ لگا کر شخص بدلیں۔',
+      points: [
+        '{عِنْدِي} میرے پاس · {عِنْدَكَ} آپ کے پاس (مرد) · {عِنْدَكِ} آپ کے پاس (عورت) · {عِنْدَهُ} اس کے پاس (مرد) · {عِنْدَهَا} اس کے پاس (عورت) · {عِنْدَنَا} ہمارے پاس',
+        'جو چیز اس وقت آپ کے ساتھ ہو اس کے لیے {مَعِي} (میرے ساتھ) کہیں: {مَعِي قَلَمٌ} (اس وقت میرے پاس قلم ہے)۔',
+        '{هَلْ} سے پوچھیں: {هَلْ عِنْدَكَ سَيَّارَةٌ؟} (کیا آپ کے پاس گاڑی ہے؟)۔ «نہیں ہے» کے لیے {لَيْسَ} لگائیں: {لَيْسَ عِنْدِي سَيَّارَةٌ}۔ {لَيْسَ} اگلے سبق میں تفصیل سے آئے گا۔',
+      ],
+    },
+    ex: [
+      ['عِنْدِي كِتَابٌ جَدِيدٌ', 'ʿindii kitaabun jadiidun', 'I have a new book.', 'میرے پاس ایک نئی کتاب ہے۔'],
+      ['هَلْ عِنْدَكَ سَيَّارَةٌ؟', 'hal ʿindaka sayyaaratun?', 'Do you have a car? (to a man)', 'کیا آپ کے پاس گاڑی ہے؟'],
+      ['نَعَمْ، عِنْدِي سَيَّارَةٌ', 'naʿam, ʿindii sayyaaratun', 'Yes, I have a car.', 'جی ہاں، میرے پاس گاڑی ہے۔'],
+      ['عِنْدَهُ أَخٌ وَأُخْتٌ', 'ʿindahuu akhun wa-ukhtun', 'He has a brother and a sister.', 'اس کا ایک بھائی اور ایک بہن ہے۔'],
+      ['عِنْدَهَا اجْتِمَاعٌ الْيَوْمَ', 'ʿindahaa ijtimaaʿun al-yawma', 'She has a meeting today.', 'آج اس کی میٹنگ ہے۔'],
+      ['عِنْدَنَا ضُيُوفٌ', 'ʿindanaa ḍuyuufun', 'We have guests.', 'ہمارے ہاں مہمان آئے ہیں۔'],
+      ['مَعِي قَلَمٌ، تَفَضَّلْ', 'maʿii qalamun, tafaḍḍal', 'I have a pen on me. Here you are.', 'میرے پاس قلم ہے، یہ لیجیے۔'],
+      ['لَيْسَ عِنْدِي وَقْتٌ', 'laysa ʿindii waqtun', 'I don’t have time.', 'میرے پاس وقت نہیں ہے۔'],
+    ],
+    practice: [
+      { en: 'Say “I have a question.” Question is {سُؤَالٌ}.', ur: '«میرا ایک سوال ہے» کہیں۔ سوال: {سُؤَالٌ}۔', a: 'عِنْدِي سُؤَالٌ', tr: 'ʿindii su’aalun' },
+      { en: 'Ask a woman “Do you have a car?”', ur: 'کسی خاتون سے پوچھیں: «کیا آپ کے پاس گاڑی ہے؟»', a: 'هَلْ عِنْدَكِ سَيَّارَةٌ؟', tr: 'hal ʿindaki sayyaaratun?' },
+      { en: 'Say “We have a big house.”', ur: '«ہمارے پاس ایک بڑا گھر ہے» کہیں۔', a: 'عِنْدَنَا بَيْتٌ كَبِيرٌ', tr: 'ʿindanaa baytun kabiirun' },
+    ],
+  },
+  {
+    slug: 'lesson-14-laysa', key: 'لَيْسَ',
+    en: {
+      title: 'Saying “is not”', short: 'Make a sentence negative with {لَيْسَ}.',
+      intro: 'To say that something is not so, put {لَيْسَ} (laysa, is not) at the front of the sentence: {الْبَيْتُ كَبِيرٌ} (the house is big) becomes {لَيْسَ الْبَيْتُ كَبِيرًا} (the house is not big). Notice that the ending of the describing word changes from -un to -an.',
+      points: [
+        '{لَيْسَ} changes with the person: {لَسْتُ} I am not · {لَسْتَ} you are not (man) · {لَسْتِ} you are not (woman) · {لَيْسَ} he is not · {لَيْسَتْ} she is not · {لَسْنَا} we are not',
+        'After {لَيْسَ} the describing word ends in -an: {لَسْتُ طَبِيبًا} (I am not a doctor). Words with {ـة} end in -atan: {لَيْسَتْ مَرِيضَةً} (she is not ill).',
+        'Before “at”, “in” or “with” nothing changes: {لَيْسَ عِنْدِي وَقْتٌ} (I don’t have time), {لَيْسَ فِي الْبَيْتِ} (he is not at home).',
+      ],
+    },
+    ur: {
+      title: '«نہیں ہے» کہنا', short: '{لَيْسَ} سے جملے کو منفی بنائیں۔',
+      intro: 'کسی بات کی نفی کے لیے جملے کے شروع میں {لَيْسَ} (نہیں ہے) لگائیں: {الْبَيْتُ كَبِيرٌ} (گھر بڑا ہے) سے {لَيْسَ الْبَيْتُ كَبِيرًا} (گھر بڑا نہیں ہے)۔ دیکھیں کہ صفت کے آخر میں دو پیش کی جگہ دو زبر آ گئے۔',
+      points: [
+        '{لَيْسَ} شخص کے ساتھ بدلتا ہے: {لَسْتُ} میں نہیں ہوں · {لَسْتَ} آپ نہیں ہیں (مرد) · {لَسْتِ} آپ نہیں ہیں (عورت) · {لَيْسَ} وہ نہیں ہے (مرد) · {لَيْسَتْ} وہ نہیں ہے (عورت) · {لَسْنَا} ہم نہیں ہیں',
+        '{لَيْسَ} کے بعد صفت پر دو زبر آتے ہیں: {لَسْتُ طَبِيبًا} (میں ڈاکٹر نہیں ہوں)۔ {ـة} والے الفاظ میں بھی: {لَيْسَتْ مَرِيضَةً} (وہ بیمار نہیں ہے)۔',
+        '«پاس»، «میں» یا «ساتھ» سے پہلے کچھ نہیں بدلتا: {لَيْسَ عِنْدِي وَقْتٌ} (میرے پاس وقت نہیں)، {لَيْسَ فِي الْبَيْتِ} (وہ گھر پر نہیں ہے)۔',
+      ],
+    },
+    ex: [
+      ['لَيْسَ الْبَيْتُ كَبِيرًا', 'laysa l-baytu kabiiran', 'The house is not big.', 'گھر بڑا نہیں ہے۔'],
+      ['لَسْتُ مُدَرِّسًا', 'lastu mudarrisan', 'I am not a teacher.', 'میں استاد نہیں ہوں۔'],
+      ['لَيْسَتْ هٰذِهِ سَيَّارَتِي', 'laysat haadhihi sayyaaratii', 'This is not my car.', 'یہ میری گاڑی نہیں ہے۔'],
+      ['الْمُدِيرُ لَيْسَ فِي الْمَكْتَبِ', 'al-mudiiru laysa fil-maktabi', 'The manager is not in the office.', 'منیجر دفتر میں نہیں ہیں۔'],
+      ['لَسْنَا مُتْعَبِينَ', 'lasnaa mutʿabiina', 'We are not tired.', 'ہم تھکے ہوئے نہیں ہیں۔'],
+      ['هَلْ أَنْتَ مَرِيضٌ؟ لَا، لَسْتُ مَرِيضًا', 'hal anta mariiḍun? laa, lastu mariiḍan', 'Are you ill? No, I am not ill.', 'کیا آپ بیمار ہیں؟ نہیں، میں بیمار نہیں ہوں۔'],
+      ['لَيْسَتِ الْقَهْوَةُ حَارَّةً', 'laysati l-qahwatu ḥaarratan', 'The coffee is not hot.', 'قہوہ گرم نہیں ہے۔'],
+      ['لَيْسَ عِنْدَنَا خُبْزٌ', 'laysa ʿindanaa khubzun', 'We don’t have any bread.', 'ہمارے پاس روٹی نہیں ہے۔'],
+    ],
+    practice: [
+      { en: 'Say “I am not a student.”', ur: '«میں طالب علم نہیں ہوں» کہیں۔', a: 'لَسْتُ طَالِبًا', tr: 'lastu ṭaaliban' },
+      { en: 'Make this negative: {الْمَاءُ بَارِدٌ}', ur: 'اسے منفی بنائیں: {الْمَاءُ بَارِدٌ}', a: 'لَيْسَ الْمَاءُ بَارِدًا', tr: 'laysa l-maa’u baaridan', noteEn: '{بَارِدٌ} becomes {بَارِدًا} after {لَيْسَ}.', noteUr: '{لَيْسَ} کے بعد {بَارِدٌ} سے {بَارِدًا} بن جاتا ہے۔' },
+      { en: 'Say “She is not at home.”', ur: '«وہ (خاتون) گھر پر نہیں ہے» کہیں۔', a: 'لَيْسَتْ فِي الْبَيْتِ', tr: 'laysat fil-bayti' },
+    ],
+  },
+  {
+    slug: 'lesson-15-dual', key: 'كِتَابَانِ',
+    en: {
+      title: 'Two of something: the dual', short: 'Arabic has a special form for exactly two.',
+      intro: 'Arabic has a form just for two things. Add {ـَانِ} (-aani) to the word: {كِتَابٌ} (a book) becomes {كِتَابَانِ} (two books). For words ending in {ـة}, it turns into an ordinary {ت}: {سَيَّارَةٌ} becomes {سَيَّارَتَانِ} (two cars). You don’t need the word for “two”.',
+      points: [
+        'Point at two with {هٰذَانِ} (these two, masculine) and {هَاتَانِ} (these two, feminine): {هٰذَانِ قَلَمَانِ} (These are two pens).',
+        'After {فِي}, {عَلَى}, {مِنْ} and other little words, {ـَانِ} becomes {ـَيْنِ} (-ayni): {فِي الْبَيْتَيْنِ} (in the two houses).',
+        'Describing words take the same ending: {وَلَدَانِ صَغِيرَانِ} (two small boys).',
+      ],
+    },
+    ur: {
+      title: 'دو چیزیں: تثنیہ', short: 'عربی میں ٹھیک دو کے لیے الگ شکل ہوتی ہے۔',
+      intro: 'عربی میں دو چیزوں کے لیے الگ شکل ہے جسے تثنیہ کہتے ہیں۔ لفظ کے آخر میں {ـَانِ} لگائیں: {كِتَابٌ} (ایک کتاب) سے {كِتَابَانِ} (دو کتابیں)۔ {ـة} والے الفاظ میں {ة} عام {ت} بن جاتی ہے: {سَيَّارَةٌ} سے {سَيَّارَتَانِ} (دو گاڑیاں)۔ «دو» کا لفظ الگ سے کہنے کی ضرورت نہیں۔',
+      points: [
+        'دو کی طرف اشارے کے لیے {هٰذَانِ} (یہ دونوں، مذکر) اور {هَاتَانِ} (یہ دونوں، مؤنث): {هٰذَانِ قَلَمَانِ} (یہ دو قلم ہیں)۔',
+        '{فِي}، {عَلَى}، {مِنْ} جیسے چھوٹے الفاظ کے بعد {ـَانِ} کی جگہ {ـَيْنِ} آتا ہے: {فِي الْبَيْتَيْنِ} (دونوں گھروں میں)۔',
+        'صفت پر بھی یہی لاحقہ لگتا ہے: {وَلَدَانِ صَغِيرَانِ} (دو چھوٹے لڑکے)۔',
+      ],
+    },
+    ex: [
+      ['كِتَابَانِ', 'kitaabaani', 'two books', 'دو کتابیں'],
+      ['سَيَّارَتَانِ', 'sayyaarataani', 'two cars', 'دو گاڑیاں'],
+      ['هٰذَانِ قَلَمَانِ', 'haadhaani qalamaani', 'These are two pens.', 'یہ دو قلم ہیں۔'],
+      ['هَاتَانِ طَالِبَتَانِ', 'haataani ṭaalibataani', 'These are two (female) students.', 'یہ دو طالبات ہیں۔'],
+      ['عِنْدِي أَخَوَانِ', 'ʿindii akhawaani', 'I have two brothers.', 'میرے دو بھائی ہیں۔'],
+      ['الْوَلَدَانِ فِي الْحَدِيقَةِ', 'al-waladaani fil-ḥadiiqati', 'The two boys are in the garden.', 'دونوں لڑکے باغ میں ہیں۔'],
+      ['جَلَسْتُ بَيْنَ الطَّالِبَيْنِ', 'jalastu bayna ṭ-ṭaalibayni', 'I sat between the two students.', 'میں دونوں طالب علموں کے درمیان بیٹھا۔'],
+      ['هُمَا مُهَنْدِسَانِ', 'humaa muhandisaani', 'They (two) are engineers.', 'وہ دونوں انجینئر ہیں۔'],
+    ],
+    practice: [
+      { en: 'Make “two doors” from {بَابٌ}.', ur: '{بَابٌ} سے «دو دروازے» بنائیں۔', a: 'بَابَانِ', tr: 'baabaani' },
+      { en: 'Make “two schools” from {مَدْرَسَةٌ}.', ur: '{مَدْرَسَةٌ} سے «دو اسکول» بنائیں۔', a: 'مَدْرَسَتَانِ', tr: 'madrasataani', noteEn: 'The {ة} turns into {ت} before the ending.', noteUr: 'لاحقے سے پہلے {ة} عام {ت} بن جاتی ہے۔' },
+      { en: 'Say “in the two cars”.', ur: '«دونوں گاڑیوں میں» کہیں۔', a: 'فِي السَّيَّارَتَيْنِ', tr: 'fis-sayyaaratayni' },
+    ],
+  },
+  {
+    slug: 'lesson-16-counting', key: 'كَمْ',
+    en: {
+      title: 'Counting things: how many?', short: 'Numbers 3 to 10 with nouns, and asking {كَمْ}.',
+      intro: 'To ask “how many?”, use {كَمْ} (kam) with a singular noun ending in -an: {كَمْ كِتَابًا عِنْدَكَ؟} (How many books do you have?). To answer, put the number before a plural noun: {ثَلَاثَةُ كُتُبٍ} (three books).',
+      points: [
+        'Numbers 3 to 10 do something unusual: they take the opposite gender to the noun. With a masculine noun the number has {ـة}: {ثَلَاثَةُ أَقْلَامٍ} (three pens). With a feminine noun it doesn’t: {ثَلَاثُ سَيَّارَاتٍ} (three cars).',
+        'One and two come after the noun: {كِتَابٌ وَاحِدٌ} (one book). Or simply use the dual from Lesson 15: {كِتَابَانِ} (two books).',
+        'The noun after 3 to 10 is plural and ends in -in: {خَمْسَةُ رِجَالٍ} (five men), {سَبْعُ بَنَاتٍ} (seven girls).',
+      ],
+    },
+    ur: {
+      title: 'گنتی: کتنے؟', short: 'اسم کے ساتھ تین سے دس تک گنتی، اور {كَمْ} سے سوال۔',
+      intro: '«کتنے؟» پوچھنے کے لیے {كَمْ} کے بعد واحد اسم دو زبر کے ساتھ لائیں: {كَمْ كِتَابًا عِنْدَكَ؟} (آپ کے پاس کتنی کتابیں ہیں؟)۔ جواب میں عدد پہلے اور جمع اسم بعد میں آتا ہے: {ثَلَاثَةُ كُتُبٍ} (تین کتابیں)۔',
+      points: [
+        'تین سے دس تک کے عدد ایک انوکھا کام کرتے ہیں: وہ اسم کی الٹی جنس لیتے ہیں۔ مذکر اسم کے ساتھ عدد پر {ـة} آتی ہے: {ثَلَاثَةُ أَقْلَامٍ} (تین قلم)۔ مؤنث اسم کے ساتھ نہیں آتی: {ثَلَاثُ سَيَّارَاتٍ} (تین گاڑیاں)۔',
+        'ایک اور دو اسم کے بعد آتے ہیں: {كِتَابٌ وَاحِدٌ} (ایک کتاب)۔ یا سبق ۱۵ والا تثنیہ استعمال کریں: {كِتَابَانِ} (دو کتابیں)۔',
+        'تین سے دس کے بعد اسم جمع ہوتا ہے اور اس کے آخر میں دو زیر آتے ہیں: {خَمْسَةُ رِجَالٍ} (پانچ مرد)، {سَبْعُ بَنَاتٍ} (سات لڑکیاں)۔',
+      ],
+    },
+    ex: [
+      ['كَمْ كِتَابًا عِنْدَكَ؟', 'kam kitaaban ʿindaka?', 'How many books do you have? (to a man)', 'آپ کے پاس کتنی کتابیں ہیں؟'],
+      ['عِنْدِي ثَلَاثَةُ كُتُبٍ', 'ʿindii thalaathatu kutubin', 'I have three books.', 'میرے پاس تین کتابیں ہیں۔'],
+      ['كَمْ وَلَدًا عِنْدَهُ؟', 'kam waladan ʿindahuu?', 'How many children does he have?', 'اس کے کتنے بچے ہیں؟'],
+      ['عِنْدَهُ أَرْبَعَةُ أَوْلَادٍ', 'ʿindahuu arbaʿatu awlaadin', 'He has four children.', 'اس کے چار بچے ہیں۔'],
+      ['فِي الْفَصْلِ عَشَرَةُ طُلَّابٍ', 'fil-faṣli ʿasharatu ṭullaabin', 'There are ten students in the class.', 'کلاس میں دس طالب علم ہیں۔'],
+      ['اشْتَرَيْتُ خَمْسَ بُرْتُقَالَاتٍ', 'ishtaraytu khamsa burtuqaalaatin', 'I bought five oranges.', 'میں نے پانچ سنگترے خریدے۔'],
+      ['الْأُسْبُوعُ سَبْعَةُ أَيَّامٍ', 'al-usbuuʿu sabʿatu ayyaamin', 'A week is seven days.', 'ہفتہ سات دن کا ہوتا ہے۔'],
+      ['عِنْدِي ثَلَاثُ أَخَوَاتٍ', 'ʿindii thalaathu akhawaatin', 'I have three sisters.', 'میری تین بہنیں ہیں۔'],
+    ],
+    practice: [
+      { en: 'Say “five pens”.', ur: '«پانچ قلم» کہیں۔', a: 'خَمْسَةُ أَقْلَامٍ', tr: 'khamsatu aqlaamin', noteEn: '{قَلَمٌ} is masculine, so the number takes {ـة}.', noteUr: '{قَلَمٌ} مذکر ہے، اس لیے عدد پر {ـة} آئی۔' },
+      { en: 'Say “four cars”.', ur: '«چار گاڑیاں» کہیں۔', a: 'أَرْبَعُ سَيَّارَاتٍ', tr: 'arbaʿu sayyaaraatin', noteEn: '{سَيَّارَةٌ} is feminine, so the number has no {ـة}.', noteUr: '{سَيَّارَةٌ} مؤنث ہے، اس لیے عدد پر {ـة} نہیں۔' },
+      { en: 'Ask a man “How many brothers do you have?”', ur: 'کسی مرد سے پوچھیں: «آپ کے کتنے بھائی ہیں؟»', a: 'كَمْ أَخًا عِنْدَكَ؟', tr: 'kam akhan ʿindaka?' },
+    ],
+  },
+  {
+    slug: 'lesson-17-commands', key: 'اِجْلِسْ',
+    en: {
+      title: 'Telling someone what to do', short: 'Commands such as sit down, write and open, and saying “don’t”.',
+      intro: 'To give an instruction, start from the present tense and drop the first letter: {تَجْلِسُ} (you sit) becomes {اِجْلِسْ} (ijlis, sit down!). If the word would then begin with two consonants, add {ا} at the front, said “i” or “u”: {اُكْتُبْ} (uktub, write!). The last vowel disappears.',
+      points: [
+        'If the present tense has u in the middle, the command starts with u: {يَكْتُبُ} → {اُكْتُبْ}. Otherwise it starts with i: {يَجْلِسُ} → {اِجْلِسْ}, {يَفْتَحُ} → {اِفْتَحْ}.',
+        'To a woman add {ـِي} (-ii): {اِجْلِسِي} (sit down), {اُكْتُبِي} (write). To a group add {ـُوا} (-uu): {اِجْلِسُوا}.',
+        'To say “don’t”, use {لَا} with the present tense and drop the last vowel: {لَا تَذْهَبْ} (don’t go), {لَا تَتَكَلَّمْ} (don’t talk).',
+      ],
+    },
+    ur: {
+      title: 'حکم دینا: بیٹھیں، لکھیں، کھولیں', short: 'امر (حکم) کے فعل، اور «نہ کریں» کہنا۔',
+      intro: 'حکم دینے کے لیے مضارع سے شروع کریں اور پہلا حرف ہٹا دیں: {تَجْلِسُ} (آپ بیٹھتے ہیں) سے {اِجْلِسْ} (بیٹھیں!)۔ اگر لفظ دو ساکن حروف سے شروع ہونے لگے تو شروع میں {ا} لگائیں، جسے زیر یا پیش سے پڑھتے ہیں: {اُكْتُبْ} (لکھیں!)۔ آخر کی حرکت ختم ہو جاتی ہے۔',
+      points: [
+        'اگر مضارع میں درمیانی حرف پر پیش ہو تو امر بھی پیش سے شروع ہوتا ہے: {يَكْتُبُ} سے {اُكْتُبْ}۔ ورنہ زیر سے: {يَجْلِسُ} سے {اِجْلِسْ}، {يَفْتَحُ} سے {اِفْتَحْ}۔',
+        'عورت کو حکم دیتے ہوئے {ـِي} لگائیں: {اِجْلِسِي} (بیٹھیں)، {اُكْتُبِي} (لکھیں)۔ کئی لوگوں کے لیے {ـُوا}: {اِجْلِسُوا}۔',
+        '«نہ کریں» کہنے کے لیے مضارع سے پہلے {لَا} لگائیں اور آخر کی حرکت ہٹا دیں: {لَا تَذْهَبْ} (نہ جائیں)، {لَا تَتَكَلَّمْ} (بات نہ کریں)۔',
+      ],
+    },
+    ex: [
+      ['اِجْلِسْ مِنْ فَضْلِكَ', 'ijlis min faḍlika', 'Sit down, please. (to a man)', 'براہِ مہربانی بیٹھیں۔'],
+      ['اُكْتُبِ اسْمَكَ هُنَا', 'uktubi smaka hunaa', 'Write your name here. (to a man)', 'اپنا نام یہاں لکھیں۔'],
+      ['اِفْتَحِ الْبَابَ', 'iftaḥi l-baaba', 'Open the door.', 'دروازہ کھولیں۔'],
+      ['اِسْمَعْ يَا أَحْمَدُ', 'ismaʿ yaa aḥmadu', 'Listen, Ahmad.', 'سنو، احمد۔'],
+      ['اِجْلِسِي يَا فَاطِمَةُ', 'ijlisii yaa faaṭimatu', 'Sit down, Fatima.', 'فاطمہ، بیٹھ جاؤ۔'],
+      ['اُدْخُلُوا', 'udkhuluu', 'Come in. (to a group)', 'اندر آ جائیں۔ (کئی لوگوں سے)'],
+      ['لَا تَذْهَبْ', 'laa tadh-hab', 'Don’t go. (to a man)', 'نہ جائیں۔'],
+      ['لَا تَقْلَقْ', 'laa taqlaq', 'Don’t worry. (to a man)', 'فکر نہ کریں۔'],
+    ],
+    practice: [
+      { en: 'Tell a man “Open the book.”', ur: 'کسی مرد سے کہیں: «کتاب کھولیں۔»', a: 'اِفْتَحِ الْكِتَابَ', tr: 'iftaḥi l-kitaaba' },
+      { en: 'Tell a woman “Write.”', ur: 'کسی خاتون سے کہیں: «لکھیں۔»', a: 'اُكْتُبِي', tr: 'uktubii' },
+      { en: 'Tell a man “Don’t sit here.”', ur: 'کسی مرد سے کہیں: «یہاں نہ بیٹھیں۔»', a: 'لَا تَجْلِسْ هُنَا', tr: 'laa tajlis hunaa' },
+    ],
+  },
+  {
+    slug: 'lesson-18-future', key: 'سَأَذْهَبُ',
+    en: {
+      title: 'Talking about the future', short: 'Will and won’t with {سَـ}, {سَوْفَ} and {لَنْ}.',
+      intro: 'To talk about the future, add {سَـ} (sa-) to the front of a present tense verb: {أَذْهَبُ} (I go) becomes {سَأَذْهَبُ} (sa-adh-habu, I will go). {سَوْفَ} (sawfa), written as a separate word, means the same and often points a little further ahead: {سَوْفَ أُسَافِرُ} (I will travel).',
+      points: [
+        '{سَأَكْتُبُ} I will write · {سَتَكْتُبُ} you will write (man), she will write · {سَيَكْتُبُ} he will write · {سَنَكْتُبُ} we will write',
+        'To say “will not”, use {لَنْ} (lan) and change the last vowel to -a: {لَنْ أَذْهَبَ} (I will not go), {لَنْ نَتَأَخَّرَ} (we won’t be late).',
+        'Time words help: {غَدًا} (tomorrow), {بَعْدَ غَدٍ} (the day after tomorrow), {الْأُسْبُوعَ الْقَادِمَ} (next week).',
+      ],
+    },
+    ur: {
+      title: 'مستقبل کی بات', short: '{سَـ}، {سَوْفَ} اور {لَنْ} سے «گا» اور «نہیں گا»۔',
+      intro: 'مستقبل کے لیے مضارع کے شروع میں {سَـ} لگائیں: {أَذْهَبُ} (میں جاتا ہوں) سے {سَأَذْهَبُ} (میں جاؤں گا)۔ {سَوْفَ} الگ لفظ کے طور پر بھی یہی مطلب دیتا ہے، اور اکثر کچھ دور کے مستقبل کے لیے آتا ہے: {سَوْفَ أُسَافِرُ} (میں سفر کروں گا)۔',
+      points: [
+        '{سَأَكْتُبُ} میں لکھوں گا · {سَتَكْتُبُ} آپ لکھیں گے (مرد)، وہ لکھے گی · {سَيَكْتُبُ} وہ لکھے گا · {سَنَكْتُبُ} ہم لکھیں گے',
+        '«نہیں کروں گا» کے لیے {لَنْ} لگائیں اور آخری حرف پر زبر کر دیں: {لَنْ أَذْهَبَ} (میں نہیں جاؤں گا)، {لَنْ نَتَأَخَّرَ} (ہم دیر نہیں کریں گے)۔',
+        'وقت کے الفاظ مدد دیتے ہیں: {غَدًا} (کل)، {بَعْدَ غَدٍ} (پرسوں)، {الْأُسْبُوعَ الْقَادِمَ} (اگلے ہفتے)۔',
+      ],
+    },
+    ex: [
+      ['سَأَذْهَبُ إِلَى مَكَّةَ غَدًا', 'sa-adh-habu ilaa makkata ghadan', 'I will go to Makkah tomorrow.', 'میں کل مکہ جاؤں گا۔'],
+      ['سَنَزُورُكُمْ يَوْمَ الْجُمُعَةِ', 'sa-nazuurukum yawma l-jumuʿati', 'We will visit you on Friday.', 'ہم جمعے کو آپ سے ملنے آئیں گے۔'],
+      ['سَيَبْدَأُ الدَّرْسُ بَعْدَ قَلِيلٍ', 'sa-yabda’u d-darsu baʿda qaliilin', 'The lesson will start shortly.', 'سبق تھوڑی دیر میں شروع ہوگا۔'],
+      ['سَوْفَ أَتَعَلَّمُ الْعَرَبِيَّةَ', 'sawfa ataʿallamu l-ʿarabiyyata', 'I will learn Arabic.', 'میں عربی سیکھوں گا۔'],
+      ['مَتَى سَتُسَافِرُ؟', 'mataa sa-tusaafiru?', 'When will you travel? (to a man)', 'آپ کب سفر کریں گے؟'],
+      ['لَنْ أَتَأَخَّرَ', 'lan ata’akhkhara', 'I won’t be late.', 'میں دیر نہیں کروں گا۔'],
+      ['لَنْ يَنْجَحَ الْكَسْلَانُ', 'lan yanjaḥa l-kaslaanu', 'The lazy one will not succeed.', 'سست آدمی کامیاب نہیں ہوگا۔'],
+      ['سَتَكُونُ الْقَهْوَةُ جَاهِزَةً بَعْدَ دَقِيقَةٍ', 'sa-takuunu l-qahwatu jaahizatan baʿda daqiiqatin', 'The coffee will be ready in a minute.', 'قہوہ ایک منٹ میں تیار ہو جائے گا۔'],
+    ],
+    practice: [
+      { en: 'Say “I will write.”', ur: '«میں لکھوں گا» کہیں۔', a: 'سَأَكْتُبُ', tr: 'sa-aktubu' },
+      { en: 'Say “We will go tomorrow.”', ur: '«ہم کل جائیں گے» کہیں۔', a: 'سَنَذْهَبُ غَدًا', tr: 'sa-nadh-habu ghadan' },
+      { en: 'Say “I will not go.”', ur: '«میں نہیں جاؤں گا» کہیں۔', a: 'لَنْ أَذْهَبَ', tr: 'lan adh-haba', noteEn: 'After {لَنْ} the last vowel becomes -a.', noteUr: '{لَنْ} کے بعد آخری حرف پر زبر آ جاتا ہے۔' },
+    ],
+  },
+  {
+    slug: 'lesson-19-did-not', key: 'لَمْ',
+    en: {
+      title: 'Saying “did not”', short: 'The negative past with {مَا} and {لَمْ}.',
+      intro: 'There are two ways to say something did not happen. The simple one is {مَا} (maa) before a past tense verb: {مَا ذَهَبْتُ} (I didn’t go). The more formal one, used in writing and in the Quran, is {لَمْ} (lam) with the present tense and no final vowel: {لَمْ أَذْهَبْ} (I didn’t go).',
+      points: [
+        '{لَمْ أَكْتُبْ} I didn’t write · {لَمْ تَكْتُبْ} you didn’t write, she didn’t write · {لَمْ يَكْتُبْ} he didn’t write · {لَمْ نَكْتُبْ} we didn’t write',
+        'You have already seen {لَمْ} in Surah Al-Ikhlas: {لَمْ يَلِدْ وَلَمْ يُولَدْ} (He has no child, and He was not born).',
+        '{لَمْ} with {بَعْدُ} means “not yet”: {لَمْ يَصِلْ بَعْدُ} (he hasn’t arrived yet).',
+      ],
+    },
+    ur: {
+      title: '«نہیں کیا» کہنا', short: '{مَا} اور {لَمْ} سے ماضی کی نفی۔',
+      intro: 'کسی کام کے نہ ہونے کو بیان کرنے کے دو طریقے ہیں۔ آسان طریقہ: ماضی کے فعل سے پہلے {مَا}: {مَا ذَهَبْتُ} (میں نہیں گیا)۔ زیادہ فصیح طریقہ، جو تحریر اور قرآن میں آتا ہے: {لَمْ} کے بعد مضارع، اور آخری حرف ساکن: {لَمْ أَذْهَبْ} (میں نہیں گیا)۔',
+      points: [
+        '{لَمْ أَكْتُبْ} میں نے نہیں لکھا · {لَمْ تَكْتُبْ} آپ نے نہیں لکھا، اس (خاتون) نے نہیں لکھا · {لَمْ يَكْتُبْ} اس نے نہیں لکھا · {لَمْ نَكْتُبْ} ہم نے نہیں لکھا',
+        '{لَمْ} آپ سورہ اخلاص میں دیکھ چکے ہیں: {لَمْ يَلِدْ وَلَمْ يُولَدْ} (نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد ہے)۔',
+        '{لَمْ} کے ساتھ {بَعْدُ} کا مطلب ہے «ابھی تک نہیں»: {لَمْ يَصِلْ بَعْدُ} (وہ ابھی تک نہیں پہنچا)۔',
+      ],
+    },
+    ex: [
+      ['مَا ذَهَبْتُ إِلَى الْعَمَلِ أَمْسِ', 'maa dhahabtu ila l-ʿamali amsi', 'I didn’t go to work yesterday.', 'میں کل کام پر نہیں گیا۔'],
+      ['لَمْ أَفْهَمِ السُّؤَالَ', 'lam afhami s-su’aala', 'I didn’t understand the question.', 'میں سوال نہیں سمجھا۔'],
+      ['لَمْ يَأْكُلْ شَيْئًا', 'lam ya’kul shay’an', 'He didn’t eat anything.', 'اس نے کچھ نہیں کھایا۔'],
+      ['لَمْ تَنَمْ جَيِّدًا', 'lam tanam jayyidan', 'She didn’t sleep well.', 'وہ ٹھیک سے نہیں سوئی۔'],
+      ['لَمْ نَشْرَبِ الشَّايَ', 'lam nashrabi sh-shaaya', 'We didn’t drink the tea.', 'ہم نے چائے نہیں پی۔'],
+      ['هَلْ وَصَلَ الْمُدِيرُ؟ لَا، لَمْ يَصِلْ بَعْدُ', 'hal waṣala l-mudiiru? laa, lam yaṣil baʿdu', 'Has the manager arrived? No, not yet.', 'کیا منیجر پہنچ گئے؟ نہیں، ابھی نہیں پہنچے۔'],
+      ['مَا كَتَبْتُ الْوَاجِبَ', 'maa katabtu l-waajiba', 'I didn’t do (write) the homework.', 'میں نے ہوم ورک نہیں لکھا۔'],
+      ['لَمْ أَرَهُ الْيَوْمَ', 'lam arahu l-yawma', 'I haven’t seen him today.', 'میں نے آج اسے نہیں دیکھا۔'],
+    ],
+    practice: [
+      { en: 'Say “I didn’t go” in two ways.', ur: '«میں نہیں گیا» دو طریقوں سے کہیں۔', a: 'مَا ذَهَبْتُ / لَمْ أَذْهَبْ', tr: 'maa dhahabtu / lam adh-hab' },
+      { en: 'Say “He didn’t write” using {لَمْ}.', ur: '{لَمْ} کے ساتھ «اس نے نہیں لکھا» کہیں۔', a: 'لَمْ يَكْتُبْ', tr: 'lam yaktub' },
+      { en: 'Say “She hasn’t arrived yet.”', ur: '«وہ (خاتون) ابھی تک نہیں پہنچی» کہیں۔', a: 'لَمْ تَصِلْ بَعْدُ', tr: 'lam taṣil baʿdu' },
+    ],
+  },
+  {
+    slug: 'lesson-20-questions', key: 'كَيْفَ',
+    en: {
+      title: 'Asking questions: when, how, why, which', short: 'All the main question words in one place.',
+      intro: 'Arabic question words go at the start of the sentence, and the rest of the sentence stays as it is. You already know {مَا} (what), {مَنْ} (who), {أَيْنَ} (where), {كَمْ} (how many) and {هَلْ} (for yes/no questions). This lesson adds the rest.',
+      points: [
+        '{مَتَى} when · {كَيْفَ} how · {لِمَاذَا} why · {مَاذَا} what (before a verb) · {أَيُّ} which',
+        'Use {مَا} before a noun and {مَاذَا} before a verb: {مَا اسْمُكَ؟} (What is your name?) but {مَاذَا تُرِيدُ؟} (What do you want?).',
+        'Answer “why?” with {لِأَنَّ} (because) and an ending from Lesson 8: {لِأَنِّي مَشْغُولٌ} (because I am busy). Lesson 21 explains how this works.',
+      ],
+    },
+    ur: {
+      title: 'سوال پوچھنا: کب، کیسے، کیوں، کون سا', short: 'سوال کے تمام اہم الفاظ ایک جگہ۔',
+      intro: 'عربی میں سوال کا لفظ جملے کے شروع میں آتا ہے اور باقی جملہ ویسا ہی رہتا ہے۔ آپ {مَا} (کیا)، {مَنْ} (کون)، {أَيْنَ} (کہاں)، {كَمْ} (کتنے) اور {هَلْ} (ہاں یا نہیں والا سوال) سیکھ چکے ہیں۔ اس سبق میں باقی الفاظ ہیں۔',
+      points: [
+        '{مَتَى} کب · {كَيْفَ} کیسے · {لِمَاذَا} کیوں · {مَاذَا} کیا (فعل سے پہلے) · {أَيُّ} کون سا',
+        'اسم سے پہلے {مَا} اور فعل سے پہلے {مَاذَا}: {مَا اسْمُكَ؟} (آپ کا نام کیا ہے؟) مگر {مَاذَا تُرِيدُ؟} (آپ کیا چاہتے ہیں؟)۔',
+        '«کیوں؟» کا جواب {لِأَنَّ} (کیونکہ) اور سبق ۸ والے لاحقے سے دیں: {لِأَنِّي مَشْغُولٌ} (کیونکہ میں مصروف ہوں)۔ سبق ۲۱ میں اس کی تفصیل ہے۔',
+      ],
+    },
+    ex: [
+      ['مَتَى تَبْدَأُ الصَّلَاةُ؟', 'mataa tabda’u ṣ-ṣalaatu?', 'When does the prayer start?', 'نماز کب شروع ہوتی ہے؟'],
+      ['كَيْفَ حَالُكَ؟', 'kayfa ḥaaluka?', 'How are you? (to a man)', 'آپ کیسے ہیں؟'],
+      ['لِمَاذَا تَأَخَّرْتَ؟', 'limaadhaa ta’akhkharta?', 'Why were you late? (to a man)', 'آپ کو دیر کیوں ہوئی؟'],
+      ['لِأَنَّ الطَّرِيقَ مُزْدَحِمٌ', 'li-anna ṭ-ṭariiqa muzdaḥimun', 'Because the road is busy.', 'کیونکہ سڑک پر رش ہے۔'],
+      ['مَاذَا تَفْعَلُ فِي الْمَسَاءِ؟', 'maadhaa tafʿalu fil-masaa’i?', 'What do you do in the evening? (to a man)', 'آپ شام کو کیا کرتے ہیں؟'],
+      ['أَيُّ كِتَابٍ تُرِيدُ؟', 'ayyu kitaabin turiidu?', 'Which book do you want? (to a man)', 'آپ کو کون سی کتاب چاہیے؟'],
+      ['مَنْ هٰذَا الرَّجُلُ؟', 'man haadha r-rajulu?', 'Who is this man?', 'یہ آدمی کون ہے؟'],
+      ['كَيْفَ أَذْهَبُ إِلَى الْمَطَارِ؟', 'kayfa adh-habu ila l-maṭaari?', 'How do I get to the airport?', 'میں ہوائی اڈے کیسے جاؤں؟'],
+    ],
+    practice: [
+      { en: 'Ask a man “When are you coming?” (you come: {تَأْتِي})', ur: 'کسی مرد سے پوچھیں: «آپ کب آ رہے ہیں؟» (آپ آتے ہیں: {تَأْتِي})', a: 'مَتَى تَأْتِي؟', tr: 'mataa ta’tii?' },
+      { en: 'Ask a man “Why are you studying Arabic?” (you study: {تَدْرُسُ})', ur: 'کسی مرد سے پوچھیں: «آپ عربی کیوں پڑھ رہے ہیں؟» (آپ پڑھتے ہیں: {تَدْرُسُ})', a: 'لِمَاذَا تَدْرُسُ الْعَرَبِيَّةَ؟', tr: 'limaadhaa tadrusu l-ʿarabiyyata?' },
+      { en: 'Ask a man “What do you want?”', ur: 'کسی مرد سے پوچھیں: «آپ کیا چاہتے ہیں؟»', a: 'مَاذَا تُرِيدُ؟', tr: 'maadhaa turiidu?' },
+    ],
+  },
+  {
+    slug: 'lesson-21-inna', key: 'إِنَّ',
+    en: {
+      title: 'Indeed, but, because', short: '{إِنَّ}, {لٰكِنَّ} and {لِأَنَّ} change the ending of the next noun.',
+      intro: 'Some little words at the start of a sentence change the ending of the noun after them from -u to -a. The most common is {إِنَّ} (inna, indeed), which you will see again and again in the Quran: {إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ} (Indeed, Allah is Forgiving, Merciful). Its “sisters” work the same way.',
+      points: [
+        '{إِنَّ} indeed · {أَنَّ} that · {لٰكِنَّ} but · {لِأَنَّ} because · {كَأَنَّ} as if',
+        'The noun after them ends in -a, and the rest of the sentence stays the same: {الْجَوُّ حَارٌّ} → {إِنَّ الْجَوَّ حَارٌّ} (Indeed, the weather is hot).',
+        'They can take the endings from Lesson 8: {إِنَّهُ} (indeed he), {لٰكِنَّهَا} (but she), {لِأَنِّي} (because I), {لِأَنَّنَا} (because we).',
+      ],
+    },
+    ur: {
+      title: 'بے شک، لیکن، کیونکہ', short: '{إِنَّ}، {لٰكِنَّ} اور {لِأَنَّ} اگلے اسم کا آخر بدل دیتے ہیں۔',
+      intro: 'جملے کے شروع میں آنے والے کچھ چھوٹے الفاظ اپنے بعد والے اسم کے آخر کو پیش سے زبر کر دیتے ہیں۔ سب سے عام {إِنَّ} (بے شک) ہے، جو قرآن میں بار بار آتا ہے: {إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ} (بے شک اللہ بخشنے والا، رحم کرنے والا ہے)۔ اس کی «بہنیں» بھی اسی طرح کام کرتی ہیں۔',
+      points: [
+        '{إِنَّ} بے شک · {أَنَّ} کہ · {لٰكِنَّ} لیکن · {لِأَنَّ} کیونکہ · {كَأَنَّ} گویا',
+        'ان کے بعد اسم پر زبر آتا ہے اور باقی جملہ ویسا ہی رہتا ہے: {الْجَوُّ حَارٌّ} سے {إِنَّ الْجَوَّ حَارٌّ} (بے شک موسم گرم ہے)۔',
+        'ان کے ساتھ سبق ۸ والے لاحقے بھی لگتے ہیں: {إِنَّهُ} (بے شک وہ)، {لٰكِنَّهَا} (لیکن وہ خاتون)، {لِأَنِّي} (کیونکہ میں)، {لِأَنَّنَا} (کیونکہ ہم)۔',
+      ],
+    },
+    ex: [
+      ['إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ', 'inna llaaha ghafuurun raḥiimun', 'Indeed, Allah is Forgiving, Merciful.', 'بے شک اللہ بخشنے والا، رحم کرنے والا ہے۔'],
+      ['إِنَّ الْعِلْمَ نُورٌ', 'inna l-ʿilma nuurun', 'Indeed, knowledge is light.', 'بے شک علم روشنی ہے۔'],
+      ['أَعْرِفُ أَنَّ الطَّرِيقَ طَوِيلٌ', 'aʿrifu anna ṭ-ṭariiqa ṭawiilun', 'I know that the road is long.', 'میں جانتا ہوں کہ راستہ لمبا ہے۔'],
+      ['الْبَيْتُ صَغِيرٌ لٰكِنَّهُ جَمِيلٌ', 'al-baytu ṣaghiirun laakinnahuu jamiilun', 'The house is small, but it is beautiful.', 'گھر چھوٹا ہے لیکن خوبصورت ہے۔'],
+      ['لَمْ أَذْهَبْ لِأَنِّي مَرِيضٌ', 'lam adh-hab li-annii mariiḍun', 'I didn’t go because I am ill.', 'میں نہیں گیا کیونکہ میں بیمار ہوں۔'],
+      ['تَأَخَّرْنَا لِأَنَّ السَّيَّارَةَ تَعَطَّلَتْ', 'ta’akhkharnaa li-anna s-sayyaarata taʿaṭṭalat', 'We were late because the car broke down.', 'ہمیں دیر ہوئی کیونکہ گاڑی خراب ہو گئی۔'],
+      ['كَأَنَّهُ أَسَدٌ', 'ka-annahuu asadun', 'He is like a lion (as if he were a lion).', 'گویا وہ شیر ہے۔'],
+      ['إِنَّهَا طَبِيبَةٌ مَاهِرَةٌ', 'innahaa ṭabiibatun maahiratun', 'Indeed, she is a skilled doctor.', 'بے شک وہ ایک ماہر ڈاکٹر ہیں۔'],
+    ],
+    practice: [
+      { en: 'Add {إِنَّ} to {الْوَقْتُ قَصِيرٌ}.', ur: '{الْوَقْتُ قَصِيرٌ} پر {إِنَّ} لگائیں۔', a: 'إِنَّ الْوَقْتَ قَصِيرٌ', tr: 'inna l-waqta qaṣiirun', noteEn: '{الْوَقْتُ} becomes {الْوَقْتَ}; {قَصِيرٌ} stays the same.', noteUr: '{الْوَقْتُ} سے {الْوَقْتَ} بنا؛ {قَصِيرٌ} ویسا ہی رہا۔' },
+      { en: 'Say “because I am busy” (busy: {مَشْغُولٌ}).', ur: '«کیونکہ میں مصروف ہوں» کہیں (مصروف: {مَشْغُولٌ})۔', a: 'لِأَنِّي مَشْغُولٌ', tr: 'li-annii mashghuulun' },
+      { en: 'Say “The car is old, but it is good.” (old: {قَدِيمَةٌ}, good: {جَيِّدَةٌ})', ur: '«گاڑی پرانی ہے لیکن اچھی ہے» کہیں (پرانی: {قَدِيمَةٌ}، اچھی: {جَيِّدَةٌ})۔', a: 'السَّيَّارَةُ قَدِيمَةٌ لٰكِنَّهَا جَيِّدَةٌ', tr: 'as-sayyaaratu qadiimatun laakinnahaa jayyidatun' },
+    ],
+  },
+  {
+    slug: 'lesson-22-comparing', key: 'أَكْبَرُ',
+    en: {
+      title: 'Comparing: bigger, the biggest', short: 'The {أَفْعَلُ} pattern for “-er” and “-est”.',
+      intro: 'To compare, Arabic puts the describing word into the pattern {أَفْعَلُ} (afʿalu) and follows it with {مِنْ} (than): {كَبِيرٌ} (big) gives {أَكْبَرُ مِنْ} (bigger than). The same form is used for men, women and things, so it never takes {ـة}.',
+      points: [
+        '{كَبِيرٌ} → {أَكْبَرُ} bigger · {صَغِيرٌ} → {أَصْغَرُ} smaller · {قَرِيبٌ} → {أَقْرَبُ} nearer · {جَمِيلٌ} → {أَجْمَلُ} more beautiful',
+        'For “the biggest”, put the same word before a singular noun: {أَكْبَرُ مَدِينَةٍ} (the biggest city). Or add {الْ}: {هُوَ الْأَكْبَرُ} (he is the eldest).',
+        '{أَحْسَنُ} means better or best, and {أَكْثَرُ} more or most: {أَكْثَرُ مِنْ سَاعَةٍ} (more than an hour). You already know a famous one: {اللَّهُ أَكْبَرُ} (Allah is the Greatest).',
+      ],
+    },
+    ur: {
+      title: 'موازنہ: بڑا، سب سے بڑا', short: '«زیادہ» اور «سب سے» کے لیے {أَفْعَلُ} کا وزن۔',
+      intro: 'موازنے کے لیے عربی صفت کو {أَفْعَلُ} کے وزن پر لاتی ہے، اور اس کے بعد {مِنْ} (سے) آتا ہے: {كَبِيرٌ} (بڑا) سے {أَكْبَرُ مِنْ} (سے بڑا)۔ یہ شکل مرد، عورت اور چیز سب کے لیے ایک ہی رہتی ہے، اس پر {ـة} نہیں لگتی۔',
+      points: [
+        '{كَبِيرٌ} سے {أَكْبَرُ} زیادہ بڑا · {صَغِيرٌ} سے {أَصْغَرُ} زیادہ چھوٹا · {قَرِيبٌ} سے {أَقْرَبُ} زیادہ قریب · {جَمِيلٌ} سے {أَجْمَلُ} زیادہ خوبصورت',
+        '«سب سے بڑا» کے لیے یہی لفظ واحد اسم سے پہلے لائیں: {أَكْبَرُ مَدِينَةٍ} (سب سے بڑا شہر)۔ یا {الْ} لگائیں: {هُوَ الْأَكْبَرُ} (وہ سب سے بڑا ہے)۔',
+        '{أَحْسَنُ} یعنی بہتر یا سب سے اچھا، اور {أَكْثَرُ} یعنی زیادہ: {أَكْثَرُ مِنْ سَاعَةٍ} (ایک گھنٹے سے زیادہ)۔ ایک مشہور مثال آپ پہلے سے جانتے ہیں: {اللَّهُ أَكْبَرُ} (اللہ سب سے بڑا ہے)۔',
+      ],
+    },
+    ex: [
+      ['الرِّيَاضُ أَكْبَرُ مِنْ جِدَّةَ', 'ar-riyaaḍu akbaru min jiddata', 'Riyadh is bigger than Jeddah.', 'ریاض جدہ سے بڑا ہے۔'],
+      ['أَخِي أَصْغَرُ مِنِّي', 'akhii aṣgharu minnii', 'My brother is younger than me.', 'میرا بھائی مجھ سے چھوٹا ہے۔'],
+      ['هٰذَا الطَّرِيقُ أَقْرَبُ', 'haadha ṭ-ṭariiqu aqrabu', 'This way is shorter (nearer).', 'یہ راستہ زیادہ قریب ہے۔'],
+      ['الْقِطَارُ أَسْرَعُ مِنَ الْحَافِلَةِ', 'al-qiṭaaru asraʿu mina l-ḥaafilati', 'The train is faster than the bus.', 'ٹرین بس سے زیادہ تیز ہے۔'],
+      ['هٰذَا أَحْسَنُ مَطْعَمٍ فِي الْمَدِينَةِ', 'haadhaa aḥsanu maṭʿamin fil-madiinati', 'This is the best restaurant in the city.', 'یہ شہر کا سب سے اچھا ریستوران ہے۔'],
+      ['انْتَظَرْتُ أَكْثَرَ مِنْ سَاعَةٍ', 'intaẓartu akthara min saaʿatin', 'I waited more than an hour.', 'میں نے ایک گھنٹے سے زیادہ انتظار کیا۔'],
+      ['هِيَ أَطْوَلُ طَالِبَةٍ فِي الْفَصْلِ', 'hiya aṭwalu ṭaalibatin fil-faṣli', 'She is the tallest student in the class.', 'وہ کلاس کی سب سے لمبی طالبہ ہے۔'],
+      ['اللَّهُ أَكْبَرُ', 'allaahu akbar', 'Allah is the Greatest.', 'اللہ سب سے بڑا ہے۔'],
+    ],
+    practice: [
+      { en: 'Make “more beautiful than” from {جَمِيلٌ}.', ur: '{جَمِيلٌ} سے «سے زیادہ خوبصورت» بنائیں۔', a: 'أَجْمَلُ مِنْ', tr: 'ajmalu min' },
+      { en: 'Say “My house is bigger than your house.” (to a man)', ur: '«میرا گھر آپ کے گھر سے بڑا ہے» کہیں (مرد سے)۔', a: 'بَيْتِي أَكْبَرُ مِنْ بَيْتِكَ', tr: 'baytii akbaru min baytika' },
+      { en: 'Say “the biggest city”.', ur: '«سب سے بڑا شہر» کہیں۔', a: 'أَكْبَرُ مَدِينَةٍ', tr: 'akbaru madiinatin' },
+    ],
+  },
+  {
+    slug: 'lesson-23-alladhi', key: 'الَّذِي',
+    en: {
+      title: 'Joining sentences: who, which, that', short: '{الَّذِي}, {الَّتِي} and {الَّذِينَ}.',
+      intro: 'To describe a noun with a whole sentence, Arabic uses {الَّذِي} (alladhii) after a masculine noun and {الَّتِي} (allatii) after a feminine one: {الرَّجُلُ الَّذِي يَعْمَلُ هُنَا} (the man who works here). They come only after a noun with {الـ}. You met {الَّذِينَ} (those who) in Al-Fatiha and Al-Asr.',
+      points: [
+        '{الَّذِي} who, which (masculine) · {الَّتِي} who, which (feminine, and plural things) · {الَّذِينَ} who (plural people)',
+        'After a noun without {الـ}, leave the word out: {رَجُلٌ يَعْمَلُ هُنَا} (a man who works here).',
+        'If the noun is the object of the verb, add an ending that points back to it: {الْكِتَابُ الَّذِي قَرَأْتُهُ} (the book that I read, literally “that I read it”).',
+      ],
+    },
+    ur: {
+      title: 'جملے جوڑنا: جو، جس', short: '{الَّذِي}، {الَّتِي} اور {الَّذِينَ}۔',
+      intro: 'کسی اسم کی وضاحت پورے جملے سے کرنی ہو تو مذکر اسم کے بعد {الَّذِي} اور مؤنث کے بعد {الَّتِي} آتا ہے: {الرَّجُلُ الَّذِي يَعْمَلُ هُنَا} (وہ آدمی جو یہاں کام کرتا ہے)۔ یہ صرف {الـ} والے اسم کے بعد آتے ہیں۔ {الَّذِينَ} (وہ لوگ جو) آپ سورہ فاتحہ اور سورہ عصر میں دیکھ چکے ہیں۔',
+      points: [
+        '{الَّذِي} جو (مذکر) · {الَّتِي} جو (مؤنث، اور بے جان چیزوں کی جمع) · {الَّذِينَ} جو (لوگوں کی جمع)',
+        'اگر اسم پر {الـ} نہ ہو تو یہ لفظ نہیں آتا: {رَجُلٌ يَعْمَلُ هُنَا} (ایک آدمی جو یہاں کام کرتا ہے)۔',
+        'اگر اسم فعل کا مفعول ہو تو فعل کے ساتھ ایک لاحقہ اسی کی طرف لوٹتا ہے: {الْكِتَابُ الَّذِي قَرَأْتُهُ} (وہ کتاب جو میں نے پڑھی، لفظی طور پر «جو میں نے اسے پڑھا»)۔',
+      ],
+    },
+    ex: [
+      ['الرَّجُلُ الَّذِي يَعْمَلُ هُنَا مِنْ مِصْرَ', 'ar-rajulu lladhii yaʿmalu hunaa min miṣra', 'The man who works here is from Egypt.', 'جو آدمی یہاں کام کرتا ہے وہ مصر سے ہے۔'],
+      ['الْمَرْأَةُ الَّتِي تَتَكَلَّمُ طَبِيبَةٌ', 'al-mar’atu llatii tatakallamu ṭabiibatun', 'The woman who is speaking is a doctor.', 'جو خاتون بات کر رہی ہیں وہ ڈاکٹر ہیں۔'],
+      ['أَيْنَ الْكِتَابُ الَّذِي اشْتَرَيْتَهُ؟', 'ayna l-kitaabu lladhii shtaraytahuu?', 'Where is the book that you bought? (to a man)', 'وہ کتاب کہاں ہے جو آپ نے خریدی؟'],
+      ['هٰذِهِ السَّيَّارَةُ الَّتِي أُرِيدُهَا', 'haadhihi s-sayyaaratu llatii uriiduhaa', 'This is the car that I want.', 'یہ وہ گاڑی ہے جو مجھے چاہیے۔'],
+      ['الطُّلَّابُ الَّذِينَ نَجَحُوا سُعَدَاءُ', 'aṭ-ṭullaabu lladhiina najaḥuu suʿadaa’u', 'The students who passed are happy.', 'جو طلبہ کامیاب ہوئے وہ خوش ہیں۔'],
+      ['عِنْدِي صَدِيقٌ يَسْكُنُ فِي الرِّيَاضِ', 'ʿindii ṣadiiqun yaskunu fir-riyaaḍi', 'I have a friend who lives in Riyadh.', 'میرا ایک دوست ہے جو ریاض میں رہتا ہے۔'],
+      ['الْبُيُوتُ الَّتِي فِي هٰذَا الشَّارِعِ جَدِيدَةٌ', 'al-buyuutu llatii fii haadha sh-shaariʿi jadiidatun', 'The houses on this street are new.', 'اس سڑک پر جو گھر ہیں وہ نئے ہیں۔'],
+      ['الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ', 'alladhiina aamanuu wa-ʿamiluu ṣ-ṣaaliḥaati', 'those who believe and do good deeds (from Surah Al-Asr)', 'وہ لوگ جو ایمان لائے اور نیک عمل کیے (سورہ عصر سے)'],
+    ],
+    practice: [
+      { en: 'Say “the teacher who teaches us” (teaches us: {يُدَرِّسُنَا}).', ur: '«وہ استاد جو ہمیں پڑھاتے ہیں» کہیں (ہمیں پڑھاتا ہے: {يُدَرِّسُنَا})۔', a: 'الْمُدَرِّسُ الَّذِي يُدَرِّسُنَا', tr: 'al-mudarrisu lladhii yudarrisunaa' },
+      { en: 'Say “the car that I bought”.', ur: '«وہ گاڑی جو میں نے خریدی» کہیں۔', a: 'السَّيَّارَةُ الَّتِي اشْتَرَيْتُهَا', tr: 'as-sayyaaratu llatii shtaraytuhaa', noteEn: 'The noun is feminine, so {الَّتِي}; the ending {ـهَا} on the verb points back to the car.', noteUr: 'اسم مؤنث ہے اس لیے {الَّتِي}؛ فعل پر {ـهَا} گاڑی کی طرف لوٹتا ہے۔' },
+      { en: 'Say “a man who works in a hospital” (hospital: {مُسْتَشْفًى}).', ur: '«ایک آدمی جو ہسپتال میں کام کرتا ہے» کہیں (ہسپتال: {مُسْتَشْفًى})۔', a: 'رَجُلٌ يَعْمَلُ فِي مُسْتَشْفًى', tr: 'rajulun yaʿmalu fii mustashfan', noteEn: 'There is no {الـ} on {رَجُلٌ}, so there is no {الَّذِي}.', noteUr: '{رَجُلٌ} پر {الـ} نہیں، اس لیے {الَّذِي} نہیں آیا۔' },
+    ],
+  },
+  {
+    slug: 'lesson-24-time', key: 'السَّاعَةُ',
+    en: {
+      title: 'Days and time: today, tomorrow, what time is it?', short: 'Yesterday and tomorrow, and telling the time.',
+      intro: 'Ask the time with {كَمِ السَّاعَةُ؟} (kami s-saaʿatu?, What time is it?). The answer uses “the hour” and an order word: {السَّاعَةُ الثَّالِثَةُ} (as-saaʿatu th-thaalithatu) means “three o’clock”, literally “the third hour”.',
+      points: [
+        'Hours: {الْوَاحِدَةُ} 1 · {الثَّانِيَةُ} 2 · {الثَّالِثَةُ} 3 · {الرَّابِعَةُ} 4 · {الْخَامِسَةُ} 5 · {السَّادِسَةُ} 6 · {السَّابِعَةُ} 7 · {الثَّامِنَةُ} 8 · {التَّاسِعَةُ} 9 · {الْعَاشِرَةُ} 10',
+        'Add {وَالنِّصْفُ} (and a half) or {وَالرُّبْعُ} (and a quarter): {السَّاعَةُ الْخَامِسَةُ وَالنِّصْفُ} (half past five). {إِلَّا رُبْعًا} means “quarter to”.',
+        '{الْيَوْمَ} today · {أَمْسِ} yesterday · {غَدًا} tomorrow · {صَبَاحًا} in the morning · {مَسَاءً} in the evening. The days of the week are in the vocabulary section.',
+      ],
+    },
+    ur: {
+      title: 'دن اور وقت: آج، کل، کیا بجا ہے؟', short: 'گزرا اور آنے والا کل، اور وقت بتانا۔',
+      intro: 'وقت پوچھنے کے لیے کہیں {كَمِ السَّاعَةُ؟} (کیا بجا ہے؟)۔ جواب میں «گھنٹہ» کے ساتھ ترتیبی عدد آتا ہے: {السَّاعَةُ الثَّالِثَةُ} یعنی «تین بجے ہیں»، لفظی طور پر «تیسرا گھنٹہ»۔',
+      points: [
+        'گھنٹے: {الْوَاحِدَةُ} ایک، {الثَّانِيَةُ} دو، {الثَّالِثَةُ} تین، {الرَّابِعَةُ} چار، {الْخَامِسَةُ} پانچ، {السَّادِسَةُ} چھ، {السَّابِعَةُ} سات، {الثَّامِنَةُ} آٹھ، {التَّاسِعَةُ} نو، {الْعَاشِرَةُ} دس',
+        '{وَالنِّصْفُ} (ساڑھے) یا {وَالرُّبْعُ} (سوا) لگائیں: {السَّاعَةُ الْخَامِسَةُ وَالنِّصْفُ} (ساڑھے پانچ بجے)۔ {إِلَّا رُبْعًا} کا مطلب ہے «پونے»۔',
+        '{الْيَوْمَ} آج · {أَمْسِ} گزرا ہوا کل · {غَدًا} آنے والا کل · {صَبَاحًا} صبح · {مَسَاءً} شام۔ ہفتے کے دن الفاظ کے حصے میں ہیں۔',
+      ],
+    },
+    ex: [
+      ['كَمِ السَّاعَةُ؟', 'kami s-saaʿatu?', 'What time is it?', 'کیا بجا ہے؟'],
+      ['السَّاعَةُ الثَّالِثَةُ', 'as-saaʿatu th-thaalithatu', 'It’s three o’clock.', 'تین بجے ہیں۔'],
+      ['السَّاعَةُ الْخَامِسَةُ وَالنِّصْفُ', 'as-saaʿatu l-khaamisatu wan-niṣfu', 'It’s half past five.', 'ساڑھے پانچ بجے ہیں۔'],
+      ['السَّاعَةُ الْعَاشِرَةُ وَالرُّبْعُ', 'as-saaʿatu l-ʿaashiratu war-rubʿu', 'It’s quarter past ten.', 'سوا دس بجے ہیں۔'],
+      ['السَّاعَةُ الثَّامِنَةُ إِلَّا رُبْعًا', 'as-saaʿatu th-thaaminatu illaa rubʿan', 'It’s quarter to eight.', 'پونے آٹھ بجے ہیں۔'],
+      ['يَبْدَأُ الدَّوَامُ فِي السَّاعَةِ السَّابِعَةِ', 'yabda’u d-dawaamu fis-saaʿati s-saabiʿati', 'Work starts at seven o’clock.', 'ڈیوٹی سات بجے شروع ہوتی ہے۔'],
+      ['زُرْتُهُ أَمْسِ', 'zurtuhuu amsi', 'I visited him yesterday.', 'میں کل (گزشتہ) اس سے ملنے گیا۔'],
+      ['سَأُسَافِرُ يَوْمَ الْخَمِيسِ', 'sa-usaafiru yawma l-khamiisi', 'I will travel on Thursday.', 'میں جمعرات کو سفر کروں گا۔'],
+    ],
+    practice: [
+      { en: 'Say “It’s four o’clock.”', ur: '«چار بجے ہیں» کہیں۔', a: 'السَّاعَةُ الرَّابِعَةُ', tr: 'as-saaʿatu r-raabiʿatu' },
+      { en: 'Say “It’s half past nine.”', ur: '«ساڑھے نو بجے ہیں» کہیں۔', a: 'السَّاعَةُ التَّاسِعَةُ وَالنِّصْفُ', tr: 'as-saaʿatu t-taasiʿatu wan-niṣfu' },
+      { en: 'Say “I went to the market yesterday.”', ur: '«میں کل بازار گیا تھا» کہیں۔', a: 'ذَهَبْتُ إِلَى السُّوقِ أَمْسِ', tr: 'dhahabtu ila s-suuqi amsi' },
+    ],
+  },
 ];
 
 // ---------------------------------------------------------------- interface text
@@ -1194,7 +1626,7 @@ function homePage(lang) {
     cards: [
       ['alphabet.html', 'حروفِ تہجی', `تمام ${n(28)} حروف، ان کی چاروں شکلیں، تلفظ کی رہنمائی اور ہر حرف کی ایک مثال۔`],
       ['writing.html', 'لکھنے کی مشق', 'ہر حرف اسکرین پر انگلی سے لکھیں، یا مفت ورک شیٹس پرنٹ کریں۔'],
-      ['lessons.html', 'گرامر کے اسباق', `${n(LESSONS.length)} مختصر اسباق، پہلے جملے سے اپنے بارے میں بات کرنے تک۔`],
+      ['lessons.html', 'گرامر کے اسباق', `${n(LESSONS.length)} مختصر اسباق، پہلے جملے سے افعال، گنتی اور وقت بتانے تک۔`],
       ['reading.html', 'آسان کہانیاں', `${n(STORIES.length)} مختصر کہانیاں اعراب کے ساتھ؛ ہر لفظ پر ٹیپ کر کے مطلب دیکھیں۔`],
       ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے رنگوں تک، فلیش کارڈز کے ساتھ۔`],
       ['quran.html', 'قرآنی عربی', `سورہ فاتحہ اور ${n(SURAHS.length - 1)} مختصر سورتیں لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
@@ -1222,7 +1654,7 @@ function homePage(lang) {
     cards: [
       ['alphabet.html', 'Alphabet', 'All 28 letters with their four shapes, pronunciation tips and an example word for each.'],
       ['writing.html', 'Writing practice', 'Trace every letter on screen with your finger, or print free tracing worksheets.'],
-      ['lessons.html', 'Grammar lessons', `${LESSONS.length} short lessons, from your first sentence to talking about yourself.`],
+      ['lessons.html', 'Grammar lessons', `${LESSONS.length} short lessons, from your first sentence to verbs, numbers and telling the time.`],
       ['reading.html', 'Easy stories', `${STORIES.length} short vowelled stories; tap any word to see what it means.`],
       ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to colours, with flashcards.`],
       ['quran.html', 'Quranic Arabic', `Al-Fatiha and ${SURAHS.length - 1} short surahs word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
@@ -1443,25 +1875,30 @@ ${sections}
 
 function lessonsPage(lang) {
   const ur = lang === 'ur';
-  const list = LESSONS.map((l, i) => `<li><a href="${link(lang, l.slug + '.html')}"><span class="num">${num(lang, i + 1)}</span><span><strong>${fmt(l[lang].title)}</strong><p>${fmt(l[lang].short)}</p></span><span class="ar" lang="ar">${l.key}</span></a></li>`).join('\n  ');
+  const item = (l, i) => `<li><a href="${link(lang, l.slug + '.html')}"><span class="num">${num(lang, i + 1)}</span><span><strong>${fmt(l[lang].title)}</strong><p>${fmt(l[lang].short)}</p></span><span class="ar" lang="ar">${l.key}</span></a></li>`;
+  const parts = ur
+    ? [[0, 8, 'حصہ اول: پہلے جملے'], [8, 16, 'حصہ دوم: صفت، گنتی اور روزمرہ کے افعال'], [16, 24, 'حصہ سوم: حکم، مستقبل، وجہ اور وقت']]
+    : [[0, 8, 'Part 1: First sentences'], [8, 16, 'Part 2: Describing, counting and everyday verbs'], [16, 24, 'Part 3: Instructions, the future, reasons and time']];
+  const list = parts.filter(([a]) => a < LESSONS.length).map(([a, b, h], k) => `<h2 class="part-h">${h}</h2>
+<ol class="lesson-list">
+  ${LESSONS.slice(a, k === parts.length - 1 ? LESSONS.length : b).map((l, i) => item(l, a + i)).join('\n  ')}
+</ol>`).join('\n');
   const C = ur ? {
-    title: 'ابتدائی عربی گرامر کے اسباق | حرف', desc: `اردو میں عربی گرامر کے ${ud(LESSONS.length)} ابتدائی اسباق: هٰذَا، الـ، حروفِ جر، مذکر و مؤنث، اضافت، ضمیریں، صفت، جمع، ماضی اور مضارع، مثالوں اور آواز کے ساتھ۔`,
+    title: 'ابتدائی عربی گرامر کے اسباق | حرف', desc: `اردو میں عربی گرامر کے ${ud(LESSONS.length)} ابتدائی اسباق: هٰذَا، الـ، حروفِ جر، مذکر و مؤنث، اضافت، ضمیریں، صفت، جمع، ماضی، مضارع، امر، مستقبل، گنتی اور وقت، مثالوں اور آواز کے ساتھ۔`,
     h1: 'ابتدائی عربی گرامر کے اسباق',
-    lead: `${num(lang, LESSONS.length)} مختصر اسباق جو آپ کو پہلے جملے سے اپنے بارے میں بات کرنے تک لے جاتے ہیں۔ ان کی ترتیب غیر عرب طلبہ کے کلاسیکی نصاب، جیسے مدینہ یونیورسٹی کی مشہور کتب، کے انداز پر ہے: ایک وقت میں ایک قاعدہ، اور بہت سی مثالیں۔`,
+    lead: `${num(lang, LESSONS.length)} مختصر اسباق جو آپ کو پہلے جملے سے افعال، گنتی اور وقت بتانے تک لے جاتے ہیں۔ ان کی ترتیب غیر عرب طلبہ کے کلاسیکی نصاب، جیسے مدینہ یونیورسٹی کی مشہور کتب، کے انداز پر ہے: ایک وقت میں ایک قاعدہ، اور بہت سی مثالیں۔`,
     first: 'ابھی حروف نہیں پہچانتے؟ پہلے حروفِ تہجی سیکھ لیں۔',
   } : {
-    title: 'Arabic grammar lessons for beginners | Harf', desc: `${LESSONS.length} beginner Arabic grammar lessons: this and that, al-, prepositions, masculine and feminine, possession, pronouns, adjectives, plurals and past and present verbs, with examples and audio.`,
+    title: 'Arabic grammar lessons for beginners | Harf', desc: `${LESSONS.length} beginner Arabic grammar lessons: this and that, al-, prepositions, masculine and feminine, possession, pronouns, adjectives, plurals, verbs, the future, numbers and time, with examples and audio.`,
     h1: 'Arabic grammar lessons for beginners',
-    lead: `${LESSONS.length} short lessons that take you from your first sentence to talking about yourself. They follow the step-by-step order of classic courses for non-Arabic speakers, such as the well-known Madinah books: one small pattern at a time, with plenty of examples.`,
+    lead: `${LESSONS.length} short lessons that take you from your first sentence to verbs, numbers and telling the time. They follow the step-by-step order of classic courses for non-Arabic speakers, such as the well-known Madinah books: one small pattern at a time, with plenty of examples.`,
     first: 'Can’t read the letters yet? Start with the alphabet.',
   };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.lessons]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
 <p><a href="${link(lang, 'alphabet.html')}">${C.first}</a></p>
-<ol class="lesson-list">
-  ${list}
-</ol>
+${list}
 <section class="box" style="margin-top:28px"><p>${ur ? `اسباق کے ساتھ پڑھنے کی مشق کے لیے <a href="${link(lang, 'reading.html')}">آسان عربی کہانیاں</a> پڑھیں۔` : `Practise reading alongside the lessons with our <a href="${link(lang, 'reading.html')}">easy Arabic stories</a>.`}</p></section>`;
   return layout(lang, { file: 'lessons.html', section: 'lessons', title: C.title, desc: C.desc, body });
 }
@@ -2161,7 +2598,8 @@ html[lang="ur"] .fact h3{font-family:var(--urdu);text-transform:none;letter-spac
 .example > .ar{font-size:36px}
 .pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:18px;margin-top:28px}
 
-.lesson-list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.lesson-list{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:10px}
+.part-h{margin-top:8px}
 .lesson-list a{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 18px;text-decoration:none;color:var(--ink)}
 .lesson-list a:hover{border-color:var(--accent)}
 .lesson-list .num{font-family:var(--display);font-size:26px;color:var(--gold);text-align:center}
