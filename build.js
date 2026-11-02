@@ -688,6 +688,33 @@ const STORIES = [
       { en: 'When does he go to the market?', ur: 'وہ بازار کب جاتا ہے؟', a: 'يَوْمَ الْجُمُعَةِ', aEn: 'On Fridays.', aUr: 'جمعے کے دن۔' },
       { en: 'What price did they agree on?', ur: 'آخر میں کتنی قیمت طے ہوئی؟', a: 'ثَمَانِيَةُ رِيَالَاتٍ', aEn: 'Eight riyals.', aUr: 'آٹھ ریال۔' },
     ] },
+  { slug: 'at-the-doctor', level: 3, ar: 'عِنْدَ الطَّبِيبِ', en: 'At the doctor', ur: 'ڈاکٹر کے پاس', afterEn: 'after lessons 13–19', afterUr: 'سبق ۱۳ تا ۱۹ کے بعد',
+    s: [
+      { w: [['ذَهَبْتُ', 'I went', 'میں گیا'], ['إِلَى', 'to', 'کے پاس'], ['الطَّبِيبِ', 'the doctor', 'ڈاکٹر'], ['الْيَوْمَ.', 'today', 'آج']], tr: 'dhahabtu ila ṭ-ṭabiibi l-yawma.', en: 'I went to the doctor today.', ur: 'میں آج ڈاکٹر کے پاس گیا۔' },
+      { w: [['قَالَ', 'said', 'کہا'], ['الطَّبِيبُ:', 'the doctor', 'ڈاکٹر نے'], ['مَاذَا', 'what', 'کیا'], ['بِكَ؟', 'with you', 'آپ کو']], tr: 'qaala ṭ-ṭabiibu: maadhaa bika?', en: 'The doctor said, “What’s wrong?”', ur: 'ڈاکٹر نے کہا: «آپ کو کیا تکلیف ہے؟»' },
+      { w: [['قُلْتُ:', 'I said', 'میں نے کہا'], ['عِنْدِي', 'I have', 'مجھے ہے'], ['صُدَاعٌ،', 'a headache', 'سر درد'], ['وَلَمْ', 'and did not', 'اور نہیں'], ['أَنَمْ', 'I sleep', 'میں سویا'], ['جَيِّدًا.', 'well', 'ٹھیک سے']], tr: 'qultu: ʿindii ṣudaaʿun, wa-lam anam jayyidan.', en: 'I said, “I have a headache, and I didn’t sleep well.”', ur: 'میں نے کہا: «میرے سر میں درد ہے، اور میں ٹھیک سے نہیں سویا۔»' },
+      { w: [['هَلْ', '(question word)', 'کیا'], ['عِنْدَكَ', 'you have', 'آپ کو'], ['حُمًّى؟', 'a fever', 'بخار']], tr: 'hal ʿindaka ḥummaa?', en: '“Do you have a fever?”', ur: '«کیا آپ کو بخار ہے؟»' },
+      { w: [['لَا،', 'no', 'نہیں'], ['لَيْسَ', 'there is not', 'نہیں ہے'], ['عِنْدِي', 'I have', 'مجھے'], ['حُمًّى.', 'a fever', 'بخار']], tr: 'laa, laysa ʿindii ḥummaa.', en: '“No, I don’t have a fever.”', ur: '«نہیں، مجھے بخار نہیں ہے۔»' },
+      { w: [['اِشْرَبْ', 'drink', 'پئیں'], ['مَاءً', 'water', 'پانی'], ['كَثِيرًا', 'a lot', 'بہت سا'], ['وَنَمْ', 'and sleep', 'اور سوئیں'], ['مُبَكِّرًا.', 'early', 'جلدی']], tr: 'ishrab maa’an kathiiran wa-nam mubakkiran.', en: '“Drink plenty of water and go to sleep early.”', ur: '«بہت سا پانی پئیں اور جلدی سوئیں۔»' },
+      { w: [['سَتَكُونُ', 'you will be', 'آپ ہو جائیں گے'], ['بِخَيْرٍ', 'well', 'ٹھیک'], ['إِنْ', 'if', 'اگر'], ['شَاءَ', 'wills', 'چاہا'], ['اللَّهُ.', 'Allah', 'اللہ نے']], tr: 'sa-takuunu bi-khayrin in shaa’a llaah.', en: '“You will be well, God willing.”', ur: '«ان شاء اللہ آپ ٹھیک ہو جائیں گے۔»' },
+    ],
+    q: [
+      { en: 'What was wrong with him?', ur: 'اسے کیا تکلیف تھی؟', a: 'عِنْدَهُ صُدَاعٌ', aEn: 'He had a headache and hadn’t slept well.', aUr: 'سر میں درد تھا اور وہ ٹھیک سے نہیں سویا تھا۔' },
+      { en: 'What did the doctor tell him to do?', ur: 'ڈاکٹر نے اسے کیا کرنے کو کہا؟', a: 'اِشْرَبْ مَاءً كَثِيرًا وَنَمْ مُبَكِّرًا', aEn: 'Drink plenty of water and sleep early.', aUr: 'بہت سا پانی پیے اور جلدی سوئے۔' },
+    ] },
+  { slug: 'a-trip-to-makkah', level: 3, ar: 'رِحْلَةٌ إِلَى مَكَّةَ', en: 'A trip to Makkah', ur: 'مکہ کا سفر', afterEn: 'after lessons 18–24', afterUr: 'سبق ۱۸ تا ۲۴ کے بعد',
+    s: [
+      { w: [['سَنُسَافِرُ', 'we will travel', 'ہم سفر کریں گے'], ['إِلَى', 'to', 'کی طرف'], ['مَكَّةَ', 'Makkah', 'مکہ'], ['يَوْمَ', 'on the day of', 'کے دن'], ['الْخَمِيسِ.', 'Thursday', 'جمعرات']], tr: 'sa-nusaafiru ilaa makkata yawma l-khamiisi.', en: 'We will travel to Makkah on Thursday.', ur: 'ہم جمعرات کو مکہ کا سفر کریں گے۔' },
+      { w: [['سَنَخْرُجُ', 'we will leave', 'ہم نکلیں گے'], ['مِنَ', 'from', 'سے'], ['الْبَيْتِ', 'the house', 'گھر'], ['فِي', 'at', 'پر'], ['السَّاعَةِ', 'the hour', 'بجے'], ['السَّادِسَةِ', 'sixth', 'چھ'], ['صَبَاحًا.', 'in the morning', 'صبح']], tr: 'sa-nakhruju mina l-bayti fis-saaʿati s-saadisati ṣabaaḥan.', en: 'We will leave home at six in the morning.', ur: 'ہم صبح چھ بجے گھر سے نکلیں گے۔' },
+      { w: [['سَأَلَنِي', 'asked me', 'مجھ سے پوچھا'], ['ابْنِي:', 'my son', 'میرے بیٹے نے'], ['كَمْ', 'how many', 'کتنے'], ['سَاعَةً', 'hours', 'گھنٹے'], ['سَنُسَافِرُ؟', 'will we travel', 'ہم سفر کریں گے']], tr: 'sa’alanii bnii: kam saaʿatan sa-nusaafiru?', en: 'My son asked me, “How many hours will we travel?”', ur: 'میرے بیٹے نے مجھ سے پوچھا: «ہم کتنے گھنٹے سفر کریں گے؟»' },
+      { w: [['قُلْتُ:', 'I said', 'میں نے کہا'], ['الطَّرِيقُ', 'the road', 'راستہ'], ['طَوِيلٌ،', 'is long', 'لمبا ہے'], ['لٰكِنَّنَا', 'but we', 'لیکن ہم'], ['سَنَصِلُ', 'will arrive', 'پہنچ جائیں گے'], ['قَبْلَ', 'before', 'سے پہلے'], ['الْعَصْرِ.', 'Asr (afternoon prayer)', 'عصر']], tr: 'qultu: aṭ-ṭariiqu ṭawiilun, laakinnanaa sa-naṣilu qabla l-ʿaṣri.', en: 'I said, “The road is long, but we will arrive before Asr.”', ur: 'میں نے کہا: «راستہ لمبا ہے، لیکن ہم عصر سے پہلے پہنچ جائیں گے۔»' },
+      { w: [['سَأَلَتْ', 'asked', 'پوچھا'], ['بِنْتِي:', 'my daughter', 'میری بیٹی نے'], ['لِمَاذَا', 'why', 'کیوں'], ['نَذْهَبُ', 'are we going', 'ہم جا رہے ہیں'], ['إِلَى', 'to', 'کی طرف'], ['مَكَّةَ؟', 'Makkah', 'مکہ']], tr: 'sa’alat bintii: limaadhaa nadh-habu ilaa makkata?', en: 'My daughter asked, “Why are we going to Makkah?”', ur: 'میری بیٹی نے پوچھا: «ہم مکہ کیوں جا رہے ہیں؟»' },
+      { w: [['قُلْتُ:', 'I said', 'میں نے کہا'], ['لِأَنَّنَا', 'because we', 'کیونکہ ہم'], ['سَنَعْتَمِرُ،', 'will perform umrah', 'عمرہ کریں گے'], ['إِنْ', 'if', 'اگر'], ['شَاءَ', 'wills', 'چاہا'], ['اللَّهُ.', 'Allah', 'اللہ نے']], tr: 'qultu: li-annanaa sa-naʿtamiru, in shaa’a llaah.', en: 'I said, “Because we will perform umrah, God willing.”', ur: 'میں نے کہا: «کیونکہ ان شاء اللہ ہم عمرہ کریں گے۔»' },
+    ],
+    q: [
+      { en: 'When will they travel?', ur: 'وہ کب سفر کریں گے؟', a: 'يَوْمَ الْخَمِيسِ', aEn: 'On Thursday.', aUr: 'جمعرات کو۔' },
+      { en: 'Why are they going to Makkah?', ur: 'وہ مکہ کیوں جا رہے ہیں؟', a: 'لِأَنَّهُمْ سَيَعْتَمِرُونَ', aEn: 'To perform umrah.', aUr: 'عمرہ کرنے کے لیے۔' },
+    ] },
 ];
 
 // ---------------------------------------------------------------- level test
