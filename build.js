@@ -23,7 +23,7 @@ const KOFI_URL = 'https://ko-fi.com/164fawad';
 const ADSENSE_CLIENT = '';
 const CONTACT_EMAIL = 'faadi164@gmail.com';
 const GA_ID = 'G-DYRQWLHBQB';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
-const GSC_VERIFY = '';  // Google Search Console verification code (only the content="..." value)
+const GSC_VERIFY = '1L9mAoymv9_mHwRlJmemUA-Eg8VcyPHfUBMqNZoehlY';  // Google Search Console verification code (only the content="..." value)
 const UPDATED = { en: '3 November 2026', ur: '۳ نومبر ۲۰۲۶' };
 const YEAR = '2026';
 const OUT = path.join(__dirname, '_site');
