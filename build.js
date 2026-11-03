@@ -3016,7 +3016,10 @@ function homePage(lang) {
     h1: 'مفت عربی سیکھیں، ایک ایک حرف کر کے',
     lead: `حرف آپ کو عربی پہلے حرف سے سکھاتا ہے۔ ${n(28)} حروف اور ان کی بدلتی شکلیں سیکھیں، گرامر کے مختصر اسباق پڑھیں، فلیش کارڈز سے الفاظ یاد کریں اور کوئز سے خود کو جانچیں۔ ہر عربی لفظ کی آواز سنی جا سکتی ہے۔`,
     cta1: 'حروفِ تہجی سے شروع کریں', cta2: 'اسباق دیکھیں',
+    newBadge: '🎬 پہلے اسباق میں ویڈیو دستیاب ہے',
+    savesNote: 'آپ کی پیشرفت خود بخود اس براؤزر میں محفوظ ہوتی رہتی ہے — سائن اپ کی ضرورت نہیں۔',
     s1: 'سیکھے گئے حروف', s2: 'یاد کیے گئے الفاظ', s3: 'بہترین کوئز',
+    startBanner: 'نئے ہیں؟ <a href="alphabet.html"><strong>حروفِ تہجی سے شروع کریں ←</strong></a> — پانچ منٹ میں اپنے پہلے ۳ حروف سیکھیں۔',
     insideH: 'یہاں آپ کیا سیکھیں گے',
     cards: [
       ['alphabet.html', 'حروفِ تہجی', `تمام ${n(28)} حروف، ان کی چاروں شکلیں، تلفظ کی رہنمائی اور ہر حرف کی ایک مثال۔`],
@@ -3045,7 +3048,10 @@ function homePage(lang) {
     h1: 'Learn Arabic for free, one letter at a time',
     lead: 'Harf teaches Arabic from the very first letter. Learn the 28 letters and how they change shape, follow short grammar lessons, build vocabulary with flashcards and test yourself with quizzes. Every Arabic word has audio.',
     cta1: 'Start with the alphabet', cta2: 'Go to the lessons',
+    newBadge: '🎬 Video lessons now available for the first lessons',
+    savesNote: 'Your progress saves automatically in this browser — no sign-up needed.',
     s1: 'Letters learned', s2: 'Words known', s3: 'Best quiz',
+    startBanner: 'New here? <a href="alphabet.html"><strong>Start with the alphabet →</strong></a> — learn your first 3 letters in 5 minutes.',
     insideH: 'What you can learn here',
     cards: [
       ['alphabet.html', 'Alphabet', 'All 28 letters with their four shapes, pronunciation tips and an example word for each.'],
@@ -3082,13 +3088,16 @@ function homePage(lang) {
       <a class="btn gold" href="${link(lang, 'alphabet.html')}">${C.cta1}</a>
       <a class="btn ghost" href="${link(lang, 'lessons.html')}">${C.cta2}</a>
     </div>
+    <p class="hero-note">${C.newBadge}</p>
+    <p class="hero-note"><small>${C.savesNote}</small></p>
     <p class="hero-note"><a href="${link(lang, 'level-test.html')}">${ur ? 'معلوم نہیں کہاں سے شروع کریں؟ دو منٹ کا لیول ٹیسٹ دیں ←' : 'Not sure where to start? Take the two-minute level test →'}</a></p>
   </div>
   <div class="mihrab" aria-hidden="true">
     <div class="mihrab-in"><span class="calli" lang="ar">اِقْرَأْ</span><small>${ur ? 'پڑھیے' : 'Read'}</small></div>
   </div>
 </section>
-<div class="stats" id="stats" data-letters="28" data-words="${deckTotal}">
+<div class="start-banner" id="startBanner">${C.startBanner}</div>
+<div class="stats" id="stats" data-letters="28" data-words="${deckTotal}" style="display:none">
   <div class="stat"><strong id="sLetters">${n(0)}/${n(28)}</strong><span>${C.s1}</span><div class="meter"><i id="mLetters"></i></div></div>
   <div class="stat"><strong id="sWords">${n(0)}/${n(deckTotal)}</strong><span>${C.s2}</span><div class="meter"><i id="mWords"></i></div></div>
   <div class="stat"><strong id="sBest">–</strong><span>${C.s3}</span><div class="meter"><i id="mBest"></i></div></div>
@@ -4211,6 +4220,8 @@ html[lang="ur"] .eyebrow{letter-spacing:0;text-transform:none;font-size:14px}
 .prose h2{margin-top:1.4em}
 .note{font-size:15px;color:var(--muted)}
 
+.start-banner{background:var(--accent-soft,#e8f8f4);border:1.5px solid var(--accent,#1fa882);border-radius:12px;padding:14px 18px;margin-bottom:28px;font-size:15px;line-height:1.5}
+.start-banner a{color:var(--accent,#1fa882)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
 .stat strong{display:block;font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums;line-height:1.5}
@@ -4845,12 +4856,18 @@ const APP_JS = String.raw`(function () {
   if (st) {
     var known0 = store.get('known', []), best0 = store.get('best', null);
     var tl = +st.getAttribute('data-letters'), tw = +st.getAttribute('data-words');
-    $('#sLetters').textContent = N(learned.length) + '/' + N(tl);
-    $('#mLetters').style.width = Math.min(100, learned.length / tl * 100) + '%';
-    $('#sWords').textContent = N(known0.length) + '/' + N(tw);
-    $('#mWords').style.width = Math.min(100, known0.length / tw * 100) + '%';
-    $('#sBest').textContent = best0 === null ? '–' : N(best0) + '/' + N(10);
-    $('#mBest').style.width = best0 === null ? '0' : (best0 * 10) + '%';
+    var hasProgress = learned.length > 0 || known0.length > 0 || best0 !== null;
+    var banner = $('#startBanner');
+    if (hasProgress) {
+      st.style.display = '';
+      if (banner) banner.style.display = 'none';
+      $('#sLetters').textContent = N(learned.length) + '/' + N(tl);
+      $('#mLetters').style.width = Math.min(100, learned.length / tl * 100) + '%';
+      $('#sWords').textContent = N(known0.length) + '/' + N(tw);
+      $('#mWords').style.width = Math.min(100, known0.length / tw * 100) + '%';
+      $('#sBest').textContent = best0 === null ? '–' : N(best0) + '/' + N(10);
+      $('#mBest').style.width = best0 === null ? '0' : (best0 * 10) + '%';
+    }
   }
 
   var fc = $('#flash');
