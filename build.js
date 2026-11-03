@@ -21,7 +21,7 @@ const path = require('path');
 const SITE_URL = 'https://learnwithharf.com';
 const KOFI_URL = 'https://ko-fi.com/164fawad';
 const ADSENSE_CLIENT = '';
-const CONTACT_EMAIL = '';
+const CONTACT_EMAIL = 'faadi164@gmail.com';
 const GA_ID = 'G-DYRQWLHBQB';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
 const GSC_VERIFY = '';  // Google Search Console verification code (only the content="..." value)
 const UPDATED = { en: '3 November 2026', ur: '۳ نومبر ۲۰۲۶' };
