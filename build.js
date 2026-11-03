@@ -882,7 +882,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-3-the', key: 'الـ',
+    slug: 'lesson-3-the', key: 'الـ', video: 'lesson-3-the.mp4',
     en: {
       title: 'The (al-) and describing things', short: 'Make nouns definite and describe them. Sun and moon letters.',
       intro: 'Add {الـ} (al-) to the front of a noun to make it definite: {كِتَابٌ} (a book) becomes {الْكِتَابُ} (the book), and the -un ending shortens to -u. Put a describing word after a definite noun and you have a full sentence: {الْكِتَابُ جَدِيدٌ}, “The book is new”.',
@@ -918,7 +918,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-4-where', key: 'أَيْنَ',
+    slug: 'lesson-4-where', key: 'أَيْنَ', video: 'lesson-4-where.mp4',
     en: {
       title: 'Where? In, on, from, to', short: 'Ask where things are and answer with prepositions.',
       intro: 'Ask {أَيْنَ؟} (ayna, where?) and answer with a preposition. After {فِي} (in), {عَلَى} (on), {مِنْ} (from) and {إِلَى} (to), the end of the noun changes from -u to -i: {الْبَيْتُ} becomes {فِي الْبَيْتِ} (in the house).',
@@ -990,7 +990,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-6-whose', key: 'لِمَنْ',
+    slug: 'lesson-6-whose', key: 'لِمَنْ', video: 'lesson-6-whose.mp4',
     en: {
       title: 'Whose? Saying “of” (iḍaafa)', short: 'Join two nouns to show who owns what.',
       intro: 'To say “Muhammad’s book” or “the door of the house”, put two nouns side by side, the thing first and the owner second: {كِتَابُ مُحَمَّدٍ}, {بَابُ الْبَيْتِ}. This pairing is called iḍaafa. The first noun never takes al- or the -un ending, and the second noun ends in -i.',
@@ -1026,7 +1026,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-7-pronouns', key: 'أَنَا',
+    slug: 'lesson-7-pronouns', key: 'أَنَا', video: 'lesson-7-pronouns.mp4',
     en: {
       title: 'I, you, he, she', short: 'Talk about yourself and other people.',
       intro: 'Pronouns work like {هٰذَا}: put one before a noun or describing word and you have a sentence. {أَنَا طَالِبٌ} means “I am a student”. Arabic has two words for “you”: {أَنْتَ} when you speak to a man and {أَنْتِ} when you speak to a woman.',
