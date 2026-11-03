@@ -809,7 +809,7 @@ const LEVEL_QS = [
 // All explanations and example sentences here are original.
 const LESSONS = [
   {
-    slug: 'lesson-1-this-is', key: 'هٰذَا',
+    slug: 'lesson-1-this-is', key: 'هٰذَا', video: 'lesson-1-this-is.mp4',
     en: {
       title: 'This is… and your first questions', short: 'Your first sentence. What is this? Who is this?',
       intro: 'Your first Arabic sentence needs no verb. To say “This is a book”, put {هٰذَا} (haadhaa, this) before a noun: {هٰذَا كِتَابٌ}. There is no word for “is” in sentences like this, and no word for “a”: the ending -un on {كِتَابٌ} already means “a book”.',
@@ -846,7 +846,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-2-that-is', key: 'ذٰلِكَ',
+    slug: 'lesson-2-that-is', key: 'ذٰلِكَ', video: 'lesson-2-that-is.mp4',
     en: {
       title: 'That is…: near and far', short: 'Point to things near you and further away.',
       intro: 'Use {هٰذَا} for something near you and {ذٰلِكَ} (dhaalika, that) for something further away. The sentence pattern stays the same: {ذٰلِكَ نَجْمٌ}, “That is a star”.',
@@ -954,7 +954,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-5-feminine', key: 'هٰذِهِ',
+    slug: 'lesson-5-feminine', key: 'هٰذِهِ', video: 'lesson-5-feminine.mp4',
     en: {
       title: 'Feminine words: this and that', short: 'Masculine and feminine nouns, and the {ة} ending.',
       intro: 'Every Arabic noun is masculine or feminine. Most feminine nouns end in {ة} (taa marbuuṭa), like {سَيَّارَةٌ} (car) and {مَدْرَسَةٌ} (school). With feminine nouns, use {هٰذِهِ} (haadhihi) instead of {هٰذَا}, and {تِلْكَ} (tilka) instead of {ذٰلِكَ}.',
@@ -1062,7 +1062,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-8-my-your', key: 'كِتَابِي',
+    slug: 'lesson-8-my-your', key: 'كِتَابِي', video: 'lesson-8-my-your.mp4',
     en: {
       title: 'My, your, his, her', short: 'Add endings to say my, your, his and her.',
       intro: 'To say “my book” or “your house”, Arabic adds a short ending to the noun instead of using a separate word: {كِتَابِي} (my book), {كِتَابُكَ} (your book). A noun with one of these endings drops al- and the -un ending.',
@@ -1098,7 +1098,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-9-adjectives', key: 'كَبِيرٌ',
+    slug: 'lesson-9-adjectives', key: 'كَبِيرٌ', video: 'lesson-9-adjectives.mp4',
     en: {
       title: 'Describing things: a big house, the big house', short: 'Adjectives come after the noun and match it.',
       intro: 'In Arabic the describing word comes after the noun: {بَيْتٌ كَبِيرٌ} (baytun kabiirun) is “a big house”. The adjective copies the noun: if the noun has {الـ}, so does the adjective, and if the noun is feminine, the adjective takes {ـة} too.',
@@ -1134,7 +1134,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-10-plurals', key: 'هٰؤُلَاءِ',
+    slug: 'lesson-10-plurals', key: 'هٰؤُلَاءِ', video: 'lesson-10-plurals.mp4',
     en: {
       title: 'More than one: plurals and “these”', short: 'Plurals with endings, broken plurals, and {هٰؤُلَاءِ}.',
       intro: 'Arabic makes plurals in two ways. Many words for people add an ending: {مُسْلِمٌ} becomes {مُسْلِمُونَ} (Muslim men) and {مُسْلِمَةٌ} becomes {مُسْلِمَاتٌ} (Muslim women). Most other words change their inside pattern instead, a bit like English man → men: {كِتَابٌ} becomes {كُتُبٌ} (books). To point at people, use {هٰؤُلَاءِ} (haa’ulaa’i, these).',
@@ -3481,10 +3481,13 @@ function lessonPage(lang, i) {
   }).join('\n');
   const desc = ur ? `${plainTitle}۔ ${L.short.replace(/[{}]/g, '')} اردو میں وضاحت، مثالیں، آواز اور مشق۔`
     : `${plainTitle}. ${L.short.replace(/[{}]/g, '')} Clear explanation, examples with audio and practice.`;
+  const videoHtml = l.video
+    ? `<div class="lesson-video"><video src="/videos/${l.video}" controls preload="none" width="100%" style="border-radius:10px;max-width:640px;display:block;margin:0 auto 1.5rem"></video></div>`
+    : '';
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['lessons.html', T[lang].nav.lessons], [null, `${C.label} ${n}`]])}
 <p class="eyebrow">${C.label} ${n}${ur ? '،' : ' ·'} <span class="ar" lang="ar">${l.key}</span></p>
 <h1>${fmt(L.title)}</h1>
-<p class="lead">${fmt(L.intro)}</p>
+${videoHtml}<p class="lead">${fmt(L.intro)}</p>
 ${picBoard(lang, l.slug)}
 <section>
   <h2>${C.ex}</h2>
@@ -5126,6 +5129,13 @@ if (require.main === module) {
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
   for (const [name, content] of Object.entries(files)) fs.writeFileSync(path.join(OUT, name), content);
+  // Copy videos folder into _site
+  const videosIn = path.join(__dirname, 'videos');
+  if (fs.existsSync(videosIn)) {
+    const videosOut = path.join(OUT, 'videos');
+    fs.mkdirSync(videosOut, { recursive: true });
+    for (const f of fs.readdirSync(videosIn)) fs.copyFileSync(path.join(videosIn, f), path.join(videosOut, f));
+  }
   console.log(`Built ${Object.keys(files).length} files into _site`);
 }
 
