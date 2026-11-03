@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 
 // ---------------------------------------------------------------- settings
-const SITE_URL = 'https://faadi164-sudo.github.io';
+const SITE_URL = 'https://learnwithharf.com';
 const KOFI_URL = 'https://ko-fi.com/164fawad';
 const ADSENSE_CLIENT = '';
 const CONTACT_EMAIL = '';
