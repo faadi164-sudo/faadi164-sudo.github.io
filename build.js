@@ -2937,6 +2937,26 @@ function layout(lang, o) {
   const ads = ADSENSE_CLIENT
     ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n` : '';
   const verify = GSC_VERIFY ? `<meta name="google-site-verification" content="${esc(GSC_VERIFY)}">\n` : '';
+  const brevoHead = o.brevo ? `<style>
+#sib-container input::placeholder{font-family:Helvetica,sans-serif;text-align:left;color:#c0ccda}
+#sib-container textarea::placeholder{font-family:Helvetica,sans-serif;text-align:left;color:#c0ccda}
+#sib-container a{text-decoration:underline;color:#2BB2FC}
+:where(.sib-form-message-panel){display:none}
+</style>
+<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+` : '';
+  const brevoScript = o.brevo ? `<script>
+window.REQUIRED_CODE_ERROR_MESSAGE='Please choose a country code';
+window.LOCALE='en';
+window.EMAIL_INVALID_MESSAGE=window.SMS_INVALID_MESSAGE="The information provided is invalid. Please review the field format and try again.";
+window.REQUIRED_ERROR_MESSAGE="This field cannot be left blank. ";
+window.GENERIC_INVALID_MESSAGE="The information provided is invalid. Please review the field format and try again.";
+window.INVALID_DATE="Please enter a valid date";
+window.REQUIRED_MULTISELECT_MESSAGE='Please select at least 1 option';
+var AUTOHIDE=Boolean(0);
+</script>
+<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+` : '';
   const analytics = GA_ID
     ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
 <script>try{var q=location.search;if(/[?&]notrack=1/.test(q))localStorage.setItem('harf-notrack','1');if(/[?&]notrack=0/.test(q))localStorage.removeItem('harf-notrack');if(localStorage.getItem('harf-notrack')==='1')window['ga-disable-${GA_ID}']=true;}catch(e){}
@@ -2963,7 +2983,7 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${esc(FONTS[lang])}">
 <link rel="stylesheet" href="style.css">
-${verify}${analytics}${ads}</head>
+${verify}${analytics}${ads}${brevoHead}</head>
 <body>
 <a class="skip" href="#main">${t.skip}</a>
 <header class="top">
@@ -2990,7 +3010,7 @@ ${o.body}
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="app.js" defer></script>
-</body>
+${brevoScript}</body>
 </html>
 `;
 }
@@ -3119,8 +3139,32 @@ ${urBox}
     <p>${fmt(C.which)}</p>
   </div>
 </section>
+<section class="newsletter-box">
+  <h2>${ur ? 'نئے اسباق کی اطلاع پائیں' : 'Get notified of new lessons'}</h2>
+  <p>${ur ? 'ہفتہ وار ای‌میل — نئے اسباق، الفاظ اور عربی سیکھنے کے مشورے۔' : 'Weekly email — new lessons, words and Arabic learning tips.'}</p>
+  <div id="sib-form-container" class="sib-form-container">
+    <div id="error-message" class="sib-form-message-panel" style="font-size:14px;text-align:left;color:#661d1d;background-color:#ffeded;border-color:#ff4949;border-radius:6px;max-width:480px"><div class="sib-form-message-panel__text sib-form-message-panel__text--center"><span class="sib-form-message-panel__inner-text">${ur ? 'سبسکرپشن محفوظ نہ ہو سکی۔ دوبارہ کوشش کریں۔' : 'Your subscription could not be saved. Please try again.'}</span></div></div>
+    <div></div>
+    <div id="success-message" class="sib-form-message-panel" style="font-size:14px;text-align:left;color:#085229;background-color:#e7faf0;border-color:#13ce66;border-radius:6px;max-width:480px"><div class="sib-form-message-panel__text sib-form-message-panel__text--center"><span class="sib-form-message-panel__inner-text">${ur ? 'سبسکرپشن کامیاب ہو گئی!' : 'Your subscription has been successful.'}</span></div></div>
+    <div></div>
+    <div id="sib-container" class="sib-container--large sib-container--vertical" style="max-width:480px;text-align:center;background-color:transparent;border:none;padding:0">
+      <form id="sib-form" method="POST" action="https://ea83693a.sibforms.com/serve/MUIFAAH66-d_w4RaguWR00QGd4w5F-wrrSBwfeNkipyeoElLEoi_s0m06F_Fix8QzlpIZ8TUQyBs99LZC7_z5mC5HfKwdRGkZAEluDHmEXD2UpSDRYXB3umsPl1_GDvOlT6zkx27Mk0OgpKARqEQM75Zs8fK-KjIvA470FGVzx58pC7zOX2U8R9dkMZXgcjqhsR48KSdHMen7MMi0A==" data-type="subscription">
+        <div class="newsletter-row">
+          <input class="input newsletter-input" type="text" id="EMAIL" name="EMAIL" autocomplete="email" placeholder="${ur ? 'آپ کا ای‌میل' : 'Your email address'}" data-required="true" required />
+          <label class="entry__error entry__error--primary" style="font-size:14px;color:#661d1d;background-color:#ffeded;border-color:#ff4949;border-radius:3px"></label>
+          <button class="btn gold sib-form-block__button sib-form-block__button-with-loader" type="submit" form="sib-form">
+            <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512" style="width:14px;height:14px;vertical-align:middle;margin-right:4px"><path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z"/></svg>
+            ${ur ? 'سبسکرائب کریں' : 'Subscribe'}
+          </button>
+        </div>
+        <input type="text" name="email_address_check" value="" class="input--hidden">
+        <input type="hidden" name="locale" value="${ur ? 'ur' : 'en'}">
+      </form>
+    </div>
+  </div>
+</section>
 ${supportBox(lang)}`;
-  return layout(lang, { file: 'index.html', section: 'home', title: C.title, desc: C.desc, body });
+  return layout(lang, { file: 'index.html', section: 'home', title: C.title, desc: C.desc, body, brevo: true });
 }
 
 function letterName(lang, x) { return lang === 'ur' ? x.ur : x.en; }
@@ -4222,6 +4266,12 @@ html[lang="ur"] .eyebrow{letter-spacing:0;text-transform:none;font-size:14px}
 
 .start-banner{background:var(--accent-soft,#e8f8f4);border:1.5px solid var(--accent,#1fa882);border-radius:12px;padding:14px 18px;margin-bottom:28px;font-size:15px;line-height:1.5}
 .start-banner a{color:var(--accent,#1fa882)}
+.newsletter-box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px 28px;margin:0 0 32px}
+.newsletter-box h2{margin:0 0 6px;font-size:20px}
+.newsletter-box p{margin:0 0 14px;color:var(--muted);font-size:15px}
+.newsletter-row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start}
+.newsletter-input{flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;background:var(--bg);color:var(--text)}
+.newsletter-input:focus{outline:2px solid var(--accent,#1fa882);border-color:transparent}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
 .stat strong{display:block;font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums;line-height:1.5}
