@@ -3113,7 +3113,7 @@ function homePage(lang) {
     <p class="hero-note"><a href="${link(lang, 'level-test.html')}">${ur ? 'معلوم نہیں کہاں سے شروع کریں؟ دو منٹ کا لیول ٹیسٹ دیں ←' : 'Not sure where to start? Take the two-minute level test →'}</a></p>
   </div>
   <div class="mihrab" aria-hidden="true">
-    <div class="mihrab-in"><span class="calli" lang="ar">اِقْرَأْ</span><small>${ur ? 'پڑھیے' : 'Read'}</small></div>
+    <div class="mihrab-in"><img class="mascot" src="/img/teacher-hero.webp" alt="" width="900" height="900" fetchpriority="high"></div>
   </div>
 </section>
 <div class="start-banner" id="startBanner">${C.startBanner}</div>
@@ -3512,6 +3512,7 @@ function lessonsPage(lang) {
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.lessons]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
+<img class="banner-img" src="/img/classroom-banner.webp" alt="${ur ? 'ایک استانی بورڈ پر عربی حروف دکھا رہی ہیں' : 'A cartoon Arabic teacher showing letters on a whiteboard to two students'}" width="1400" height="674" loading="lazy">
 <p><a href="${link(lang, 'alphabet.html')}">${C.first}</a></p>
 ${list}
 <section class="box" style="margin-top:28px"><p>${ur ? `اسباق کے ساتھ پڑھنے کی مشق کے لیے <a href="${link(lang, 'reading.html')}">آسان عربی کہانیاں</a> پڑھیں۔` : `Practise reading alongside the lessons with our <a href="${link(lang, 'stories.html')}">Arabic stories</a>.`}</p></section>`;
@@ -4829,6 +4830,13 @@ html[lang="ur"] .pic .mean{line-height:2}
 @media (min-width:521px){.pics:has(> .pic:nth-child(6):last-child),.pics:has(> .pic:nth-child(3):last-child){grid-template-columns:repeat(3,1fr);max-width:690px}}
 @media (max-width:520px){.pics{grid-template-columns:1fr 1fr;gap:10px}.pic svg{width:84px;height:84px}.pic .ar{font-size:21px}}
 @media (prefers-reduced-motion: reduce){ .card,.btn,.lt,.lesson-list a{transition:none} a.card:hover,.btn:hover{transform:none} }
+/* Lumina artwork: teacher mascot in the hero arch, classroom banner on the lessons page */
+.mihrab-in{position:relative;overflow:hidden}
+.mihrab-in::before{display:none}
+.mihrab-in .mascot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;border-radius:inherit;transform:scale(1.18);transform-origin:50% 40%}
+.mihrab-in::after{z-index:2}
+.banner-img{display:block;width:100%;height:auto;margin:18px 0 8px;border-radius:20px;border:1px solid var(--line-2);box-shadow:var(--shadow-lg)}
+@media (max-width:520px){.banner-img{border-radius:14px}}
 `;
 
 const APP_JS = String.raw`(function () {
@@ -5196,6 +5204,13 @@ if (require.main === module) {
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
   for (const [name, content] of Object.entries(files)) fs.writeFileSync(path.join(OUT, name), content);
+  // Copy img folder into _site
+  const imgIn = path.join(__dirname, 'img');
+  if (fs.existsSync(imgIn)) {
+    const imgOut = path.join(OUT, 'img');
+    fs.mkdirSync(imgOut, { recursive: true });
+    for (const f of fs.readdirSync(imgIn)) fs.copyFileSync(path.join(imgIn, f), path.join(imgOut, f));
+  }
   // Copy videos folder into _site
   const videosIn = path.join(__dirname, 'videos');
   if (fs.existsSync(videosIn)) {
