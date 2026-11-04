@@ -24,7 +24,7 @@ const ADSENSE_CLIENT = '';
 const CONTACT_EMAIL = 'faadi164@gmail.com';
 const GA_ID = 'G-DYRQWLHBQB';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
 const GSC_VERIFY = '1L9mAoymv9_mHwRlJmemUA-Eg8VcyPHfUBMqNZoehlY';  // Google Search Console verification code (only the content="..." value)
-const UPDATED = { en: '3 November 2026', ur: '۳ نومبر ۲۰۲۶' };
+const UPDATED = { en: '4 November 2026', ur: '۴ نومبر ۲۰۲۶' };
 const YEAR = '2026';
 const OUT = path.join(__dirname, '_site');
 
@@ -2782,6 +2782,21 @@ const BASMALA = SURAHS[0].v[0].w.map((x) => x[0]).join(' ');
 PRAYER.forEach((p) => { if (p.a === 'BASMALA') p.a = BASMALA; });
 const surahWords = (s) => s.v.reduce((n, v) => n + v.w.length, 0);
 
+// The complete Quran: all 114 surahs word by word, from data/quran (made from the Quran.com API).
+// chapters.json rows: [number, name, Arabic name, meaning (en), meaning (ur), makkah|madinah, verses].
+// NNN.json: { v: [[ [[arabic, transliteration, english, urdu], ...], verse (en), verse (ur) ], ...] }
+// The 12 surahs in SURAHS keep their own hand-written pages; the rest are built from this data.
+const QURAN_DIR = path.join(__dirname, 'data', 'quran');
+const QURAN = fs.existsSync(path.join(QURAN_DIR, 'chapters.json'))
+  ? JSON.parse(fs.readFileSync(path.join(QURAN_DIR, 'chapters.json'), 'utf8')).map(([n, en, name, meanEn, meanUr, place, verses]) => {
+    const own = SURAHS.find((s) => s.n === n);
+    const slug = own ? own.slug : en.toLowerCase().replace(/['‘’`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return { n, en, name, meanEn, meanUr, place, verses, slug, own: !!own, ur: own ? own.ur : 'سورہ ' + name };
+  })
+  : [];
+const loadSurah = (q) => JSON.parse(fs.readFileSync(path.join(QURAN_DIR, String(q.n).padStart(3, '0') + '.json'), 'utf8'))
+  .v.map(([w, en, ur]) => ({ w, en, ur }));
+
 const translit = (() => {
 // Transliterate fully vowelled Arabic into the Latin style used on Harf. Shared by build.js (copied in) and tests.
 const MAP = { 'ب': 'b', 'ت': 't', 'ث': 'th', 'ج': 'j', 'ح': 'ḥ', 'خ': 'kh', 'د': 'd', 'ذ': 'dh', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'sh', 'ص': 'ṣ', 'ض': 'ḍ', 'ط': 'ṭ', 'ظ': 'ẓ', 'ع': 'ʿ', 'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n', 'ه': 'h' };
@@ -3048,7 +3063,7 @@ function homePage(lang) {
       ...(CLASSICS.length ? [['classic-tales.html', 'کلاسیکی کہانیاں', `${n(CLASSICS.length)} پرانی حکایتیں، لفظ بہ لفظ ترجمے، تلفظ اور لفظ کے ماخذ کے ساتھ۔`]] : []),
       ['reading.html', 'آسان کہانیاں', `${n(STORIES.length)} مختصر کہانیاں اعراب کے ساتھ؛ ہر لفظ پر ٹیپ کر کے مطلب دیکھیں۔`],
       ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے پیشوں اور جسم تک، فلیش کارڈز کے ساتھ۔`],
-      ['quran.html', 'قرآنی عربی', `سورہ فاتحہ اور ${n(SURAHS.length - 1)} مختصر سورتیں لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
+      ['quran.html', 'قرآنی عربی', `مکمل قرآن (${n(114)} سورتیں) لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
       ['phrases.html', 'جملے', `ملنے جلنے، خریداری اور راستہ پوچھنے کے لیے ${n(PHRASES.length)} جملے۔`],
       ['saudi-arabic.html', 'سعودی بول چال', `سعودی عرب میں روزمرہ استعمال ہونے والے ${n(SAUDI.reduce((k, g) => k + g.items.length, 0))} جملے: دفتر، دکان، ٹیکسی اور ڈاکٹر۔`],
       ['quiz.html', 'کوئز', 'حروف اور الفاظ پر دس مختصر سوال، ہر بار نیا سیٹ۔'],
@@ -3080,7 +3095,7 @@ function homePage(lang) {
       ...(CLASSICS.length ? [['classic-tales.html', 'Classic tales', `${CLASSICS.length} old fables and folk tales with word-by-word translation, pronunciation and word origins.`]] : []),
       ['reading.html', 'Easy stories', `${STORIES.length} short vowelled stories; tap any word to see what it means.`],
       ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to jobs and the body, with flashcards.`],
-      ['quran.html', 'Quranic Arabic', `Al-Fatiha and ${SURAHS.length - 1} short surahs word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
+      ['quran.html', 'Quranic Arabic', `The complete Quran (all 114 surahs) word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
       ['phrases.html', 'Phrases', `${PHRASES.length} sentences for meeting people, shopping and getting around.`],
       ['saudi-arabic.html', 'Saudi Arabic', `${SAUDI.reduce((k, g) => k + g.items.length, 0)} phrases Saudis use every day: at work, in shops, in taxis and at the doctor.`],
       ['quiz.html', 'Quiz', 'Ten quick questions on letters and words, with a new set every time.'],
@@ -3714,20 +3729,24 @@ function quranPage(lang) {
   const n = (v) => num(lang, v);
   const cards = SURAHS.map((s) => `<a class="card" href="${link(lang, 'quran-' + s.slug + '.html')}"><h3>${ur ? s.ur : 'Surah ' + s.en}</h3><p><span class="ar" lang="ar">${s.name}</span></p><p>${ur ? `${s.meanUr}، ${n(s.v.length)} آیات` : `${s.meanEn} · ${s.v.length} verses`}</p></a>`).join('\n    ');
   const C = ur ? {
-    title: 'قرآنی عربی: لفظ بہ لفظ ترجمہ اور نماز کے الفاظ | حرف', desc: 'سورہ فاتحہ اور آخری سورتوں کا لفظ بہ لفظ اردو ترجمہ، نماز میں پڑھے جانے والے اذکار کا مطلب، اور قرآن کے عام الفاظ فلیش کارڈز کے ساتھ۔',
+    title: 'مکمل قرآن لفظ بہ لفظ اردو ترجمہ اور تلفظ | حرف', desc: 'قرآن کی تمام ۱۱۴ سورتوں کا لفظ بہ لفظ اردو ترجمہ اور تلفظ، نماز میں پڑھے جانے والے اذکار کا مطلب، اور قرآن کے عام الفاظ فلیش کارڈز کے ساتھ۔',
     h1: 'قرآنی عربی: جو پڑھتے ہیں اسے سمجھیں',
-    lead: 'ہم روزانہ نماز میں سورہ فاتحہ اور چھوٹی سورتیں پڑھتے ہیں۔ یہاں ہر لفظ کا مطلب الگ الگ سیکھیں، تاکہ اگلی بار پڑھتے ہوئے آپ جانتے ہوں کہ کیا کہہ رہے ہیں۔',
-    sH: 'سورتیں لفظ بہ لفظ', moreH: 'نماز اور عام الفاظ',
+    lead: 'ہم روزانہ نماز میں سورہ فاتحہ اور چھوٹی سورتیں پڑھتے ہیں۔ پہلے نیچے دی گئی مختصر سورتوں سے شروع کریں، پھر مکمل قرآن لفظ بہ لفظ پڑھیں، تاکہ تلاوت کرتے ہوئے آپ جانتے ہوں کہ کیا کہہ رہے ہیں۔',
+    sH: 'شروع کرنے کے لیے: مختصر سورتیں', moreH: 'نماز اور عام الفاظ',
+    allH: `مکمل قرآن: تمام ${n(114)} سورتیں`,
+    allP: 'ہر سورت کا ہر لفظ اردو معنی اور تلفظ کے ساتھ، اور ہر آیت کا ترجمہ۔ سورت پر ٹیپ کریں۔',
     prayer: ['quran-prayer-words.html', 'نماز کے اذکار', 'تکبیر سے سلام تک: نماز میں پڑھی جانے والی ہر دعا، تلفظ اور اردو ترجمے کے ساتھ۔'],
     common: ['quran-common-words.html', 'قرآن کے عام الفاظ', `قرآن میں بار بار آنے والے ${n(QWORDS.length)} الفاظ، فلیش کارڈز اور کوئز کے ساتھ۔`],
     howH: 'کیسے سیکھیں',
     how: ['ایک وقت میں ایک آیت لیں۔ ہر لفظ پر ٹیپ کر کے اس کی آواز سنیں اور اس کا مطلب پڑھیں۔', 'پھر پوری آیت کا ترجمہ پڑھیں اور دیکھیں کہ الفاظ کیسے جڑتے ہیں۔', 'اگلی نماز میں انہی معانی کو ذہن میں رکھ کر پڑھیں۔'],
     start: 'سورہ فاتحہ سے شروع کریں',
   } : {
-    title: 'Quranic Arabic: word-by-word meanings and prayer words | Harf', desc: 'Understand what you recite: Al-Fatiha and the short surahs word by word, the words of the prayer with meanings, and common Quran words with flashcards.',
+    title: 'The complete Quran word by word: meanings and pronunciation | Harf', desc: 'Understand what you recite: all 114 surahs of the Quran word by word with English meanings and pronunciation, the words of the prayer with meanings, and common Quran words with flashcards.',
     h1: 'Quranic Arabic: understand what you recite',
-    lead: 'Many of us recite Al-Fatiha and the short surahs every day without knowing what each word means. Learn them here word by word, so that next time you pray you know what you are saying.',
-    sH: 'Surahs word by word', moreH: 'Prayer and common words',
+    lead: 'Many of us recite Al-Fatiha and the short surahs every day without knowing what each word means. Start with the short surahs below, then read the complete Quran word by word, so that next time you recite you know what you are saying.',
+    sH: 'Start here: the short surahs', moreH: 'Prayer and common words',
+    allH: 'The complete Quran: all 114 surahs',
+    allP: 'Every word of every surah with its meaning and pronunciation, and the meaning of each verse. Pick a surah to open it.',
     prayer: ['quran-prayer-words.html', 'Words of the prayer', 'From the takbir to the salam: everything said in the prayer, with pronunciation and meaning.'],
     common: ['quran-common-words.html', 'Common Quran words', `${QWORDS.length} words that appear again and again in the Quran, with flashcards and a quiz.`],
     howH: 'How to use these pages',
@@ -3744,6 +3763,13 @@ function quranPage(lang) {
     ${cards}
   </div>
 </section>
+${QURAN.length ? `<section id="all">
+  <h2>${C.allH}</h2>
+  <p>${C.allP}</p>
+  <ol class="slist">
+    ${QURAN.map((q) => `<li><a href="${link(lang, 'quran-' + q.slug + '.html')}"><span class="sn">${n(q.n)}</span><span class="st"><b>${ur ? q.ur : q.en}</b><small>${ur ? `${q.meanUr} · ${n(q.verses)} آیات` : `${q.meanEn} · ${q.verses} verses`}</small></span><span class="ar" lang="ar">${q.name}</span></a></li>`).join('\n    ')}
+  </ol>
+</section>` : ''}
 <section>
   <h2>${C.moreH}</h2>
   <div class="cards">
@@ -3771,7 +3797,7 @@ function surahPage(lang, i) {
 <p class="eyebrow">${eyebrow}</p>
 <h1>${title}</h1>
 <p class="lead">${fmt(ur ? s.introUr : s.introEn)}</p>
-<p class="row"><a class="btn" href="https://quran.com/${s.n}" target="_blank" rel="noopener">${ur ? 'Quran.com پر تلاوت سنیں' : 'Listen to a recitation on Quran.com ↗'}</a><span class="note">${ur ? 'کسی بھی لفظ پر ٹیپ کر کے اس کی آواز سنیں۔' : 'Tap any word to hear it on its own.'}</span></p>
+<p class="row"><a class="btn" href="https://quran.com/${s.n}" target="_blank" rel="noopener">${ur ? 'Quran.com پر تلاوت سنیں' : 'Listen to a recitation on Quran.com ↗'}</a>${QURAN.length ? `<a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a>` : ''}<span class="note">${ur ? 'کسی بھی لفظ پر ٹیپ کر کے اس کی آواز سنیں۔' : 'Tap any word to hear it on its own.'}</span></p>
 <p class="surah-name ar" lang="ar">سُورَةُ ${s.name}</p>
 ${s.n === 1 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
 ${s.v.map((v, k) => verseHtml(lang, v, k + 1)).join('\n')}
@@ -3781,6 +3807,43 @@ ${s.v.map((v, k) => verseHtml(lang, v, k + 1)).join('\n')}
   ${next ? `<a class="btn primary" href="${link(lang, 'quran-' + next.slug + '.html')}">${ur ? 'اگلا: ' + name(next) + ' ←' : 'Next: ' + name(next) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran-prayer-words.html')}">${ur ? 'اگلا: نماز کے اذکار ←' : 'Next: words of the prayer →'}</a>`}
 </nav>`;
   return layout(lang, { file: 'quran-' + s.slug + '.html', section: 'quran', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+}
+
+const QURAN_FULL_NOTE = {
+  en: 'Word-by-word meanings and pronunciation from <a href="https://quran.com">Quran.com</a>. Verse meanings: Saheeh International. These help you follow the Arabic; they are not a tafsir. The Listen button uses your device’s voice for single words. It is not a recitation, so listen to a qari for proper tajweed.',
+  ur: 'لفظ بہ لفظ معانی اور تلفظ <a href="https://quran.com">Quran.com</a> سے لیے گئے ہیں۔ آیات کا ترجمہ: مولانا فتح محمد جالندھری۔ یہ عربی سمجھنے میں مدد کے لیے ہیں؛ تفسیر نہیں۔ «سنیں» کا بٹن آپ کے آلے کی مشینی آواز میں الگ الگ لفظ سناتا ہے؛ یہ تلاوت نہیں، اس لیے درست تجوید کے لیے کسی قاری کی تلاوت سنیں۔',
+};
+
+function fullSurahPage(lang, i) {
+  const ur = lang === 'ur';
+  const q = QURAN[i], prev = QURAN[i - 1], next = QURAN[i + 1];
+  const v = loadSurah(q);
+  const nV = v.length, nW = v.reduce((k, x) => k + x.w.length, 0);
+  const name = (x) => (ur ? x.ur : 'Surah ' + x.en);
+  const href = (x) => link(lang, 'quran-' + x.slug + '.html');
+  const place = ur ? (q.place === 'makkah' ? 'مکی' : 'مدنی') : (q.place === 'makkah' ? 'Makkah' : 'Madinah');
+  const title = ur ? `${q.ur} لفظ بہ لفظ اردو ترجمہ اور تلفظ` : `Surah ${q.en} word by word: meaning and pronunciation`;
+  const desc = ur ? `${q.ur} (${q.meanUr}) کا لفظ بہ لفظ اردو ترجمہ، رومن تلفظ اور ہر آیت کا ترجمہ۔ ${ud(nV)} آیات، ${ud(nW)} الفاظ۔`
+    : `Surah ${q.en} (${q.meanEn}) word by word: the meaning and pronunciation of every word, and the meaning of each verse. ${nV} verses, ${nW} words.`;
+  const eyebrow = ur ? `سورت ${ud(q.n)}، ${place}، ${ud(nV)} آیات، ${ud(nW)} الفاظ` : `Surah ${q.n} · ${place} · ${nV} verses · ${nW} words`;
+  const lead = ur ? `${q.ur} («${q.meanUr}») قرآن کی ${ud(q.n)}ویں سورت ہے اور ${place === 'مکی' ? 'مکہ' : 'مدینہ'} میں نازل ہوئی۔ اس میں ${ud(nV)} آیات ہیں۔ ہر لفظ کا مطلب اس کے نیچے ہے؛ لفظ پر ٹیپ کر کے اس کی آواز سنیں۔`
+    : `Surah ${q.en}, “${q.meanEn}”, is surah ${q.n} of the Quran. It was revealed in ${place} and has ${nV} verses. The meaning of each word is under it; tap a word to hear it.`;
+  const jump = nV > 20 ? `<nav class="vjump" aria-label="${ur ? 'آیت پر جائیں' : 'Go to verse'}"><span>${ur ? 'آیت پر جائیں:' : 'Go to verse:'}</span> ${Array.from({ length: Math.ceil(nV / 10) }, (_, k) => k * 10 + 1).map((k) => `<a href="#v${k}">${num(lang, k)}</a>`).join(' ')}</nav>` : '';
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, name(q)]])}
+<p class="eyebrow">${eyebrow}</p>
+<h1>${title}</h1>
+<p class="lead">${esc(lead)}</p>
+<p class="row"><a class="btn" href="https://quran.com/${q.n}" target="_blank" rel="noopener">${ur ? 'Quran.com پر تلاوت سنیں' : 'Listen to a recitation on Quran.com ↗'}</a><a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a></p>
+${jump}
+<p class="surah-name ar" lang="ar">سُورَةُ ${q.name}</p>
+${q.n === 1 || q.n === 9 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
+${v.map((x, k) => verseHtml(lang, x, k + 1)).join('\n')}
+<p class="note">${QURAN_FULL_NOTE[lang]}</p>
+<nav class="pager" aria-label="${T[lang].nav.quran}">
+  ${prev ? `<a class="btn" href="${href(prev)}">${T[lang].prev}: ${name(prev)}</a>` : `<a class="btn" href="${link(lang, 'quran.html')}">${T[lang].prev}: ${T[lang].nav.quran}</a>`}
+  ${next ? `<a class="btn primary" href="${href(next)}">${ur ? 'اگلی: ' + name(next) + ' ←' : 'Next: ' + name(next) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran.html')}">${T[lang].nav.quran}</a>`}
+</nav>`;
+  return layout(lang, { file: 'quran-' + q.slug + '.html', section: 'quran', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
 }
 
 function prayerPage(lang) {
@@ -4419,6 +4482,16 @@ table.words{width:100%;border-collapse:collapse;background:var(--surface);border
 .w .m{font-size:13px;color:var(--muted);line-height:1.35;margin-top:2px}
 html[lang="ur"] .w .m{line-height:2}
 .vmean{margin:0;max-width:75ch}
+.vjump{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0 0 8px;font-size:15px}
+.vjump a{font-variant-numeric:tabular-nums}
+.slist{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.slist a{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 14px;color:var(--ink);text-decoration:none}
+.slist a:hover{border-color:var(--accent)}
+.slist .sn{min-width:30px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;text-align:center}
+.slist .st{flex:1;display:flex;flex-direction:column;line-height:1.35}
+.slist .st small{color:var(--muted);font-size:13px}
+html[lang="ur"] .slist .st{line-height:1.9}
+.slist .ar{font-size:22px;line-height:1.6}
 .vn{color:var(--gold);font-weight:700}
 .pws{display:grid;gap:12px;max-width:860px}
 .pw{display:grid;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 18px}
@@ -5179,6 +5252,7 @@ function build() {
     TOPICS.forEach((t, i) => add(lang, 'vocab-' + t.slug + '.html', topicPage(lang, i)));
     add(lang, 'quran.html', quranPage(lang));
     SURAHS.forEach((x, i) => add(lang, 'quran-' + x.slug + '.html', surahPage(lang, i)));
+    QURAN.forEach((x, i) => { if (!x.own) add(lang, 'quran-' + x.slug + '.html', fullSurahPage(lang, i)); });
     add(lang, 'quran-prayer-words.html', prayerPage(lang));
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
     add(lang, 'phrases.html', phrasesPage(lang));
