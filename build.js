@@ -20,7 +20,7 @@ const path = require('path');
 // ---------------------------------------------------------------- settings
 const SITE_URL = 'https://learnwithharf.com';
 const KOFI_URL = 'https://ko-fi.com/164fawad';
-const ADSENSE_CLIENT = '';
+const ADSENSE_CLIENT = 'ca-pub-8037431918456738';
 const CONTACT_EMAIL = 'faadi164@gmail.com';
 const GA_ID = 'G-DYRQWLHBQB';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
 const GSC_VERIFY = '1L9mAoymv9_mHwRlJmemUA-Eg8VcyPHfUBMqNZoehlY';  // Google Search Console verification code (only the content="..." value)
