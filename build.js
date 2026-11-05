@@ -1244,7 +1244,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-13-i-have', key: 'عِنْدِي',
+    slug: 'lesson-13-i-have', key: 'عِنْدِي', video: 'lesson-13-i-have.mp4',
     en: {
       title: 'Having things: I have, you have', short: '{عِنْدَ} and {مَعَ} with the endings from Lesson 8.',
       intro: 'Arabic has no verb “to have”. Instead you say “at me is…”: {عِنْدِي كِتَابٌ} (ʿindii kitaabun) means “I have a book”. Add the endings you learned in Lesson 8 to {عِنْدَ} (ʿinda, at) to change the person.',
@@ -1352,7 +1352,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-16-counting', key: 'كَمْ',
+    slug: 'lesson-16-counting', key: 'كَمْ', video: 'lesson-16-counting.mp4',
     en: {
       title: 'Counting things: how many?', short: 'Numbers 3 to 10 with nouns, and asking {كَمْ}.',
       intro: 'To ask “how many?”, use {كَمْ} (kam) with a singular noun ending in -an: {كَمْ كِتَابًا عِنْدَكَ؟} (How many books do you have?). To answer, put the number before a plural noun: {ثَلَاثَةُ كُتُبٍ} (three books).',
@@ -1388,7 +1388,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-17-commands', key: 'اِجْلِسْ',
+    slug: 'lesson-17-commands', key: 'اِجْلِسْ', video: 'lesson-17-commands.mp4',
     en: {
       title: 'Telling someone what to do', short: 'Commands such as sit down, write and open, and saying “don’t”.',
       intro: 'To give an instruction, start from the present tense and drop the first letter: {تَجْلِسُ} (you sit) becomes {اِجْلِسْ} (ijlis, sit down!). If the word would then begin with two consonants, add {ا} at the front, said “i” or “u”: {اُكْتُبْ} (uktub, write!). The last vowel disappears.',
@@ -1424,7 +1424,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-18-future', key: 'سَأَذْهَبُ',
+    slug: 'lesson-18-future', key: 'سَأَذْهَبُ', video: 'lesson-18-future.mp4',
     en: {
       title: 'Talking about the future', short: 'Will and won’t with {سَـ}, {سَوْفَ} and {لَنْ}.',
       intro: 'To talk about the future, add {سَـ} (sa-) to the front of a present tense verb: {أَذْهَبُ} (I go) becomes {سَأَذْهَبُ} (sa-adh-habu, I will go). {سَوْفَ} (sawfa), written as a separate word, means the same and often points a little further ahead: {سَوْفَ أُسَافِرُ} (I will travel).',
@@ -1568,7 +1568,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-22-comparing', key: 'أَكْبَرُ',
+    slug: 'lesson-22-comparing', key: 'أَكْبَرُ', video: 'lesson-22-comparing.mp4',
     en: {
       title: 'Comparing: bigger, the biggest', short: 'The {أَفْعَلُ} pattern for “-er” and “-est”.',
       intro: 'To compare, Arabic puts the describing word into the pattern {أَفْعَلُ} (afʿalu) and follows it with {مِنْ} (than): {كَبِيرٌ} (big) gives {أَكْبَرُ مِنْ} (bigger than). The same form is used for men, women and things, so it never takes {ـة}.',
