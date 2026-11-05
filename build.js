@@ -24,6 +24,12 @@ const ADSENSE_CLIENT = 'ca-pub-8037431918456738';
 const CONTACT_EMAIL = 'faadi164@gmail.com';
 const GA_ID = 'G-DYRQWLHBQB';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
 const GSC_VERIFY = '1L9mAoymv9_mHwRlJmemUA-Eg8VcyPHfUBMqNZoehlY';  // Google Search Console verification code (only the content="..." value)
+// App (installable web app + Android app on Google Play).
+// After PWABuilder gives you the Android package, paste its SHA-256 signing fingerprint here
+// (looks like 'AB:CD:12:...'). If you also turn on Play App Signing, add Google's fingerprint as a second entry.
+// This produces /.well-known/assetlinks.json, which hides the browser bar in the Android app.
+const ANDROID_PACKAGE = 'com.learnwithharf.app';
+const ANDROID_SHA256 = [];
 const UPDATED = { en: '4 November 2026', ur: '۴ نومبر ۲۰۲۶' };
 const YEAR = '2026';
 const OUT = path.join(__dirname, '_site');
@@ -3393,6 +3399,139 @@ const ROSETTE = 'url("data:image/svg+xml,' + encodeURIComponent(ROSETTE_SVG) + '
 const SPK = 'url("data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#000"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>') + '")';
 const FAVICON = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0d6b57"/><text x="32" y="46" font-size="38" text-anchor="middle" fill="#ffffff" font-family="serif">ح</text></svg>');
 
+// ---------------------------------------------------------------- app (PWA)
+const BUILD_ID = Date.now().toString(36);
+
+// Registers the offline worker and offers "Install the app" (Android/desktop Chrome button, iPhone instructions).
+// Hidden inside the installed app, after "Not now" for 30 days, and on a visitor's first page view.
+function appScript(lang) {
+  const ur = lang === 'ur';
+  const L = ur
+    ? { title: 'حرف ایپ انسٹال کریں', text: 'ہوم اسکرین سے کھولیں، پڑھے ہوئے اسباق آف لائن بھی چلیں گے۔', install: 'انسٹال کریں', later: 'ابھی نہیں', ios: 'شیئر بٹن ⎋ دبائیں، پھر «Add to Home Screen» چنیں۔' }
+    : { title: 'Get the Harf app', text: 'One tap from your home screen. Lessons you open work offline.', install: 'Install', later: 'Not now', ios: 'Tap the Share button ⎋, then choose “Add to Home Screen”.' };
+  return `<div id="harf-install" hidden style="position:fixed;inset-inline:12px;bottom:12px;z-index:60;max-width:460px;margin-inline:auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px 16px;display:flex;gap:12px;align-items:center">
+  <img src="img/icon-192.png" alt="" width="48" height="48" style="border-radius:12px;flex:none">
+  <div style="flex:1;min-width:0"><strong style="display:block">${L.title}</strong><span id="harf-install-text" style="font-size:.9em;color:var(--muted)">${L.text}</span></div>
+  <div style="display:flex;flex-direction:column;gap:6px;flex:none"><button type="button" id="harf-install-go" class="btn primary" style="padding:6px 14px">${L.install}</button><button type="button" id="harf-install-no" style="background:none;border:0;color:var(--muted);font:inherit;font-size:.85em;cursor:pointer">${L.later}</button></div>
+</div>
+<script>
+(function(){
+  if ('serviceWorker' in navigator) window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+  var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone || document.referrer.indexOf('android-app://') === 0;
+  if (standalone) { try { document.documentElement.classList.add('in-app'); } catch (e) {} return; }
+  var box = document.getElementById('harf-install'), go = document.getElementById('harf-install-go'), no = document.getElementById('harf-install-no');
+  function get(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function set(k,v){ try { localStorage.setItem(k, v); } catch (e) {} }
+  var views = (+get('harf_app_views') || 0) + 1; set('harf_app_views', views);
+  var snoozed = Date.now() < (+get('harf_app_snooze') || 0);
+  var ok = views > 1 && !snoozed;
+  function show(){ if (ok) { box.hidden = false; box.style.display = 'flex'; } }
+  function hide(){ box.hidden = true; box.style.display = 'none'; }
+  no.onclick = function(){ set('harf_app_snooze', Date.now() + 30 * 864e5); hide(); };
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferred = e; show(); });
+  window.addEventListener('appinstalled', function(){ hide(); set('harf_app_snooze', Date.now() + 3650 * 864e5); });
+  go.onclick = function(){
+    if (deferred) { deferred.prompt(); deferred.userChoice.then(function(){ deferred = null; hide(); }); }
+    else { hide(); }
+  };
+  var ua = navigator.userAgent, iOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (iOS && /safari/i.test(ua) && !/crios|fxios|edgios/i.test(ua)) {
+    document.getElementById('harf-install-text').textContent = ${JSON.stringify(L.ios)};
+    go.textContent = 'OK'; show();
+  }
+})();
+</script>`;
+}
+
+function manifest() {
+  const sc = (name, url) => ({ name, short_name: name, url, icons: [{ src: 'img/icon-192.png', sizes: '192x192', type: 'image/png' }] });
+  return JSON.stringify({
+    id: '/',
+    name: 'Harf: Learn Arabic',
+    short_name: 'Harf',
+    description: 'Learn Arabic free in English and Urdu: the alphabet with audio, grammar lessons, Quran word by word, vocabulary and quizzes.',
+    lang: 'en',
+    dir: 'ltr',
+    start_url: '/',
+    scope: '/',
+    display: 'standalone',
+    orientation: 'portrait',
+    background_color: '#f5f6f2',
+    theme_color: '#0d6b57',
+    categories: ['education', 'books'],
+    icons: [
+      { src: 'img/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: 'img/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: 'img/maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+      { src: 'img/maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+    ],
+    shortcuts: [
+      sc('Alphabet', '/alphabet.html'),
+      sc('Lessons', '/lessons.html'),
+      sc('Quran', '/quran.html'),
+      sc('اردو', '/ur.html'),
+    ],
+  }, null, 2) + '\n';
+}
+
+// Offline worker: pages are fetched fresh when online and saved as they are read, so visited lessons work offline.
+// Core pages are saved on install. Videos, ads and analytics are never cached.
+function serviceWorker() {
+  const core = ['./', 'index.html', 'ur.html', 'offline.html', 'style.css', 'app.js', 'manifest.webmanifest',
+    'img/icon-192.png', 'img/icon-512.png',
+    ...['alphabet.html', 'lessons.html', 'vocabulary.html', 'phrases.html', 'quiz.html', 'quran.html', 'writing.html']
+      .flatMap((f) => [f, 'ur-' + f]),
+    ...LETTERS.map((x) => 'letter-' + x.slug + '.html')];
+  return `// Harf offline worker, build ${BUILD_ID}
+var CORE = 'harf-core-${BUILD_ID}', PAGES = 'harf-pages-v1', ASSETS = 'harf-assets-v1';
+var CORE_FILES = ${JSON.stringify(core)};
+self.addEventListener('install', function (e) {
+  e.waitUntil(caches.open(CORE).then(function (c) { return c.addAll(CORE_FILES); }).then(function () { return self.skipWaiting(); }));
+});
+self.addEventListener('activate', function (e) {
+  e.waitUntil(caches.keys().then(function (keys) {
+    return Promise.all(keys.filter(function (k) { return k.indexOf('harf-core-') === 0 && k !== CORE; }).map(function (k) { return caches.delete(k); }));
+  }).then(function () { return self.clients.claim(); }));
+});
+function put(name, req, res) { if (res && res.ok && res.type !== 'opaqueredirect') { var copy = res.clone(); caches.open(name).then(function (c) { c.put(req, copy); }); } return res; }
+self.addEventListener('fetch', function (e) {
+  var req = e.request;
+  if (req.method !== 'GET') return;
+  var url = new URL(req.url);
+  var fonts = url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com';
+  if (url.origin !== location.origin && !fonts) return;            // ads, analytics, Ko-fi: straight to the network
+  if (url.pathname.indexOf('/videos/') === 0 || req.headers.has('range')) return;  // videos stream normally
+  if (req.mode === 'navigate') {
+    e.respondWith(fetch(req).then(function (res) { return put(PAGES, req, res); }).catch(function () {
+      return caches.match(req, { ignoreSearch: true }).then(function (hit) { return hit || caches.match('offline.html'); });
+    }));
+    return;
+  }
+  // style, scripts, images, fonts, data: answer from cache at once and refresh in the background
+  e.respondWith(caches.match(req).then(function (hit) {
+    var net = fetch(req).then(function (res) { return put(fonts ? ASSETS : (url.pathname.match(/\\.(css|js)$/) ? CORE : ASSETS), req, res); }).catch(function () { return hit; });
+    return hit || net;
+  }));
+});
+`;
+}
+
+function offlinePage() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Offline · Harf</title>
+<meta name="robots" content="noindex"><meta name="theme-color" content="#0d6b57"><link rel="stylesheet" href="style.css"></head>
+<body><main class="wrap" style="padding:48px 16px;text-align:center">
+<img src="img/icon-192.png" alt="" width="96" height="96" style="border-radius:22px">
+<h1 style="margin-top:16px">You are offline</h1>
+<p>This page has not been saved on your phone yet. Pages you have opened before still work, so try the alphabet or lessons.</p>
+<p dir="rtl" lang="ur">آپ آف لائن ہیں۔ یہ صفحہ ابھی محفوظ نہیں ہوا۔ پہلے کھولے ہوئے صفحات انٹرنیٹ کے بغیر بھی چلتے ہیں۔</p>
+<p><a class="btn primary" href="alphabet.html">Alphabet</a> <a class="btn" href="lessons.html">Lessons</a> <a class="btn" href="ur.html">اردو</a></p>
+</main></body></html>
+`;
+}
+
 function layout(lang, o) {
   const t = T[lang];
   const self = link(lang, o.file);
@@ -3444,6 +3583,13 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 <meta property="og:url" content="${pageUrl(self)}">
 <meta property="og:locale" content="${lang === 'ur' ? 'ur_PK' : 'en_GB'}">
 <link rel="icon" href="${FAVICON}">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d6b57">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Harf">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${esc(FONTS[lang])}">
@@ -3475,6 +3621,7 @@ ${o.body}
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="app.js" defer></script>
+${appScript(lang)}
 ${brevoScript}</body>
 </html>
 `;
@@ -5746,6 +5893,13 @@ function build() {
   files['404.html'] = notFoundPage();
   files['style.css'] = STYLE_CSS.replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   files['app.js'] = APP_JS;
+  files['manifest.webmanifest'] = manifest();
+  files['sw.js'] = serviceWorker();
+  files['offline.html'] = offlinePage();
+  if (ANDROID_SHA256.length) files['.well-known/assetlinks.json'] = JSON.stringify([{
+    relation: ['delegate_permission/common.handle_all_urls'],
+    target: { namespace: 'android_app', package_name: ANDROID_PACKAGE, sha256_cert_fingerprints: ANDROID_SHA256 },
+  }], null, 2) + '\n';
   files['googleba7aa79e24dbfa47.html'] = 'google-site-verification: googleba7aa79e24dbfa47.html'; // Google Search Console ownership, keep this
   files['robots.txt'] = `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
   files['sitemap.xml'] = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -5758,7 +5912,10 @@ if (require.main === module) {
   const files = build();
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
-  for (const [name, content] of Object.entries(files)) fs.writeFileSync(path.join(OUT, name), content);
+  for (const [name, content] of Object.entries(files)) {
+    fs.mkdirSync(path.dirname(path.join(OUT, name)), { recursive: true });
+    fs.writeFileSync(path.join(OUT, name), content);
+  }
   // Copy img folder into _site
   const imgIn = path.join(__dirname, 'img');
   if (fs.existsSync(imgIn)) {
