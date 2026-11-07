@@ -3181,7 +3181,7 @@ const LESSONS = [
 const T = {
   en: {
     dir: 'ltr', brand: 'Harf', skip: 'Skip to content', navLabel: 'Sections',
-    nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', stories: 'Stories', vocabulary: 'Vocabulary', quran: 'Quran', phrases: 'Phrases', quiz: 'Quiz' },
+    nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', stories: 'Stories', vocabulary: 'Vocabulary', quran: 'Quran', duas: 'Duas', phrases: 'Phrases', quiz: 'Quiz' },
     switchLabel: 'اردو', switchTitle: 'یہ صفحہ اردو میں پڑھیں', switchLang: 'ur',
     about: 'About', contact: 'Contact', privacy: 'Privacy policy', support: 'Support Harf',
     listen: 'Listen', sep: '›', prev: '← Previous', next: 'Next →',
@@ -3189,7 +3189,7 @@ const T = {
   },
   ur: {
     dir: 'rtl', brand: 'حرف', skip: 'مواد پر جائیں', navLabel: 'حصے',
-    nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', stories: 'کہانیاں', vocabulary: 'الفاظ', quran: 'قرآن', phrases: 'جملے', quiz: 'کوئز' },
+    nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', stories: 'کہانیاں', vocabulary: 'الفاظ', quran: 'قرآن', duas: 'دعائیں', phrases: 'جملے', quiz: 'کوئز' },
     switchLabel: 'English', switchTitle: 'Read this page in English', switchLang: 'en',
     about: 'ہمارے بارے میں', contact: 'رابطہ', privacy: 'رازداری کی پالیسی', support: 'حرف کی مدد کریں',
     listen: 'سنیں', sep: '‹', prev: '→ پچھلا', next: 'اگلا ←',
@@ -3300,6 +3300,42 @@ function reciteBar(lang, n, nV) {
 
 const loadSurah = (q) => JSON.parse(fs.readFileSync(path.join(QURAN_DIR, String(q.n).padStart(3, '0') + '.json'), 'utf8'))
   .v.map(([w, en, ur]) => ({ w, en, ur }));
+
+// ---------------------------------------------------------------- Duas (content in data/duas.js)
+const { DUA_CATS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
+// Quran duas: build the Arabic, pronunciation and default meanings from data/quran, and the verses to play.
+(function expandDuas() {
+  const cache = {};
+  const verse = (n, a) => {
+    if (!cache[n]) cache[n] = loadSurah(QURAN.find((q) => q.n === n));
+    const v = cache[n][a - 1];
+    if (!v) throw new Error(`Dua verse ${n}:${a} not found`);
+    return v;
+  };
+  for (const c of DUA_CATS) for (const d of c.items) {
+    if (d.q && QURAN.length) {
+      const ar = [], tr = [], en = [], ur = [];
+      for (const [n, a, first] of d.q) {
+        const v = verse(n, a);
+        const bare = (t) => t.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, '');
+        const k = first ? v.w.findIndex((x) => bare(x[0]) === bare(first)) : 0;
+        if (k < 0) throw new Error(`Dua ${n}:${a}: word ${first} not found`);
+        const w = v.w.slice(k).map((x) => [x[0], x[1]]);
+        if (k > 0) { w[0][0] = w[0][0].replace(/^(.)([\u064B-\u065F\u0670]*)/, (m, b, mk) => b + mk.replace(/\u0651/g, '')); w[0][1] = w[0][1].replace(/^l-/, ''); }
+        ar.push(w.map((x) => x[0]).join(' ') + ' <span class="anum">' + arNum(a) + '</span>');
+        tr.push(w.map((x) => x[1]).join(' '));
+        en.push(v.en); ur.push(v.ur);
+      }
+      d.a = ar.join(' '); d.qmark = true;
+      d.tr = tr.join(' · ');
+      if (!d.mEn) d.mEn = en.join(' '); if (!d.mUr) d.mUr = ur.join(' ');
+      const runs = [];
+      for (const [n, a] of d.q) { const r = runs[runs.length - 1]; if (r && r[0] === n && r[2] === a - 1) r[2] = a; else runs.push([n, a, a]); }
+      d.qa = runs;
+    }
+  }
+})();
+const DUA_TOTAL = DUA_CATS.reduce((k, c) => k + c.items.length, 0);
 
 const translit = (() => {
 // Transliterate fully vowelled Arabic into the Latin style used on Harf. Shared by build.js (copied in) and tests.
@@ -3584,7 +3620,7 @@ function layout(lang, o) {
   const t = T[lang];
   const self = link(lang, o.file);
   const other = link(t.switchLang, o.file);
-  const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['stories.html', 'stories'], ['vocabulary.html', 'vocabulary'], ['quran.html', 'quran'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
+  const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['stories.html', 'stories'], ['vocabulary.html', 'vocabulary'], ['quran.html', 'quran'], ['duas.html', 'duas'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
     .map(([f, k]) => `<a href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${t.nav[k]}</a>`).join('');
   const ads = ADSENSE_CLIENT
     ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n` : '';
@@ -3709,6 +3745,7 @@ function homePage(lang) {
       ['reading.html', 'آسان کہانیاں', `${n(STORIES.length)} مختصر کہانیاں اعراب کے ساتھ؛ ہر لفظ پر ٹیپ کر کے مطلب دیکھیں۔`],
       ['vocabulary.html', 'الفاظ', `${n(TOPICS.length)} موضوعات میں روزمرہ کے ${n(totalWords)} الفاظ، سلام سے پیشوں اور جسم تک، فلیش کارڈز کے ساتھ۔`],
       ['quran.html', 'قرآنی عربی', `مکمل قرآن (${n(114)} سورتیں) لفظ بہ لفظ، نماز کے اذکار اور قرآن کے ${n(QWORDS.length)} عام الفاظ۔`],
+      ['duas.html', 'دعائیں اور اذکار', `قرآن و سنت کی ${n(DUA_TOTAL)} مستند دعائیں، اردو ترجمے، تلفظ، حوالے اور آواز کے ساتھ۔`],
       ['phrases.html', 'جملے', `ملنے جلنے، خریداری اور راستہ پوچھنے کے لیے ${n(PHRASES.length)} جملے۔`],
       ['saudi-arabic.html', 'سعودی بول چال', `سعودی عرب میں روزمرہ استعمال ہونے والے ${n(SAUDI.reduce((k, g) => k + g.items.length, 0))} جملے: دفتر، دکان، ٹیکسی اور ڈاکٹر۔`],
       ['quiz.html', 'کوئز', 'حروف اور الفاظ پر دس مختصر سوال، ہر بار نیا سیٹ۔'],
@@ -3741,6 +3778,7 @@ function homePage(lang) {
       ['reading.html', 'Easy stories', `${STORIES.length} short vowelled stories; tap any word to see what it means.`],
       ['vocabulary.html', 'Vocabulary', `${totalWords} everyday words in ${TOPICS.length} topics, from greetings to jobs and the body, with flashcards.`],
       ['quran.html', 'Quranic Arabic', `The complete Quran (all 114 surahs) word by word, the words of the prayer and ${QWORDS.length} common Quran words.`],
+      ['duas.html', 'Duas and adhkar', `${DUA_TOTAL} authentic duas from the Quran and Sunnah, with meaning, pronunciation, source and audio.`],
       ['phrases.html', 'Phrases', `${PHRASES.length} sentences for meeting people, shopping and getting around.`],
       ['saudi-arabic.html', 'Saudi Arabic', `${SAUDI.reduce((k, g) => k + g.items.length, 0)} phrases Saudis use every day: at work, in shops, in taxis and at the doctor.`],
       ['quiz.html', 'Quiz', 'Ten quick questions on letters and words, with a new set every time.'],
@@ -4410,6 +4448,7 @@ function quranPage(lang) {
     sH: 'شروع کرنے کے لیے: مختصر سورتیں', moreH: 'نماز اور عام الفاظ',
     allH: `مکمل قرآن: تمام ${n(114)} سورتیں`,
     allP: 'ہر سورت کا ہر لفظ اردو معنی اور تلفظ کے ساتھ، اور ہر آیت کا ترجمہ۔ سورت پر ٹیپ کریں۔',
+    duas: ['duas.html', 'قرآنی اور مسنون دعائیں', `${n(DUA_TOTAL)} مستند دعائیں اردو ترجمے اور حوالے کے ساتھ، صبح و شام کے اذکار سمیت۔`],
     listen: ['quran-listen.html', 'قرآن کی تلاوت سنیں', `${n(RECITERS.length)} مشہور قراء کی آواز میں پورا قرآن، آیت بہ آیت، اردو ترجمے کی آواز کے ساتھ۔`],
     prayer: ['quran-prayer-words.html', 'نماز کے اذکار', 'تکبیر سے سلام تک: نماز میں پڑھی جانے والی ہر دعا، تلفظ اور اردو ترجمے کے ساتھ۔'],
     common: ['quran-common-words.html', 'قرآن کے عام الفاظ', `قرآن میں بار بار آنے والے ${n(QWORDS.length)} الفاظ، فلیش کارڈز اور کوئز کے ساتھ۔`],
@@ -4423,6 +4462,7 @@ function quranPage(lang) {
     sH: 'Start here: the short surahs', moreH: 'Prayer and common words',
     allH: 'The complete Quran: all 114 surahs',
     allP: 'Every word of every surah with its meaning and pronunciation, and the meaning of each verse. Pick a surah to open it.',
+    duas: ['duas.html', 'Duas from the Quran and Sunnah', `${DUA_TOTAL} authentic duas with meaning and source, including the morning and evening adhkar.`],
     listen: ['quran-listen.html', 'Listen to the Quran', `The whole Quran verse by verse, recited by ${RECITERS.length} well-known qaris, with spoken Urdu or English meanings.`],
     prayer: ['quran-prayer-words.html', 'Words of the prayer', 'From the takbir to the salam: everything said in the prayer, with pronunciation and meaning.'],
     common: ['quran-common-words.html', 'Common Quran words', `${QWORDS.length} words that appear again and again in the Quran, with flashcards and a quiz.`],
@@ -4450,7 +4490,7 @@ ${QURAN.length ? `<section id="all">
 <section>
   <h2>${C.moreH}</h2>
   <div class="cards">
-    ${[C.listen, C.prayer, C.common].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
+    ${[C.listen, C.duas, C.prayer, C.common].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
   </div>
 </section>
 <section class="box">
@@ -4556,6 +4596,94 @@ function listenPage(lang) {
 </section>
 <p class="note">${ur ? 'تلاوت کی آڈیو <a href="https://everyayah.com">EveryAyah.com</a> کی مفت ریکارڈنگز ہیں، جو <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a> سے چلتی ہیں۔ ترجمے کی آواز بھی اسی سے آتی ہے۔ اللہ انہیں جزائے خیر دے۔' : 'Recitations are free audio from <a href="https://everyayah.com">EveryAyah.com</a>, streamed by the <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a>, which also provides the spoken translations. May Allah reward them.'}</p>`;
   return layout(lang, { file: 'quran-listen.html', section: 'quran', title: C.title, desc: C.desc, body });
+}
+
+// ---------------------------------------------------------------- Duas pages
+const SUNNAH_COM = { bukhari: 'bukhari', muslim: 'muslim', abudawud: 'abudawud', tirmidhi: 'tirmidhi', ibnmajah: 'ibnmajah' };
+function duaSource(lang, src) {
+  const ur = lang === 'ur';
+  const [book, no] = src;
+  if (book === 'quran') {
+    const [sn, rest] = String(no).split(':'), q = QURAN.find((x) => x.n === +sn);
+    const label = (ur ? 'قرآن ' : 'Quran ') + (ur ? ud(no).replace('–', '–') : no);
+    return q ? `<a href="${link(lang, 'quran-' + q.slug + '.html')}#v${parseInt(rest, 10)}">${label}</a>` : label;
+  }
+  const b = DUA_BOOKS[book];
+  const label = `${ur ? b[1] : b[0]} ${num(lang, no)}`;
+  return SUNNAH_COM[book] ? `<a href="https://sunnah.com/${SUNNAH_COM[book]}:${no}" target="_blank" rel="noopener">${label}</a>` : label;
+}
+
+function duaHtml(lang, d, k) {
+  const ur = lang === 'ur';
+  const times = d.times ? `<span class="times">${ur ? (typeof d.times === 'number' ? ud(d.times) + ' بار' : ud(d.times.replace('×', '×')) + ' بار') : (typeof d.times === 'number' ? d.times + ' times' : d.times + ' times')}</span>` : '';
+  const when = (ur ? d.whenUr : d.whenEn) || '';
+  const qa = d.qa ? d.qa.map(([n, a, b]) => `${n}:${a}-${b}`).join(',') : '';
+  const btns = [
+    qa ? `<button class="btn sm primary dplay" type="button" data-q="${qa}">${ur ? '▶ قاری کی تلاوت' : '▶ Hear it recited'}</button>` : '',
+    !d.qmark ? say(lang, d.a.replace(/ · /g, '، ')) : '',
+    d.links ? d.links.map((f) => { const q = QURAN.find((x) => 'quran-' + x.slug + '.html' === f); return q ? `<a class="btn sm" href="${link(lang, f)}">${ur ? q.ur : 'Surah ' + q.en}</a>` : ''; }).join('') : '',
+  ].join('');
+  return `<article class="dua" id="d${k}">
+  <h2><span class="vn">${num(lang, k)}.</span> ${esc(ur ? d.ur : d.en)}</h2>
+  ${when || times ? `<p class="when">${esc(when)}${times}</p>` : ''}
+  <p class="dua-ar ar" lang="ar">${d.a}</p>
+  <p class="tr latin" dir="ltr">${esc(d.tr)}</p>
+  <p class="mean">${esc(ur ? d.mUr : d.mEn)}</p>
+  ${(ur ? d.noteUr : d.noteEn) ? `<p class="dua-note">${fmt(ur ? d.noteUr : d.noteEn)}</p>` : ''}
+  <div class="dua-foot"><span class="src">${ur ? 'حوالہ' : 'Source'}: ${duaSource(lang, d.src)}</span><span class="row">${btns}</span></div>
+</article>`;
+}
+
+const DUAS_NOTE = {
+  en: 'Every dua here is from the Quran or an authentic hadith, with its reference so you can check it; hadith numbers follow <a href="https://sunnah.com">sunnah.com</a>. Meanings are written by Harf to help you understand; whole Quran verses use the Saheeh International translation. Quran recitations are from <a href="https://everyayah.com">EveryAyah.com</a>; the Listen button for other duas uses your device’s voice. For rulings, ask a scholar you trust.',
+  ur: 'یہاں ہر دعا قرآن یا مستند حدیث سے ہے اور ساتھ حوالہ دیا گیا ہے تاکہ آپ خود دیکھ سکیں؛ حدیث نمبر <a href="https://sunnah.com">sunnah.com</a> کے مطابق ہیں۔ ترجمہ سمجھنے میں مدد کے لیے حرف نے لکھا ہے؛ پوری آیات کا ترجمہ مولانا فتح محمد جالندھری کا ہے۔ قرآنی تلاوت <a href="https://everyayah.com">EveryAyah.com</a> سے ہے؛ باقی دعاؤں کا «سنیں» بٹن آلے کی مشینی آواز استعمال کرتا ہے۔ مسائل کے لیے کسی معتبر عالم سے رجوع کریں۔',
+};
+
+function duasPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'مسنون دعائیں اردو ترجمے کے ساتھ: صبح و شام کے اذکار، قرآنی دعائیں | حرف',
+    desc: `قرآن و سنت کی ${ud(DUA_TOTAL)} مستند دعائیں عربی متن، تلفظ، اردو ترجمے اور حوالے کے ساتھ: صبح و شام کے اذکار، روزمرہ کی دعائیں، قرآنی دعائیں اور نماز کے بعد کے اذکار۔`,
+    h1: 'دعائیں اور اذکار', lead: `قرآن اور نبی ﷺ کی سنت سے ${ud(DUA_TOTAL)} مستند دعائیں، ہر ایک عربی متن، تلفظ، اردو ترجمے، حوالے اور آواز کے ساتھ۔ موضوع چنیں اور روز ایک دعا یاد کریں؛ اس کا مطلب جان کر پڑھنے سے دعا میں دل لگتا ہے۔`,
+    n: (c) => `${ud(c.items.length)} دعائیں`, more: 'یہ بھی دیکھیں', prayer: 'نماز کے اذکار ترجمے کے ساتھ ←', listen: 'قرآن کی تلاوت سنیں ←',
+  } : {
+    title: 'Duas from the Quran and Sunnah with meaning: morning and evening adhkar | Harf',
+    desc: `${DUA_TOTAL} authentic duas with Arabic, pronunciation, English meaning and source: morning and evening adhkar, daily duas, duas from the Quran and adhkar after prayer.`,
+    h1: 'Duas and adhkar', lead: `${DUA_TOTAL} authentic duas from the Quran and the Sunnah of the Prophet ﷺ, each with the Arabic, pronunciation, meaning, source and audio. Pick a topic and learn one dua a day; knowing what you are saying brings your heart into the dua.`,
+    n: (c) => `${c.items.length} duas`, more: 'See also', prayer: 'The words of the prayer with meaning →', listen: 'Listen to the Quran →',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.duas]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="cards dua-cats">
+  ${DUA_CATS.map((c) => `<a class="card" href="${link(lang, c.slug + '.html')}"><h3><span class="dc-ic" aria-hidden="true">${c.icon}</span> ${ur ? c.ur : c.en}</h3><p>${fmt(ur ? c.introUr : c.introEn).replace(/<span class="ar[^"]*" lang="ar">([^<]*)<\/span>/g, '<span class="ar" lang="ar">$1</span>')}</p><p class="note">${C.n(c)}</p></a>`).join('\n  ')}
+</div>
+<section>
+  <h2>${C.more}</h2>
+  <p><a href="${link(lang, 'quran-prayer-words.html')}">${C.prayer}</a><br><a href="${link(lang, 'quran-listen.html')}">${C.listen}</a></p>
+</section>
+<p class="note">${DUAS_NOTE[lang]}</p>`;
+  return layout(lang, { file: 'duas.html', section: 'duas', title: C.title, desc: C.desc, body });
+}
+
+function duaCatPage(lang, i) {
+  const ur = lang === 'ur';
+  const c = DUA_CATS[i], prev = DUA_CATS[i - 1], next = DUA_CATS[i + 1];
+  const name = (x) => (ur ? x.ur : x.en);
+  const title = ur ? `${c.ur}: عربی، تلفظ اور اردو ترجمہ | حرف` : `${c.en}: Arabic, pronunciation and meaning | Harf`;
+  const desc = (ur ? c.introUr : c.introEn).replace(/[{}]/g, '').slice(0, 155);
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['duas.html', T[lang].nav.duas], [null, name(c)]])}
+<p class="eyebrow">${ur ? `${ud(c.items.length)} دعائیں` : `${c.items.length} duas`}</p>
+<h1>${name(c)}</h1>
+<p class="lead">${fmt(ur ? c.introUr : c.introEn)}</p>
+<nav class="dua-toc" aria-label="${ur ? 'فہرست' : 'Contents'}"><ol>${c.items.map((d, k) => `<li><a href="#d${k + 1}">${esc(ur ? d.ur : d.en)}</a></li>`).join('')}</ol></nav>
+${c.items.map((d, k) => duaHtml(lang, d, k + 1)).join('\n')}
+<p class="note">${DUAS_NOTE[lang]}</p>
+<nav class="pager" aria-label="${T[lang].nav.duas}">
+  ${prev ? `<a class="btn" href="${link(lang, prev.slug + '.html')}">${T[lang].prev}: ${name(prev)}</a>` : `<a class="btn" href="${link(lang, 'duas.html')}">${T[lang].prev}: ${T[lang].nav.duas}</a>`}
+  ${next ? `<a class="btn primary" href="${link(lang, next.slug + '.html')}">${ur ? 'اگلا: ' + name(next) + ' ←' : 'Next: ' + name(next) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'duas.html')}">${T[lang].nav.duas}</a>`}
+</nav>`;
+  return layout(lang, { file: c.slug + '.html', section: 'duas', title, desc, body });
 }
 
 function prayerPage(lang) {
@@ -5644,6 +5772,23 @@ html[lang="ur"] .pic .mean{line-height:2}
 .qr-pick:hover{border-color:var(--accent)}
 .qr-pick .ar{font-size:20px;color:var(--gold)}
 @media (max-width:520px){.qplayer{top:4px;padding:8px 10px;gap:6px 8px}.qp-field{flex:1 1 40%;font-size:11px}.qp-field select{font-size:13px;padding:6px 6px}.qp-ctrl{gap:6px 8px}.qp-ctrl .btn{padding:6px 12px;min-height:0}.qp-rep{font-size:12px}.qp-status{font-size:12px;flex-basis:100%}}
+.dua{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 20px 14px;margin:0 0 16px;box-shadow:var(--shadow)}
+.dua h2{font-size:20px;margin:0 0 4px}
+.dua .when{margin:0 0 6px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.dua .times{display:inline-block;background:var(--accent);color:#fff;border-radius:999px;padding:1px 10px;font-size:12px;font-weight:600}
+.dua-ar{font-size:30px;line-height:2.1;text-align:right;margin:6px 0 4px}
+.dua .tr{color:var(--gold);font-weight:600;font-size:15px;margin:0 0 6px}
+.dua .mean{margin:0 0 6px;max-width:75ch}
+.dua-note{font-size:15px;color:var(--muted);border-inline-start:3px solid var(--gold);padding-inline-start:10px;margin:8px 0}
+.dua-foot{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between;margin-top:8px}
+.dua-foot .src{font-size:14px;color:var(--muted)}
+.dua-foot .row{margin:0;display:flex;flex-wrap:wrap;gap:6px}
+.dua.playing{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset,var(--shadow)}
+.dua-toc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 18px;margin:0 0 18px}
+.dua-toc ol{margin:0;padding-inline-start:22px;columns:2 240px;column-gap:28px}
+.dua-toc li{margin:2px 0;break-inside:avoid}
+.dc-ic{font-size:22px}
+@media (max-width:520px){.dua{padding:12px 14px}.dua-ar{font-size:26px}}
 `;
 
 const APP_JS = String.raw`(function () {
@@ -5969,8 +6114,29 @@ const QURAN_AUDIO_JS = String.raw`
 (function () {
   'use strict';
   var doc = document, bar = doc.querySelector('.qplayer');
-  if (!bar) { [].forEach.call(doc.querySelectorAll('.vplay'), function (b) { b.hidden = true; }); return; }
   var A = __AUDIO__, UR = doc.documentElement.lang === 'ur';
+  // Duas: play the Quran verses of a dua (data-q="2:201-201,..."), in the reader's chosen reciter.
+  if (doc.querySelector('.dplay')) (function () {
+    var KB0 = {}; A.r.forEach(function (x) { KB0[x[0]] = x[1]; });
+    var au = new Audio(), list = [], pos = 0, cur = null;
+    function rec() { var r = null; try { r = localStorage.getItem('harf-reciter'); } catch (e) {} return KB0[r] ? r : A.r[0][0]; }
+    function startOf(n) { for (var i = 0; i < A.s.length; i++) if (A.s[i][0] === n) return A.s[i][1]; return 0; }
+    function label(b, on) { b.textContent = on ? (UR ? '⏸ روکیں' : '⏸ Stop') : b.getAttribute('data-label'); var d = b.closest('.dua'); if (d) d.classList.toggle('playing', on); }
+    function next() { if (pos >= list.length) { if (cur) label(cur, false); cur = null; return; } var r = rec(); au.src = 'https://cdn.islamic.network/quran/audio/' + KB0[r] + '/' + r + '/' + list[pos++] + '.mp3'; var p = au.play(); if (p && p.catch) p.catch(function () {}); }
+    au.addEventListener('ended', next);
+    au.addEventListener('error', function () { if (cur) label(cur, false); cur = null; });
+    doc.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.dplay'); if (!b) return;
+      e.preventDefault();
+      if (!b.getAttribute('data-label')) b.setAttribute('data-label', b.textContent);
+      var was = cur; au.pause(); if (cur) label(cur, false); cur = null;
+      if (was === b) return;
+      list = []; pos = 0;
+      b.getAttribute('data-q').split(',').forEach(function (r) { var m = r.split(/[:-]/), g = startOf(+m[0]); for (var a = +m[1]; a <= +m[2]; a++) list.push(g + a - 1); });
+      cur = b; label(b, true); next();
+    });
+  })();
+  if (!bar) { [].forEach.call(doc.querySelectorAll('.vplay'), function (b) { b.hidden = true; }); return; }
   var CDN = 'https://cdn.islamic.network/quran/audio/';
   var KB = {}; A.r.concat(A.m).forEach(function (x) { KB[x[0]] = x[1]; });
   var NAME = {}; A.r.forEach(function (x) { NAME[x[0]] = UR ? x[3] : x[2]; });
@@ -6106,6 +6272,8 @@ function build() {
     QURAN.forEach((x, i) => { if (!x.own) add(lang, 'quran-' + x.slug + '.html', fullSurahPage(lang, i)); });
     if (QURAN.length) add(lang, 'quran-listen.html', listenPage(lang));
     add(lang, 'quran-prayer-words.html', prayerPage(lang));
+    add(lang, 'duas.html', duasPage(lang));
+    DUA_CATS.forEach((c, i) => add(lang, c.slug + '.html', duaCatPage(lang, i)));
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
     add(lang, 'phrases.html', phrasesPage(lang));
     add(lang, 'saudi-arabic.html', saudiPage(lang));
