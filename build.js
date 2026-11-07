@@ -3662,6 +3662,7 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 <html lang="${lang}" dir="${t.dir}">
 <head>
 <meta charset="utf-8">
+<meta name='impact-site-verification' value='e80a10c7-22ec-411d-ac80-a9148039fa79'>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(o.title)}</title>
 <meta name="description" content="${esc(o.desc)}">
