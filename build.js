@@ -3250,6 +3250,54 @@ const QURAN = fs.existsSync(path.join(QURAN_DIR, 'chapters.json'))
     return { n, en, name, meanEn, meanUr, place, verses, slug, own: !!own, ur: own ? own.ur : 'سورہ ' + name };
   })
   : [];
+// Recitations: free verse-by-verse MP3s streamed from the Islamic Network CDN (alquran.cloud/cdn), which
+// serves the EveryAyah.com recordings. URL: https://cdn.islamic.network/quran/audio/{kbps}/{id}/{1..6236}.mp3
+// Every reciter below was checked for verse 1 and verse 6236 at the bitrate given.
+const RECITERS = [
+  ['ar.alafasy', 128, 'Mishary Rashid Alafasy', 'مشاری راشد العفاسی', 'مشاري راشد العفاسي'],
+  ['ar.abdurrahmaansudais', 64, 'Abdul Rahman Al-Sudais', 'عبدالرحمٰن السدیس', 'عبد الرحمن السديس'],
+  ['ar.saoodshuraym', 64, 'Saud Al-Shuraim', 'سعود الشریم', 'سعود الشريم'],
+  ['ar.mahermuaiqly', 128, 'Maher Al-Muaiqly', 'ماہر المعیقلی', 'ماهر المعيقلي'],
+  ['ar.abdulbasitmurattal', 64, 'Abdul Basit Abdus-Samad', 'عبدالباسط عبدالصمد', 'عبد الباسط عبد الصمد'],
+  ['ar.husary', 128, 'Mahmoud Khalil Al-Husary', 'محمود خلیل الحصری', 'محمود خليل الحصري'],
+  ['ar.minshawi', 128, 'Muhammad Siddiq Al-Minshawi', 'محمد صدیق المنشاوی', 'محمد صديق المنشاوي'],
+  ['ar.hudhaify', 128, 'Ali Al-Hudhaify', 'علی الحذیفی', 'علي الحذيفي'],
+  ['ar.muhammadayyoub', 128, 'Muhammad Ayyub', 'محمد ایوب', 'محمد أيوب'],
+  ['ar.shaatree', 128, 'Abu Bakr Al-Shatri', 'ابوبکر الشاطری', 'أبو بكر الشاطري'],
+  ['ar.ahmedajamy', 128, 'Ahmed Al-Ajmi', 'احمد العجمی', 'أحمد العجمي'],
+  ['ar.hanirifai', 64, 'Hani Ar-Rifai', 'ہانی الرفاعی', 'هاني الرفاعي'],
+  ['ar.abdullahbasfar', 64, 'Abdullah Basfar', 'عبداللہ بصفر', 'عبد الله بصفر'],
+  ['ar.muhammadjibreel', 128, 'Muhammad Jibreel', 'محمد جبریل', 'محمد جبريل'],
+  ['ar.husarymujawwad', 128, 'Al-Husary (mujawwad, slow)', 'الحصری (مجوّد، آہستہ)', 'الحصري (مجوّد)'],
+  ['ar.minshawimujawwad', 64, 'Al-Minshawi (mujawwad, slow)', 'المنشاوی (مجوّد، آہستہ)', 'المنشاوي (مجوّد)'],
+].map(([id, kbps, en, ur, ar]) => ({ id, kbps, en, ur, ar }));
+// Spoken translations that can follow each verse.
+const AUDIO_MEANINGS = [
+  { id: 'ur.khan', kbps: 64, en: 'Urdu (Shamshad Ali Khan)', ur: 'اردو (شمشاد علی خان)' },
+  { id: 'en.walk', kbps: 192, en: 'English (Ibrahim Walk, Saheeh Intl.)', ur: 'انگریزی (ابراہیم واک)' },
+];
+// Global number (1..6236) of the first verse of each surah, for the CDN file names.
+const AYAH_START = (() => { const a = []; let k = 1; for (const q of QURAN) { a[q.n] = k; k += q.verses; } return a; })();
+const audioData = () => ({ r: RECITERS.map((x) => [x.id, x.kbps, x.en, x.ur, x.ar]), m: AUDIO_MEANINGS.map((x) => [x.id, x.kbps, x.en, x.ur]),
+  s: QURAN.map((q) => [q.n, AYAH_START[q.n], q.verses, q.en, q.name, q.ur, q.slug]) });
+
+// The recitation bar shown on every surah page. The player itself lives in app.js.
+function reciteBar(lang, n, nV) {
+  const ur = lang === 'ur';
+  if (!AYAH_START[n]) return '';
+  return `<div class="qplayer" data-surah="${n}" data-start="${AYAH_START[n]}" data-count="${nV}">
+  <label class="qp-field"><span>${ur ? 'قاری' : 'Reciter'}</span><select class="qp-reciter">${RECITERS.map((x) => `<option value="${x.id}">${esc(ur ? x.ur : x.en)}</option>`).join('')}</select></label>
+  <label class="qp-field"><span>${ur ? 'ہر آیت کے بعد ترجمہ' : 'Meaning after each verse'}</span><select class="qp-mean"><option value="">${ur ? 'نہیں' : 'Off'}</option>${AUDIO_MEANINGS.map((x) => `<option value="${x.id}">${esc(ur ? x.ur : x.en)}</option>`).join('')}</select></label>
+  <div class="qp-ctrl">
+    <button class="btn qp-prev" type="button" aria-label="${ur ? 'پچھلی آیت' : 'Previous verse'}">⏮</button>
+    <button class="btn primary qp-play" type="button">${ur ? '▶ تلاوت سنیں' : '▶ Play recitation'}</button>
+    <button class="btn qp-next" type="button" aria-label="${ur ? 'اگلی آیت' : 'Next verse'}">⏭</button>
+    <label class="qp-rep"><input type="checkbox" class="qp-repeat"> ${ur ? 'آیت دہرائیں' : 'Repeat verse'}</label>
+    <span class="qp-status" aria-live="polite"></span>
+  </div>
+</div>`;
+}
+
 const loadSurah = (q) => JSON.parse(fs.readFileSync(path.join(QURAN_DIR, String(q.n).padStart(3, '0') + '.json'), 'utf8'))
   .v.map(([w, en, ur]) => ({ w, en, ur }));
 
@@ -4337,15 +4385,15 @@ function quizPage(lang) {
 
 // ---------------------------------------------------------------- Quran pages
 const QURAN_NOTE = {
-  en: 'Quran text from the <a href="https://tanzil.net">Tanzil Project</a>. Word meanings and translations are written by Harf to help learners; they are not a full translation or tafsir. The Listen button uses your device’s voice for single words. It is not a recitation, so listen to a qari for proper tajweed.',
-  ur: 'قرآن کا متن <a href="https://tanzil.net">تنزیل پروجیکٹ</a> سے لیا گیا ہے۔ الفاظ کے معانی اور ترجمہ حرف نے سیکھنے والوں کی مدد کے لیے لکھے ہیں؛ یہ مکمل ترجمہ یا تفسیر نہیں۔ «سنیں» کا بٹن آپ کے آلے کی مشینی آواز میں الگ الگ لفظ سناتا ہے؛ یہ تلاوت نہیں، اس لیے درست تجوید کے لیے کسی قاری کی تلاوت سنیں۔',
+  en: 'Quran text from the <a href="https://tanzil.net">Tanzil Project</a>. Word meanings and translations are written by Harf to help learners; they are not a full translation or tafsir. Tapping a word uses your device’s voice and is not a recitation; for proper tajweed use the ▶ recitation player. Recitations are free audio from <a href="https://everyayah.com">EveryAyah.com</a>, streamed by the <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a>.',
+  ur: 'قرآن کا متن <a href="https://tanzil.net">تنزیل پروجیکٹ</a> سے لیا گیا ہے۔ الفاظ کے معانی اور ترجمہ حرف نے سیکھنے والوں کی مدد کے لیے لکھے ہیں؛ یہ مکمل ترجمہ یا تفسیر نہیں۔ لفظ پر ٹیپ کرنے سے آلے کی مشینی آواز آتی ہے، یہ تلاوت نہیں؛ درست تجوید کے لیے ▶ تلاوت والا پلیئر استعمال کریں۔ تلاوت کی آڈیو <a href="https://everyayah.com">EveryAyah.com</a> کی مفت ریکارڈنگز ہیں، جو <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a> سے چلتی ہیں۔',
 };
 
 function verseHtml(lang, v, k) {
   const ur = lang === 'ur';
   const tiles = v.w.map(([a, tr, en, u]) => `<button class="w" type="button" data-say="${esc(a)}"><span class="ar" lang="ar">${a}</span><span class="tr latin">${esc(tr)}</span><span class="m"${ur ? '' : ' dir="ltr"'}>${esc(ur ? u : en)}</span></button>`).join('');
   return `<section class="verse" id="v${k}">
-  <p class="ayah ar" lang="ar">${v.w.map((x) => x[0]).join(' ')} <span class="anum">${arNum(k)}</span></p>
+  <p class="ayah ar" lang="ar">${v.w.map((x) => x[0]).join(' ')} <span class="anum">${arNum(k)}</span> <button class="vplay" type="button" data-v="${k}" aria-label="${ur ? 'آیت ' + k + ' کی تلاوت سنیں' : 'Play verse ' + k}">▶</button></p>
   <div class="wbw" dir="rtl">${tiles}</div>
   <p class="vmean"><span class="vn">${num(lang, k)}.</span> ${esc(ur ? v.ur : v.en)}</p>
 </section>`;
@@ -4362,6 +4410,7 @@ function quranPage(lang) {
     sH: 'شروع کرنے کے لیے: مختصر سورتیں', moreH: 'نماز اور عام الفاظ',
     allH: `مکمل قرآن: تمام ${n(114)} سورتیں`,
     allP: 'ہر سورت کا ہر لفظ اردو معنی اور تلفظ کے ساتھ، اور ہر آیت کا ترجمہ۔ سورت پر ٹیپ کریں۔',
+    listen: ['quran-listen.html', 'قرآن کی تلاوت سنیں', `${n(RECITERS.length)} مشہور قراء کی آواز میں پورا قرآن، آیت بہ آیت، اردو ترجمے کی آواز کے ساتھ۔`],
     prayer: ['quran-prayer-words.html', 'نماز کے اذکار', 'تکبیر سے سلام تک: نماز میں پڑھی جانے والی ہر دعا، تلفظ اور اردو ترجمے کے ساتھ۔'],
     common: ['quran-common-words.html', 'قرآن کے عام الفاظ', `قرآن میں بار بار آنے والے ${n(QWORDS.length)} الفاظ، فلیش کارڈز اور کوئز کے ساتھ۔`],
     howH: 'کیسے سیکھیں',
@@ -4374,6 +4423,7 @@ function quranPage(lang) {
     sH: 'Start here: the short surahs', moreH: 'Prayer and common words',
     allH: 'The complete Quran: all 114 surahs',
     allP: 'Every word of every surah with its meaning and pronunciation, and the meaning of each verse. Pick a surah to open it.',
+    listen: ['quran-listen.html', 'Listen to the Quran', `The whole Quran verse by verse, recited by ${RECITERS.length} well-known qaris, with spoken Urdu or English meanings.`],
     prayer: ['quran-prayer-words.html', 'Words of the prayer', 'From the takbir to the salam: everything said in the prayer, with pronunciation and meaning.'],
     common: ['quran-common-words.html', 'Common Quran words', `${QWORDS.length} words that appear again and again in the Quran, with flashcards and a quiz.`],
     howH: 'How to use these pages',
@@ -4400,7 +4450,7 @@ ${QURAN.length ? `<section id="all">
 <section>
   <h2>${C.moreH}</h2>
   <div class="cards">
-    ${[C.prayer, C.common].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
+    ${[C.listen, C.prayer, C.common].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
   </div>
 </section>
 <section class="box">
@@ -4424,7 +4474,8 @@ function surahPage(lang, i) {
 <p class="eyebrow">${eyebrow}</p>
 <h1>${title}</h1>
 <p class="lead">${fmt(ur ? s.introUr : s.introEn)}</p>
-<p class="row"><a class="btn" href="https://quran.com/${s.n}" target="_blank" rel="noopener">${ur ? 'Quran.com پر تلاوت سنیں' : 'Listen to a recitation on Quran.com ↗'}</a>${QURAN.length ? `<a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a>` : ''}<span class="note">${ur ? 'کسی بھی لفظ پر ٹیپ کر کے اس کی آواز سنیں۔' : 'Tap any word to hear it on its own.'}</span></p>
+${reciteBar(lang, s.n, nV)}
+<p class="row">${QURAN.length ? `<a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a>` : ''}<a class="btn" href="${link(lang, 'quran-listen.html')}">${ur ? 'تمام قراء' : 'All reciters'}</a><span class="note">${ur ? 'کسی بھی لفظ پر ٹیپ کر کے اس کی آواز سنیں، یا آیت کے ▶ سے قاری کی تلاوت۔' : 'Tap any word to hear it on its own, or ▶ on a verse to hear the qari recite it.'}</span></p>
 <p class="surah-name ar" lang="ar">سُورَةُ ${s.name}</p>
 ${s.n === 1 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
 ${s.v.map((v, k) => verseHtml(lang, v, k + 1)).join('\n')}
@@ -4437,8 +4488,8 @@ ${s.v.map((v, k) => verseHtml(lang, v, k + 1)).join('\n')}
 }
 
 const QURAN_FULL_NOTE = {
-  en: 'Word-by-word meanings and pronunciation from <a href="https://quran.com">Quran.com</a>. Verse meanings: Saheeh International. These help you follow the Arabic; they are not a tafsir. The Listen button uses your device’s voice for single words. It is not a recitation, so listen to a qari for proper tajweed.',
-  ur: 'لفظ بہ لفظ معانی اور تلفظ <a href="https://quran.com">Quran.com</a> سے لیے گئے ہیں۔ آیات کا ترجمہ: مولانا فتح محمد جالندھری۔ یہ عربی سمجھنے میں مدد کے لیے ہیں؛ تفسیر نہیں۔ «سنیں» کا بٹن آپ کے آلے کی مشینی آواز میں الگ الگ لفظ سناتا ہے؛ یہ تلاوت نہیں، اس لیے درست تجوید کے لیے کسی قاری کی تلاوت سنیں۔',
+  en: 'Word-by-word meanings and pronunciation from <a href="https://quran.com">Quran.com</a>. Verse meanings: Saheeh International. These help you follow the Arabic; they are not a tafsir. Tapping a word uses your device’s voice and is not a recitation; for proper tajweed use the ▶ recitation player. Recitations are free audio from <a href="https://everyayah.com">EveryAyah.com</a>, streamed by the <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a>.',
+  ur: 'لفظ بہ لفظ معانی اور تلفظ <a href="https://quran.com">Quran.com</a> سے لیے گئے ہیں۔ آیات کا ترجمہ: مولانا فتح محمد جالندھری۔ یہ عربی سمجھنے میں مدد کے لیے ہیں؛ تفسیر نہیں۔ لفظ پر ٹیپ کرنے سے آلے کی مشینی آواز آتی ہے، یہ تلاوت نہیں؛ درست تجوید کے لیے ▶ تلاوت والا پلیئر استعمال کریں۔ تلاوت کی آڈیو <a href="https://everyayah.com">EveryAyah.com</a> کی مفت ریکارڈنگز ہیں، جو <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a> سے چلتی ہیں۔',
 };
 
 function fullSurahPage(lang, i) {
@@ -4460,7 +4511,8 @@ function fullSurahPage(lang, i) {
 <p class="eyebrow">${eyebrow}</p>
 <h1>${title}</h1>
 <p class="lead">${esc(lead)}</p>
-<p class="row"><a class="btn" href="https://quran.com/${q.n}" target="_blank" rel="noopener">${ur ? 'Quran.com پر تلاوت سنیں' : 'Listen to a recitation on Quran.com ↗'}</a><a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a></p>
+${reciteBar(lang, q.n, nV)}
+<p class="row"><a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a><a class="btn" href="${link(lang, 'quran-listen.html')}">${ur ? 'تمام قراء' : 'All reciters'}</a></p>
 ${jump}
 <p class="surah-name ar" lang="ar">سُورَةُ ${q.name}</p>
 ${q.n === 1 || q.n === 9 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
@@ -4471,6 +4523,39 @@ ${v.map((x, k) => verseHtml(lang, x, k + 1)).join('\n')}
   ${next ? `<a class="btn primary" href="${href(next)}">${ur ? 'اگلی: ' + name(next) + ' ←' : 'Next: ' + name(next) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran.html')}">${T[lang].nav.quran}</a>`}
 </nav>`;
   return layout(lang, { file: 'quran-' + q.slug + '.html', section: 'quran', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+}
+
+function listenPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'قرآن کی تلاوت سنیں: ' + RECITERS.length + ' قراء، مفت آڈیو | حرف',
+    desc: `مکمل قرآن مفت سنیں: السدیس، الشریم، العفاسی، المعیقلی، عبدالباسط، الحصری، المنشاوی سمیت ${RECITERS.length} قراء کی تلاوت، آیت بہ آیت، اردو ترجمے کی آواز کے ساتھ۔`,
+    h1: 'قرآن کی تلاوت سنیں',
+    lead: 'سورت اور قاری چنیں اور سنیں۔ تلاوت آیت بہ آیت چلتی ہے اور سورت ختم ہونے پر اگلی سورت شروع ہو جاتی ہے۔ چاہیں تو ہر آیت کے بعد اس کا اردو ترجمہ بھی سنیں۔ حفظ کے لیے «آیت دہرائیں» لگائیں۔',
+    surah: 'سورت', open: 'یہ سورت لفظ بہ لفظ پڑھیں ←', qH: 'قراء', qP: 'ہر قاری کی تلاوت پورے قرآن کی ہے۔ «مجوّد» تلاوت آہستہ اور ترنم کے ساتھ ہے؛ باقی «مرتّل» ہیں، یعنی عام رفتار جیسی نماز میں ہوتی ہے۔',
+  } : {
+    title: `Listen to the Quran: ${RECITERS.length} reciters, free audio | Harf`,
+    desc: `Listen to the whole Quran free, verse by verse: Sudais, Shuraim, Alafasy, Muaiqly, Abdul Basit, Husary, Minshawi and more (${RECITERS.length} qaris), with spoken Urdu or English meanings.`,
+    h1: 'Listen to the Quran',
+    lead: 'Pick a surah and a reciter, then press play. The recitation goes verse by verse and moves on to the next surah when one ends. You can hear the meaning in Urdu or English after each verse, and turn on “Repeat verse” to memorise.',
+    surah: 'Surah', open: 'Read this surah word by word →', qH: 'The reciters', qP: 'Every reciter covers the whole Quran. The “mujawwad” recitations are slow and melodic; the rest are murattal, at the everyday pace you hear in prayer.',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="qlisten">
+  <label class="qp-field"><span>${C.surah}</span><select class="qp-surah">${QURAN.map((q) => `<option value="${q.n}">${q.n}. ${esc(ur ? q.ur : q.en)} · ${q.name}</option>`).join('')}</select></label>
+  ${reciteBar(lang, 1, 7).replace('class="qplayer"', 'class="qplayer qp-listen"')}
+  <p class="qp-now ar" lang="ar"></p>
+  <p><a class="qp-open" href="${link(lang, 'quran-al-fatiha.html')}" data-base="${link(lang, 'quran-')}">${C.open}</a></p>
+</div>
+<section>
+  <h2>${C.qH}</h2>
+  <p>${C.qP}</p>
+  <ul class="qreciters">${RECITERS.map((x) => `<li><button type="button" class="qr-pick" data-r="${x.id}"><b>${esc(ur ? x.ur : x.en)}</b><span class="ar" lang="ar">${x.ar}</span></button></li>`).join('')}</ul>
+</section>
+<p class="note">${ur ? 'تلاوت کی آڈیو <a href="https://everyayah.com">EveryAyah.com</a> کی مفت ریکارڈنگز ہیں، جو <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a> سے چلتی ہیں۔ ترجمے کی آواز بھی اسی سے آتی ہے۔ اللہ انہیں جزائے خیر دے۔' : 'Recitations are free audio from <a href="https://everyayah.com">EveryAyah.com</a>, streamed by the <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a>, which also provides the spoken translations. May Allah reward them.'}</p>`;
+  return layout(lang, { file: 'quran-listen.html', section: 'quran', title: C.title, desc: C.desc, body });
 }
 
 function prayerPage(lang) {
@@ -4830,7 +4915,7 @@ function privacyPage(lang) {
 <h2>ہم کیا محفوظ کرتے ہیں</h2>
 <p>حرف پر کوئی اکاؤنٹ نہیں، اور ہم آپ کا نام یا ای میل نہیں مانگتے۔ آپ کی پیش رفت (سیکھے گئے حروف، یاد کیے گئے الفاظ اور کوئز کا بہترین اسکور) صرف آپ کے اپنے براؤزر کی لوکل اسٹوریج میں محفوظ ہوتی ہے۔ یہ ہم تک کبھی نہیں پہنچتی، اور آپ براؤزر کا ڈیٹا صاف کر کے اسے کسی بھی وقت مٹا سکتے ہیں۔</p>
 <h2>آواز</h2>
-<p>تلفظ آپ کے آلے کی اپنی ٹیکسٹ ٹو اسپیچ آواز سے چلایا جاتا ہے۔ کوئی آواز یا متن ہمیں نہیں بھیجا جاتا۔</p>
+<p>تلفظ آپ کے آلے کی اپنی ٹیکسٹ ٹو اسپیچ آواز سے چلایا جاتا ہے۔ کوئی آواز یا متن ہمیں نہیں بھیجا جاتا۔ قرآن کی تلاوت Al Quran Cloud CDN (cdn.islamic.network) سے چلتی ہے، جسے تلاوت چلانے پر آپ کا IP ایڈریس ملتا ہے۔ آپ کا چنا ہوا قاری صرف آپ کے براؤزر میں محفوظ رہتا ہے۔</p>
 <h2>ہم کون سی سروسز استعمال کرتے ہیں</h2>
 <p>یہ ویب سائٹ GitHub Pages پر ہوسٹ ہے، جو سیکیورٹی کے لیے آپ کا IP ایڈریس جیسی تکنیکی معلومات ریکارڈ کر سکتا ہے۔ فونٹس Google Fonts سے لوڈ ہوتے ہیں، جسے صفحہ کھلنے پر آپ کا IP ایڈریس ملتا ہے۔ تفصیل کے لیے GitHub اور Google کی رازداری کی پالیسیاں دیکھیں۔</p>
 <h2>وزٹرز کے اعداد و شمار</h2>
@@ -4849,7 +4934,7 @@ function privacyPage(lang) {
 <h2>What we store</h2>
 <p>Harf has no accounts and never asks for your name or email. Your progress (letters learned, words known and your best quiz score) is saved only in your own browser, using local storage. It never reaches us, and you can delete it at any time by clearing your browser data.</p>
 <h2>Audio</h2>
-<p>Pronunciation is played by your device’s built-in text-to-speech voice. No audio or text is sent to us.</p>
+<p>Pronunciation is played by your device’s built-in text-to-speech voice. No audio or text is sent to us. Quran recitations are streamed from the Al Quran Cloud CDN (cdn.islamic.network), which receives your IP address when you play one. Your chosen reciter is remembered in your own browser.</p>
 <h2>Services we use</h2>
 <p>The site is hosted on GitHub Pages, which may record technical data such as your IP address for security. Fonts are loaded from Google Fonts, which receives your IP address when a page loads. See the GitHub and Google privacy policies for details.</p>
 <h2>Visitor statistics</h2>
@@ -5538,6 +5623,27 @@ html[lang="ur"] .pic .mean{line-height:2}
 .mihrab-in::after{z-index:2}
 .banner-img{display:block;width:100%;height:auto;margin:18px 0 8px;border-radius:20px;border:1px solid var(--line-2);box-shadow:var(--shadow-lg)}
 @media (max-width:520px){.banner-img{border-radius:14px}}
+
+.qplayer{position:sticky;top:8px;z-index:20;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;background:var(--surface);border:1px solid var(--line-2);border-radius:16px;padding:12px 16px;margin:14px 0 18px;box-shadow:var(--shadow-lg)}
+.qp-field{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--muted);flex:1 1 200px;min-width:0}
+.qp-field select{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;max-width:100%}
+.qp-ctrl{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;flex:1 1 100%}
+.qp-ctrl .btn{margin:0}
+.qp-rep{font-size:14px;display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.qp-status{font-size:14px;color:var(--accent);font-weight:600}
+.vplay{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;margin-inline-start:6px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--accent);font-size:14px;line-height:1;vertical-align:middle;cursor:pointer;font-family:system-ui,sans-serif}
+.vplay:hover{border-color:var(--accent)}
+.verse.playing{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset,var(--shadow)}
+.verse.playing .ayah{color:var(--accent)}
+.qlisten{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:0 0 22px}
+.qlisten > .qp-field{max-width:520px;margin-bottom:4px}
+.qlisten .qplayer{position:static;box-shadow:none;margin:10px 0}
+.qp-now{font-size:30px;text-align:center;color:var(--accent);margin:6px 0 0;min-height:1em}
+.qreciters{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.qr-pick{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:start;font:inherit;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 14px;color:var(--ink);cursor:pointer}
+.qr-pick:hover{border-color:var(--accent)}
+.qr-pick .ar{font-size:20px;color:var(--gold)}
+@media (max-width:520px){.qplayer{top:4px;padding:8px 10px;gap:6px 8px}.qp-field{flex:1 1 40%;font-size:11px}.qp-field select{font-size:13px;padding:6px 6px}.qp-ctrl{gap:6px 8px}.qp-ctrl .btn{padding:6px 12px;min-height:0}.qp-rep{font-size:12px}.qp-status{font-size:12px;flex-basis:100%}}
 `;
 
 const APP_JS = String.raw`(function () {
@@ -5858,6 +5964,123 @@ const APP_JS = String.raw`(function () {
 })();
 `;
 
+// Quran recitation player: surah pages and the Listen page. Audio data (reciters, surah offsets) is filled in by build.js.
+const QURAN_AUDIO_JS = String.raw`
+(function () {
+  'use strict';
+  var doc = document, bar = doc.querySelector('.qplayer');
+  if (!bar) { [].forEach.call(doc.querySelectorAll('.vplay'), function (b) { b.hidden = true; }); return; }
+  var A = __AUDIO__, UR = doc.documentElement.lang === 'ur';
+  var CDN = 'https://cdn.islamic.network/quran/audio/';
+  var KB = {}; A.r.concat(A.m).forEach(function (x) { KB[x[0]] = x[1]; });
+  var NAME = {}; A.r.forEach(function (x) { NAME[x[0]] = UR ? x[3] : x[2]; });
+  var $ = function (c) { return bar.querySelector(c); };
+  var selR = $('.qp-reciter'), selM = $('.qp-mean'), btn = $('.qp-play'), rep = $('.qp-repeat'), st = $('.qp-status');
+  var listen = bar.classList.contains('qp-listen');
+  var selS = doc.querySelector('.qp-surah'), openA = doc.querySelector('.qp-open');
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  if (get('harf-reciter') && KB[get('harf-reciter')]) selR.value = get('harf-reciter');
+  if (get('harf-mean') !== null && (get('harf-mean') === '' || KB[get('harf-mean')])) selM.value = get('harf-mean');
+  var surah = +bar.getAttribute('data-surah'), start = +bar.getAttribute('data-start'), count = +bar.getAttribute('data-count');
+  var cur = 0, phase = '', playing = false;
+  var audio = new Audio(), pre = new Audio();
+  audio.preload = 'auto'; pre.preload = 'auto';
+  function src(ed, g) { return CDN + KB[ed] + '/' + ed + '/' + g + '.mp3'; }
+  function info(n) { for (var i = 0; i < A.s.length; i++) if (A.s[i][0] === n) return A.s[i]; return null; }
+  function setSurah(n) {
+    var s = info(n); if (!s) return;
+    surah = n; start = s[1]; count = s[2]; cur = 0; phase = '';
+    if (selS) selS.value = String(n);
+    if (openA) openA.href = openA.getAttribute('data-base') + s[6] + '.html';
+    if (listen) { set('harf-listen-surah', String(n)); var now = doc.querySelector('.qp-now'); if (now) now.textContent = 'سُورَةُ ' + s[4]; }
+    status();
+  }
+  function label() {
+    var s = info(surah), name = s ? (UR ? s[5] : 'Surah ' + s[3]) : '';
+    if (!phase) return listen ? name : '';
+    if (phase === 'b') return (listen ? name + ' · ' : '') + (UR ? 'بسم اللہ' : 'Bismillah');
+    return (listen ? name + ' · ' : '') + (UR ? 'آیت ' + cur + ' / ' + count : 'Verse ' + cur + ' of ' + count) + (phase === 'm' ? (UR ? ' (ترجمہ)' : ' (meaning)') : '');
+  }
+  function status(msg) { st.textContent = msg || label(); }
+  function mark() {
+    [].forEach.call(doc.querySelectorAll('.verse.playing'), function (v) { v.classList.remove('playing'); });
+    var v = phase && phase !== 'b' ? doc.getElementById('v' + cur) : null;
+    if (v) {
+      v.classList.add('playing');
+      var r = v.getBoundingClientRect();
+      if (r.top < 80 || r.bottom > window.innerHeight) v.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  function ui() { btn.textContent = playing ? (UR ? '⏸ روکیں' : '⏸ Pause') : (UR ? '▶ تلاوت سنیں' : '▶ Play recitation'); }
+  function media() {
+    if (!('mediaSession' in navigator)) return;
+    try {
+      var s = info(surah);
+      navigator.mediaSession.metadata = new MediaMetadata({ title: (UR ? s[5] : 'Surah ' + s[3]) + (cur ? ' · ' + cur : ''), artist: NAME[selR.value], album: 'Harf · ' + (UR ? 'تلاوت' : 'Quran recitation'), artwork: [{ src: 'img/icon-512.png', sizes: '512x512', type: 'image/png' }] });
+    } catch (e) {}
+  }
+  function play(k, ph) {
+    cur = k; phase = ph;
+    var g = ph === 'b' ? 1 : start + k - 1;
+    audio.src = src(ph === 'm' ? selM.value : selR.value, g);
+    var p = audio.play();
+    playing = true; ui(); mark(); status(); media();
+    if (p && p.catch) p.catch(function (e) { if (e && e.name === 'NotAllowedError') { playing = false; ui(); } });
+    var nk = ph === 'b' ? 1 : (ph === 'a' && !selM.value && k < count ? k + 1 : 0);
+    if (nk) pre.src = src(selR.value, start + nk - 1);
+  }
+  function begin(k) {
+    k = k || 1;
+    if (k === 1 && surah !== 1 && surah !== 9) play(0, 'b'); else play(k, 'a');
+  }
+  function stop() { audio.pause(); playing = false; ui(); }
+  function after() {
+    if (phase === 'b') return play(1, 'a');
+    if (phase === 'a' && selM.value) return play(cur, 'm');
+    if (rep.checked) return play(cur, 'a');
+    if (cur < count) return play(cur + 1, 'a');
+    if (listen && surah < 114) { setSurah(surah + 1); return begin(1); }
+    playing = false; phase = ''; cur = 0; ui(); mark(); status();
+  }
+  audio.addEventListener('ended', after);
+  audio.addEventListener('error', function () {
+    if (!audio.getAttribute('src')) return;
+    playing = false; ui();
+    status(UR ? 'آڈیو لوڈ نہیں ہو سکی۔ انٹرنیٹ کنکشن چیک کریں۔' : 'Could not load the audio. Check your internet connection.');
+  });
+  btn.addEventListener('click', function () {
+    if (playing) return stop();
+    if (phase && audio.getAttribute('src') && audio.currentTime > 0 && !audio.ended) { var p = audio.play(); playing = true; ui(); if (p && p.catch) p.catch(function () {}); return; }
+    begin(1);
+  });
+  $('.qp-prev').addEventListener('click', function () { if (cur > 1) play(cur - 1, 'a'); else begin(1); });
+  $('.qp-next').addEventListener('click', function () {
+    if (cur < count) play(cur + 1, 'a');
+    else if (listen && surah < 114) { setSurah(surah + 1); begin(1); }
+  });
+  selR.addEventListener('change', function () { set('harf-reciter', selR.value); if (playing && phase !== 'm') play(cur, phase); else media(); });
+  selM.addEventListener('change', function () { set('harf-mean', selM.value); });
+  if (selS) selS.addEventListener('change', function () { var was = playing; stop(); setSurah(+selS.value); if (was) begin(1); });
+  doc.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.vplay');
+    if (b) { e.preventDefault(); play(+b.getAttribute('data-v'), 'a'); return; }
+    var r = e.target.closest && e.target.closest('.qr-pick');
+    if (r) { selR.value = r.getAttribute('data-r'); set('harf-reciter', selR.value); bar.scrollIntoView({ behavior: 'smooth', block: 'center' }); begin(1); }
+  });
+  if ('mediaSession' in navigator) {
+    try {
+      navigator.mediaSession.setActionHandler('play', function () { if (!playing) btn.click(); });
+      navigator.mediaSession.setActionHandler('pause', function () { if (playing) stop(); });
+      navigator.mediaSession.setActionHandler('previoustrack', function () { $('.qp-prev').click(); });
+      navigator.mediaSession.setActionHandler('nexttrack', function () { $('.qp-next').click(); });
+    } catch (e) {}
+  }
+  if (listen) setSurah(+(get('harf-listen-surah') || 1)); else status();
+  ui();
+})();
+`;
+
 // ---------------------------------------------------------------- build
 function build() {
   CLASSICS = loadClassics();
@@ -5881,6 +6104,7 @@ function build() {
     add(lang, 'quran.html', quranPage(lang));
     SURAHS.forEach((x, i) => add(lang, 'quran-' + x.slug + '.html', surahPage(lang, i)));
     QURAN.forEach((x, i) => { if (!x.own) add(lang, 'quran-' + x.slug + '.html', fullSurahPage(lang, i)); });
+    if (QURAN.length) add(lang, 'quran-listen.html', listenPage(lang));
     add(lang, 'quran-prayer-words.html', prayerPage(lang));
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
     add(lang, 'phrases.html', phrasesPage(lang));
@@ -5892,7 +6116,7 @@ function build() {
   }
   files['404.html'] = notFoundPage();
   files['style.css'] = STYLE_CSS.replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
-  files['app.js'] = APP_JS;
+  files['app.js'] = APP_JS + QURAN_AUDIO_JS.replace('__AUDIO__', JSON.stringify(audioData()));
   files['manifest.webmanifest'] = manifest();
   files['sw.js'] = serviceWorker();
   files['offline.html'] = offlinePage();
