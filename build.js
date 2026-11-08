@@ -1178,7 +1178,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-11-past-tense', key: 'ذَهَبَ',
+    slug: 'lesson-11-past-tense', key: 'ذَهَبَ', video: 'lesson-11-past-tense.mp4',
     en: {
       title: 'Talking about the past: I went, you went', short: 'Past tense verbs and their endings.',
       intro: 'A past tense verb starts from the “he” form, which is also how dictionaries list verbs: {ذَهَبَ} (dhahaba, he went). To change the person, add an ending: {ذَهَبْتُ} (dhahabtu) is “I went”. The ending already shows who did it, so you usually don’t need a separate word for “I” or “you”.',
@@ -1214,7 +1214,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-12-present-tense', key: 'يَذْهَبُ',
+    slug: 'lesson-12-present-tense', key: 'يَذْهَبُ', video: 'lesson-12-present-tense.mp4',
     en: {
       title: 'Now and every day: I go, he goes', short: 'Present tense verbs, and how to say “not”.',
       intro: 'The present tense adds a letter at the front of the verb: {يَذْهَبُ} (yadh-habu) means “he goes” or “he is going”. That first letter tells you who: {أَ} for I, {تَ} for you or she, {يَ} for he, {نَ} for we. To say “not”, put {لَا} (laa) before the verb: {لَا أَفْهَمُ} (I don’t understand).',
@@ -1286,7 +1286,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-14-laysa', key: 'لَيْسَ',
+    slug: 'lesson-14-laysa', key: 'لَيْسَ', video: 'lesson-14-laysa.mp4',
     en: {
       title: 'Saying “is not”', short: 'Make a sentence negative with {لَيْسَ}.',
       intro: 'To say that something is not so, put {لَيْسَ} (laysa, is not) at the front of the sentence: {الْبَيْتُ كَبِيرٌ} (the house is big) becomes {لَيْسَ الْبَيْتُ كَبِيرًا} (the house is not big). Notice that the ending of the describing word changes from -un to -an.',
@@ -1358,7 +1358,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-16-counting', key: 'كَمْ', video: 'lesson-16-counting.mp4',
+    slug: 'lesson-16-counting', key: 'كَمْ',
     en: {
       title: 'Counting things: how many?', short: 'Numbers 3 to 10 with nouns, and asking {كَمْ}.',
       intro: 'To ask “how many?”, use {كَمْ} (kam) with a singular noun ending in -an: {كَمْ كِتَابًا عِنْدَكَ؟} (How many books do you have?). To answer, put the number before a plural noun: {ثَلَاثَةُ كُتُبٍ} (three books).',
@@ -1466,7 +1466,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-19-did-not', key: 'لَمْ',
+    slug: 'lesson-19-did-not', key: 'لَمْ', video: 'lesson-19-did-not.mp4',
     en: {
       title: 'Saying “did not”', short: 'The negative past with {مَا} and {لَمْ}.',
       intro: 'There are two ways to say something did not happen. The simple one is {مَا} (maa) before a past tense verb: {مَا ذَهَبْتُ} (I didn’t go). The more formal one, used in writing and in the Quran, is {لَمْ} (lam) with the present tense and no final vowel: {لَمْ أَذْهَبْ} (I didn’t go).',
@@ -1502,7 +1502,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-20-questions', key: 'كَيْفَ',
+    slug: 'lesson-20-questions', key: 'كَيْفَ', video: 'lesson-20-questions.mp4',
     en: {
       title: 'Asking questions: when, how, why, which', short: 'All the main question words in one place.',
       intro: 'Arabic question words go at the start of the sentence, and the rest of the sentence stays as it is. You already know {مَا} (what), {مَنْ} (who), {أَيْنَ} (where), {كَمْ} (how many) and {هَلْ} (for yes/no questions). This lesson adds the rest.',
@@ -1574,7 +1574,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-22-comparing', key: 'أَكْبَرُ', video: 'lesson-22-comparing.mp4',
+    slug: 'lesson-22-comparing', key: 'أَكْبَرُ',
     en: {
       title: 'Comparing: bigger, the biggest', short: 'The {أَفْعَلُ} pattern for “-er” and “-est”.',
       intro: 'To compare, Arabic puts the describing word into the pattern {أَفْعَلُ} (afʿalu) and follows it with {مِنْ} (than): {كَبِيرٌ} (big) gives {أَكْبَرُ مِنْ} (bigger than). The same form is used for men, women and things, so it never takes {ـة}.',
