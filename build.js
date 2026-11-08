@@ -1538,7 +1538,7 @@ const LESSONS = [
     ],
   },
   {
-    slug: 'lesson-21-inna', key: 'إِنَّ',
+    slug: 'lesson-21-inna', key: 'إِنَّ', video: 'lesson-21-inna.mp4',
     en: {
       title: 'Indeed, but, because', short: '{إِنَّ}, {لٰكِنَّ} and {لِأَنَّ} change the ending of the next noun.',
       intro: 'Some little words at the start of a sentence change the ending of the noun after them from -u to -a. The most common is {إِنَّ} (inna, indeed), which you will see again and again in the Quran: {إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ} (Indeed, Allah is Forgiving, Merciful). Its “sisters” work the same way.',
@@ -4274,7 +4274,7 @@ function lessonPage(lang, i) {
   const desc = ur ? `${plainTitle}۔ ${L.short.replace(/[{}]/g, '')} اردو میں وضاحت، مثالیں، آواز اور مشق۔`
     : `${plainTitle}. ${L.short.replace(/[{}]/g, '')} Clear explanation, examples with audio and practice.`;
   const videoHtml = l.video
-    ? `<div class="lesson-video"><video src="/videos/${l.video}" controls preload="none" width="100%" style="border-radius:10px;max-width:640px;display:block;margin:0 auto 1.5rem"></video></div>`
+    ? `<div class="lesson-video"><video src="/videos/${l.video}" controls preload="none" width="100%" style="border-radius:10px;max-width:640px;max-height:80vh;display:block;margin:0 auto 1.5rem;background:#000"></video></div>`
     : '';
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['lessons.html', T[lang].nav.lessons], [null, `${C.label} ${n}`]])}
 <p class="eyebrow">${C.label} ${n}${ur ? '،' : ' ·'} <span class="ar" lang="ar">${l.key}</span></p>
