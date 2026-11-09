@@ -5888,7 +5888,7 @@ function rootsHubPage(lang) {
     how: 'How to use this list', steps: ['Start at the top: the most common roots come first.', 'On each root page, read the words built from it and what they mean.', 'Read the example verses aloud and spot the highlighted word.', 'Learn three roots a day; within a month you will recognise most of the words in the Quran.'],
     search: 'Search a root or meaning…', times: '×', letter: 'By first letter',
   };
-  const items = ROOT_LIST.map((x, i) => `<a class="rt" href="${link(lang, 'quran-root-' + x.slug + '.html')}" data-s="${esc((x.r + ' ' + rootLatin(x.r) + ' ' + x.lemmas.slice(0, 3).map((l) => (ur ? l.ur : l.en) + ' ' + l.a.replace(/[ً-ْٰ]/g, '')).join(' ')).toLowerCase())}"><span class="rk">${num(lang, i + 1)}</span><span class="ar" lang="ar">${rootLetters(x.r)}</span><span class="rm">${esc(ur ? x.lemmas[0].ur : x.lemmas[0].en)}</span><span class="rn">${num(lang, x.n)}${ur ? ' ' + C.times : C.times}</span></a>`).join('\n  ');
+  const items = ROOT_LIST.map((x, i) => `<a class="rt" href="${link(lang, 'quran-root-' + x.slug + '.html')}" data-s="${esc((x.r + ' ' + rootLatin(x.r) + ' ' + x.lemmas.slice(0, 3).map((l) => (ur ? l.ur : l.en) + ' ' + l.a.replace(/[ً-ْٰ]/g, '')).join(' ')).toLowerCase())}"><span class="rk">${num(lang, i + 1)}</span><span class="rw ar" lang="ar">${x.lemmas[0].a}</span><span class="rn">${num(lang, x.n)}${ur ? ' ' + C.times : C.times}</span><span class="rsub"><b class="ar" lang="ar">${rootLetters(x.r)}</b> ${esc(ur ? x.lemmas[0].ur : x.lemmas[0].en)}</span></a>`).join('\n  ');
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, C.h1]])}
 <h1>${C.h1}</h1>
 <p class="lead">${fmt(C.lead)}</p>
@@ -5917,9 +5917,10 @@ const ROOT_CSS = `
 .rt:hover{border-color:var(--accent)}
 .rt[hidden]{display:none}
 .rt .rk{grid-row:1 / span 2;color:var(--muted);font-size:13px;min-width:2em}
-.rt .ar{font-size:26px;line-height:1.5}
-.rt .rn{color:var(--gold);font-size:13px;font-weight:600}
-.rt .rm{grid-column:2 / span 2;color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt .rw{grid-column:2;grid-row:1;font-size:26px;line-height:1.4}
+.rt .rn{grid-column:3;grid-row:1;color:var(--gold);font-size:13px;font-weight:600}
+.rt .rsub{grid-column:2 / span 2;grid-row:2;color:var(--muted);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt .rsub b{color:var(--accent);font-weight:700;font-size:17px;margin-inline-end:4px}
 .rx{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 12px}
 .rx .ayah{margin:0 0 6px}
 .rx mark{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:0 4px}
