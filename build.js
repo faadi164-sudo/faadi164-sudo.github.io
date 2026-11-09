@@ -20,6 +20,8 @@ const path = require('path');
 // ---------------------------------------------------------------- settings
 const SITE_URL = 'https://learnwithharf.com';
 const KOFI_URL = 'https://ko-fi.com/164fawad';
+const YOUTUBE_URL = 'https://www.youtube.com/@learnwithharf';
+const FACEBOOK_URL = 'https://www.facebook.com/learnwithharf';
 const ADSENSE_CLIENT = 'ca-pub-8037431918456738';
 const CONTACT_EMAIL = 'faadi164@gmail.com';
 const GA_ID = 'G-DYRQWLHBQB';       // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ9'
@@ -3496,13 +3498,13 @@ const FAVICON = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://w
 const BUILD_ID = Date.now().toString(36);
 
 // Registers the offline worker and offers "Install the app" (Android/desktop Chrome button, iPhone instructions).
-// Hidden inside the installed app, after "Not now" for 30 days, and on a visitor's first page view.
+// Hidden inside the installed app, after "Not now" for 30 days, and on a visitor's first three page views.
 function appScript(lang) {
   const ur = lang === 'ur';
   const L = ur
     ? { title: 'حرف ایپ انسٹال کریں', text: 'ہوم اسکرین سے کھولیں، پڑھے ہوئے اسباق آف لائن بھی چلیں گے۔', install: 'انسٹال کریں', later: 'ابھی نہیں', ios: 'شیئر بٹن ⎋ دبائیں، پھر «Add to Home Screen» چنیں۔' }
     : { title: 'Get the Harf app', text: 'One tap from your home screen. Lessons you open work offline.', install: 'Install', later: 'Not now', ios: 'Tap the Share button ⎋, then choose “Add to Home Screen”.' };
-  return `<div id="harf-install" hidden style="position:fixed;inset-inline:12px;bottom:12px;z-index:60;max-width:460px;margin-inline:auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px 16px;display:flex;gap:12px;align-items:center">
+  return `<div id="harf-install" hidden style="position:fixed;inset-inline:12px;bottom:12px;z-index:60;max-width:460px;margin-inline:auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px 16px;display:none;gap:12px;align-items:center">
   <img src="img/icon-192.png" alt="" width="48" height="48" style="border-radius:12px;flex:none">
   <div style="flex:1;min-width:0"><strong style="display:block">${L.title}</strong><span id="harf-install-text" style="font-size:.9em;color:var(--muted)">${L.text}</span></div>
   <div style="display:flex;flex-direction:column;gap:6px;flex:none"><button type="button" id="harf-install-go" class="btn primary" style="padding:6px 14px">${L.install}</button><button type="button" id="harf-install-no" style="background:none;border:0;color:var(--muted);font:inherit;font-size:.85em;cursor:pointer">${L.later}</button></div>
@@ -3517,7 +3519,7 @@ function appScript(lang) {
   function set(k,v){ try { localStorage.setItem(k, v); } catch (e) {} }
   var views = (+get('harf_app_views') || 0) + 1; set('harf_app_views', views);
   var snoozed = Date.now() < (+get('harf_app_snooze') || 0);
-  var ok = views > 1 && !snoozed;
+  var ok = views > 3 && !snoozed;
   function show(){ if (ok) { box.hidden = false; box.style.display = 'flex'; } }
   function hide(){ box.hidden = true; box.style.display = 'none'; }
   no.onclick = function(){ set('harf_app_snooze', Date.now() + 30 * 864e5); hide(); };
@@ -3630,7 +3632,8 @@ function layout(lang, o) {
   const self = link(lang, o.file);
   const other = link(t.switchLang, o.file);
   const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['stories.html', 'stories'], ['vocabulary.html', 'vocabulary'], ['quran.html', 'quran'], ['duas.html', 'duas'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
-    .map(([f, k]) => `<a href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${t.nav[k]}</a>`).join('');
+    .map(([f, k]) => `<a href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${t.nav[k]}</a>`).join('')
+    + [['tools.html', 'tools', lang === 'ur' ? 'مفت ٹولز' : 'Free tools'], ['guides.html', 'guides', lang === 'ur' ? 'رہنمائی' : 'Guides']].map(([f, k, label]) => `<a class="m-only" href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${label}</a>`).join('');
   const ads = ADSENSE_CLIENT
     ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}" crossorigin="anonymous"></script>\n` : '';
   const verify = GSC_VERIFY ? `<meta name="google-site-verification" content="${esc(GSC_VERIFY)}">\n` : '';
@@ -3676,6 +3679,11 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 <meta property="og:description" content="${esc(o.desc)}">
 <meta property="og:url" content="${pageUrl(self)}">
 <meta property="og:locale" content="${lang === 'ur' ? 'ur_PK' : 'en_GB'}">
+<meta property="og:image" content="${SITE_URL}/img/og-harf.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${SITE_URL}/img/og-harf.jpg">
 <link rel="icon" href="${FAVICON}">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0d6b57">
@@ -3694,8 +3702,9 @@ ${verify}${analytics}${ads}${brevoHead}</head>
 <header class="top">
   <div class="wrap bar">
     <a class="brand" href="${link(lang, 'index.html')}"><span class="ar" lang="ar">حَرْف</span>${lang === 'en' ? '<b>Harf</b>' : ''}</a>
-    <nav class="tabs" aria-label="${t.navLabel}">${navItems}</nav>
+    <nav class="tabs" id="siteNav" aria-label="${t.navLabel}">${navItems}</nav>
     <a class="lang" href="${other}" hreflang="${t.switchLang}" lang="${t.switchLang}" title="${esc(t.switchTitle)}">${t.switchLabel}</a>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="siteNav" aria-label="${lang === 'ur' ? 'مینو' : 'Menu'}"><span></span><span></span><span></span></button>
   </div>
 </header>
 <main id="main" class="wrap">
@@ -3712,6 +3721,7 @@ ${o.body}
       <a href="${link(lang, 'privacy.html')}">${t.privacy}</a>
       <a href="${KOFI_URL}">${t.support}</a>
     </nav>
+    <p class="social"><a href="${YOUTUBE_URL}" rel="noopener" target="_blank">▶ YouTube</a><a href="${FACEBOOK_URL}" rel="noopener" target="_blank">Facebook</a></p>
     <p class="small">© ${num(lang, YEAR)} ${t.brand}</p>
   </div>
 </footer>
@@ -3734,7 +3744,7 @@ function supportBox(lang) {
 }
 
 // ---------------------------------------------------------------- pages
-const CARD_GLYPH = { 'alphabet.html': 'أ ب ت', 'writing.html': 'قَلَم', 'lessons.html': 'نَحْو', 'classic-tales.html': 'حِكَايَات', 'reading.html': 'قِصَص', 'vocabulary.html': 'كَلِمَات', 'quran.html': 'قُرْآن', 'phrases.html': 'جُمَل', 'saudi-arabic.html': 'هَلَا', 'quiz.html': 'اِخْتِبَار', 'tools.html': 'أَدَوَات', 'guides.html': 'دَلِيل' };
+const CARD_GLYPH = { 'alphabet.html': 'أ ب ت', 'writing.html': 'قَلَم', 'lessons.html': 'نَحْو', 'classic-tales.html': 'حِكَايَات', 'reading.html': 'قِصَص', 'vocabulary.html': 'كَلِمَات', 'quran.html': 'قُرْآن', 'phrases.html': 'جُمَل', 'saudi-arabic.html': 'هَلَا', 'quiz.html': 'اِخْتِبَار', 'duas.html': 'دُعَاء', 'tools.html': 'أَدَوَات', 'guides.html': 'دَلِيل' };
 function homePage(lang) {
   const ur = lang === 'ur';
   const n = (v) => num(lang, v);
@@ -3830,6 +3840,9 @@ function homePage(lang) {
     <div class="mihrab-in"><img class="mascot" src="/img/teacher-hero.webp" alt="" width="900" height="900" fetchpriority="high"></div>
   </div>
 </section>
+<ul class="proof" aria-label="${ur ? 'حرف پر کیا ہے' : 'What is on Harf'}">
+  ${[[28, ur ? 'حروف' : 'letters', 'alphabet.html'], [LESSONS.length, ur ? 'گرامر اسباق' : 'grammar lessons', 'lessons.html'], [114, ur ? 'سورتیں لفظ بہ لفظ' : 'surahs word by word', 'quran.html'], ...(ROOTS ? [[ROOT_LIST.length, ur ? 'قرآنی مادے' : 'Quran roots', 'quran-roots.html']] : []), ...(CLASSICS.length ? [[CLASSICS.length, ur ? 'کلاسیکی کہانیاں' : 'classic tales', 'classic-tales.html']] : []), [DUA_TOTAL, ur ? 'دعائیں' : 'duas', 'duas.html']].map(([k, label, f]) => `<li><a href="${link(lang, f)}"><strong>${n(k)}</strong><span>${label}</span></a></li>`).join('')}
+</ul>
 <div class="start-banner" id="startBanner">${C.startBanner}</div>
 <div class="streak box" id="streak" hidden>
   <div class="sk-n"><span class="sk-fire" aria-hidden="true">🔥</span><strong id="skDays">0</strong><span>${ur ? 'دن کا سلسلہ' : 'day streak'}</span></div>
@@ -4284,7 +4297,7 @@ function lessonPage(lang, i) {
   const desc = ur ? `${plainTitle}۔ ${L.short.replace(/[{}]/g, '')} اردو میں وضاحت، مثالیں، آواز اور مشق۔`
     : `${plainTitle}. ${L.short.replace(/[{}]/g, '')} Clear explanation, examples with audio and practice.`;
   const videoHtml = l.video
-    ? `<div class="lesson-video"><video src="/videos/${l.video}" controls preload="none" width="100%" style="border-radius:10px;max-width:640px;max-height:80vh;display:block;margin:0 auto 1.5rem;background:#000"></video></div>`
+    ? `<div class="lesson-video"><video src="/videos/${l.video}" controls preload="none"${fs.existsSync(path.join(__dirname, 'img', 'poster-' + l.video.replace(/\.mp4$/, '.jpg'))) ? ` poster="/img/poster-${l.video.replace(/\.mp4$/, '.jpg')}"` : ''} width="100%" style="border-radius:10px;max-width:640px;max-height:80vh;display:block;margin:0 auto 1.5rem;background:#000"></video></div>`
     : '';
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['lessons.html', T[lang].nav.lessons], [null, `${C.label} ${n}`]])}
 <p class="eyebrow">${C.label} ${n}${ur ? '،' : ' ·'} <span class="ar" lang="ar">${l.key}</span></p>
@@ -6073,6 +6086,45 @@ ${supportBox(lang)}`;
 }
 
 const GUIDE_CSS = `
+/* ---- November 2026 polish: menu, proof strip, social, phone hero */
+.menu-btn{display:none}
+nav.tabs a.m-only{display:none}
+.proof{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.proof a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 8px;transition:border-color .15s,transform .15s}
+.proof a:hover{border-color:var(--gold-2);transform:translateY(-2px)}
+.proof strong{font-family:var(--display);font-size:28px;line-height:1.1;color:var(--accent)}
+.proof span{font-size:13.5px;color:var(--muted);text-align:center}
+.social{display:flex;gap:10px;justify-content:center;margin:14px 0 6px}
+.social a{color:#ecd08a;border:1px solid rgba(236,208,138,.45);border-radius:999px;padding:5px 16px;text-decoration:none;font-weight:600;font-size:14.5px}
+.social a:hover{background:rgba(236,208,138,.14)}
+html[lang="ur"] .hero h1{line-height:2.05}
+@media (min-width:900px){.letters{grid-template-columns:repeat(7,1fr)}}
+@media (max-width:520px){.letters{grid-template-columns:repeat(4,1fr);gap:8px}}
+@media (max-width:820px){
+  .menu-btn{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0 11px;border:1px solid var(--line-2);border-radius:12px;background:transparent;cursor:pointer;flex:none}
+  .menu-btn span{display:block;height:2px;border-radius:2px;background:var(--ink);transition:transform .2s,opacity .2s}
+  .menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .bar{padding:8px 0;flex-wrap:wrap}
+  .lang{margin-inline-start:auto}
+  nav.tabs,html[dir="rtl"] nav.tabs{display:none;order:3;width:100%;margin:0;padding:6px 0 10px;overflow:visible;-webkit-mask-image:none;mask-image:none;grid-template-columns:1fr 1fr;gap:6px}
+  nav.tabs.open,html[dir="rtl"] nav.tabs.open{display:grid}
+  nav.tabs a,nav.tabs a.m-only{display:block;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:16px;white-space:normal}
+  nav.tabs a[aria-current="page"]{border-color:var(--accent);background:rgba(11,93,75,.07)}
+  nav.tabs a[aria-current="page"]::after{display:none}
+  .proof{grid-template-columns:repeat(3,1fr);gap:8px}
+  .proof strong{font-size:23px}
+  .proof span{font-size:12.5px}
+}
+@media (max-width:520px){
+  .hero{padding:44px 20px 26px;gap:18px}
+  .hero .mihrab{order:2;width:170px}
+  .hero .lead{font-size:16.5px;line-height:1.6}
+  .hero h1{font-size:33px}
+  html[lang="ur"] .hero h1{font-size:29px}
+}
+
 .streak{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:0 0 16px;padding:14px 18px}
 .streak[hidden]{display:none}
 .sk-n{display:flex;align-items:baseline;gap:8px}
@@ -6795,6 +6847,8 @@ html[lang="ur"] .pic .mean{line-height:2}
 `;
 
 const APP_JS = String.raw`(function () {
+  var mb = document.getElementById('menuBtn'), sn = document.getElementById('siteNav');
+  if (mb && sn) mb.addEventListener('click', function () { var o = sn.classList.toggle('open'); mb.setAttribute('aria-expanded', o ? 'true' : 'false'); });
   'use strict';
   var doc = document;
   var L = doc.documentElement.lang === 'ur' ? 'ur' : 'en';
