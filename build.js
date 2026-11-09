@@ -3744,6 +3744,18 @@ function supportBox(lang) {
 }
 
 // ---------------------------------------------------------------- pages
+// Section banner artwork (img/banner-<name>.webp, 1024x500).
+const BANNER_ALT = {
+  quran: ['A closed green and gold book on a wooden stand beside a lantern', 'لکڑی کی رحل پر سبز اور سنہری کتاب اور ایک لالٹین'],
+  vocabulary: ['Picture flashcards spread on a wooden desk', 'لکڑی کی میز پر تصویری فلیش کارڈز'],
+  stories: ['An open storybook with a desert scene rising from its pages', 'کھلی کہانیوں کی کتاب جس کے صفحات سے صحرا کا منظر ابھر رہا ہے'],
+  tools: ['A desk with a laptop, keyboard, calendar and compass', 'میز پر لیپ ٹاپ، کی بورڈ، کیلنڈر اور قطب نما'],
+  guides: ['A winding path through green hills with a signpost and a map', 'سبز پہاڑیوں میں بل کھاتا راستہ، سائن بورڈ اور نقشہ'],
+  about: ['A small school building with green doors and a garden', 'سبز دروازوں اور باغیچے والی چھوٹی سی درس گاہ'],
+};
+const banner = (lang, name) => (fs.existsSync(path.join(__dirname, 'img', 'banner-' + name + '.webp'))
+  ? `\n<img class="banner-img slim" src="/img/banner-${name}.webp" alt="${BANNER_ALT[name][lang === 'ur' ? 1 : 0]}" width="1024" height="500">` : '');
+
 const CARD_GLYPH = { 'alphabet.html': 'أ ب ت', 'writing.html': 'قَلَم', 'lessons.html': 'نَحْو', 'classic-tales.html': 'حِكَايَات', 'reading.html': 'قِصَص', 'vocabulary.html': 'كَلِمَات', 'quran.html': 'قُرْآن', 'phrases.html': 'جُمَل', 'saudi-arabic.html': 'هَلَا', 'quiz.html': 'اِخْتِبَار', 'duas.html': 'دُعَاء', 'tools.html': 'أَدَوَات', 'guides.html': 'دَلِيل' };
 function homePage(lang) {
   const ur = lang === 'ur';
@@ -4340,7 +4352,7 @@ function vocabularyPage(lang) {
   };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.vocabulary]])}
 <h1>${C.h1}</h1>
-<p class="lead">${C.lead}</p>
+<p class="lead">${C.lead}</p>${banner(lang, 'vocabulary')}
 <div class="cards">
     ${cards}
 </div>`;
@@ -4512,7 +4524,7 @@ function quranPage(lang) {
   };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.quran]])}
 <h1>${C.h1}</h1>
-<p class="lead">${C.lead}</p>
+<p class="lead">${C.lead}</p>${banner(lang, 'quran')}
 <p><a class="btn primary" href="${link(lang, 'quran-al-fatiha.html')}">${C.start}</a></p>
 <section>
   <h2>${C.sH}</h2>
@@ -4848,7 +4860,7 @@ function storiesPage(lang) {
   };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.stories]])}
 <h1>${C.h1}</h1>
-<p class="lead">${C.lead}</p>
+<p class="lead">${C.lead}</p>${banner(lang, 'stories')}
 <section>
   <div class="cards">
     <a class="card wide" href="${link(lang, 'classic-tales.html')}"><span class="cg" lang="ar" aria-hidden="true">حِكَايَات</span><h3>${C.cl[0]}</h3><p>${C.cl[1]}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>
@@ -5024,7 +5036,7 @@ function aboutPage(lang) {
   const body = ur ? `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].about]])}
 <h1>حرف کے بارے میں</h1>
 <div class="prose">
-<p class="lead">عربی میں «حرف» کا مطلب ہے letter۔ حرف عربی سیکھنے کی ایک مفت ویب سائٹ ہے، جو اردو اور انگریزی بولنے والوں کے لیے بنائی گئی ہے جو بالکل شروع سے عربی سیکھنا چاہتے ہیں۔</p>
+<p class="lead">عربی میں «حرف» کا مطلب ہے letter۔ حرف عربی سیکھنے کی ایک مفت ویب سائٹ ہے، جو اردو اور انگریزی بولنے والوں کے لیے بنائی گئی ہے جو بالکل شروع سے عربی سیکھنا چاہتے ہیں۔</p>${banner(lang, 'about')}
 <h2>یہاں کیا ملے گا</h2>
 <p>مکمل حروفِ تہجی اور ہر حرف کی چاروں شکلیں، گرامر کے ابتدائی اسباق، روزمرہ کے الفاظ، کارآمد جملے اور مختصر کوئز۔ ہر عربی لفظ آپ کے آلے کی عربی آواز میں سنا جا سکتا ہے۔</p>
 <h2>ہم کون سی عربی سکھاتے ہیں</h2>
@@ -5036,7 +5048,7 @@ function aboutPage(lang) {
 </div>` : `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].about]])}
 <h1>About Harf</h1>
 <div class="prose">
-<p class="lead">Harf (${fmt('{حرف}')}) means “letter” in Arabic. It is a free website for learning Arabic, written for English and Urdu speakers who are starting from zero.</p>
+<p class="lead">Harf (${fmt('{حرف}')}) means “letter” in Arabic. It is a free website for learning Arabic, written for English and Urdu speakers who are starting from zero.</p>${banner(lang, 'about')}
 <h2>What you will find here</h2>
 <p>The full alphabet with the four shapes of every letter, beginner grammar lessons, everyday vocabulary, useful phrases and quick quizzes. Every Arabic word can be played aloud with your device’s built-in Arabic voice.</p>
 <h2>Which Arabic we teach</h2>
@@ -5206,7 +5218,7 @@ function toolsPage(lang) {
   };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, C.h1]])}
 <h1>${C.h1}</h1>
-<p class="lead">${C.lead}</p>
+<p class="lead">${C.lead}</p>${banner(lang, 'tools')}
 <div class="cards">
   ${TOOL_LIST.map(([f, g, en, u, de, du]) => `<a class="card" href="${link(lang, f)}"><span class="cg" lang="ar" aria-hidden="true">${g}</span><h3>${ur ? u : en}</h3><p>${ur ? du : de}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('\n  ')}
 </div>
@@ -6077,7 +6089,7 @@ function guidesPage(lang) {
     : { title: 'Guides to learning Arabic: Madinah books, Quranic Arabic, 90-day plan | Harf', desc: 'In-depth guides to learning Arabic: how to study the Madinah books, how to learn Quranic Arabic, MSA or dialect, and a free 90-day plan.', h1: 'Guides to learning Arabic', lead: 'Detailed answers to the questions learners ask most: where to start, which Arabic to learn and how to keep going.' };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, C.h1]])}
 <h1>${C.h1}</h1>
-<p class="lead">${C.lead}</p>
+<p class="lead">${C.lead}</p>${banner(lang, 'guides')}
 <div class="cards">
   ${GUIDES.map((x) => `<a class="card" href="${link(lang, x.slug + '.html')}"><span class="cg" lang="ar" aria-hidden="true">${x.glyph}</span><h3>${esc(x[lang].h1)}</h3><p>${esc(x[lang].desc)}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('\n  ')}
 </div>
@@ -6088,6 +6100,7 @@ ${supportBox(lang)}`;
 const GUIDE_CSS = `
 /* ---- November 2026 polish: menu, proof strip, social, phone hero */
 .menu-btn{display:none}
+@media (min-width:821px){.banner-img.slim{height:330px;object-fit:cover;object-position:center 58%}}
 nav.tabs a.m-only{display:none}
 .proof{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
 .proof a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 8px;transition:border-color .15s,transform .15s}
