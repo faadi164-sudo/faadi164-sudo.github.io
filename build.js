@@ -30,7 +30,7 @@ const GSC_VERIFY = '1L9mAoymv9_mHwRlJmemUA-Eg8VcyPHfUBMqNZoehlY';  // Google Sea
 // This produces /.well-known/assetlinks.json, which hides the browser bar in the Android app.
 const ANDROID_PACKAGE = 'com.learnwithharf.app';
 const ANDROID_SHA256 = [];
-const UPDATED = { en: '4 November 2026', ur: '۴ نومبر ۲۰۲۶' };
+const UPDATED = { en: '9 November 2026', ur: '۹ نومبر ۲۰۲۶' };
 const YEAR = '2026';
 const OUT = path.join(__dirname, '_site');
 
@@ -3705,6 +3705,8 @@ ${o.body}
   <div class="wrap foot">
     <p><strong>${t.brand}</strong> · ${t.footer}</p>
     <nav class="foot-links" aria-label="${t.about}">
+      <a href="${link(lang, 'guides.html')}">${lang === 'ur' ? 'رہنمائی' : 'Guides'}</a>
+      <a href="${link(lang, 'tools.html')}">${lang === 'ur' ? 'مفت ٹولز' : 'Free tools'}</a>
       <a href="${link(lang, 'about.html')}">${t.about}</a>
       <a href="${link(lang, 'contact.html')}">${t.contact}</a>
       <a href="${link(lang, 'privacy.html')}">${t.privacy}</a>
@@ -3732,7 +3734,7 @@ function supportBox(lang) {
 }
 
 // ---------------------------------------------------------------- pages
-const CARD_GLYPH = { 'alphabet.html': 'أ ب ت', 'writing.html': 'قَلَم', 'lessons.html': 'نَحْو', 'classic-tales.html': 'حِكَايَات', 'reading.html': 'قِصَص', 'vocabulary.html': 'كَلِمَات', 'quran.html': 'قُرْآن', 'phrases.html': 'جُمَل', 'saudi-arabic.html': 'هَلَا', 'quiz.html': 'اِخْتِبَار' };
+const CARD_GLYPH = { 'alphabet.html': 'أ ب ت', 'writing.html': 'قَلَم', 'lessons.html': 'نَحْو', 'classic-tales.html': 'حِكَايَات', 'reading.html': 'قِصَص', 'vocabulary.html': 'كَلِمَات', 'quran.html': 'قُرْآن', 'phrases.html': 'جُمَل', 'saudi-arabic.html': 'هَلَا', 'quiz.html': 'اِخْتِبَار', 'tools.html': 'أَدَوَات', 'guides.html': 'دَلِيل' };
 function homePage(lang) {
   const ur = lang === 'ur';
   const n = (v) => num(lang, v);
@@ -3759,6 +3761,8 @@ function homePage(lang) {
       ['phrases.html', 'جملے', `ملنے جلنے، خریداری اور راستہ پوچھنے کے لیے ${n(PHRASES.length)} جملے۔`],
       ['saudi-arabic.html', 'سعودی بول چال', `سعودی عرب میں روزمرہ استعمال ہونے والے ${n(SAUDI.reduce((k, g) => k + g.items.length, 0))} جملے: دفتر، دکان، ٹیکسی اور ڈاکٹر۔`],
       ['quiz.html', 'کوئز', 'حروف اور الفاظ پر دس مختصر سوال، ہر بار نیا سیٹ۔'],
+      ['tools.html', 'مفت ٹولز', 'عربی کی بورڈ، ہجری تاریخ کنورٹر، اسلامی نام اور ان کے معنی، اور عربی سے رومن حروف۔'],
+      ['guides.html', 'رہنمائی', 'مدینہ کی کتب کیسے پڑھیں، قرآنی عربی کیسے سیکھیں، اور مفت عربی سیکھنے کا ۹۰ دن کا منصوبہ۔'],
     ],
     howH: 'حرف سے کیسے سیکھیں',
     steps: [
@@ -3792,6 +3796,8 @@ function homePage(lang) {
       ['phrases.html', 'Phrases', `${PHRASES.length} sentences for meeting people, shopping and getting around.`],
       ['saudi-arabic.html', 'Saudi Arabic', `${SAUDI.reduce((k, g) => k + g.items.length, 0)} phrases Saudis use every day: at work, in shops, in taxis and at the doctor.`],
       ['quiz.html', 'Quiz', 'Ten quick questions on letters and words, with a new set every time.'],
+      ['tools.html', 'Free tools', 'An Arabic keyboard, a Hijri date converter, Muslim names with meanings, and Arabic to English letters.'],
+      ['guides.html', 'Guides', 'How to study the Madinah books, how to learn Quranic Arabic, and a free 90-day plan to learn Arabic.'],
     ],
     howH: 'How to use Harf',
     steps: [
@@ -3825,6 +3831,10 @@ function homePage(lang) {
   </div>
 </section>
 <div class="start-banner" id="startBanner">${C.startBanner}</div>
+<div class="streak box" id="streak" hidden>
+  <div class="sk-n"><span class="sk-fire" aria-hidden="true">🔥</span><strong id="skDays">0</strong><span>${ur ? 'دن کا سلسلہ' : 'day streak'}</span></div>
+  <div class="sk-g"><span>${ur ? 'آج کا ہدف:' : 'Today’s goal:'} <strong id="skGoal"></strong> ${ur ? 'صفحات' : 'pages'}</span><div class="meter"><i id="mGoal"></i></div><small id="skMsg"></small></div>
+</div>
 <div class="stats" id="stats" data-letters="28" data-words="${deckTotal}" style="display:none">
   <div class="stat"><strong id="sLetters">${n(0)}/${n(28)}</strong><span>${C.s1}</span><div class="meter"><i id="mLetters"></i></div></div>
   <div class="stat"><strong id="sWords">${n(0)}/${n(deckTotal)}</strong><span>${C.s2}</span><div class="meter"><i id="mWords"></i></div></div>
@@ -4500,7 +4510,7 @@ ${QURAN.length ? `<section id="all">
 <section>
   <h2>${C.moreH}</h2>
   <div class="cards">
-    ${[C.listen, C.duas, C.prayer, C.common].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
+    ${[C.listen, C.duas, C.prayer, C.common, ...(ROOTS ? [['quran-roots.html', ur ? 'قرآن کے عربی مادے' : 'Arabic roots of the Quran', ur ? `قرآن کے ${ud(ROOT_LIST.length)} عام مادے، ہر مادے سے بنے الفاظ اور آیات کی مثالیں۔` : `The ${ROOT_LIST.length} most common roots, every word built from them, and example verses.`]] : [])].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
   </div>
 </section>
 <section class="box">
@@ -4751,7 +4761,8 @@ ${deckHtml(lang, 'quran', QWORDS)}
 <nav class="pager" aria-label="${T[lang].nav.quran}">
   <a class="btn" href="${link(lang, 'quran-prayer-words.html')}">${T[lang].prev}: ${ur ? 'نماز کے اذکار' : 'words of the prayer'}</a>
   <a class="btn primary" href="${link(lang, 'quiz.html')}">${C.quiz}</a>
-</nav>`;
+</nav>
+${ROOTS ? `<section class="box" style="margin-top:28px"><p>${ur ? `اگلا قدم: الفاظ کو ان کے مادوں سے پہچانیں۔ <a href="${link(lang, 'quran-roots.html')}">قرآن کے عربی مادے دیکھیں ←</a>` : `Next step: learn words by their roots. <a href="${link(lang, 'quran-roots.html')}">See the Arabic roots of the Quran →</a>`}</p></section>` : ''}`;
   return layout(lang, { file: 'quran-common-words.html', section: 'quran', title: C.title, desc: C.desc, body });
 }
 
@@ -5098,6 +5109,971 @@ function notFoundPage() {
     .replace('href="ur-404.html"', 'href="ur.html"')
     .replace(/(href|src)="(?!https?:|data:|#|\/|mailto:)([^"]+)"/g, '$1="/$2"');
 }
+
+// ---------------------------------------------------------------- free tools
+// Small free tools that people search for: an Arabic keyboard, a Hijri date converter,
+// Muslim names with meanings, and Arabic-to-English letters. Each tool page carries its own script.
+const TOOL_LIST = [
+  ['arabic-keyboard.html', 'كِيبُورْد', 'Arabic keyboard', 'عربی کی بورڈ',
+    'Type Arabic with harakat on any device, then copy it, hear it or turn it into English letters.',
+    'کسی بھی ڈیوائس پر اعراب کے ساتھ عربی لکھیں، پھر کاپی کریں، سنیں یا انگریزی حروف میں بدلیں۔'],
+  ['hijri-converter.html', 'هِجْرِي', 'Hijri date converter', 'ہجری تاریخ کنورٹر',
+    'Today’s Islamic date, and any date converted between the Hijri and Gregorian calendars.',
+    'آج کی اسلامی تاریخ، اور کوئی بھی تاریخ ہجری اور عیسوی کیلنڈر کے درمیان تبدیل کریں۔'],
+  ['muslim-names.html', 'أَسْمَاء', 'Muslim names with meanings', 'اسلامی نام اور ان کے معنی',
+    'Arabic names for boys and girls, written in Arabic with their meaning in English and Urdu.',
+    'لڑکوں اور لڑکیوں کے عربی نام، عربی املا اور اردو و انگریزی معنی کے ساتھ۔'],
+  ['arabic-transliteration.html', 'a b t', 'Arabic to English letters', 'عربی سے رومن حروف',
+    'Paste vowelled Arabic and see how to pronounce it in English (Latin) letters.',
+    'اعراب والی عربی لکھیں اور اس کا تلفظ رومن (انگریزی) حروف میں دیکھیں۔'],
+];
+
+const TOOL_CSS = `
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 28px}
+.tool textarea,.tool input,.tool select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.tool textarea:focus,.tool input:focus,.tool select:focus{outline:2px solid var(--accent);border-color:transparent}
+.tool .kb-out{width:100%;min-height:120px;font-family:var(--arabic,serif);font-size:32px;line-height:1.9;direction:rtl;text-align:right;resize:vertical}
+.kb{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:6px;margin:14px 0 0;direction:rtl}
+.kb button{font:inherit;font-size:26px;line-height:1.4;min-height:50px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);cursor:pointer}
+.kb button:hover{border-color:var(--accent)}
+.kb button:active{background:var(--accent-soft)}
+.kb .mk{color:var(--gold)}
+.kb .wide{grid-column:span 3;font-size:16px}
+.kb-h{font-size:14px;color:var(--muted);margin:14px 0 0}
+.tool .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.tool label{font-weight:600}
+.big-date{font-size:22px;margin:0}
+.big-date .ar{font-size:32px}
+.conv{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.conv .tool{margin:0}
+.res{margin-top:12px;font-size:18px;min-height:1.6em}
+.res .ar{font-size:26px}
+.names{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.nm{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
+.nm .ar{font-size:30px;grid-column:2;grid-row:1 / span 3;line-height:1.5}
+.nm b{font-size:18px}
+.nm .mean{color:var(--muted);font-size:15px}
+.nm .q{font-size:13px;color:var(--gold)}
+.nm[hidden]{display:none}
+.nm[data-say]::before{display:none}
+.nm{font:inherit;color:var(--ink);text-align:start;cursor:pointer}
+.nm:hover{border-color:var(--accent)}
+.tl-out{display:flex;flex-wrap:wrap;gap:8px;direction:rtl;margin-top:14px}
+.tl-w{border:1px solid var(--line);border-radius:10px;padding:6px 10px;text-align:center;background:var(--bg)}
+.tl-w .ar{display:block;font-size:26px}
+.tl-w .latin{display:block;color:var(--gold);font-weight:600;direction:ltr}
+.tl-line{font-size:20px;direction:ltr;margin-top:12px;font-weight:600}
+`;
+
+function toolCrumbs(lang, label) {
+  const ur = lang === 'ur';
+  return crumbs(lang, [['index.html', T[lang].nav.home], ['tools.html', ur ? 'مفت ٹولز' : 'Free tools'], [null, label]]);
+}
+function toolMore(lang, self) {
+  const ur = lang === 'ur';
+  return `<section><h2 class="orn">${ur ? 'مزید مفت ٹولز' : 'More free tools'}</h2><div class="cards">${TOOL_LIST.filter((x) => x[0] !== self).map(([f, g, en, u, de, du]) => `<a class="card" href="${link(lang, f)}"><span class="cg" lang="ar" aria-hidden="true">${g}</span><h3>${ur ? u : en}</h3><p>${ur ? du : de}</p></a>`).join('')}</div></section>`;
+}
+const jsonData = (id, data) => `<script type="application/json" id="${id}">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+
+function toolsPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'مفت عربی ٹولز: کی بورڈ، ہجری تاریخ، اسلامی نام | حرف', desc: 'مفت آن لائن عربی ٹولز: اعراب کے ساتھ عربی کی بورڈ، ہجری عیسوی تاریخ کنورٹر، اسلامی نام اردو معنی کے ساتھ، اور عربی سے رومن حروف۔',
+    h1: 'مفت عربی ٹولز', lead: 'عربی سیکھنے اور روزمرہ کام کے لیے چھوٹے مفت ٹولز۔ کوئی سائن اپ نہیں، سب کچھ آپ کے براؤزر میں چلتا ہے۔',
+  } : {
+    title: 'Free Arabic tools: keyboard, Hijri date, Muslim names | Harf', desc: 'Free online Arabic tools: an Arabic keyboard with harakat, a Hijri to Gregorian date converter, Muslim names with meanings, and Arabic to English letters.',
+    h1: 'Free Arabic tools', lead: 'Small free tools for learning Arabic and everyday use. No sign-up; everything runs in your browser.',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="cards">
+  ${TOOL_LIST.map(([f, g, en, u, de, du]) => `<a class="card" href="${link(lang, f)}"><span class="cg" lang="ar" aria-hidden="true">${g}</span><h3>${ur ? u : en}</h3><p>${ur ? du : de}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('\n  ')}
+</div>
+${supportBox(lang)}`;
+  return layout(lang, { file: 'tools.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
+
+// ---- Arabic keyboard
+const KB_LETTERS = 'ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي ء أ إ آ ؤ ئ ة ى لا'.split(' ');
+const KB_MARKS = [['َ', 'fatha', 'زبر'], ['ِ', 'kasra', 'زیر'], ['ُ', 'damma', 'پیش'], ['ْ', 'sukun', 'جزم'], ['ّ', 'shadda', 'شد'], ['ً', 'tanwin fath', 'دو زبر'], ['ٍ', 'tanwin kasr', 'دو زیر'], ['ٌ', 'tanwin damm', 'دو پیش'], ['ٰ', 'dagger alif', 'کھڑا زبر']];
+const KB_EXTRA = ['،', '؟', '؛', '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩', 'ﷺ', 'ﷻ'];
+// Standard Arabic (101) layout on a QWERTY keyboard; Shift gives the harakat.
+const KB_MAP = { q: 'ض', w: 'ص', e: 'ث', r: 'ق', t: 'ف', y: 'غ', u: 'ع', i: 'ه', o: 'خ', p: 'ح', '[': 'ج', ']': 'د', a: 'ش', s: 'س', d: 'ي', f: 'ب', g: 'ل', h: 'ا', j: 'ت', k: 'ن', l: 'م', ';': 'ك', "'": 'ط', z: 'ئ', x: 'ء', c: 'ؤ', v: 'ر', b: 'لا', n: 'ى', m: 'ة', ',': 'و', '.': 'ز', '/': 'ظ', '`': 'ذ',
+  Q: 'َ', W: 'ً', E: 'ُ', R: 'ٌ', T: 'لإ', Y: 'إ', A: 'ِ', S: 'ٍ', G: 'لأ', H: 'أ', J: 'ـ', K: '،', X: 'ْ', N: 'آ', B: 'لآ', P: '؛', '?': '؟', '~': 'ّ' };
+
+function keyboardPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'عربی کی بورڈ آن لائن اعراب کے ساتھ | حرف', desc: 'مفت آن لائن عربی کی بورڈ: زبر، زیر، پیش، شد اور تنوین کے ساتھ عربی لکھیں، کاپی کریں، آواز سنیں یا رومن حروف میں دیکھیں۔ موبائل اور کمپیوٹر دونوں پر۔',
+    h1: 'عربی کی بورڈ (اعراب کے ساتھ)', lead: 'نیچے حروف پر ٹیپ کر کے عربی لکھیں۔ سنہری بٹن اعراب ہیں: حرف لکھنے کے بعد اس کا اعراب دبائیں۔ کمپیوٹر پر «اپنے کی بورڈ سے لکھیں» آن کریں تو انگریزی کی بورڈ عربی بن جائے گا۔',
+    ph: 'یہاں عربی لکھیں…', letters: 'حروف', marks: 'اعراب (زبر، زیر، پیش…)', extra: 'علامات اور عربی ہندسے',
+    copy: 'کاپی', clear: 'صاف کریں', back: 'مٹائیں ⌫', space: 'اسپیس', phys: 'اپنے کی بورڈ سے لکھیں', tl: 'رومن حروف میں دیکھیں', g: 'گوگل پر تلاش', copied: 'کاپی ہو گیا',
+    howH: 'کمپیوٹر کی بورڈ پر عربی کیسے لکھیں', how: 'جب «اپنے کی بورڈ سے لکھیں» آن ہو تو ہر انگریزی حرف عربی کے معیاری (۱۰۱) لے آؤٹ کا حرف لکھتا ہے، جیسے h سے {ا}، f سے {ب} اور j سے {ت}۔ Shift کے ساتھ اعراب آتے ہیں: Shift+Q زبر، Shift+A زیر، Shift+E پیش، Shift+X جزم اور Shift+` شد۔',
+    tipsH: 'اعراب کب لکھیں؟', tips: 'عام عربی تحریر میں اعراب نہیں لکھے جاتے، مگر سیکھنے والوں کے لیے یہ بہت مفید ہیں کیونکہ یہ بتاتے ہیں کہ لفظ کیسے پڑھا جائے۔ قرآن، بچوں کی کتابوں اور مدینہ کے عربی کورس میں ہمیشہ اعراب ہوتے ہیں۔',
+  } : {
+    title: 'Arabic keyboard online with harakat (tashkeel) | Harf', desc: 'Free online Arabic keyboard: type Arabic with harakat (fatha, kasra, damma, shadda, tanwin), copy it, hear it read aloud or see it in English letters. Works on phone and computer.',
+    h1: 'Arabic keyboard with harakat', lead: 'Tap the letters below to type Arabic. The gold keys are the harakat (vowel marks): type a letter, then its mark. On a computer, switch on “Type with my keyboard” and your English keyboard types Arabic.',
+    ph: 'Type Arabic here…', letters: 'Letters', marks: 'Harakat (vowel marks)', extra: 'Punctuation and Arabic numerals',
+    copy: 'Copy', clear: 'Clear', back: 'Delete ⌫', space: 'Space', phys: 'Type with my keyboard', tl: 'See it in English letters', g: 'Search Google', copied: 'Copied',
+    howH: 'How to type Arabic on a computer keyboard', how: 'With “Type with my keyboard” on, each English key types the letter of the standard Arabic (101) layout: h gives {ا}, f gives {ب} and j gives {ت}. Hold Shift for the harakat: Shift+Q fatha, Shift+A kasra, Shift+E damma, Shift+X sukun and Shift+` shadda.',
+    tipsH: 'When should you write harakat?', tips: 'Everyday Arabic is written without harakat, but they help learners a lot because they show how a word is read. The Quran, children’s books and the Madinah Arabic course always use them.',
+  };
+  const key = (c, cls, title) => `<button type="button" data-k="${esc(c)}"${cls ? ` class="${cls}"` : ''}${title ? ` title="${esc(title)}" aria-label="${esc(title)}"` : ''}>${c.length === 1 && /[\u064B-\u0670]/.test(c) ? 'ـ' + c : c}</button>`;
+  const legend = Object.entries(KB_MAP).filter(([k]) => /^[a-z]$/.test(k)).map(([k, v]) => `<tr><td class="latin">${k}</td><td><span class="ar" lang="ar">${v}</span></td></tr>`);
+  const half = Math.ceil(legend.length / 2);
+  const body = `${toolCrumbs(lang, ur ? 'عربی کی بورڈ' : 'Arabic keyboard')}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tool">
+  <textarea id="kbOut" class="kb-out" lang="ar" dir="rtl" placeholder="${C.ph}" aria-label="${C.ph}" spellcheck="false"></textarea>
+  <div class="row">
+    <button class="btn primary" type="button" id="kbCopy">${C.copy}</button>
+    <button class="btn" type="button" id="kbSay" data-say="">${T[lang].listen}</button>
+    <a class="btn" id="kbTl" href="${link(lang, 'arabic-transliteration.html')}">${C.tl}</a>
+    <a class="btn" id="kbG" href="https://www.google.com/search?q=" target="_blank" rel="noopener">${C.g}</a>
+    <button class="btn" type="button" id="kbClear">${C.clear}</button>
+    <label><input type="checkbox" id="kbPhys"> ${C.phys}</label>
+  </div>
+  <p class="kb-h">${C.letters}</p>
+  <div class="kb">${KB_LETTERS.map((c) => key(c)).join('')}</div>
+  <p class="kb-h">${C.marks}</p>
+  <div class="kb">${KB_MARKS.map(([c, en, u]) => key(c, 'mk', ur ? u : en)).join('')}</div>
+  <p class="kb-h">${C.extra}</p>
+  <div class="kb">${KB_EXTRA.map((c) => key(c)).join('')}<button type="button" class="wide" data-k=" ">${C.space}</button><button type="button" class="wide" id="kbBack">${C.back}</button></div>
+</div>
+<section class="split">
+  <div><h2>${C.howH}</h2><p>${fmt(C.how)}</p>
+  <div class="tbl" style="display:flex;gap:12px"><table class="words"><tbody>${legend.slice(0, half).join('')}</tbody></table><table class="words"><tbody>${legend.slice(half).join('')}</tbody></table></div></div>
+  <div><h2>${C.tipsH}</h2><p>${C.tips}</p></div>
+</section>
+${toolMore(lang, 'arabic-keyboard.html')}
+${jsonData('kb-map', KB_MAP)}
+<script>
+(function () {
+  var out = document.getElementById('kbOut'), phys = document.getElementById('kbPhys');
+  var map = JSON.parse(document.getElementById('kb-map').textContent);
+  try { if (localStorage.getItem('harf-kb-text')) out.value = localStorage.getItem('harf-kb-text'); if (localStorage.getItem('harf-kb-phys') === '1') phys.checked = true; } catch (e) {}
+  function sync() {
+    var v = out.value;
+    document.getElementById('kbSay').setAttribute('data-say', v);
+    document.getElementById('kbTl').href = '${link(lang, 'arabic-transliteration.html')}' + (v ? '?t=' + encodeURIComponent(v) : '');
+    document.getElementById('kbG').href = 'https://www.google.com/search?q=' + encodeURIComponent(v);
+    try { localStorage.setItem('harf-kb-text', v); } catch (e) {}
+  }
+  function insert(s) {
+    var a = out.selectionStart, b = out.selectionEnd;
+    if (a == null) { out.value += s; } else { out.value = out.value.slice(0, a) + s + out.value.slice(b); out.selectionStart = out.selectionEnd = a + s.length; }
+    sync();
+  }
+  document.querySelectorAll('.kb [data-k]').forEach(function (b) { b.addEventListener('click', function () { insert(b.getAttribute('data-k')); if (window.matchMedia('(pointer:fine)').matches) out.focus(); }); });
+  document.getElementById('kbBack').addEventListener('click', function () {
+    var a = out.selectionStart, b = out.selectionEnd;
+    if (a !== b) { out.value = out.value.slice(0, a) + out.value.slice(b); out.selectionStart = out.selectionEnd = a; }
+    else if (a > 0) { out.value = out.value.slice(0, a - 1) + out.value.slice(a); out.selectionStart = out.selectionEnd = a - 1; }
+    sync();
+  });
+  document.getElementById('kbClear').addEventListener('click', function () { out.value = ''; sync(); out.focus(); });
+  document.getElementById('kbCopy').addEventListener('click', function () {
+    var done = function () { var t = document.getElementById('toast'); if (t) { t.textContent = '${C.copied}'; t.classList.add('show'); setTimeout(function () { t.classList.remove('show'); }, 2000); } };
+    if (navigator.clipboard) navigator.clipboard.writeText(out.value).then(done, function () { out.select(); document.execCommand('copy'); done(); });
+    else { out.select(); document.execCommand('copy'); done(); }
+  });
+  phys.addEventListener('change', function () { try { localStorage.setItem('harf-kb-phys', phys.checked ? '1' : '0'); } catch (e) {} out.focus(); });
+  out.addEventListener('keydown', function (e) {
+    if (!phys.checked || e.ctrlKey || e.metaKey || e.altKey) return;
+    var c = map[e.key];
+    if (c) { e.preventDefault(); insert(c); }
+  });
+  out.addEventListener('input', sync);
+  sync();
+})();
+</script>`;
+  return layout(lang, { file: 'arabic-keyboard.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
+
+// ---- Hijri converter (Umm al-Qura calendar, built into modern browsers)
+const HIJRI_MONTHS = [
+  ['مُحَرَّم', 'Muharram', 'محرم', 'The first month and one of the four sacred months. The 10th is ʿĀshūrāʾ.', 'پہلا مہینہ اور چار حرمت والے مہینوں میں سے ایک۔ دس تاریخ عاشورا ہے۔'],
+  ['صَفَر', 'Safar', 'صفر', 'The second month.', 'دوسرا مہینہ۔'],
+  ['رَبِيع الأَوَّل', 'Rabiʿ al-Awwal', 'ربیع الاول', 'The month in which the Prophet ﷺ was born, according to most historians.', 'اکثر مؤرخین کے مطابق اسی مہینے نبی کریم ﷺ کی ولادت ہوئی۔'],
+  ['رَبِيع الآخِر', 'Rabiʿ al-Akhir (al-Thani)', 'ربیع الثانی', 'The fourth month.', 'چوتھا مہینہ۔'],
+  ['جُمَادَى الأُولَى', 'Jumada al-Ula', 'جمادی الاولیٰ', 'The fifth month.', 'پانچواں مہینہ۔'],
+  ['جُمَادَى الآخِرَة', 'Jumada al-Akhirah', 'جمادی الثانیہ', 'The sixth month.', 'چھٹا مہینہ۔'],
+  ['رَجَب', 'Rajab', 'رجب', 'One of the four sacred months.', 'چار حرمت والے مہینوں میں سے ایک۔'],
+  ['شَعْبَان', 'Shaʿban', 'شعبان', 'The month before Ramadan, in which the Prophet ﷺ fasted often.', 'رمضان سے پہلے کا مہینہ، جس میں نبی کریم ﷺ کثرت سے روزے رکھتے تھے۔'],
+  ['رَمَضَان', 'Ramadan', 'رمضان', 'The month of fasting, in which the Quran was first revealed (2:185).', 'روزوں کا مہینہ، جس میں قرآن نازل ہونا شروع ہوا (۲:۱۸۵)۔'],
+  ['شَوَّال', 'Shawwal', 'شوال', 'Eid al-Fitr is on the 1st. Six fasts in Shawwal are sunnah.', 'یکم شوال کو عید الفطر ہوتی ہے۔ شوال کے چھ روزے سنت ہیں۔'],
+  ['ذُو القَعْدَة', 'Dhu al-Qaʿdah', 'ذوالقعدہ', 'One of the four sacred months.', 'چار حرمت والے مہینوں میں سے ایک۔'],
+  ['ذُو الحِجَّة', 'Dhu al-Hijjah', 'ذوالحجہ', 'The month of Hajj. The 9th is the Day of ʿArafah and the 10th is Eid al-Adha. A sacred month.', 'حج کا مہینہ اور حرمت والا مہینہ۔ نو تاریخ یومِ عرفہ اور دس تاریخ عید الاضحیٰ ہے۔'],
+];
+const AR_DAYS = ['الأَحَد', 'الاِثْنَيْن', 'الثُّلَاثَاء', 'الأَرْبِعَاء', 'الخَمِيس', 'الجُمُعَة', 'السَّبْت'];
+
+function hijriPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'آج کی اسلامی تاریخ اور ہجری عیسوی تاریخ کنورٹر | حرف', desc: 'آج کی ہجری (اسلامی) تاریخ دیکھیں اور کوئی بھی تاریخ ہجری سے عیسوی یا عیسوی سے ہجری میں تبدیل کریں۔ ہجری مہینوں کے نام عربی اور اردو میں۔',
+    h1: 'ہجری تاریخ کنورٹر', lead: 'آج کی اسلامی تاریخ، اور ہجری و عیسوی کیلنڈر کے درمیان تاریخ تبدیل کرنے کا آسان طریقہ۔',
+    today: 'آج کی تاریخ', g2h: 'عیسوی سے ہجری', h2g: 'ہجری سے عیسوی', day: 'دن', month: 'مہینہ', year: 'سال', conv: 'تبدیل کریں',
+    events: 'آنے والی اسلامی تاریخیں', ev: [['رمضان کا آغاز', 9, 1], ['عید الفطر', 10, 1], ['یومِ عرفہ', 12, 9], ['عید الاضحیٰ', 12, 10], ['اسلامی نیا سال', 1, 1], ['عاشورا', 1, 10]],
+    monthsH: 'ہجری مہینوں کے نام', note: 'یہ کنورٹر اُمّ القریٰ کیلنڈر استعمال کرتا ہے، جو سعودی عرب کا سرکاری کیلنڈر ہے۔ پاکستان اور دوسرے ممالک میں مہینہ چاند دیکھ کر شروع ہوتا ہے، اس لیے وہاں تاریخ ایک دن آگے پیچھے ہو سکتی ہے۔ عید اور روزوں کے لیے اپنی مقامی رویتِ ہلال کمیٹی کے اعلان پر عمل کریں۔',
+    bad: 'یہ تاریخ درست نہیں۔', old: 'آپ کا براؤزر ہجری کیلنڈر کی سہولت نہیں دیتا۔ براہِ کرم کروم، سفاری یا ایج کا نیا ورژن استعمال کریں۔', inDays: (n) => n === 0 ? 'آج' : `${ud(n)} دن بعد`,
+    thM: ['#', 'عربی', 'اردو', 'تفصیل'], about: 'ہجری کیلنڈر قمری ہے: ہر مہینہ ۲۹ یا ۳۰ دن کا ہوتا ہے اور سال تقریباً ۳۵۴ دن کا، یعنی عیسوی سال سے ۱۱ دن چھوٹا۔ اسی لیے رمضان ہر سال تقریباً ۱۱ دن پہلے آتا ہے۔ اس کا آغاز نبی کریم ﷺ کی مکہ سے مدینہ ہجرت کے سال سے ہوتا ہے۔', aboutH: 'ہجری کیلنڈر کیا ہے؟',
+    wd: ['اتوار', 'پیر', 'منگل', 'بدھ', 'جمعرات', 'جمعہ', 'ہفتہ'], ah: 'ہجری', ce: 'عیسوی',
+  } : {
+    title: 'Today’s Islamic date & Hijri to Gregorian converter | Harf', desc: 'See today’s Hijri (Islamic) date and convert any date from Hijri to Gregorian or Gregorian to Hijri. With the Islamic month names in Arabic, English and Urdu.',
+    h1: 'Hijri date converter', lead: 'Today’s Islamic date, and a quick way to convert dates between the Hijri and Gregorian calendars.',
+    today: 'Today', g2h: 'Gregorian to Hijri', h2g: 'Hijri to Gregorian', day: 'Day', month: 'Month', year: 'Year', conv: 'Convert',
+    events: 'Coming Islamic dates', ev: [['Start of Ramadan', 9, 1], ['Eid al-Fitr', 10, 1], ['Day of ʿArafah', 12, 9], ['Eid al-Adha', 12, 10], ['Islamic New Year', 1, 1], ['ʿĀshūrāʾ', 1, 10]],
+    monthsH: 'The Islamic months', note: 'This converter uses the Umm al-Qura calendar, the official calendar of Saudi Arabia. In Pakistan, India, the UK and elsewhere the month often starts by local moon sighting, so the date there can differ by a day. For Eid and fasting, follow your local moon-sighting announcement.',
+    bad: 'That date does not exist.', old: 'Your browser does not support the Hijri calendar. Please use a recent version of Chrome, Safari or Edge.', inDays: (n) => n === 0 ? 'today' : `in ${n} day${n === 1 ? '' : 's'}`,
+    thM: ['#', 'Arabic', 'Name', 'About'], about: 'The Hijri calendar is lunar: each month has 29 or 30 days and the year has about 354 days, 11 days shorter than the Gregorian year. That is why Ramadan comes about 11 days earlier every year. It counts from the year the Prophet ﷺ migrated (the Hijrah) from Makkah to Madinah.', aboutH: 'What is the Hijri calendar?',
+    wd: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], ah: 'AH', ce: '',
+  };
+  const mNames = HIJRI_MONTHS.map((m) => ur ? m[2] : m[1]);
+  const gNames = ur ? ['جنوری', 'فروری', 'مارچ', 'اپریل', 'مئی', 'جون', 'جولائی', 'اگست', 'ستمبر', 'اکتوبر', 'نومبر', 'دسمبر'] : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const opts = (arr) => arr.map((x, i) => `<option value="${i + 1}">${num(lang, i + 1)}. ${esc(x)}</option>`).join('');
+  const data = { hm: mNames, har: HIJRI_MONTHS.map((m) => m[0]), gm: gNames, wd: C.wd, ard: AR_DAYS, ev: C.ev, ur, ah: C.ah, bad: C.bad, old: C.old };
+  const body = `${toolCrumbs(lang, C.h1)}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tool" id="hToday" aria-live="polite"><p class="small">${C.today}</p><p class="big-date">…</p></div>
+<div class="conv">
+  <div class="tool"><h2>${C.g2h}</h2>
+    <label>${C.day} <input id="gD" type="number" min="1" max="31" style="width:5em"></label>
+    <label>${C.month} <select id="gM">${opts(gNames)}</select></label>
+    <label>${C.year} <input id="gY" type="number" min="1900" max="2076" style="width:6em"></label>
+    <div class="row"><button class="btn primary" type="button" id="gGo">${C.conv}</button></div>
+    <div class="res" id="gRes" aria-live="polite"></div>
+  </div>
+  <div class="tool"><h2>${C.h2g}</h2>
+    <label>${C.day} <input id="hD" type="number" min="1" max="30" style="width:5em"></label>
+    <label>${C.month} <select id="hM">${opts(mNames)}</select></label>
+    <label>${C.year} <input id="hY" type="number" min="1318" max="1500" style="width:6em"></label>
+    <div class="row"><button class="btn primary" type="button" id="hGo">${C.conv}</button></div>
+    <div class="res" id="hRes" aria-live="polite"></div>
+  </div>
+</div>
+<section style="margin-top:28px"><h2 class="orn">${C.events}</h2><div class="tbl"><table class="words"><tbody id="hEv"></tbody></table></div></section>
+<section class="box"><p>${C.note}</p></section>
+<section><h2>${C.aboutH}</h2><p>${C.about}</p>
+<p><a href="${link(lang, 'lesson-36-hijri-months.html')}">${ur ? 'سبق: ہجری مہینوں کے نام عربی میں سیکھیں ←' : 'Lesson: learn the Hijri months in Arabic →'}</a></p>
+<h2>${C.monthsH}</h2>
+<div class="tbl"><table class="words"><thead><tr>${C.thM.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>
+${HIJRI_MONTHS.map((m, i) => `<tr><td>${num(lang, i + 1)}</td><td><span class="ar" lang="ar">${m[0]}</span></td><td>${ur ? m[2] : m[1]}</td><td>${ur ? m[4] : m[3]}</td></tr>`).join('\n')}
+</tbody></table></div></section>
+${toolMore(lang, 'hijri-converter.html')}
+${jsonData('hijri-data', data)}
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('hijri-data').textContent);
+  var n = function (x) { return D.ur ? String(x).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }) : String(x); };
+  var fmt;
+  try { fmt = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'UTC' }); if (fmt.resolvedOptions().calendar !== 'islamic-umalqura') throw 0; }
+  catch (e) { document.getElementById('hToday').innerHTML = '<p>' + D.old + '</p>'; return; }
+  function toH(date) { var p = {}; fmt.formatToParts(date).forEach(function (x) { p[x.type] = x.value; }); return { d: +p.day, m: +p.month, y: parseInt(p.year, 10) }; }
+  function utc(y, m, d) { var t = new Date(Date.UTC(2000, m - 1, d)); t.setUTCFullYear(y); return t; }
+  function fromH(y, m, d) {
+    // Estimate, then search nearby days for an exact match.
+    var est = new Date(Date.UTC(622, 6, 16) + ((y - 1) * 354.367 + (m - 1) * 29.53 + (d - 1)) * 864e5);
+    for (var k = -45; k <= 45; k++) { var t = new Date(est.getTime() + k * 864e5), h = toH(t); if (h.y === y && h.m === m && h.d === d) return t; }
+    return null;
+  }
+  function hStr(h) { return n(h.d) + ' ' + D.hm[h.m - 1] + ' ' + n(h.y) + ' ' + D.ah; }
+  function gStr(t) { return D.wd[t.getUTCDay()] + (D.ur ? '، ' : ', ') + n(t.getUTCDate()) + ' ' + D.gm[t.getUTCMonth()] + ' ' + n(t.getUTCFullYear()); }
+  function an(x) { return String(x).replace(/[0-9]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
+  function arStr(h, t) { return '<span class="ar" lang="ar">' + D.ard[t.getUTCDay()] + ' ' + an(h.d) + ' ' + D.har[h.m - 1] + ' ' + an(h.y) + 'هـ</span>'; }
+  var now = new Date(), today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+  var th = toH(today);
+  document.querySelector('#hToday .big-date').innerHTML = arStr(th, today) + '<br><strong>' + hStr(th) + '</strong> · ' + gStr(today);
+  document.getElementById('gD').value = today.getUTCDate(); document.getElementById('gM').value = today.getUTCMonth() + 1; document.getElementById('gY').value = today.getUTCFullYear();
+  document.getElementById('hD').value = th.d; document.getElementById('hM').value = th.m; document.getElementById('hY').value = th.y;
+  document.getElementById('gGo').addEventListener('click', function () {
+    var y = +document.getElementById('gY').value, m = +document.getElementById('gM').value, d = +document.getElementById('gD').value, t = utc(y, m, d), r = document.getElementById('gRes');
+    if (!y || t.getUTCDate() !== d || t.getUTCMonth() !== m - 1) { r.textContent = D.bad; return; }
+    var h = toH(t); r.innerHTML = arStr(h, t) + '<br><strong>' + hStr(h) + '</strong>';
+  });
+  document.getElementById('hGo').addEventListener('click', function () {
+    var y = +document.getElementById('hY').value, m = +document.getElementById('hM').value, d = +document.getElementById('hD').value, r = document.getElementById('hRes');
+    var t = y && d ? fromH(y, m, d) : null;
+    if (!t) { r.textContent = D.bad; return; }
+    r.innerHTML = '<strong>' + gStr(t) + '</strong><br>' + arStr(toH(t), t);
+  });
+  var rows = D.ev.map(function (e) {
+    var y = th.y, t = fromH(y, e[1], e[2]);
+    if (!t || t < today) t = fromH(y + 1, e[1], e[2]);
+    return [e[0], t];
+  }).filter(function (x) { return x[1]; }).sort(function (a, b) { return a[1] - b[1]; });
+  document.getElementById('hEv').innerHTML = rows.map(function (x) {
+    var days = Math.round((x[1] - today) / 864e5), h = toH(x[1]);
+    return '<tr><td><strong>' + x[0] + '</strong></td><td>' + hStr(h) + '</td><td>' + gStr(x[1]) + '</td><td>' + ${ur ? `(days === 0 ? 'آج' : n(days) + ' دن بعد')` : `(days === 0 ? 'today' : 'in ' + days + ' day' + (days === 1 ? '' : 's'))`} + '</td></tr>';
+  }).join('');
+})();
+</script>`;
+  return layout(lang, { file: 'hijri-converter.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
+
+// ---- Muslim names with meanings
+// [Arabic, English spelling, b/g, English meaning, Urdu meaning, Quran reference or note]
+const NAMES = [
+  ['مُحَمَّد', 'Muhammad', 'b', 'Praised, much praised', 'جس کی بہت تعریف کی جائے', 'The name of the Prophet ﷺ (Quran 48:29)'],
+  ['أَحْمَد', 'Ahmad', 'b', 'Most praiseworthy', 'سب سے زیادہ تعریف والا', 'A name of the Prophet ﷺ (Quran 61:6)'],
+  ['مَحْمُود', 'Mahmud', 'b', 'Praised', 'تعریف کیا ہوا', ''],
+  ['مُصْطَفَى', 'Mustafa', 'b', 'Chosen', 'چُنا ہوا', 'A title of the Prophet ﷺ'],
+  ['عَلِيّ', 'Ali', 'b', 'High, exalted', 'بلند، عالی مرتبہ', ''],
+  ['حَسَن', 'Hasan', 'b', 'Good, handsome', 'اچھا، خوبصورت', ''],
+  ['حُسَيْن', 'Husayn', 'b', 'Little handsome one', 'چھوٹا حسین، خوبصورت', ''],
+  ['عُمَر', 'Umar', 'b', 'Life, long-lived', 'زندگی، لمبی عمر والا', ''],
+  ['عُثْمَان', 'Uthman', 'b', 'Young bustard (a bird); a classical Arab name', 'ایک پرندے کا بچہ؛ قدیم عربی نام', ''],
+  ['حَمْزَة', 'Hamza', 'b', 'Strong, steadfast', 'مضبوط، ثابت قدم', ''],
+  ['بِلَال', 'Bilal', 'b', 'Moisture, freshness', 'تری، تازگی', ''],
+  ['زَيْد', 'Zayd', 'b', 'Growth, increase', 'بڑھوتری، اضافہ', 'The only Companion named in the Quran (33:37)'],
+  ['إِبْرَاهِيم', 'Ibrahim', 'b', 'Name of the Prophet Abraham', 'حضرت ابراہیمؑ کا نام', 'Quran 2:124'],
+  ['إِسْمَاعِيل', 'Ismail', 'b', 'Name of the Prophet Ishmael; “God hears”', 'حضرت اسماعیلؑ کا نام؛ «اللہ سنتا ہے»', 'Quran 2:127'],
+  ['إِسْحَاق', 'Ishaq', 'b', 'Name of the Prophet Isaac; “he laughs”', 'حضرت اسحاقؑ کا نام؛ «وہ ہنستا ہے»', 'Quran 11:71'],
+  ['يَعْقُوب', 'Yaqub', 'b', 'Name of the Prophet Jacob', 'حضرت یعقوبؑ کا نام', 'Quran 12:6'],
+  ['يُوسُف', 'Yusuf', 'b', 'Name of the Prophet Joseph', 'حضرت یوسفؑ کا نام', 'Surah 12 is named after him'],
+  ['مُوسَى', 'Musa', 'b', 'Name of the Prophet Moses', 'حضرت موسیٰؑ کا نام', 'Named in the Quran 136 times'],
+  ['هَارُون', 'Harun', 'b', 'Name of the Prophet Aaron', 'حضرت ہارونؑ کا نام', 'Quran 20:30'],
+  ['عِيسَى', 'Isa', 'b', 'Name of the Prophet Jesus', 'حضرت عیسیٰؑ کا نام', 'Quran 3:45'],
+  ['دَاوُد', 'Dawud', 'b', 'Name of the Prophet David; “beloved”', 'حضرت داؤدؑ کا نام؛ «محبوب»', 'Quran 38:17'],
+  ['سُلَيْمَان', 'Sulayman', 'b', 'Name of the Prophet Solomon; from “peace”', 'حضرت سلیمانؑ کا نام؛ «سلامتی» سے', 'Quran 27:15'],
+  ['نُوح', 'Nuh', 'b', 'Name of the Prophet Noah; “rest”', 'حضرت نوحؑ کا نام؛ «سکون»', 'Surah 71 is named after him'],
+  ['آدَم', 'Adam', 'b', 'Name of the first man and prophet', 'پہلے انسان اور نبی کا نام', 'Quran 2:31'],
+  ['إِدْرِيس', 'Idris', 'b', 'Name of a prophet; often linked to “study”', 'ایک نبی کا نام؛ «درس» سے منسوب', 'Quran 19:56'],
+  ['إِلْيَاس', 'Ilyas', 'b', 'Name of the Prophet Elijah', 'حضرت الیاسؑ کا نام', 'Quran 37:123'],
+  ['يُونُس', 'Yunus', 'b', 'Name of the Prophet Jonah', 'حضرت یونسؑ کا نام', 'Surah 10 is named after him'],
+  ['أَيُّوب', 'Ayyub', 'b', 'Name of the Prophet Job, known for patience', 'حضرت ایوبؑ کا نام، صبر کی مثال', 'Quran 21:83'],
+  ['زَكَرِيَّا', 'Zakariyya', 'b', 'Name of the Prophet Zechariah', 'حضرت زکریاؑ کا نام', 'Quran 19:2'],
+  ['يَحْيَى', 'Yahya', 'b', 'Name of the Prophet John; “he lives”', 'حضرت یحییٰؑ کا نام؛ «وہ زندہ رہے»', 'Quran 19:7'],
+  ['لُقْمَان', 'Luqman', 'b', 'Name of the wise man in the Quran', 'قرآن میں مذکور دانا شخص کا نام', 'Surah 31 is named after him'],
+  ['عِمْرَان', 'Imran', 'b', 'Prosperity, building up', 'آبادی، خوشحالی', 'Surah 3 is named after his family'],
+  ['خَالِد', 'Khalid', 'b', 'Everlasting, eternal', 'ہمیشہ رہنے والا', ''],
+  ['طَارِق', 'Tariq', 'b', 'Night visitor; morning star', 'رات کو آنے والا؛ صبح کا ستارہ', 'Surah 86 is named al-Tariq'],
+  ['فَيْصَل', 'Faisal', 'b', 'Judge; one who separates right from wrong', 'فیصلہ کرنے والا، حق و باطل میں فرق کرنے والا', ''],
+  ['سَعْد', 'Saad', 'b', 'Good fortune, happiness', 'خوش نصیبی، سعادت', ''],
+  ['سَلْمَان', 'Salman', 'b', 'Safe, sound', 'سلامت، محفوظ', ''],
+  ['أُسَامَة', 'Usama', 'b', 'Lion', 'شیر', ''],
+  ['أَنَس', 'Anas', 'b', 'Friendliness, warmth', 'اُنس، محبت اور اپنائیت', ''],
+  ['طَلْحَة', 'Talha', 'b', 'A kind of acacia tree', 'ببول کی طرح کا ایک درخت', ''],
+  ['زُبَيْر', 'Zubayr', 'b', 'Strong, firm', 'مضبوط، پختہ', ''],
+  ['عَبْدُ الله', 'Abdullah', 'b', 'Servant of Allah', 'اللہ کا بندہ', 'Quran 72:19'],
+  ['عَبْدُ الرَّحْمٰن', 'Abdur Rahman', 'b', 'Servant of the Most Merciful', 'رحمٰن کا بندہ', ''],
+  ['عَبْدُ العَزِيز', 'Abdul Aziz', 'b', 'Servant of the Almighty', 'غالب (اللہ) کا بندہ', ''],
+  ['أَمِين', 'Amin', 'b', 'Trustworthy, faithful', 'امانت دار', ''],
+  ['حَامِد', 'Hamid', 'b', 'One who praises (Allah)', 'تعریف کرنے والا', ''],
+  ['حَمَّاد', 'Hammad', 'b', 'One who praises much', 'بہت حمد کرنے والا', ''],
+  ['هَاشِم', 'Hashim', 'b', 'One who breaks bread (for others); name of the Prophet’s great-grandfather', 'روٹی توڑ کر کھلانے والا؛ نبی ﷺ کے پردادا کا نام', ''],
+  ['جُنَيْد', 'Junaid', 'b', 'Little soldier', 'چھوٹا سپاہی', ''],
+  ['كَرِيم', 'Karim', 'b', 'Generous, noble', 'سخی، باعزت', ''],
+  ['رَاشِد', 'Rashid', 'b', 'Rightly guided', 'ہدایت یافتہ', ''],
+  ['سَعِيد', 'Saeed', 'b', 'Happy, fortunate', 'خوش نصیب', ''],
+  ['سَامِي', 'Sami', 'b', 'High, elevated', 'بلند', ''],
+  ['شَاكِر', 'Shakir', 'b', 'Grateful', 'شکر گزار', 'Quran 16:121'],
+  ['طٰهٰ', 'Taha', 'b', 'The letters ṭā and hā; opening of Surah 20', 'حروف «طا» اور «ہا»؛ سورہ طٰہٰ کا آغاز', 'Quran 20:1'],
+  ['يٰسٓ', 'Yasin', 'b', 'The letters yā and sīn; opening of Surah 36', 'حروف «یا» اور «سین»؛ سورہ یٰسین کا آغاز', 'Quran 36:1'],
+  ['وَلِيد', 'Walid', 'b', 'Newborn child', 'نومولود بچہ', ''],
+  ['عَمَّار', 'Ammar', 'b', 'One who builds and brings life', 'آباد کرنے والا', ''],
+  ['عَارِف', 'Arif', 'b', 'Knowing, wise', 'جاننے والا، عارف', ''],
+  ['أَسَد', 'Asad', 'b', 'Lion', 'شیر', ''],
+  ['حَارِث', 'Haris (Harith)', 'b', 'Ploughman, one who works hard', 'کھیتی کرنے والا، محنتی', ''],
+  ['نَبِيل', 'Nabil', 'b', 'Noble', 'شریف، نجیب', ''],
+  ['نَاصِر', 'Nasir', 'b', 'Helper, supporter', 'مدد گار', ''],
+  ['قَاسِم', 'Qasim', 'b', 'One who shares out', 'تقسیم کرنے والا', 'Name of the Prophet’s son'],
+  ['رَيَّان', 'Rayyan', 'b', 'Well-watered; the gate of Paradise for those who fast', 'سیراب؛ جنت کا دروازہ جس سے روزہ دار داخل ہوں گے', 'Sahih al-Bukhari 1896'],
+  ['زَيْن', 'Zain', 'b', 'Beauty, grace', 'زینت، خوبصورتی', ''],
+  ['مُنِيب', 'Munib', 'b', 'One who turns to Allah in repentance', 'اللہ کی طرف رجوع کرنے والا', 'Quran 50:33'],
+  ['مُجْتَبَى', 'Mujtaba', 'b', 'Chosen', 'چُنا ہوا', ''],
+  ['مُرْتَضَى', 'Murtaza (Murtada)', 'b', 'One who is pleasing (to Allah)', 'پسندیدہ', ''],
+  ['أُوَيْس', 'Owais (Uwais)', 'b', 'Little wolf', 'چھوٹا بھیڑیا', 'Uwais al-Qarani, praised in Sahih Muslim'],
+  ['رِضْوَان', 'Rizwan (Ridwan)', 'b', 'Good pleasure (of Allah)', 'رضا، خوشنودی', 'Quran 9:72'],
+  ['سَيْف', 'Saif', 'b', 'Sword', 'تلوار', ''],
+  ['شُعَيْب', 'Shoaib (Shuayb)', 'b', 'Name of a prophet sent to Madyan', 'مدین کی طرف بھیجے گئے نبی کا نام', 'Quran 7:85'],
+  ['سُفْيَان', 'Sufyan', 'b', 'A classical Arab name; linked to “swiftness”', 'قدیم عربی نام؛ «تیزی» سے منسوب', ''],
+  ['وَسِيم', 'Wasim', 'b', 'Handsome, graceful', 'خوبصورت', ''],
+  ['يَاسِر', 'Yasir', 'b', 'One who makes things easy', 'آسانی کرنے والا', ''],
+  ['ذَاكِر', 'Zakir (Dhakir)', 'b', 'One who remembers Allah', 'اللہ کا ذکر کرنے والا', ''],
+  ['عَدْنَان', 'Adnan', 'b', 'Settler; ancestor of the northern Arabs', 'ٹھہرنے والا؛ شمالی عربوں کے جدِ امجد', ''],
+  ['أَحْسَن', 'Ahsan', 'b', 'Best, most excellent', 'سب سے بہتر', ''],
+  ['أَكْرَم', 'Akram', 'b', 'Most generous', 'سب سے زیادہ سخی', 'Quran 96:3'],
+  ['أَنْوَر', 'Anwar', 'b', 'Brighter, radiant', 'زیادہ روشن', ''],
+  ['عَاطِف', 'Atif', 'b', 'Kind, affectionate', 'مہربان، شفیق', ''],
+  ['بَشِير', 'Bashir', 'b', 'Bringer of good news', 'خوش خبری دینے والا', 'Quran 2:119'],
+  ['فَهْد', 'Fahad', 'b', 'Panther', 'چیتا', ''],
+  ['فَرْحَان', 'Farhan', 'b', 'Happy, joyful', 'خوش', ''],
+  ['فَارِس', 'Faris', 'b', 'Horseman, knight', 'گھڑ سوار، شہسوار', ''],
+  ['فُؤَاد', 'Fawad (Fuad)', 'b', 'Heart', 'دل', 'Quran 28:10'],
+  ['هَادِي', 'Hadi', 'b', 'Guide', 'رہنما', ''],
+  ['حَيْدَر', 'Haider', 'b', 'Lion; a title of Ali', 'شیر؛ حضرت علیؓ کا لقب', ''],
+  ['عِرْفَان', 'Irfan', 'b', 'Knowledge, recognition', 'معرفت، پہچان', ''],
+  ['مَنْصُور', 'Mansur', 'b', 'Helped to victory', 'جس کی مدد کی گئی، فتح یاب', 'Quran 17:33'],
+  ['مَاجِد', 'Majid', 'b', 'Glorious, noble', 'بزرگ، شان والا', ''],
+  ['نَدِيم', 'Nadim', 'b', 'Close companion', 'ہم نشین، دوست', ''],
+  ['نَعِيم', 'Naeem', 'b', 'Bliss, comfort', 'نعمت، آرام', 'Quran 83:22'],
+  ['نُعْمَان', 'Noman (Numan)', 'b', 'Blessing; an old Arab name', 'نعمت؛ قدیم عربی نام', ''],
+  ['رَافِع', 'Rafay (Rafi)', 'b', 'One who raises up', 'بلند کرنے والا', ''],
+  ['شَاهِد', 'Shahid', 'b', 'Witness', 'گواہ', 'Quran 33:45'],
+  ['شَفِيق', 'Shafiq', 'b', 'Kind, compassionate', 'مہربان، شفیق', ''],
+  ['طَاهِر', 'Tahir', 'b', 'Pure, clean', 'پاک', ''],
+  ['عُمَيْر', 'Umair', 'b', 'Little Umar; long life', 'چھوٹا عمر؛ لمبی زندگی', ''],
+  ['وَقَّاص', 'Waqas', 'b', 'Warrior; one who breaks', 'توڑنے والا، جنگجو', ''],
+  ['إِيَاد', 'Iyad', 'b', 'Strength, support', 'طاقت، سہارا', ''],
+  ['مَرْيَم', 'Maryam', 'g', 'Name of Mary, mother of Jesus', 'حضرت مریمؑ کا نام', 'Surah 19 is named after her'],
+  ['عَائِشَة', 'Aisha (Ayesha)', 'g', 'Living, full of life', 'زندہ دل، زندگی سے بھرپور', ''],
+  ['فَاطِمَة', 'Fatima', 'g', 'One who weans; the Prophet’s daughter', 'دودھ چھڑانے والی؛ نبی ﷺ کی صاحبزادی', ''],
+  ['خَدِيجَة', 'Khadija', 'g', 'Born early; the Prophet’s first wife', 'وقت سے پہلے پیدا ہونے والی؛ نبی ﷺ کی پہلی زوجہ', ''],
+  ['زَيْنَب', 'Zaynab', 'g', 'A fragrant desert tree; a name of the Prophet’s daughter', 'خوشبودار صحرائی پودا؛ نبی ﷺ کی صاحبزادی کا نام', ''],
+  ['رُقَيَّة', 'Ruqayya', 'g', 'Rising, ascending', 'بلندی کی طرف جانے والی', ''],
+  ['حَفْصَة', 'Hafsa', 'g', 'Young lioness', 'شیرنی کا بچہ', ''],
+  ['أَسْمَاء', 'Asma', 'g', 'Loftiness, eminence', 'بلندی، عظمت', ''],
+  ['سُمَيَّة', 'Sumayya', 'g', 'High, lofty; the first martyr of Islam', 'بلند؛ اسلام کی پہلی شہیدہ', ''],
+  ['صَفِيَّة', 'Safiyya', 'g', 'Pure, chosen friend', 'پاکیزہ، چُنی ہوئی', ''],
+  ['آمِنَة', 'Amina', 'g', 'Safe, trustworthy; the Prophet’s mother', 'امن والی، امانت دار؛ نبی ﷺ کی والدہ', ''],
+  ['حَلِيمَة', 'Halima', 'g', 'Gentle, patient; the Prophet’s wet nurse', 'بردبار؛ نبی ﷺ کی دائی', ''],
+  ['هَاجَر', 'Hajar', 'g', 'Name of Hagar, mother of Ismail', 'حضرت ہاجرہؑ کا نام، حضرت اسماعیلؑ کی والدہ', ''],
+  ['آسِيَة', 'Asiya', 'g', 'One who tends and comforts', 'دلاسا دینے والی', 'The believing wife of Pharaoh (Quran 66:11)'],
+  ['سَارَة', 'Sara', 'g', 'Princess; one who brings joy', 'شہزادی؛ خوشی دینے والی', 'Wife of Ibrahim'],
+  ['حَوَّاء', 'Hawwa', 'g', 'Name of Eve; living', 'حضرت حواؑ کا نام؛ زندگی', ''],
+  ['لَيْلَى', 'Layla', 'g', 'Night', 'رات', ''],
+  ['نُور', 'Noor', 'g', 'Light', 'روشنی', 'Surah 24 is named al-Nur'],
+  ['هُدَى', 'Huda', 'g', 'Guidance', 'ہدایت', 'Quran 2:2'],
+  ['هِبَة', 'Hiba', 'g', 'Gift', 'تحفہ', ''],
+  ['إِيمَان', 'Iman', 'g', 'Faith', 'ایمان', ''],
+  ['عِنَايَة', 'Inaya', 'g', 'Care, concern', 'عنایت، توجہ', ''],
+  ['عَالِيَة', 'Aliya', 'g', 'High, exalted', 'بلند مرتبہ', 'Quran 69:22'],
+  ['أَمِيرَة', 'Amira', 'g', 'Princess, leader', 'شہزادی', ''],
+  ['أَنِيسَة', 'Anisa', 'g', 'Friendly companion', 'ہمدم، دوستانہ', ''],
+  ['أَرِيبَة', 'Areeba', 'g', 'Clever, wise', 'عقلمند، ذہین', ''],
+  ['بُشْرَى', 'Bushra', 'g', 'Good news', 'خوش خبری', 'Quran 10:64'],
+  ['دُعَاء', 'Dua', 'g', 'Prayer, supplication', 'دعا', ''],
+  ['فَرِحَة', 'Fariha', 'g', 'Happy, joyful', 'خوش', ''],
+  ['فَرَح', 'Farah', 'g', 'Joy', 'خوشی', ''],
+  ['غَزَالَة', 'Ghazala', 'g', 'Gazelle', 'ہرنی', ''],
+  ['هَنَاء', 'Hana', 'g', 'Happiness, contentment', 'خوشی، اطمینان', ''],
+  ['حِرَاء', 'Hira', 'g', 'The cave where the Quran was first revealed', 'وہ غار جہاں پہلی وحی نازل ہوئی', ''],
+  ['اِقْرَأْ', 'Iqra', 'g', 'Read! The first word revealed', 'پڑھ! پہلی وحی کا پہلا لفظ', 'Quran 96:1'],
+  ['جَنَّة', 'Jannat', 'g', 'Paradise, garden', 'جنت، باغ', ''],
+  ['كِنْزَة', 'Kinza', 'g', 'Treasure', 'خزانہ', ''],
+  ['مَهَا', 'Maha', 'g', 'Oryx; a poetic word for beautiful eyes', 'نیل گائے؛ شاعری میں خوبصورت آنکھوں کی علامت', ''],
+  ['مَلِيكَة', 'Malika', 'g', 'Queen', 'ملکہ', ''],
+  ['مَنَاهِل', 'Minahil (Manahil)', 'g', 'Springs of fresh water', 'میٹھے پانی کے چشمے', ''],
+  ['نِدَاء', 'Nida', 'g', 'Call', 'پکار', ''],
+  ['رَابِعَة', 'Rabia', 'g', 'The fourth', 'چوتھی', 'Rabiʿa al-ʿAdawiyya of Basra'],
+  ['سَعْدِيَّة', 'Sadia', 'g', 'Fortunate, happy', 'خوش نصیب', ''],
+  ['شِفَاء', 'Shifa', 'g', 'Healing, cure', 'شفا', 'Quran 10:57'],
+  ['سِدْرَة', 'Sidra', 'g', 'Lote tree', 'بیری کا درخت', 'Sidrat al-Muntaha (Quran 53:14)'],
+  ['تَسْنِيم', 'Tasneem', 'g', 'A spring in Paradise', 'جنت کا ایک چشمہ', 'Quran 83:27'],
+  ['طُوبَى', 'Tuba', 'g', 'Blessedness, good fortune', 'خوش بختی', 'Quran 13:29'],
+  ['أُمَامَة', 'Umama', 'g', 'A classical name; the Prophet’s granddaughter', 'قدیم عربی نام؛ نبی ﷺ کی نواسی', ''],
+  ['وَرْدَة', 'Warda', 'g', 'Rose', 'گلاب', ''],
+  ['يُسْرَى', 'Yusra', 'g', 'Ease', 'آسانی', 'Quran 87:8'],
+  ['زَهْرَاء', 'Zahra', 'g', 'Shining, radiant; a title of Fatima', 'روشن؛ حضرت فاطمہؓ کا لقب', ''],
+  ['آيَات', 'Ayat', 'g', 'Signs, verses', 'نشانیاں، آیات', ''],
+  ['أَمَل', 'Amal', 'g', 'Hope', 'امید', ''],
+  ['لُبْنَى', 'Lubna', 'g', 'Storax tree', 'ایک خوشبودار درخت', ''],
+  ['رَحْمَة', 'Rahma', 'g', 'Mercy', 'رحمت', ''],
+  ['سَلْمَى', 'Salma', 'g', 'Safe, peaceful', 'سلامتی والی', ''],
+  ['سَمِيرَة', 'Samira', 'g', 'Companion in evening talk', 'شام کی محفل کی ساتھی', ''],
+  ['مُنَى', 'Muna', 'g', 'Wishes, hopes', 'آرزوئیں', ''],
+  ['نَوَال', 'Nawal', 'g', 'Gift, grace', 'عطا، بخشش', ''],
+  ['رَانِيَة', 'Rania', 'g', 'Gazing, looking intently', 'محو ہو کر دیکھنے والی', ''],
+  ['صَبَا', 'Saba', 'g', 'Morning breeze from the east', 'صبح کی مشرقی ہوا', ''],
+  ['زُلَيْخَا', 'Zulaikha', 'g', 'Traditional name of the wife of al-ʿAziz in the story of Yusuf', 'حضرت یوسفؑ کے قصے میں عزیزِ مصر کی بیوی کا روایتی نام', ''],
+];
+
+// Urdu for the notes on NAMES
+const NAME_NOTE_UR = {
+  'The name of the Prophet ﷺ (Quran 48:29)': 'نبی کریم ﷺ کا نام (قرآن ۴۸:۲۹)',
+  'A name of the Prophet ﷺ (Quran 61:6)': 'نبی کریم ﷺ کا ایک نام (قرآن ۶۱:۶)',
+  'A title of the Prophet ﷺ': 'نبی کریم ﷺ کا لقب',
+  'The only Companion named in the Quran (33:37)': 'واحد صحابی جن کا نام قرآن میں آیا (۳۳:۳۷)',
+  'Named in the Quran 136 times': 'قرآن میں ۱۳۶ بار نام آیا ہے',
+  'Surah 3 is named after his family': 'سورہ ۳ (آلِ عمران) ان کے خاندان کے نام پر ہے',
+  'Surah 86 is named al-Tariq': 'سورہ ۸۶ کا نام الطارق ہے',
+  'Surah 24 is named al-Nur': 'سورہ ۲۴ کا نام النور ہے',
+  'Name of the Prophet’s son': 'نبی کریم ﷺ کے صاحبزادے کا نام',
+  'Sahih al-Bukhari 1896': 'صحیح بخاری ۱۸۹۶',
+  'Uwais al-Qarani, praised in Sahih Muslim': 'اویس قرنیؒ، جن کی تعریف صحیح مسلم میں ہے',
+  'The believing wife of Pharaoh (Quran 66:11)': 'فرعون کی مومن بیوی (قرآن ۶۶:۱۱)',
+  'Wife of Ibrahim': 'حضرت ابراہیمؑ کی زوجہ',
+  'Sidrat al-Muntaha (Quran 53:14)': 'سدرۃ المنتہیٰ (قرآن ۵۳:۱۴)',
+  'Rabiʿa al-ʿAdawiyya of Basra': 'رابعہ بصریؒ',
+};
+function nameNote(lang, q) {
+  if (!q || lang !== 'ur') return q;
+  if (NAME_NOTE_UR[q]) return NAME_NOTE_UR[q];
+  let m = q.match(/^Quran (\d+):(\d+)$/); if (m) return `قرآن ${ud(m[1])}:${ud(m[2])}`;
+  m = q.match(/^Surah (\d+) is named after (him|her)$/); if (m) return `سورہ ${ud(m[1])} ${m[2] === 'him' ? 'انہی' : 'انہی'} کے نام پر ہے`;
+  return q;
+}
+const inQuran = (q) => /Quran|Surah/.test(q);
+
+function namesPage(lang) {
+  const ur = lang === 'ur';
+  const boys = NAMES.filter((x) => x[2] === 'b').length, girls = NAMES.length - boys;
+  const C = ur ? {
+    title: 'اسلامی نام اور ان کے معنی: لڑکوں اور لڑکیوں کے عربی نام | حرف', desc: `لڑکوں کے ${ud(boys)} اور لڑکیوں کے ${ud(girls)} اسلامی نام، عربی املا، اردو معنی، تلفظ اور قرآنی حوالے کے ساتھ۔`,
+    h1: 'اسلامی نام اور ان کے معنی', lead: `لڑکوں کے ${ud(boys)} اور لڑکیوں کے ${ud(girls)} عربی نام، درست عربی املا اور معنی کے ساتھ۔ نام پر ٹیپ کر کے اس کا عربی تلفظ سنیں۔`,
+    search: 'نام یا معنی تلاش کریں…', all: 'سب', b: 'لڑکے', g: 'لڑکیاں', quran: 'قرآن میں', none: 'کوئی نام نہیں ملا۔',
+    tipH: 'نام رکھنے سے پہلے', tip: 'نبی کریم ﷺ نے اچھے معنی والے نام رکھنے کی ترغیب دی اور بعض نام بدل کر اچھے نام رکھے۔ نام کا مطلب کسی عالم سے بھی پوچھ لیں، اور عربی املا ٹھیک رکھیں کیونکہ ایک حرف کے فرق سے معنی بدل جاتا ہے (جیسے {ثناء} تعریف اور {سناء} روشنی)۔',
+  } : {
+    title: 'Muslim baby names with meanings: Arabic boy and girl names | Harf', desc: `${boys} Muslim boy names and ${girls} girl names in Arabic script, with their meanings in English and Urdu, pronunciation and Quran references.`,
+    h1: 'Muslim names with meanings', lead: `${boys} boy names and ${girls} girl names in correct Arabic spelling, with meanings in English and Urdu. Tap a name to hear it in Arabic.`,
+    search: 'Search a name or meaning…', all: 'All', b: 'Boys', g: 'Girls', quran: 'In the Quran', none: 'No names found.',
+    tipH: 'Before you choose a name', tip: 'The Prophet ﷺ encouraged names with good meanings, and changed some names to better ones. Check the meaning with someone knowledgeable, and keep the Arabic spelling right, because one letter can change the meaning (for example {ثناء} “praise” and {سناء} “radiance”).',
+  };
+  const cards = NAMES.slice().sort((a, b) => a[1].localeCompare(b[1])).map(([a, en, g, me, mu, q]) => `<button type="button" class="nm" data-g="${g}" data-q="${inQuran(q) ? 1 : 0}" data-say="${esc(a.replace(/[\u06D6-\u06ED]/g, ''))}" data-s="${esc((en + ' ' + me + ' ' + mu + ' ' + a.replace(/[\u064B-\u0652\u0670]/g, '')).toLowerCase())}"><span class="ar" lang="ar">${a}</span><b>${esc(en)}</b><span class="mean">${esc(ur ? mu : me)}</span>${q ? `<span class="q">${esc(nameNote(lang, q))}</span>` : ''}</button>`).join('\n  ');
+  const body = `${toolCrumbs(lang, C.h1)}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tool" style="padding:12px 14px">
+  <input id="nmQ" type="search" placeholder="${C.search}" aria-label="${C.search}" style="width:100%;max-width:420px">
+  <div class="chips" id="nmG" role="group" style="margin-top:10px">${[['', C.all], ['b', C.b], ['g', C.g], ['q', C.quran]].map(([v, l], k) => `<button class="chip" type="button" data-v="${v}" aria-pressed="${k === 0}">${l}</button>`).join('')}</div>
+</div>
+<div class="names" id="nmList">
+  ${cards}
+</div>
+<p id="nmNone" hidden>${C.none}</p>
+<section class="box" style="margin-top:28px"><h2>${C.tipH}</h2><p>${fmt(C.tip)}</p></section>
+${toolMore(lang, 'muslim-names.html')}
+<script>
+(function () {
+  var q = document.getElementById('nmQ'), f = '', items = document.querySelectorAll('#nmList .nm');
+  function run() {
+    var s = q.value.trim().toLowerCase().replace(/[\\u064B-\\u0652\\u0670]/g, ''), shown = 0;
+    items.forEach(function (it) {
+      var ok = (!f || (f === 'q' ? it.getAttribute('data-q') === '1' : it.getAttribute('data-g') === f)) && (!s || it.getAttribute('data-s').indexOf(s) > -1);
+      it.hidden = !ok; if (ok) shown++;
+    });
+    document.getElementById('nmNone').hidden = shown > 0;
+  }
+  q.addEventListener('input', run);
+  document.querySelectorAll('#nmG .chip').forEach(function (b) { b.addEventListener('click', function () {
+    f = b.getAttribute('data-v'); document.querySelectorAll('#nmG .chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); run();
+  }); });
+})();
+</script>`;
+  return layout(lang, { file: 'muslim-names.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
+
+// ---- Arabic to English letters (reuses the site's own translit())
+function translitSource() {
+  const src = fs.readFileSync(__filename, 'utf8');
+  const a = src.indexOf('const translit = (() => {');
+  const b = src.indexOf('\n})();', a);
+  return src.slice(a, b + 6);
+}
+function translitPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'عربی سے رومن حروف: عربی تلفظ انگریزی حروف میں | حرف', desc: 'مفت ٹول: اعراب والی عربی لکھیں یا پیسٹ کریں اور اس کا تلفظ رومن (انگریزی) حروف میں دیکھیں۔ قرآن کی آیات اور دعاؤں کے لیے مفید۔',
+    h1: 'عربی سے رومن حروف', lead: 'اعراب والی عربی یہاں لکھیں یا پیسٹ کریں، اور ہر لفظ کا تلفظ رومن حروف میں دیکھیں۔ قرآن کی آیات اور دعائیں آزمائیں۔',
+    ph: 'یہاں عربی پیسٹ کریں…', simple: 'سادہ حروف (ḥ کی جگہ h)', kb: 'عربی کی بورڈ کھولیں', ex: 'مثال آزمائیں',
+    warn: 'اس متن میں اعراب کم ہیں، اس لیے تلفظ ادھورا ہوگا۔ بہتر نتیجے کے لیے زبر، زیر، پیش والی عربی استعمال کریں۔',
+    keyH: 'خاص حروف کی رہنمائی', key: [['ḥ', 'ح', 'حلق سے گہری «ح»'], ['ʿ', 'ع', 'عین، حلق کی آواز'], ['’', 'ء', 'ہمزہ، آواز کا لمحاتی رکنا'], ['ṣ ḍ ṭ ẓ', 'ص ض ط ظ', 'بھاری (موٹی) آوازیں'], ['th / dh', 'ث / ذ', 'انگریزی think اور this جیسی'], ['aa, ii, uu', 'ا ي و', 'لمبی آوازیں (مد)']],
+    whyH: 'رومن حروف پر کیوں نہ رکیں؟', why: 'رومن حروف شروع میں مدد دیتے ہیں، مگر عربی کی کئی آوازیں انگریزی میں نہیں ہیں۔ آپ تو عربی رسم الخط پہلے ہی پڑھ سکتے ہیں، اس لیے تھوڑی محنت سے عربی کو براہِ راست اعراب کے ساتھ پڑھنا سیکھ لیں۔',
+  } : {
+    title: 'Arabic to English letters: transliteration tool | Harf', desc: 'Free tool: type or paste vowelled Arabic and see its pronunciation in English (Latin) letters. Useful for Quran verses and duas.',
+    h1: 'Arabic to English letters', lead: 'Type or paste vowelled Arabic and see how each word is pronounced in English letters. Try a Quran verse or a dua.',
+    ph: 'Paste Arabic here…', simple: 'Simple letters (h instead of ḥ)', kb: 'Open the Arabic keyboard', ex: 'Try an example',
+    warn: 'This text has few harakat, so the pronunciation will be incomplete. For the best result use Arabic with fatha, kasra and damma.',
+    keyH: 'Guide to the special letters', key: [['ḥ', 'ح', 'a deep, breathy h from the throat'], ['ʿ', 'ع', 'ʿayn, a tight sound in the throat'], ['’', 'ء', 'hamza, a short catch in the voice'], ['ṣ ḍ ṭ ẓ', 'ص ض ط ظ', 'heavy (emphatic) sounds'], ['th / dh', 'ث / ذ', 'as in “think” and “this”'], ['aa, ii, uu', 'ا ي و', 'long vowels']],
+    whyH: 'Why not stop at English letters?', why: 'English letters help at the start, but several Arabic sounds do not exist in English. Learning the alphabet takes about ten days with Harf, and then you can read the Arabic itself.',
+  };
+  const example = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+  const body = `${toolCrumbs(lang, C.h1)}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tool">
+  <textarea id="tlIn" class="kb-out" lang="ar" dir="rtl" placeholder="${C.ph}" aria-label="${C.ph}" spellcheck="false" style="min-height:90px"></textarea>
+  <div class="row">
+    <button class="btn" type="button" id="tlEx">${C.ex}</button>
+    <button class="btn" type="button" id="tlSay" data-say="">${T[lang].listen}</button>
+    <a class="btn" href="${link(lang, 'arabic-keyboard.html')}">${C.kb}</a>
+    <label><input type="checkbox" id="tlSimple"> ${C.simple}</label>
+  </div>
+  <p class="note" id="tlWarn" hidden>${C.warn}</p>
+  <div class="tl-line latin" id="tlLine" aria-live="polite"></div>
+  <div class="tl-out" id="tlOut"></div>
+</div>
+<section class="split">
+  <div><h2>${C.keyH}</h2><div class="tbl"><table class="words"><tbody>${C.key.map(([l, a, d]) => `<tr><td class="latin"><strong>${l}</strong></td><td><span class="ar" lang="ar">${a}</span></td><td>${d}</td></tr>`).join('')}</tbody></table></div></div>
+  <div><h2>${C.whyH}</h2><p>${C.why}</p><p><a class="btn primary" href="${link(lang, 'alphabet.html')}">${ur ? 'حروفِ تہجی سیکھیں ←' : 'Learn the alphabet →'}</a></p></div>
+</section>
+${toolMore(lang, 'arabic-transliteration.html')}
+<script>
+(function () {
+${translitSource()}
+  var inp = document.getElementById('tlIn'), simple = document.getElementById('tlSimple');
+  var esc = function (s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  function plain(s) { return s.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[ʿ’]/g, "'"); }
+  function run() {
+    var t = inp.value.trim(), words = t ? t.split(/\\s+/) : [];
+    var letters = (t.match(/[\\u0621-\\u064A]/g) || []).length, marks = (t.match(/[\\u064B-\\u0652]/g) || []).length;
+    document.getElementById('tlWarn').hidden = !(letters > 3 && marks < letters * 0.4);
+    var out = words.map(function (w) { var r = translit(w); return [w, simple.checked ? plain(r) : r]; });
+    document.getElementById('tlLine').textContent = out.map(function (x) { return x[1]; }).join(' ');
+    document.getElementById('tlOut').innerHTML = out.map(function (x) { return '<span class="tl-w"><span class="ar" lang="ar">' + esc(x[0]) + '</span><span class="latin">' + esc(x[1]) + '</span></span>'; }).join('');
+    document.getElementById('tlSay').setAttribute('data-say', t);
+  }
+  var p = new URLSearchParams(location.search).get('t'); if (p) inp.value = p;
+  inp.addEventListener('input', run); simple.addEventListener('change', run);
+  document.getElementById('tlEx').addEventListener('click', function () { inp.value = ${JSON.stringify(example)}; run(); });
+  run();
+})();
+</script>`;
+  return layout(lang, { file: 'arabic-transliteration.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
+
+
+// ---------------------------------------------------------------- Quran roots
+// One page for every root that appears at least 10 times in the Quran, plus a hub page.
+// data/quran-roots.json comes from the Quranic Arabic Corpus morphology (GNU GPL): for each root,
+// its lemmas with the [surah, verse, word] of every occurrence. Meanings come from data/quran.
+const ROOTS_FILE = path.join(__dirname, 'data', 'quran-roots.json');
+const ROOTS = fs.existsSync(ROOTS_FILE) && QURAN.length ? JSON.parse(fs.readFileSync(ROOTS_FILE, 'utf8')) : null;
+const ROOT_LAT = { 'ء': '’', 'أ': '’', 'ؤ': '’', 'ا': 'a', 'ب': 'b', 'ت': 't', 'ث': 'th', 'ج': 'j', 'ح': 'ḥ', 'خ': 'kh', 'د': 'd', 'ذ': 'dh', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'sh', 'ص': 'ṣ', 'ض': 'ḍ', 'ط': 'ṭ', 'ظ': 'ẓ', 'ع': 'ʿ', 'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n', 'ه': 'h', 'و': 'w', 'ي': 'y' };
+const ROOT_SLUG = { 'ء': 'a', 'أ': 'a', 'ؤ': 'a', 'ا': 'aa', 'ب': 'b', 'ت': 't', 'ث': 'th', 'ج': 'j', 'ح': 'hh', 'خ': 'kh', 'د': 'd', 'ذ': 'dh', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'sh', 'ص': 'ss', 'ض': 'dd', 'ط': 'tt', 'ظ': 'zz', 'ع': 'ain', 'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n', 'ه': 'h', 'و': 'w', 'ي': 'y' };
+const rootLetters = (r) => [...r].join(' ');
+const rootLatin = (r) => [...r].map((c) => ROOT_LAT[c] || c).join('-');
+let ROOT_LIST = []; // [{ r, n, slug, lemmas: [{ a, n, tr, en, ur, occ }], surahs: [[surahIndex, count]] }]
+let ROOT_INDEX = {};
+function prepareRoots() {
+  if (!ROOTS || ROOT_LIST.length) return;
+  const text = QURAN.map(loadSurah);
+  const used = new Set();
+  const clean = (g) => {
+    let c = String(g).replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ').replace(/[.,;:!?"“”]/g, ' ').replace(/\s+/g, ' ').trim();
+    for (let k = 0; k < 3; k++) {
+      c = c.replace(/^(and|so|then|but|indeed|the|a|an)\s+/i, '').replace(/^(اور|پس|پھر|تو|بے شک|بیشک|اپنی|اپنے|اپنا)\s+/, '');
+      if (c.split(' ').length > 1) c = c.replace(/^(to|for|by|with|of|in|on|because of|surely|his|her|their|your|our|my|its)\s+/i, '');
+      if (c.split(' ').length > 1) c = c.replace(/\s+(ہے|ہیں|کے لیے|کو|کا|کی|کے|میں|سے|والوں)$/, '');
+    }
+    c = c.trim();
+    return c || String(g).trim();
+  };
+  // most common meanings, ignoring case and keeping the first spelling seen
+  const top = (arr, k) => { const c = new Map(); arr.forEach((x) => { const key = x.toLowerCase(); const e = c.get(key) || [x, 0]; e[1]++; c.set(key, e); }); return [...c.values()].sort((a, b) => b[1] - a[1]).slice(0, k).map((x) => x[0]); };
+  for (const [r, n] of ROOTS.all) {
+    const lem = ROOTS.roots[r];
+    if (!lem) continue;
+    let slug = [...r].map((c) => ROOT_SLUG[c] || 'x').join('-');
+    while (used.has(slug)) slug += '-2';
+    used.add(slug);
+    const bySurah = new Map();
+    const lemmas = lem.map(([a, k, occ]) => {
+      const en = [], ur = [];
+      for (const [s, v, w] of occ) {
+        const x = text[s - 1][v - 1].w[w - 1];
+        en.push(clean(x[2])); ur.push(clean(x[3]));
+        bySurah.set(s, (bySurah.get(s) || 0) + 1);
+      }
+      const av = a.replace(/([\u0628-\u064A\u0621\u0623\u0625])(\u0651?)(?=ا)/g, '$1$2\u064E');
+      return { a, n: k, tr: /َ?ة$/.test(a) ? translit(av).replace(/aa$/, 'a') : translit(av), en: top(en, 2).join(' · '), ur: top(ur, 2).join(' · '), occ };
+    });
+    ROOT_LIST.push({ r, n, slug, lemmas, surahs: [...bySurah.entries()].sort((a, b) => b[1] - a[1]) });
+  }
+  ROOT_LIST.forEach((x, i) => { ROOT_INDEX[x.r] = i; });
+  ROOT_LIST.text = text;
+}
+
+function rootExample(lang, x, s, v, w) {
+  const ur = lang === 'ur';
+  const q = QURAN[s - 1], verse = ROOT_LIST.text[s - 1][v - 1];
+  const ayah = verse.w.map((y, k) => (k === w - 1 ? `<mark>${y[0]}</mark>` : y[0])).join(' ');
+  const word = verse.w[w - 1];
+  return `<div class="rx">
+  <p class="ayah ar" lang="ar">${ayah} <span class="anum">${arNum(v)}</span></p>
+  <p class="rx-w"><span class="ar" lang="ar">${word[0]}</span> <span class="latin">${esc(word[1])}</span> · ${esc(ur ? word[3] : word[2])}</p>
+  <p class="vmean">${esc(ur ? verse.ur : verse.en)} <a href="${link(lang, 'quran-' + q.slug + '.html')}#v${v}">${ur ? `(${q.ur}، آیت ${ud(v)})` : `(Surah ${q.en}, ${s}:${v})`}</a></p>
+</div>`;
+}
+
+function rootPage(lang, i) {
+  const ur = lang === 'ur';
+  const x = ROOT_LIST[i], prev = ROOT_LIST[i - 1], next = ROOT_LIST[i + 1];
+  const L = rootLetters(x.r), lat = rootLatin(x.r);
+  const main = x.lemmas[0];
+  const nf = x.lemmas.length;
+  const title = ur ? `قرآنی مادہ ${L} (${lat}): معنی اور الفاظ | حرف` : `Quran root ${L} (${lat}): meaning and words | Harf`;
+  const desc = ur ? `مادہ ${L} سے بنے الفاظ قرآن میں ${ud(x.n)} بار آئے ہیں۔ سب سے عام لفظ ${main.a} (${main.ur.split(' · ')[0]})۔ ہر لفظ کا اردو معنی، تلفظ اور قرآنی آیات کی مثالیں۔`
+    : `Words from the root ${L} (${lat}) appear ${x.n} times in the Quran. The most common is ${main.a} (${main.en.split(' · ')[0]}). Every word with its meaning, pronunciation and example verses.`;
+  const h1 = ur ? `قرآنی مادہ ${L}` : `The Quran root ${L}`;
+  const eyebrow = ur ? `قرآن میں ${ud(x.n)} بار · ${ud(nf)} الفاظ · مقبولیت میں نمبر ${ud(i + 1)}` : `${x.n} times in the Quran · ${nf} word form${nf === 1 ? '' : 's'} · rank ${i + 1}`;
+  const lead = ur
+    ? `مادہ ${fmt('{' + L + '}')} ([${lat}]) سے بنے الفاظ قرآن میں ${ud(x.n)} بار آئے ہیں۔ سب سے عام لفظ ${fmt('{' + main.a + '}')} ہے، جس کا مطلب «${esc(main.ur.split(' · ')[0])}» ہے اور یہ ${ud(main.n)} بار آیا ہے۔ ایک مادہ سیکھنے سے اس سے بنے سب الفاظ پہچاننا آسان ہو جاتا ہے۔`
+    : `Words built from the root ${fmt('{' + L + '}')} ([${lat}]) appear ${x.n} times in the Quran. The most common is ${fmt('{' + main.a + '}')}, “${esc(main.en.split(' · ')[0])}”, which comes ${main.n} time${main.n === 1 ? '' : 's'}. Learn the root once and you can recognise every word made from it.`;
+  const rows = x.lemmas.map((l) => `<tr><td><span class="ar" lang="ar">${l.a}</span></td><td class="latin">${esc(l.tr)}</td><td>${esc(ur ? l.ur : l.en)}</td><td>${num(lang, l.n)}</td><td>${say(lang, l.a)}</td></tr>`).join('\n');
+  // examples: the first two places for each of the top four words
+  const seen = new Set(), picks = [];
+  for (const l of x.lemmas.slice(0, 5)) {
+    let want = l === main ? 2 : 1;
+    for (const o of l.occ) { if (!want || picks.length >= 6) break; const key = o[0] + ':' + o[1]; if (seen.has(key)) continue; seen.add(key); picks.push(o); want--; }
+  }
+  const ex = picks.map((o) => rootExample(lang, x, ...o)).join('\n');
+  const surahs = x.surahs.slice(0, 6).map(([s, k]) => { const q = QURAN[s - 1]; return `<li><a href="${link(lang, 'quran-' + q.slug + '.html')}">${ur ? q.ur : 'Surah ' + q.en}</a> · ${num(lang, k)}${ur ? ' بار' : '×'}</li>`; }).join('');
+  const rh = (y) => link(lang, 'quran-root-' + y.slug + '.html');
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], ['quran-roots.html', ur ? 'قرآنی مادے' : 'Quran roots'], [null, L]])}
+<p class="eyebrow">${eyebrow}</p>
+<h1>${h1} <span class="latin" dir="ltr" style="font-size:.6em;color:var(--muted)">${lat}</span></h1>
+<p class="lead">${lead}</p>
+<h2>${ur ? `اس مادے سے بنے الفاظ` : `Words from this root`}</h2>
+<div class="tbl"><table class="words"><thead><tr><th>${ur ? 'لفظ' : 'Word'}</th><th>${ur ? 'تلفظ' : 'Say it'}</th><th>${ur ? 'معنی' : 'Meaning'}</th><th>${ur ? 'کتنی بار' : 'Times'}</th><th></th></tr></thead><tbody>
+${rows}
+</tbody></table></div>
+<h2>${ur ? 'قرآن سے مثالیں' : 'Examples from the Quran'}</h2>
+${ex}
+<section class="split" style="margin-top:28px">
+  <div><h2>${ur ? 'یہ مادہ کن سورتوں میں زیادہ آیا' : 'Surahs where it comes most'}</h2><ul>${surahs}</ul></div>
+  <div class="box"><p>${ur ? 'ہر لفظ کا معنی اس کے قرآنی سیاق سے لیا گیا ہے، اس لیے ایک ہی لفظ کے دو معنی بھی دکھائے جا سکتے ہیں۔ مادے اور بنیادی الفاظ (lemma) کی معلومات Quranic Arabic Corpus سے لی گئی ہیں۔' : 'Each meaning is taken from the word-by-word translation of the verses, so a word can show two meanings from different contexts. Root and base-word data come from the Quranic Arabic Corpus.'}</p></div>
+</section>
+<nav class="pager" aria-label="${ur ? 'قرآنی مادے' : 'Quran roots'}">
+  ${prev ? `<a class="btn" href="${rh(prev)}">${T[lang].prev}: ${rootLetters(prev.r)}</a>` : `<a class="btn" href="${link(lang, 'quran-roots.html')}">${ur ? 'تمام مادے' : 'All roots'}</a>`}
+  ${next ? `<a class="btn primary" href="${rh(next)}">${ur ? 'اگلا: ' + rootLetters(next.r) + ' ←' : 'Next: ' + rootLetters(next.r) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran-roots.html')}">${ur ? 'تمام مادے' : 'All roots'}</a>`}
+</nav>`;
+  return layout(lang, { file: 'quran-root-' + x.slug + '.html', section: 'quran', title, desc, body });
+}
+
+function rootsHubPage(lang) {
+  const ur = lang === 'ur';
+  const total = ROOTS.all.reduce((k, x) => k + x[1], 0);
+  const covered = ROOT_LIST.reduce((k, x) => k + x.n, 0);
+  const pct = Math.round((covered / total) * 100);
+  const top100 = ROOT_LIST.slice(0, 100).reduce((k, x) => k + x.n, 0);
+  const p100 = Math.round((top100 / total) * 100);
+  const C = ur ? {
+    title: 'قرآن کے عربی مادے (روٹ) اردو معنی کے ساتھ | حرف', desc: `قرآن کے ${ud(ROOT_LIST.length)} عام عربی مادے، ہر مادے سے بنے الفاظ، اردو معنی، تلفظ اور آیات کی مثالیں۔ قرآنی عربی سمجھنے کا تیز طریقہ۔`,
+    h1: 'قرآن کے عربی مادے', lead: `عربی کے زیادہ تر الفاظ تین حرفی «مادے» سے بنتے ہیں۔ مثلاً {ع ل م} سے {عِلْم} (علم)، {عَالِم} (جاننے والا)، {عَلِيم} (سب جاننے والا) اور {يَعْلَمُ} (وہ جانتا ہے) بنتے ہیں۔ یہاں قرآن کے ${ud(ROOT_LIST.length)} سب سے عام مادے ہیں۔`,
+    stat: `قرآن میں مادے والے الفاظ ${ud(total)} ہیں۔ پہلے ${ud(100)} مادے ان میں سے ${ud(p100)}٪ ہیں، اور یہاں دیے گئے ${ud(ROOT_LIST.length)} مادے ${ud(pct)}٪۔`,
+    how: 'کیسے استعمال کریں', steps: ['اوپر سے شروع کریں: سب سے عام مادے پہلے ہیں۔', 'ہر مادے کے صفحے پر اس سے بنے الفاظ اور ان کے معنی پڑھیں۔', 'مثال والی آیات بلند آواز سے پڑھیں اور نشان زدہ لفظ پہچانیں۔', 'روزانہ تین مادے سیکھیں؛ ایک مہینے میں قرآن کے بیشتر الفاظ پہچاننے لگیں گے۔'],
+    search: 'مادہ یا معنی تلاش کریں…', times: 'بار', letter: 'پہلے حرف سے',
+  } : {
+    title: 'Quran Arabic roots with meanings: word list by root | Harf', desc: `The ${ROOT_LIST.length} most common Arabic roots in the Quran, with every word built from them, meanings, pronunciation and example verses. The fast way to understand Quranic Arabic.`,
+    h1: 'Arabic roots of the Quran', lead: `Most Arabic words are built from a three-letter root. From {ع ل م} come {عِلْم} “knowledge”, {عَالِم} “one who knows”, {عَلِيم} “All-Knowing” and {يَعْلَمُ} “he knows”. Here are the ${ROOT_LIST.length} most common roots in the Quran.`,
+    stat: `The Quran has ${total.toLocaleString('en')} words with a root. The top 100 roots cover ${p100}% of them, and the ${ROOT_LIST.length} roots here cover ${pct}%.`,
+    how: 'How to use this list', steps: ['Start at the top: the most common roots come first.', 'On each root page, read the words built from it and what they mean.', 'Read the example verses aloud and spot the highlighted word.', 'Learn three roots a day; within a month you will recognise most of the words in the Quran.'],
+    search: 'Search a root or meaning…', times: '×', letter: 'By first letter',
+  };
+  const items = ROOT_LIST.map((x, i) => `<a class="rt" href="${link(lang, 'quran-root-' + x.slug + '.html')}" data-s="${esc((x.r + ' ' + rootLatin(x.r) + ' ' + x.lemmas.slice(0, 3).map((l) => (ur ? l.ur : l.en) + ' ' + l.a.replace(/[ً-ْٰ]/g, '')).join(' ')).toLowerCase())}"><span class="rk">${num(lang, i + 1)}</span><span class="ar" lang="ar">${rootLetters(x.r)}</span><span class="rm">${esc(ur ? x.lemmas[0].ur : x.lemmas[0].en)}</span><span class="rn">${num(lang, x.n)}${ur ? ' ' + C.times : C.times}</span></a>`).join('\n  ');
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${fmt(C.lead)}</p>
+<section class="box"><p>${C.stat}</p></section>
+<section><h2>${C.how}</h2><ol class="steps">${C.steps.map((s) => `<li>${s}</li>`).join('')}</ol></section>
+<div class="tool" style="padding:12px 14px"><input id="rtQ" type="search" placeholder="${C.search}" aria-label="${C.search}" style="width:100%;max-width:420px"></div>
+<div class="rts" id="rtList">
+  ${items}
+</div>
+<p class="note">${ur ? 'مادوں کی معلومات: Quranic Arabic Corpus (corpus.quran.com)، GNU GPL۔ معنی: حرف کا لفظ بہ لفظ ترجمہ۔' : 'Root data: Quranic Arabic Corpus (corpus.quran.com), GNU GPL. Meanings: Harf’s word-by-word translation.'}</p>
+<script>
+(function () {
+  var q = document.getElementById('rtQ'), items = document.querySelectorAll('#rtList .rt');
+  q.addEventListener('input', function () {
+    var s = q.value.trim().toLowerCase().replace(/[\\u064B-\\u0652\\u0670\\s]/g, '');
+    items.forEach(function (it) { it.hidden = !!s && it.getAttribute('data-s').replace(/\\s/g, '').indexOf(s) < 0; });
+  });
+})();
+</script>`;
+  return layout(lang, { file: 'quran-roots.html', section: 'quran', title: C.title, desc: C.desc, body });
+}
+
+const ROOT_CSS = `
+.rts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.rt{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;gap:0 10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 12px;text-decoration:none;color:var(--ink)}
+.rt:hover{border-color:var(--accent)}
+.rt[hidden]{display:none}
+.rt .rk{grid-row:1 / span 2;color:var(--muted);font-size:13px;min-width:2em}
+.rt .ar{font-size:26px;line-height:1.5}
+.rt .rn{color:var(--gold);font-size:13px;font-weight:600}
+.rt .rm{grid-column:2 / span 2;color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rx{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 12px}
+.rx .ayah{margin:0 0 6px}
+.rx mark{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:0 4px}
+.rx-w{margin:0 0 4px;font-weight:600}
+.rx-w .ar{font-size:24px}
+.rx .vmean{margin:0}
+`;
+
+// ---------------------------------------------------------------- guides
+// Long-form guides that answer what learners search for. Text uses {Arabic}, [latin] and
+// @@file.html|link text@@ for links inside Harf.
+const GUIDES = [
+  {
+    slug: 'madinah-arabic-book-guide', glyph: 'دُرُوس',
+    en: {
+      title: 'Madinah Arabic books: a free study guide for Book 1 | Harf',
+      desc: 'How the Madinah Arabic books (Durus al-Lughah al-Arabiyyah) work, where to get them free from the author’s institute, and how to study Book 1 online with free lessons in English and Urdu.',
+      h1: 'The Madinah Arabic books: how to study them for free',
+      lead: 'The Madinah books are the most widely used course for learning the Arabic of the Quran and Sunnah as a non-Arab. This guide explains what they are, where to get them, and how to work through Book 1 with Harf’s free lessons beside you.',
+      sections: [
+        ['What are the Madinah books?', 'Their real title is {دُرُوسُ اللُّغَةِ الْعَرَبِيَّةِ لِغَيْرِ النَّاطِقِينَ بِهَا} ([Durūs al-Lughah al-ʿArabiyyah li-Ghayr al-Nāṭiqīna Bihā]), “Arabic lessons for those who do not speak it”. They were written by Dr. V. Abdur Rahim, an Indian scholar who taught Arabic at the Islamic University of Madinah from 1969 and designed this course for its foreign students. The course has three main books. Book 1 covers the basic sentence, Book 2 brings in verbs and more grammar, and Book 3 goes further into verb forms and more advanced grammar.'],
+        ['Why are they so popular?', 'The books are written entirely in Arabic and teach grammar through short example sentences rather than long rules. Each lesson adds one small pattern, such as “this is…”, “the…”, or “whose is this?”, and drills it until it feels natural. The vocabulary mixes everyday words with words from the Quran and hadith, so you start recognising Quranic phrases early.'],
+        ['Where can you get them free?', 'Dr. Abdur Rahim’s own institute, the Institute of the Language of the Quran in Toronto (lqtoronto.com), shares the books and keys as free PDFs with his permission. There are keys in English and in Urdu that explain every lesson. Printed copies are also sold widely, often under names such as “Madinah Arabic Reader” or “Easy Arabic Course”. Harf does not host the books; we write our own lessons that follow the same step-by-step order.'],
+        ['How to study Book 1 with Harf', 'First learn to read: if you cannot yet read Arabic letters with harakat, spend ten days on the @@alphabet.html|alphabet@@ (three letters a day). Then go through the books and Harf side by side. Harf’s first lessons follow the same path as Book 1: @@lesson-1-this-is.html|this is (هٰذَا)@@, @@lesson-2-that-is.html|that is (ذٰلِكَ)@@, @@lesson-3-the.html|the article al-@@, @@lesson-4-where.html|where?@@, @@lesson-5-feminine.html|feminine words (هٰذِهِ)@@, @@lesson-6-whose.html|whose? (لِمَنْ)@@, @@lesson-7-pronouns.html|pronouns@@ and @@lesson-8-my-your.html|my and your@@. Read the book’s lesson, then the Harf lesson on the same pattern for an explanation in plain English or Urdu, with audio for every word.'],
+        ['A weekly routine that works', 'Two book lessons a week is a good pace. On day one read the lesson aloud and look up new words. On day two read the matching Harf lesson and do its practice. On day three write out the book’s exercises. Keep a small notebook of new words and test yourself with the @@quiz.html|quiz@@ and @@vocabulary.html|flashcards@@ at the end of each week. When a word comes from the Quran, look up its root in the @@quran-roots.html|Quran roots list@@ to see the other words from the same family.'],
+        ['Common mistakes', 'Do not skip the reading drills: say every sentence out loud. Do not rush to Book 2 before you can make simple sentences without looking. And do not try to memorise grammar tables on their own; the books are designed so that the rules settle in through examples.'],
+      ],
+    },
+    ur: {
+      title: 'مدینہ عربی کتب: پہلی کتاب مفت پڑھنے کا طریقہ | حرف',
+      desc: 'مدینہ یونیورسٹی کی عربی کتب (دروس اللغة العربية) کیا ہیں، مصنف کے ادارے سے مفت کہاں ملتی ہیں، اور پہلی کتاب اردو میں مفت اسباق کے ساتھ کیسے پڑھیں۔',
+      h1: 'مدینہ کی عربی کتب: مفت پڑھنے کا مکمل طریقہ',
+      lead: 'مدینہ کی کتب غیر عرب طلبہ کے لیے قرآن و سنت کی عربی سیکھنے کا سب سے مقبول نصاب ہیں۔ اس رہنمائی میں بتایا گیا ہے کہ یہ کتب کیا ہیں، کہاں سے ملتی ہیں، اور حرف کے مفت اسباق کے ساتھ پہلی کتاب کیسے مکمل کریں۔',
+      sections: [
+        ['مدینہ کی کتب کیا ہیں؟', 'ان کا اصل نام {دُرُوسُ اللُّغَةِ الْعَرَبِيَّةِ لِغَيْرِ النَّاطِقِينَ بِهَا} ہے، یعنی «عربی نہ بولنے والوں کے لیے عربی کے اسباق»۔ انہیں ہندوستان کے عالم ڈاکٹر وی عبد الرحیم نے لکھا، جو ۱۹۶۹ء سے مدینہ یونیورسٹی میں عربی پڑھاتے رہے اور وہاں کے غیر ملکی طلبہ کے لیے یہ نصاب تیار کیا۔ اس کی تین بنیادی کتب ہیں: پہلی کتاب بنیادی جملہ سکھاتی ہے، دوسری میں افعال اور مزید گرامر آتی ہے، اور تیسری میں افعال کے ابواب اور اعلیٰ گرامر۔'],
+        ['یہ کتب اتنی مقبول کیوں ہیں؟', 'یہ کتب مکمل طور پر عربی میں ہیں اور لمبے قواعد کی بجائے مختصر مثالوں سے گرامر سکھاتی ہیں۔ ہر سبق ایک چھوٹا سا اصول سکھاتا ہے، جیسے «یہ…ہے»، «الـ» یا «یہ کس کا ہے؟»، اور اسے اتنی مشق کراتا ہے کہ وہ زبان پر چڑھ جائے۔ الفاظ روزمرہ کے بھی ہیں اور قرآن و حدیث کے بھی، اس لیے شروع ہی سے قرآنی جملے پہچان میں آنے لگتے ہیں۔'],
+        ['یہ مفت کہاں ملتی ہیں؟', 'ڈاکٹر عبد الرحیم کا اپنا ادارہ، انسٹی ٹیوٹ آف دی لینگویج آف دی قرآن ٹورنٹو (lqtoronto.com)، ان کی اجازت سے یہ کتب اور ان کی کلید (key) مفت PDF میں دیتا ہے۔ اردو کلید بھی موجود ہے جو ہر سبق کی وضاحت کرتی ہے۔ چھپی ہوئی کتب بھی عام ملتی ہیں۔ حرف یہ کتب اپنی ویب سائٹ پر نہیں رکھتا؛ ہم اپنے اسباق خود لکھتے ہیں جو اسی ترتیب پر چلتے ہیں۔'],
+        ['حرف کے ساتھ پہلی کتاب کیسے پڑھیں', 'پہلے پڑھنا سیکھیں: اگر آپ اعراب کے ساتھ عربی روانی سے نہیں پڑھ سکتے تو دس دن @@alphabet.html|حروفِ تہجی@@ کو دیں۔ (اردو بولنے والوں کے لیے یہ آسان ہے، اصل فرق تلفظ کا ہے۔) پھر کتاب اور حرف کو ساتھ ساتھ پڑھیں۔ حرف کے پہلے اسباق پہلی کتاب ہی کی ترتیب پر ہیں: @@lesson-1-this-is.html|هٰذَا (یہ)@@، @@lesson-2-that-is.html|ذٰلِكَ (وہ)@@، @@lesson-3-the.html|الـ@@، @@lesson-4-where.html|أَيْنَ (کہاں)@@، @@lesson-5-feminine.html|مؤنث (هٰذِهِ)@@، @@lesson-6-whose.html|لِمَنْ (کس کا)@@، @@lesson-7-pronouns.html|ضمیریں@@ اور @@lesson-8-my-your.html|میرا، تمہارا@@۔ کتاب کا سبق پڑھیں، پھر حرف پر اسی موضوع کا سبق اردو وضاحت اور ہر لفظ کی آواز کے ساتھ پڑھیں۔'],
+        ['ہفتہ وار معمول', 'ہفتے میں کتاب کے دو اسباق اچھی رفتار ہے۔ پہلے دن سبق بلند آواز سے پڑھیں اور نئے الفاظ دیکھیں۔ دوسرے دن حرف کا متعلقہ سبق اور اس کی مشق کریں۔ تیسرے دن کتاب کی مشقیں لکھیں۔ نئے الفاظ کی ایک کاپی بنائیں اور ہفتے کے آخر میں @@quiz.html|کوئز@@ اور @@vocabulary.html|فلیش کارڈز@@ سے خود کو جانچیں۔ جو لفظ قرآن کا ہو، اس کا مادہ @@quran-roots.html|قرآنی مادوں کی فہرست@@ میں دیکھیں تاکہ اسی خاندان کے باقی الفاظ بھی یاد ہو جائیں۔'],
+        ['عام غلطیاں', 'پڑھنے کی مشق نہ چھوڑیں: ہر جملہ بلند آواز سے بولیں۔ جب تک بغیر دیکھے چھوٹے جملے نہ بنا سکیں، دوسری کتاب کی طرف نہ بھاگیں۔ اور گرامر کے نقشے الگ سے رٹنے کی کوشش نہ کریں؛ یہ کتب اس طرح بنی ہیں کہ اصول مثالوں سے خود ذہن میں بیٹھ جاتے ہیں۔'],
+      ],
+    },
+  },
+  {
+    slug: 'learn-quranic-arabic', glyph: 'فَهْم',
+    en: {
+      title: 'How to learn Quranic Arabic: a step-by-step plan for beginners | Harf',
+      desc: 'A practical, free plan to understand the Arabic of the Quran: learn to read, learn the most common words and roots, learn basic grammar, then read surahs word by word.',
+      h1: 'How to learn Quranic Arabic: a plan for beginners',
+      lead: 'You do not need to be fluent in Arabic to start understanding the Quran as you recite it. A few hundred words and a handful of grammar patterns go a very long way. Here is a plan you can follow for free, in about fifteen minutes a day.',
+      sections: [
+        ['Step 1: Read Arabic with confidence', 'Everything starts with reading. Learn the 28 letters, how they join, and the harakat (the short vowel marks). With three letters a day this takes about ten days on Harf’s @@alphabet.html|alphabet pages@@. Practise writing with the @@writing.html|tracing sheets@@, because writing fixes the shapes in your memory.'],
+        ['Step 2: Learn the most common words', 'A small number of words make up a large share of the Quran. Words like {اللّٰه}, {رَبّ}, {قَالَ}, {كَانَ}, {آمَنَ} and {يَوْم} come up again and again. Start with Harf’s @@quran-common-words.html|common Quran words@@ with flashcards, and the @@quran-prayer-words.html|words of the prayer@@, so that your daily salah starts to carry meaning straight away.'],
+        ['Step 3: Learn words by their roots', 'Arabic builds words from three-letter roots. Once you know that {ع ل م} is about knowing, you can guess {عِلْم} (knowledge), {عَلِيم} (All-Knowing) and {يَعْلَمُونَ} (they know). The top 100 roots cover about three in five Quran words that have a root. Work through the @@quran-roots.html|Quran roots list@@, three roots a day.'],
+        ['Step 4: Learn the core grammar', 'You need fewer rules than you think: how a simple sentence works, the definite article, possession, pronouns, past and present verbs, and a few particles such as {إِنَّ}, {لَمْ} and {لَنْ}. Harf’s @@lessons.html|grammar lessons@@ teach these one at a time with examples, many of them from the Quran.'],
+        ['Step 5: Read surahs word by word', 'Now put it together. Pick a short surah you already recite, such as al-Ikhlas or al-Asr, and open it in the @@quran.html|word-by-word Quran@@. Read each word, its meaning and the full verse. Then listen to a recitation and follow along. Move on to longer surahs as you grow; every surah on Harf has the meaning of each word in English and Urdu.'],
+        ['How long does it take?', 'With fifteen minutes a day, most learners can read fluently within two weeks, know the 100 most common roots within two to three months, and recognise much of what they hear in salah within six months. Understanding every verse in depth takes longer and is best done with a teacher and a trusted tafsir, but the steps above build the base for that.'],
+      ],
+    },
+    ur: {
+      title: 'اردو میں قرآنی عربی کیسے سیکھیں: مرحلہ وار طریقہ | حرف',
+      desc: 'قرآن کی عربی سمجھنے کا مفت اور آسان منصوبہ: پڑھنا سیکھیں، قرآن کے عام الفاظ اور مادے یاد کریں، بنیادی گرامر سیکھیں، پھر سورتیں لفظ بہ لفظ پڑھیں۔',
+      h1: 'اردو میں قرآنی عربی کیسے سیکھیں',
+      lead: 'تلاوت کے دوران قرآن سمجھنا شروع کرنے کے لیے عربی میں ماہر ہونا ضروری نہیں۔ چند سو الفاظ اور گرامر کے چند اصول بہت آگے لے جاتے ہیں۔ یہ ایک مفت منصوبہ ہے جس پر آپ روزانہ پندرہ منٹ میں عمل کر سکتے ہیں۔',
+      sections: [
+        ['پہلا قدم: عربی روانی سے پڑھیں', 'اردو بولنے والے عربی رسم الخط پہلے ہی پہچانتے ہیں، اس لیے آپ کا آدھا کام ہو چکا ہے۔ اصل فرق تلفظ کا ہے: {ث ح ذ ص ض ط ظ ع ق} عربی میں اردو سے مختلف بولے جاتے ہیں۔ @@alphabet.html|حروفِ تہجی@@ کے ہر صفحے پر یہ فرق تفصیل سے بتایا گیا ہے اور ہر حرف کی آواز سنی جا سکتی ہے۔'],
+        ['دوسرا قدم: قرآن کے عام الفاظ یاد کریں', 'قرآن کا بڑا حصہ تھوڑے سے الفاظ پر مشتمل ہے۔ {اللّٰه}، {رَبّ}، {قَالَ}، {كَانَ}، {آمَنَ} اور {يَوْم} جیسے الفاظ بار بار آتے ہیں۔ حرف کے @@quran-common-words.html|قرآن کے عام الفاظ@@ فلیش کارڈز کے ساتھ اور @@quran-prayer-words.html|نماز کے اذکار@@ سے شروع کریں تاکہ روزانہ کی نماز میں فوراً معنی سمجھ آنے لگیں۔ اردو کے بہت سے الفاظ (علم، رحمت، صبر، ایمان) عربی ہی سے آئے ہیں، یہ آپ کو بہت مدد دے گا۔'],
+        ['تیسرا قدم: الفاظ کو ان کے مادوں سے پہچانیں', 'عربی کے الفاظ تین حرفی مادوں سے بنتے ہیں۔ جب آپ جان لیں کہ {ع ل م} کا تعلق جاننے سے ہے تو {عِلْم}، {عَلِيم} اور {يَعْلَمُونَ} خود سمجھ آ جاتے ہیں۔ قرآن کے پہلے ۱۰۰ مادے مادے والے الفاظ میں سے تقریباً ہر پانچ میں سے تین کا احاطہ کرتے ہیں۔ @@quran-roots.html|قرآنی مادوں کی فہرست@@ سے روزانہ تین مادے سیکھیں۔'],
+        ['چوتھا قدم: بنیادی گرامر سیکھیں', 'جتنا آپ سمجھتے ہیں اس سے کم قواعد درکار ہیں: سادہ جملہ، الـ، اضافت، ضمیریں، ماضی اور مضارع، اور {إِنَّ}، {لَمْ} اور {لَنْ} جیسے چند حروف۔ حرف کے @@lessons.html|گرامر کے اسباق@@ یہ سب ایک ایک کر کے اردو وضاحت اور مثالوں سے سکھاتے ہیں، جن میں سے بہت سی قرآن سے ہیں۔'],
+        ['پانچواں قدم: سورتیں لفظ بہ لفظ پڑھیں', 'اب سب کچھ جوڑیں۔ کوئی چھوٹی سورت لیں جو آپ کو یاد ہے، جیسے سورہ اخلاص یا سورہ عصر، اور اسے @@quran.html|لفظ بہ لفظ قرآن@@ میں کھولیں۔ ہر لفظ، اس کا اردو معنی اور پوری آیت کا ترجمہ پڑھیں۔ پھر تلاوت سنیں اور ساتھ ساتھ دیکھیں۔ آہستہ آہستہ بڑی سورتوں کی طرف بڑھیں۔'],
+        ['کتنا وقت لگے گا؟', 'روزانہ پندرہ منٹ کے ساتھ زیادہ تر لوگ دو ہفتے میں روانی سے پڑھنے لگتے ہیں، دو تین مہینے میں قرآن کے ۱۰۰ عام مادے سیکھ لیتے ہیں، اور چھ مہینے میں نماز میں سنی جانے والی تلاوت کا بڑا حصہ سمجھنے لگتے ہیں۔ ہر آیت کو گہرائی سے سمجھنا اس سے زیادہ وقت لیتا ہے، اور یہ کسی استاد اور معتبر تفسیر کے ساتھ بہتر ہے، مگر یہ قدم اس کی بنیاد بناتے ہیں۔'],
+      ],
+    },
+  },
+  {
+    slug: 'msa-quranic-or-dialect', glyph: 'فُصْحَى',
+    en: {
+      title: 'Modern Standard Arabic, Quranic Arabic or a dialect: which should you learn first? | Harf',
+      desc: 'The difference between Modern Standard Arabic (fusha), Quranic (classical) Arabic and spoken dialects such as Saudi or Egyptian, and which one to start with for your goals.',
+      h1: 'MSA, Quranic Arabic or a dialect: which should you learn first?',
+      lead: 'Arabic is really a family of varieties. People who start learning are often told different things about which one to pick. Here is how they differ and how to choose for your own goal.',
+      sections: [
+        ['Quranic (classical) Arabic', 'This is the Arabic of the Quran, the hadith and the classical books. Its grammar is the same grammar taught today as fuṣḥā, but some words and styles are older. If your main goal is to understand the Quran and the prayer, this is your target, and it is reached through the same basic grammar as Modern Standard Arabic.'],
+        ['Modern Standard Arabic (fuṣḥā)', 'Modern Standard Arabic ({الْفُصْحَى}) is the Arabic of books, news, official letters, signs and formal speeches across the whole Arab world. It is very close to classical Arabic: the grammar is the same, with modern vocabulary added. It is understood everywhere from Morocco to Oman, though people rarely chat in it at home. This is what Harf teaches.'],
+        ['Spoken dialects', 'At home and in the street, people speak a local dialect: Saudi, Gulf, Egyptian, Levantine, Iraqi, Moroccan and others. Dialects simplify the grammar and use different everyday words; for example “what?” is {مَاذَا} in fuṣḥā but {إِيش} in much of Saudi Arabia and {إِيه} in Egypt. Dialects from far apart (Morocco and Iraq, say) can be hard for each other to follow.'],
+        ['Which should you learn first?', 'If you want the Quran, prayer and Islamic knowledge, start with fuṣḥā. It opens the Quran and the books, and it is understood everywhere. If you live or work in an Arab country and mainly want to chat with people, learn the basics of fuṣḥā (reading and core grammar) and then add the local dialect. If you are a heritage learner who wants to talk with family, start with your family’s dialect, and add fuṣḥā for reading later.'],
+        ['Can you learn both?', 'Yes, and most learners eventually do. Fuṣḥā gives you the solid base: grammar, reading and a large vocabulary. A dialect then mostly means learning a set of everyday words and shortcuts. Going the other way is harder, because a dialect learned only by ear leaves you unable to read. If you live in Saudi Arabia, Harf’s @@saudi-arabic.html|Saudi Arabic phrases@@ give you the everyday words alongside the fuṣḥā lessons.'],
+        ['Where to start on Harf', 'Begin with the @@alphabet.html|alphabet@@, then the @@lessons.html|grammar lessons@@ and @@vocabulary.html|vocabulary@@. If your goal is the Quran, follow our @@learn-quranic-arabic.html|plan for learning Quranic Arabic@@ as well.'],
+      ],
+    },
+    ur: {
+      title: 'جدید فصیح عربی، قرآنی عربی یا لہجہ: پہلے کون سی سیکھیں؟ | حرف',
+      desc: 'جدید فصیح عربی (فصحیٰ)، قرآنی عربی اور سعودی یا مصری جیسے بول چال کے لہجوں میں فرق، اور اپنے مقصد کے مطابق کس سے شروع کریں۔',
+      h1: 'فصیح عربی، قرآنی عربی یا لہجہ: پہلے کون سی سیکھیں؟',
+      lead: 'عربی دراصل کئی شکلوں کا ایک خاندان ہے، اور سیکھنا شروع کرنے والوں کو اکثر مختلف مشورے ملتے ہیں۔ یہاں ان کا فرق اور اپنے مقصد کے مطابق انتخاب کا طریقہ بتایا گیا ہے۔',
+      sections: [
+        ['قرآنی (کلاسیکی) عربی', 'یہ قرآن، حدیث اور کلاسیکی کتب کی عربی ہے۔ اس کی گرامر وہی ہے جو آج فصحیٰ کے نام سے پڑھائی جاتی ہے، البتہ کچھ الفاظ اور اسلوب پرانے ہیں۔ اگر آپ کا اصل مقصد قرآن اور نماز سمجھنا ہے تو یہی آپ کی منزل ہے، اور اس تک اسی بنیادی گرامر سے پہنچا جاتا ہے جو جدید فصیح عربی کی ہے۔'],
+        ['جدید فصیح عربی (فصحیٰ)', 'جدید فصیح عربی ({الْفُصْحَى}) پوری عرب دنیا میں کتابوں، خبروں، سرکاری خطوط، بورڈز اور رسمی تقاریر کی زبان ہے۔ یہ کلاسیکی عربی کے بہت قریب ہے: گرامر ایک ہی ہے، بس جدید الفاظ شامل ہو گئے ہیں۔ یہ مراکش سے عمان تک ہر جگہ سمجھی جاتی ہے، اگرچہ لوگ گھروں میں اس میں کم ہی بات کرتے ہیں۔ حرف یہی عربی سکھاتا ہے۔'],
+        ['بول چال کے لہجے', 'گھر اور بازار میں لوگ مقامی لہجہ بولتے ہیں: سعودی، خلیجی، مصری، شامی، عراقی، مراکشی وغیرہ۔ لہجوں میں گرامر آسان ہو جاتی ہے اور روزمرہ کے الفاظ بدل جاتے ہیں؛ مثلاً «کیا؟» فصحیٰ میں {مَاذَا} ہے، سعودی عرب کے بڑے حصے میں {إِيش} اور مصر میں {إِيه}۔ دور دراز کے لہجے (جیسے مراکش اور عراق) ایک دوسرے کے لیے مشکل ہو سکتے ہیں۔'],
+        ['پہلے کون سی سیکھیں؟', 'اگر آپ قرآن، نماز اور دینی علم کے لیے سیکھنا چاہتے ہیں تو فصحیٰ سے شروع کریں۔ یہ قرآن اور کتب دونوں کا دروازہ کھولتی ہے اور ہر جگہ سمجھی جاتی ہے۔ اگر آپ سعودی عرب یا کسی اور عرب ملک میں رہتے یا کام کرتے ہیں اور زیادہ تر لوگوں سے بات کرنا چاہتے ہیں تو فصحیٰ کی بنیاد (پڑھنا اور بنیادی گرامر) سیکھ کر مقامی لہجہ شامل کریں۔'],
+        ['کیا دونوں سیکھ سکتے ہیں؟', 'جی ہاں، اور زیادہ تر سیکھنے والے آخرکار دونوں سیکھتے ہیں۔ فصحیٰ مضبوط بنیاد دیتی ہے: گرامر، پڑھنا اور وسیع ذخیرۂ الفاظ۔ اس کے بعد لہجہ سیکھنا زیادہ تر روزمرہ کے چند الفاظ اور مختصر انداز سیکھنا ہے۔ الٹا راستہ مشکل ہے، کیونکہ صرف سن کر سیکھا گیا لہجہ آپ کو پڑھنا نہیں سکھاتا۔ سعودی عرب میں رہتے ہیں تو فصحیٰ کے اسباق کے ساتھ حرف کے @@saudi-arabic.html|سعودی بول چال کے جملے@@ بھی سیکھیں۔'],
+        ['حرف پر کہاں سے شروع کریں', '@@alphabet.html|حروفِ تہجی@@ سے شروع کریں، پھر @@lessons.html|گرامر کے اسباق@@ اور @@vocabulary.html|الفاظ@@۔ اگر آپ کا مقصد قرآن ہے تو ہمارا @@learn-quranic-arabic.html|قرآنی عربی سیکھنے کا منصوبہ@@ بھی دیکھیں۔'],
+      ],
+    },
+  },
+  {
+    slug: 'learn-arabic-free-plan', glyph: '٩٠',
+    en: {
+      title: 'How to learn Arabic for free: a 90-day plan for beginners | Harf',
+      desc: 'A free 90-day plan to learn Arabic from zero: the alphabet in 10 days, then grammar, vocabulary, reading and listening, 15–20 minutes a day, with no sign-up.',
+      h1: 'Learn Arabic for free: a 90-day plan',
+      lead: 'You can go from not knowing a single letter to reading simple Arabic stories in three months, without paying anything. This plan needs 15 to 20 minutes a day. Your progress on Harf saves in your browser, so you can pick up where you left off.',
+      sections: [
+        ['Days 1–10: the alphabet', 'Learn three letters a day on the @@alphabet.html|alphabet pages@@: their sound, their four shapes and one example word. Trace each one on the @@writing.html|writing practice@@ page. On day 10, take the letters quiz on the @@quiz.html|quiz page@@. If you score 8 or more out of 10, move on.'],
+        ['Days 11–30: your first sentences', 'Take one @@lessons.html|grammar lesson@@ every two days, starting with @@lesson-1-this-is.html|this is…@@ By day 30 you will have done about ten lessons and can say things like “this is a big house” and “where is the book?”. Alongside, learn one @@vocabulary.html|vocabulary topic@@ a week with the flashcards.'],
+        ['Days 31–60: verbs and reading', 'Continue the lessons into @@lesson-11-past-tense.html|past@@ and @@lesson-12-present-tense.html|present@@ verbs. Start reading: the @@reading.html|easy stories@@ are vowelled and let you tap any word for its meaning. Read one story a week aloud, twice. Add the @@phrases.html|everyday phrases@@ and use them whenever you can.'],
+        ['Days 61–90: grow and review', 'Finish the remaining lessons at your own pace. Move to the @@classic-tales.html|classic tales@@ with word-by-word translation. Take the @@level-test.html|level test@@ again to see how far you have come. If the Quran is your goal, start the @@quran-roots.html|Quran roots@@ list, three roots a day.'],
+        ['Daily habits that make the difference', 'Say every word out loud; the Listen button on every Arabic word is there for that. Little and often beats long sessions at the weekend. Review before you learn something new: five minutes of old flashcards first. And use what you learn: label things around your home, or write one sentence a day with the @@arabic-keyboard.html|Arabic keyboard@@.'],
+        ['When you get stuck', 'Grammar that does not make sense today often clicks a week later, so do not stop. Re-read the lesson, then look only at the examples. If a sound is hard, listen to the letter page again and copy it slowly. And remember why you started; write it down and keep it where you can see it.'],
+      ],
+    },
+    ur: {
+      title: 'مفت عربی کیسے سیکھیں: ۹۰ دن کا منصوبہ | حرف',
+      desc: 'صفر سے عربی سیکھنے کا مفت ۹۰ دن کا منصوبہ: دس دن میں حروفِ تہجی، پھر گرامر، الفاظ، پڑھنا اور سننا، روزانہ ۱۵ سے ۲۰ منٹ، بغیر سائن اپ کے۔',
+      h1: 'مفت عربی سیکھیں: ۹۰ دن کا منصوبہ',
+      lead: 'آپ تین مہینے میں ایک حرف نہ جاننے سے آسان عربی کہانیاں پڑھنے تک پہنچ سکتے ہیں، وہ بھی بغیر کچھ خرچ کیے۔ اس منصوبے کے لیے روزانہ ۱۵ سے ۲۰ منٹ چاہییں۔ حرف پر آپ کی پیشرفت براؤزر میں محفوظ رہتی ہے، اس لیے جہاں چھوڑیں وہیں سے شروع کریں۔',
+      sections: [
+        ['دن ۱ تا ۱۰: حروفِ تہجی', 'روزانہ تین حروف @@alphabet.html|حروفِ تہجی@@ کے صفحات پر سیکھیں: ان کی آواز، چاروں شکلیں اور ایک مثال۔ ہر حرف @@writing.html|لکھنے کی مشق@@ کے صفحے پر لکھیں۔ اردو جاننے والوں کے لیے شکلیں آسان ہیں؛ تلفظ کے فرق پر خاص توجہ دیں۔ دسویں دن @@quiz.html|کوئز@@ میں حروف کا ٹیسٹ دیں۔ دس میں سے آٹھ آئیں تو آگے بڑھیں۔'],
+        ['دن ۱۱ تا ۳۰: پہلے جملے', 'ہر دو دن میں ایک @@lessons.html|گرامر کا سبق@@ لیں، @@lesson-1-this-is.html|هٰذَا (یہ ہے)@@ سے شروع کر کے۔ تیسویں دن تک تقریباً دس اسباق ہو جائیں گے اور آپ «یہ بڑا گھر ہے» اور «کتاب کہاں ہے؟» جیسے جملے بول سکیں گے۔ ساتھ میں ہر ہفتے فلیش کارڈز سے @@vocabulary.html|الفاظ کا ایک موضوع@@ سیکھیں۔'],
+        ['دن ۳۱ تا ۶۰: افعال اور پڑھنا', 'اسباق میں @@lesson-11-past-tense.html|ماضی@@ اور @@lesson-12-present-tense.html|مضارع@@ تک پہنچیں۔ پڑھنا شروع کریں: @@reading.html|آسان کہانیاں@@ اعراب کے ساتھ ہیں اور ہر لفظ پر ٹیپ کر کے معنی دیکھا جا سکتا ہے۔ ہر ہفتے ایک کہانی دو بار بلند آواز سے پڑھیں۔ @@phrases.html|روزمرہ کے جملے@@ بھی سیکھیں اور جہاں موقع ملے بولیں۔'],
+        ['دن ۶۱ تا ۹۰: آگے بڑھیں اور دہرائیں', 'باقی اسباق اپنی رفتار سے مکمل کریں۔ لفظ بہ لفظ ترجمے والی @@classic-tales.html|کلاسیکی کہانیاں@@ پڑھیں۔ @@level-test.html|لیول ٹیسٹ@@ دوبارہ دیں اور دیکھیں کہ کتنا آگے آ گئے۔ اگر مقصد قرآن ہے تو @@quran-roots.html|قرآنی مادوں@@ کی فہرست سے روزانہ تین مادے شروع کریں۔'],
+        ['روزانہ کی عادتیں جو فرق ڈالتی ہیں', 'ہر لفظ بلند آواز سے بولیں؛ ہر عربی لفظ کے ساتھ «سنیں» کا بٹن اسی لیے ہے۔ ہفتے کے آخر میں لمبی نشست کی بجائے روزانہ تھوڑا پڑھنا بہتر ہے۔ نیا سیکھنے سے پہلے پانچ منٹ پرانے فلیش کارڈز دہرائیں۔ جو سیکھیں اسے استعمال کریں: گھر کی چیزوں پر عربی نام لگائیں، یا @@arabic-keyboard.html|عربی کی بورڈ@@ سے روزانہ ایک جملہ لکھیں۔'],
+        ['جب اٹک جائیں', 'جو گرامر آج سمجھ نہ آئے وہ اکثر ایک ہفتے بعد سمجھ آ جاتی ہے، اس لیے رکیں نہیں۔ سبق دوبارہ پڑھیں، پھر صرف مثالوں پر توجہ دیں۔ کوئی آواز مشکل لگے تو حرف کا صفحہ دوبارہ سنیں اور آہستہ آہستہ نقل کریں۔ اور یاد رکھیں کہ آپ نے کیوں شروع کیا تھا؛ اسے لکھ کر سامنے رکھیں۔'],
+      ],
+    },
+  },
+];
+
+// {Arabic} and [latin] via fmt, then @@file|text@@ links
+const gfmt = (lang, s) => fmt(s).replace(/@@([a-z0-9.-]+\.html)\|([^@]+)@@/g, (m, f, t) => `<a href="${link(lang, f)}">${t}</a>`);
+
+function guidePage(lang, i) {
+  const ur = lang === 'ur';
+  const g = GUIDES[i], c = g[lang];
+  const others = GUIDES.filter((x) => x !== g);
+  const toc = c.sections.map(([h], k) => `<li><a href="#s${k + 1}">${esc(h)}</a></li>`).join('');
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['guides.html', ur ? 'رہنمائی' : 'Guides'], [null, c.h1]])}
+<p class="eyebrow">${ur ? 'رہنمائی' : 'Guide'} · ${ur ? 'تازہ ترین' : 'Updated'} ${UPDATED[lang]}</p>
+<h1>${esc(c.h1)}</h1>
+<p class="lead">${gfmt(lang, c.lead)}</p>
+<nav class="box toc" aria-label="${ur ? 'فہرست' : 'Contents'}"><strong>${ur ? 'اس صفحے پر' : 'On this page'}</strong><ol>${toc}</ol></nav>
+<article class="guide">
+${c.sections.map(([h, p], k) => `<section id="s${k + 1}"><h2>${esc(h)}</h2><p>${gfmt(lang, p)}</p></section>`).join('\n')}
+</article>
+<section><h2 class="orn">${ur ? 'مزید رہنمائی' : 'More guides'}</h2><div class="cards">${others.map((x) => `<a class="card" href="${link(lang, x.slug + '.html')}"><span class="cg" lang="ar" aria-hidden="true">${x.glyph}</span><h3>${esc(x[lang].h1)}</h3><p>${esc(x[lang].desc)}</p></a>`).join('')}</div></section>
+${supportBox(lang)}`;
+  return layout(lang, { file: g.slug + '.html', section: 'guides', title: c.title, desc: c.desc, body, article: true });
+}
+
+function guidesPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? { title: 'عربی سیکھنے کی رہنمائی: مدینہ کی کتب، قرآنی عربی، ۹۰ دن کا منصوبہ | حرف', desc: 'عربی سیکھنے کے بارے میں مفصل رہنمائی اردو میں: مدینہ کی کتب کیسے پڑھیں، قرآنی عربی کیسے سیکھیں، فصحیٰ یا لہجہ، اور ۹۰ دن کا مفت منصوبہ۔', h1: 'عربی سیکھنے کی رہنمائی', lead: 'عربی سیکھنے کے عام سوالوں کے تفصیلی جواب: کہاں سے شروع کریں، کون سی عربی سیکھیں اور کیسے آگے بڑھیں۔' }
+    : { title: 'Guides to learning Arabic: Madinah books, Quranic Arabic, 90-day plan | Harf', desc: 'In-depth guides to learning Arabic: how to study the Madinah books, how to learn Quranic Arabic, MSA or dialect, and a free 90-day plan.', h1: 'Guides to learning Arabic', lead: 'Detailed answers to the questions learners ask most: where to start, which Arabic to learn and how to keep going.' };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="cards">
+  ${GUIDES.map((x) => `<a class="card" href="${link(lang, x.slug + '.html')}"><span class="cg" lang="ar" aria-hidden="true">${x.glyph}</span><h3>${esc(x[lang].h1)}</h3><p>${esc(x[lang].desc)}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('\n  ')}
+</div>
+${supportBox(lang)}`;
+  return layout(lang, { file: 'guides.html', section: 'guides', title: C.title, desc: C.desc, body });
+}
+
+const GUIDE_CSS = `
+.streak{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:0 0 16px;padding:14px 18px}
+.streak[hidden]{display:none}
+.sk-n{display:flex;align-items:baseline;gap:8px}
+.sk-n strong{font-family:var(--display);font-size:34px;color:var(--gold)}
+.sk-fire{font-size:26px}
+.sk-g{flex:1;min-width:220px}
+.sk-g small{color:var(--muted)}
+
+.toc ol{margin:6px 0 0;padding-inline-start:22px}
+.toc li{margin:2px 0}
+.guide{max-width:72ch}
+.guide section{margin:0 0 26px}
+.guide p{font-size:17px;line-height:1.75}
+`;
 
 // ---------------------------------------------------------------- shared files
 const STYLE_CSS = String.raw`:root{
@@ -5843,6 +6819,46 @@ const APP_JS = String.raw`(function () {
     clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.classList.remove('show'); }, 3500);
   }
 
+  // Daily streak: opening a learning page counts towards today's goal; consecutive days build a streak.
+  var GOAL = 3;
+  function dayKey(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  var today = dayKey(new Date()), yest = dayKey(new Date(Date.now() - 864e5));
+  var days = store.get('days', []), dayPages = store.get('dayPages', { d: today, n: 0, p: [] });
+  if (dayPages.d !== today) dayPages = { d: today, n: 0, p: [] };
+  function streakLen() {
+    var set = {}, n = 0, d = new Date();
+    days.forEach(function (x) { set[x] = 1; });
+    if (!set[today]) d = new Date(Date.now() - 864e5);
+    while (set[dayKey(d)]) { n++; d = new Date(d.getTime() - 864e5); }
+    return n;
+  }
+  var page = (location.pathname.split('/').pop() || 'index.html').replace(/^ur-/, '').replace(/^ur\.html$/, 'index.html');
+  var study = /^(letter-|lesson-|vocab-|reading-|tale-|quran-|dua|alphabet|writing|quiz|level-test|phrases|saudi|vocabulary|lessons|reading|stories|classic)/.test(page);
+  if (study && dayPages.p.indexOf(page) < 0) {
+    var firstToday = days.indexOf(today) < 0;
+    dayPages.p.push(page); dayPages.n = dayPages.p.length; store.set('dayPages', dayPages);
+    if (firstToday) {
+      days.push(today); days = days.slice(-90); store.set('days', days);
+      var sl = streakLen();
+      if (sl > 1) setTimeout(function () { toast(L === 'ur' ? '🔥 مسلسل ' + N(sl) + ' دن! جاری رکھیں۔' : '🔥 ' + sl + ' days in a row! Keep it going.'); }, 1200);
+    } else if (dayPages.n === GOAL) {
+      setTimeout(function () { toast(L === 'ur' ? '✓ آج کا ہدف پورا! کل پھر ملیں گے۔' : '✓ Today’s goal done! See you tomorrow.'); }, 1200);
+    }
+  }
+  var sk = $('#streak');
+  if (sk && days.length) {
+    var sn = streakLen(), done = Math.min(dayPages.n, GOAL);
+    sk.hidden = false;
+    $('#skDays').textContent = N(sn);
+    $('#skGoal').textContent = N(done) + '/' + N(GOAL);
+    $('#mGoal').style.width = (done / GOAL * 100) + '%';
+    $('#skMsg').textContent = done >= GOAL
+      ? (L === 'ur' ? 'آج کا ہدف پورا ہو گیا۔ شاباش!' : 'Today’s goal is done. Well done!')
+      : (sn > 0 && days.indexOf(today) < 0
+        ? (L === 'ur' ? 'آج ایک سبق کھولیں تاکہ سلسلہ نہ ٹوٹے۔' : 'Open a lesson today to keep your streak.')
+        : (L === 'ur' ? 'آج ' + N(GOAL - done) + ' مزید صفحات پڑھیں۔' : 'Study ' + (GOAL - done) + ' more page' + (GOAL - done === 1 ? '' : 's') + ' today.'));
+  }
+
   var arVoice = null;
   function pickVoice() {
     try { var v = window.speechSynthesis.getVoices(); arVoice = null; for (var i = 0; i < v.length; i++) { if (/^ar/i.test(v[i].lang)) { arVoice = v[i]; break; } } } catch (e) {}
@@ -5880,7 +6896,7 @@ const APP_JS = String.raw`(function () {
   if (st) {
     var known0 = store.get('known', []), best0 = store.get('best', null);
     var tl = +st.getAttribute('data-letters'), tw = +st.getAttribute('data-words');
-    var hasProgress = learned.length > 0 || known0.length > 0 || best0 !== null;
+    var hasProgress = learned.length > 0 || known0.length > 0 || best0 !== null || days.length > 0;
     var banner = $('#startBanner');
     if (hasProgress) {
       st.style.display = '';
@@ -6305,6 +7321,7 @@ const QURAN_AUDIO_JS = String.raw`
 // ---------------------------------------------------------------- build
 function build() {
   CLASSICS = loadClassics();
+  prepareRoots();
   const files = {};
   const pages = [];
   const add = (lang, file, html) => { const f = link(lang, file); files[f] = html; pages.push(f); };
@@ -6330,15 +7347,23 @@ function build() {
     add(lang, 'duas.html', duasPage(lang));
     DUA_CATS.forEach((c, i) => add(lang, c.slug + '.html', duaCatPage(lang, i)));
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
+    if (ROOTS) { add(lang, 'quran-roots.html', rootsHubPage(lang)); ROOT_LIST.forEach((x, i) => add(lang, 'quran-root-' + x.slug + '.html', rootPage(lang, i))); }
     add(lang, 'phrases.html', phrasesPage(lang));
     add(lang, 'saudi-arabic.html', saudiPage(lang));
     add(lang, 'quiz.html', quizPage(lang));
+    add(lang, 'guides.html', guidesPage(lang));
+    GUIDES.forEach((x, i) => add(lang, x.slug + '.html', guidePage(lang, i)));
+    add(lang, 'tools.html', toolsPage(lang));
+    add(lang, 'arabic-keyboard.html', keyboardPage(lang));
+    add(lang, 'hijri-converter.html', hijriPage(lang));
+    add(lang, 'muslim-names.html', namesPage(lang));
+    add(lang, 'arabic-transliteration.html', translitPage(lang));
     add(lang, 'about.html', aboutPage(lang));
     add(lang, 'contact.html', contactPage(lang));
     add(lang, 'privacy.html', privacyPage(lang));
   }
   files['404.html'] = notFoundPage();
-  files['style.css'] = STYLE_CSS.replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
