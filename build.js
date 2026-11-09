@@ -4447,13 +4447,20 @@ const QURAN_NOTE = {
   ur: 'قرآن کا متن <a href="https://tanzil.net">تنزیل پروجیکٹ</a> سے لیا گیا ہے۔ الفاظ کے معانی اور ترجمہ حرف نے سیکھنے والوں کی مدد کے لیے لکھے ہیں؛ یہ مکمل ترجمہ یا تفسیر نہیں۔ لفظ پر ٹیپ کرنے سے آلے کی مشینی آواز آتی ہے، یہ تلاوت نہیں؛ درست تجوید کے لیے ▶ تلاوت والا پلیئر استعمال کریں۔ تلاوت کی آڈیو <a href="https://everyayah.com">EveryAyah.com</a> کی مفت ریکارڈنگز ہیں، جو <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a> سے چلتی ہیں۔',
 };
 
-function verseHtml(lang, v, k) {
+// Links from a verse to the root pages of its words (data/quran-verse-roots.json).
+function verseRoots(lang, n, k) {
+  const list = n && VERSE_ROOTS && VERSE_ROOTS[n - 1] && VERSE_ROOTS[n - 1][k - 1];
+  if (!list) return '';
+  const links = list.split(' ').filter((r) => r && ROOT_INDEX[r] !== undefined).map((r) => `<a href="${link(lang, 'quran-root-' + ROOT_LIST[ROOT_INDEX[r]].slug + '.html')}" lang="ar">${rootLetters(r)}</a>`);
+  return links.length ? `\n  <p class="vroots"><span>${lang === 'ur' ? 'اس آیت کے مادے:' : 'Roots in this verse:'}</span> <span class="vr-list" dir="rtl">${links.join(' ')}</span></p>` : '';
+}
+function verseHtml(lang, v, k, n) {
   const ur = lang === 'ur';
   const tiles = v.w.map(([a, tr, en, u]) => `<button class="w" type="button" data-say="${esc(a)}"><span class="ar" lang="ar">${a}</span><span class="tr latin">${esc(tr)}</span><span class="m"${ur ? '' : ' dir="ltr"'}>${esc(ur ? u : en)}</span></button>`).join('');
   return `<section class="verse" id="v${k}">
   <p class="ayah ar" lang="ar">${v.w.map((x) => `<span class="aw">${x[0]}</span>`).join(' ')} <span class="anum">${arNum(k)}</span> <button class="vplay" type="button" data-v="${k}" aria-label="${ur ? 'آیت ' + k + ' کی تلاوت سنیں' : 'Play verse ' + k}">▶</button></p>
   <div class="wbw" dir="rtl">${tiles}</div>
-  <p class="vmean"><span class="vn">${num(lang, k)}.</span> ${esc(ur ? v.ur : v.en)}</p>
+  <p class="vmean"><span class="vn">${num(lang, k)}.</span> ${esc(ur ? v.ur : v.en)}</p>${verseRoots(lang, n, k)}
 </section>`;
 }
 
@@ -4538,7 +4545,7 @@ ${reciteBar(lang, s.n, nV)}
 <p class="row">${QURAN.length ? `<a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a>` : ''}<a class="btn" href="${link(lang, 'quran-listen.html')}">${ur ? 'تمام قراء' : 'All reciters'}</a><span class="note">${ur ? 'کسی بھی لفظ پر ٹیپ کر کے اس کی آواز سنیں، یا آیت کے ▶ سے قاری کی تلاوت۔' : 'Tap any word to hear it on its own, or ▶ on a verse to hear the qari recite it.'}</span></p>
 <p class="surah-name ar" lang="ar">سُورَةُ ${s.name}</p>
 ${s.n === 1 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
-${s.v.map((v, k) => verseHtml(lang, v, k + 1)).join('\n')}
+${s.v.map((v, k) => verseHtml(lang, v, k + 1, s.n)).join('\n')}
 <p class="note">${QURAN_NOTE[lang]}</p>
 <nav class="pager" aria-label="${T[lang].nav.quran}">
   ${prev ? `<a class="btn" href="${link(lang, 'quran-' + prev.slug + '.html')}">${T[lang].prev}: ${name(prev)}</a>` : `<a class="btn" href="${link(lang, 'quran.html')}">${T[lang].prev}: ${T[lang].nav.quran}</a>`}
@@ -4576,7 +4583,7 @@ ${reciteBar(lang, q.n, nV)}
 ${jump}
 <p class="surah-name ar" lang="ar">سُورَةُ ${q.name}</p>
 ${q.n === 1 || q.n === 9 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
-${v.map((x, k) => verseHtml(lang, x, k + 1)).join('\n')}
+${v.map((x, k) => verseHtml(lang, x, k + 1, q.n)).join('\n')}
 <p class="note">${QURAN_FULL_NOTE[lang]}</p>
 <nav class="pager" aria-label="${T[lang].nav.quran}">
   ${prev ? `<a class="btn" href="${href(prev)}">${T[lang].prev}: ${name(prev)}</a>` : `<a class="btn" href="${link(lang, 'quran.html')}">${T[lang].prev}: ${T[lang].nav.quran}</a>`}
@@ -5732,6 +5739,8 @@ ${translitSource()}
 // its lemmas with the [surah, verse, word] of every occurrence. Meanings come from data/quran.
 const ROOTS_FILE = path.join(__dirname, 'data', 'quran-roots.json');
 const ROOTS = fs.existsSync(ROOTS_FILE) && QURAN.length ? JSON.parse(fs.readFileSync(ROOTS_FILE, 'utf8')) : null;
+const VERSE_ROOTS_FILE = path.join(__dirname, 'data', 'quran-verse-roots.json');
+const VERSE_ROOTS = ROOTS && fs.existsSync(VERSE_ROOTS_FILE) ? JSON.parse(fs.readFileSync(VERSE_ROOTS_FILE, 'utf8')).v : null;
 const ROOT_LAT = { 'ء': '’', 'أ': '’', 'ؤ': '’', 'ا': 'a', 'ب': 'b', 'ت': 't', 'ث': 'th', 'ج': 'j', 'ح': 'ḥ', 'خ': 'kh', 'د': 'd', 'ذ': 'dh', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'sh', 'ص': 'ṣ', 'ض': 'ḍ', 'ط': 'ṭ', 'ظ': 'ẓ', 'ع': 'ʿ', 'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n', 'ه': 'h', 'و': 'w', 'ي': 'y' };
 const ROOT_SLUG = { 'ء': 'a', 'أ': 'a', 'ؤ': 'a', 'ا': 'aa', 'ب': 'b', 'ت': 't', 'ث': 'th', 'ج': 'j', 'ح': 'hh', 'خ': 'kh', 'د': 'd', 'ذ': 'dh', 'ر': 'r', 'ز': 'z', 'س': 's', 'ش': 'sh', 'ص': 'ss', 'ض': 'dd', 'ط': 'tt', 'ظ': 'zz', 'ع': 'ain', 'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n', 'ه': 'h', 'و': 'w', 'ي': 'y' };
 const rootLetters = (r) => [...r].join(' ');
@@ -5892,6 +5901,10 @@ const ROOT_CSS = `
 .rx-w{margin:0 0 4px;font-weight:600}
 .rx-w .ar{font-size:24px}
 .rx .vmean{margin:0}
+.vroots{font-size:14px;color:var(--muted);margin:6px 0 0;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.vr-list{display:flex;flex-wrap:wrap;gap:6px}
+.vroots a{font-size:19px;line-height:1.5;text-decoration:none;color:var(--accent);background:var(--accent-soft);border:1px solid transparent;border-radius:999px;padding:0 10px;white-space:nowrap}
+.vroots a:hover{border-color:var(--accent)}
 `;
 
 // ---------------------------------------------------------------- guides
