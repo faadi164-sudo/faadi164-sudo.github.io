@@ -3762,10 +3762,10 @@ const CARD_GLYPH = { 'alphabet.html': 'أ ب ت', 'writing.html': 'قَلَم', 
 // A client-side word search over everything on the site. The index is written per
 // language to search-<lang>.json as compact arrays [arabic, term, meaning, url, kind].
 const SEARCH_KINDS = {
-  en: { page: 'Section', letter: 'Letter', lesson: 'Lesson', word: 'Word', surah: 'Surah', root: 'Quran root', qword: 'Quran word', name: 'Name', dua: 'Dua', phrase: 'Phrase' },
-  ur: { page: 'حصہ', letter: 'حرف', lesson: 'سبق', word: 'لفظ', surah: 'سورہ', root: 'قرآنی مادہ', qword: 'قرآنی لفظ', name: 'نام', dua: 'دعا', phrase: 'جملہ' },
+  en: { page: 'Section', letter: 'Letter', lesson: 'Lesson', word: 'Word', surah: 'Surah', root: 'Quran root', qword: 'Quran word', name: 'Name', dua: 'Dua', phrase: 'Phrase', sentence: 'Example' },
+  ur: { page: 'حصہ', letter: 'حرف', lesson: 'سبق', word: 'لفظ', surah: 'سورہ', root: 'قرآنی مادہ', qword: 'قرآنی لفظ', name: 'نام', dua: 'دعا', phrase: 'جملہ', sentence: 'مثال' },
 };
-const SEARCH_ORDER = ['page', 'lesson', 'letter', 'surah', 'root', 'qword', 'word', 'name', 'dua', 'phrase'];
+const SEARCH_ORDER = ['page', 'lesson', 'letter', 'surah', 'root', 'qword', 'word', 'sentence', 'name', 'dua', 'phrase'];
 
 function buildSearchIndex(lang) {
   const ur = lang === 'ur';
@@ -3810,6 +3810,8 @@ function buildSearchIndex(lang) {
   NAMES.forEach((x) => add(x[0], x[1], ur ? x[4] : x[3], 'muslim-names.html', 'name'));
   DUA_CATS.forEach((c) => c.items.forEach((d) => add(d.a.split(/\s+/).slice(0, 4).join(' '), ur ? d.ur : d.en, '', 'duas.html', 'dua')));
   PHRASES.forEach((p) => add(p[0], p[1], ur ? p[3] : p[2], 'phrases.html', 'phrase'));
+  SAUDI.forEach((g) => g.items.forEach((it) => add(it[0], it[1], ur ? it[3] : it[2], 'saudi-arabic.html', 'phrase')));
+  LESSONS.forEach((l) => (l.ex || []).forEach((e) => add(e[0], e[1], ur ? e[3] : e[2], l.slug + '.html', 'sentence')));
   return E;
 }
 
