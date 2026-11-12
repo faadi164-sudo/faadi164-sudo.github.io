@@ -3703,6 +3703,7 @@ ${verify}${analytics}${ads}${brevoHead}</head>
   <div class="wrap bar">
     <a class="brand" href="${link(lang, 'index.html')}"><span class="ar" lang="ar">حَرْف</span>${lang === 'en' ? '<b>Harf</b>' : ''}</a>
     <nav class="tabs" id="siteNav" aria-label="${t.navLabel}">${navItems}</nav>
+    <a class="search-ic" href="${link(lang, 'search.html')}" aria-label="${lang === 'ur' ? 'تلاش' : 'Search'}" title="${lang === 'ur' ? 'تلاش' : 'Search'}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></a>
     <a class="lang" href="${other}" hreflang="${t.switchLang}" lang="${t.switchLang}" title="${esc(t.switchTitle)}">${t.switchLabel}</a>
     <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="siteNav" aria-label="${lang === 'ur' ? 'مینو' : 'Menu'}"><span></span><span></span><span></span></button>
   </div>
@@ -3757,12 +3758,216 @@ const banner = (lang, name) => (fs.existsSync(path.join(__dirname, 'img', 'banne
   ? `\n<img class="banner-img slim" src="/img/banner-${name}.webp" alt="${BANNER_ALT[name][lang === 'ur' ? 1 : 0]}" width="1024" height="500">` : '');
 
 const CARD_GLYPH = { 'alphabet.html': 'أ ب ت', 'writing.html': 'قَلَم', 'lessons.html': 'نَحْو', 'classic-tales.html': 'حِكَايَات', 'reading.html': 'قِصَص', 'vocabulary.html': 'كَلِمَات', 'quran.html': 'قُرْآن', 'phrases.html': 'جُمَل', 'saudi-arabic.html': 'هَلَا', 'quiz.html': 'اِخْتِبَار', 'duas.html': 'دُعَاء', 'tools.html': 'أَدَوَات', 'guides.html': 'دَلِيل' };
+// ---------------------------------------------------------------- site search
+// A client-side word search over everything on the site. The index is written per
+// language to search-<lang>.json as compact arrays [arabic, term, meaning, url, kind].
+const SEARCH_KINDS = {
+  en: { page: 'Section', letter: 'Letter', lesson: 'Lesson', word: 'Word', surah: 'Surah', root: 'Quran root', qword: 'Quran word', name: 'Name', dua: 'Dua', phrase: 'Phrase' },
+  ur: { page: 'حصہ', letter: 'حرف', lesson: 'سبق', word: 'لفظ', surah: 'سورہ', root: 'قرآنی مادہ', qword: 'قرآنی لفظ', name: 'نام', dua: 'دعا', phrase: 'جملہ' },
+};
+const SEARCH_ORDER = ['page', 'lesson', 'letter', 'surah', 'root', 'qword', 'word', 'name', 'dua', 'phrase'];
+
+function buildSearchIndex(lang) {
+  const ur = lang === 'ur';
+  const E = [];
+  const add = (a, t, m, file, k) => E.push([a || '', t || '', m || '', link(lang, file), k]);
+  const SECTIONS = ur ? [
+    ['أ ب ت', 'حروفِ تہجی', 'تمام ۲۸ حروف', 'alphabet.html'],
+    ['نَحْو', 'گرامر کے اسباق', 'پہلے جملے سے افعال تک', 'lessons.html'],
+    ['كَلِمَات', 'الفاظ', 'موضوعات کے حساب سے روزمرہ الفاظ', 'vocabulary.html'],
+    ['قُرْآن', 'قرآن لفظ بہ لفظ', 'تمام ۱۱۴ سورتیں', 'quran.html'],
+    ['مَادَّة', 'قرآنی مادے', 'ہر مادے سے بنے الفاظ', 'quran-roots.html'],
+    ['دُعَاء', 'دعائیں اور اذکار', 'قرآن و سنت کی مستند دعائیں', 'duas.html'],
+    ['جُمَل', 'جملے', 'روزمرہ گفتگو کے جملے', 'phrases.html'],
+    ['هَلَا', 'سعودی بول چال', 'سعودی عرب کے روزمرہ جملے', 'saudi-arabic.html'],
+    ['أَسْمَاء', 'اسلامی نام', 'ناموں کے معنی', 'muslim-names.html'],
+    ['أَدَوَات', 'مفت ٹولز', 'کی بورڈ، ہجری کنورٹر، نام', 'tools.html'],
+    ['دَلِيل', 'رہنمائی', 'عربی سیکھنے کی گائیڈز', 'guides.html'],
+    ['قَلَم', 'لکھنے کی مشق', 'حروف لکھنا سیکھیں', 'writing.html'],
+    ['اِخْتِبَار', 'کوئز', 'خود کو جانچیں', 'quiz.html'],
+  ] : [
+    ['أ ب ت', 'Alphabet', 'All 28 letters', 'alphabet.html'],
+    ['نَحْو', 'Grammar lessons', 'From your first sentence to verbs', 'lessons.html'],
+    ['كَلِمَات', 'Vocabulary', 'Everyday words by topic', 'vocabulary.html'],
+    ['قُرْآن', 'Quran word by word', 'All 114 surahs', 'quran.html'],
+    ['مَادَّة', 'Quran roots', 'Words built from each root', 'quran-roots.html'],
+    ['دُعَاء', 'Duas and adhkar', 'Authentic duas from Quran and Sunnah', 'duas.html'],
+    ['جُمَل', 'Phrases', 'Sentences for everyday talk', 'phrases.html'],
+    ['هَلَا', 'Saudi Arabic', 'Everyday phrases used in Saudi Arabia', 'saudi-arabic.html'],
+    ['أَسْمَاء', 'Muslim names', 'Names with meanings', 'muslim-names.html'],
+    ['أَدَوَات', 'Free tools', 'Keyboard, Hijri converter, names', 'tools.html'],
+    ['دَلِيل', 'Guides', 'Guides to learning Arabic', 'guides.html'],
+    ['قَلَم', 'Writing practice', 'Learn to write the letters', 'writing.html'],
+    ['اِخْتِبَار', 'Quiz', 'Test yourself', 'quiz.html'],
+  ];
+  SECTIONS.forEach(([a, t, m, f]) => add(a, t, m, f, 'page'));
+  LETTERS.forEach((x) => add(x.c, letterName(lang, x), SEARCH_KINDS[lang].letter, 'letter-' + x.slug + '.html', 'letter'));
+  LESSONS.forEach((l) => add(l.key, ur ? l.ur.title : l.en.title, '', l.slug + '.html', 'lesson'));
+  TOPICS.forEach((t) => t.words.forEach((w) => add(w[0], w[1], ur ? w[3] : w[2], 'vocab-' + t.slug + '.html', 'word')));
+  QURAN.forEach((s) => add(s.name, (ur ? s.ur : 'Surah ' + s.en), ur ? s.meanUr : s.meanEn, 'quran-' + s.slug + '.html', 'surah'));
+  if (typeof ROOTS !== 'undefined' && ROOTS) ROOT_LIST.forEach((x) => add(x.lemmas[0].a, rootLetters(x.r) + ' · ' + rootLatin(x.r), ur ? x.lemmas[0].ur : x.lemmas[0].en, 'quran-root-' + x.slug + '.html', 'root'));
+  QWORDS.forEach((w) => add(w[0], w[1], ur ? w[3] : w[2], 'quran-common-words.html', 'qword'));
+  NAMES.forEach((x) => add(x[0], x[1], ur ? x[4] : x[3], 'muslim-names.html', 'name'));
+  DUA_CATS.forEach((c) => c.items.forEach((d) => add(d.a.split(/\s+/).slice(0, 4).join(' '), ur ? d.ur : d.en, '', 'duas.html', 'dua')));
+  PHRASES.forEach((p) => add(p[0], p[1], ur ? p[3] : p[2], 'phrases.html', 'phrase'));
+  return E;
+}
+
+function searchPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'تلاش کریں: عربی لفظ، مادہ، سورہ یا نام | حرف',
+    desc: 'حرف پر کوئی بھی چیز تلاش کریں: عربی لفظ، قرآنی مادہ، سورہ، دعا، اسلامی نام یا سبق۔ انگریزی، اردو یا عربی میں لکھیں۔',
+    h1: 'تلاش کریں', ph: 'لفظ، مادہ، سورہ یا نام لکھیں…',
+    lead: 'انگریزی، اردو یا عربی میں لکھیں۔ الفاظ، مادے، سورتیں، دعائیں، نام اور اسباق سب ایک جگہ۔',
+    none: 'کچھ نہیں ملا۔ کوئی اور لفظ آزمائیں۔', typeMore: 'تلاش کے لیے لکھنا شروع کریں۔',
+    results: (n) => `${ud(n)} نتائج`, all: 'سب',
+  } : {
+    title: 'Search: Arabic word, root, surah or name | Harf',
+    desc: 'Search anything on Harf: an Arabic word, a Quran root, a surah, a dua, a Muslim name or a lesson. Type in English, Urdu or Arabic.',
+    h1: 'Search', ph: 'Search a word, root, surah or name…',
+    lead: 'Type in English, Urdu or Arabic. Words, roots, surahs, duas, names and lessons, all in one place.',
+    none: 'Nothing found. Try another word.', typeMore: 'Start typing to search.',
+    results: (n) => `${n} result${n === 1 ? '' : 's'}`, all: 'All',
+  };
+  const cfg = { lang, kinds: SEARCH_KINDS[lang], order: SEARCH_ORDER, none: C.none, typeMore: C.typeMore, resultsWord: ur ? 'نتائج' : 'results' };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, C.h1]])}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<form class="site-search big" role="search" onsubmit="return false">
+  <input type="search" id="searchBox" name="q" placeholder="${C.ph}" aria-label="${C.ph}" autocomplete="off" autofocus spellcheck="false" enterkeyhint="search">
+</form>
+<div class="chips" id="searchFilters" hidden></div>
+<p class="search-status" id="searchStatus" aria-live="polite">${C.typeMore}</p>
+<div class="search-results" id="searchResults"></div>
+<script type="application/json" id="search-cfg">${JSON.stringify(cfg).replace(/</g, '\\u003c')}</script>
+<script>
+(function () {
+  var cfg = JSON.parse(document.getElementById('search-cfg').textContent);
+  var box = document.getElementById('searchBox'), out = document.getElementById('searchResults'), status = document.getElementById('searchStatus'), filterBox = document.getElementById('searchFilters');
+  var DATA = null, keys = null, active = '';
+  function norm(s) {
+    return (s || '').toString().toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f\\u064B-\\u0652\\u0670\\u0640]/g, '')
+      .replace(/[\\u0623\\u0625\\u0622]/g, '\\u0627').replace(/\\u0649/g, '\\u064A').replace(/\\u0629/g, '\\u0647')
+      .replace(/[^a-z0-9\\u0600-\\u06ff]/g, '');
+  }
+  function esc(s) { return (s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function load(cb) {
+    if (DATA) return cb();
+    status.textContent = '…';
+    fetch('search-' + cfg.lang + '.json').then(function (r) { return r.json(); }).then(function (d) {
+      DATA = d; keys = d.map(function (e) { return norm(e[0]) + '|' + norm(e[1]) + '|' + norm(e[2]); }); cb();
+    }).catch(function () { status.textContent = '⚠'; });
+  }
+  function run() {
+    var q = box.value.trim();
+    history.replaceState(null, '', q ? '?q=' + encodeURIComponent(q) : location.pathname);
+    if (!q) { out.innerHTML = ''; filterBox.hidden = true; status.textContent = cfg.typeMore; return; }
+    load(function () {
+      var qn = norm(q), hits = [];
+      if (!qn) { out.innerHTML = ''; status.textContent = cfg.typeMore; return; }
+      for (var i = 0; i < DATA.length; i++) {
+        var p = keys[i].indexOf(qn);
+        if (p < 0) continue;
+        if (active && DATA[i][4] !== active) continue;
+        hits.push([DATA[i], p === 0 || keys[i].indexOf('|' + qn) > -1 ? 0 : 1]);
+      }
+      hits.sort(function (a, b) { return a[1] - b[1] || cfg.order.indexOf(a[0][4]) - cfg.order.indexOf(b[0][4]); });
+      // filter chips by kind count (computed before the kind filter)
+      renderFilters(qn, q);
+      status.textContent = hits.length ? (cfg.lang === 'ur' ? toUr(hits.length) + ' ' + cfg.resultsWord : hits.length + ' ' + cfg.resultsWord + ' for “' + esc(q) + '”') : cfg.none;
+      var html = '', shown = hits.slice(0, 300);
+      for (var j = 0; j < shown.length; j++) {
+        var e = shown[j][0];
+        html += '<a class="sres" href="' + e[3] + '"><span class="sr-k sr-' + e[4] + '">' + esc(cfg.kinds[e[4]]) + '</span>'
+          + (e[0] ? '<span class="sr-a ar" lang="ar">' + esc(e[0]) + '</span>' : '')
+          + '<span class="sr-b"><span class="sr-t">' + esc(e[1]) + '</span>' + (e[2] ? '<span class="sr-m">' + esc(e[2]) + '</span>' : '') + '</span></a>';
+      }
+      out.innerHTML = html;
+    });
+  }
+  function toUr(n) { return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
+  function renderFilters(qn, q) {
+    var counts = {};
+    for (var i = 0; i < DATA.length; i++) { if (keys[i].indexOf(qn) < 0) continue; counts[DATA[i][4]] = (counts[DATA[i][4]] || 0) + 1; }
+    var ks = cfg.order.filter(function (k) { return counts[k]; });
+    if (ks.length < 2) { filterBox.hidden = true; filterBox.innerHTML = ''; return; }
+    filterBox.hidden = false;
+    var all = '<button type="button" class="chip' + (active ? '' : ' on') + '" data-k="">' + (cfg.lang === 'ur' ? 'سب' : 'All') + '</button>';
+    filterBox.innerHTML = all + ks.map(function (k) {
+      return '<button type="button" class="chip' + (active === k ? ' on' : '') + '" data-k="' + k + '">' + esc(cfg.kinds[k]) + ' <b>' + (cfg.lang === 'ur' ? toUr(counts[k]) : counts[k]) + '</b></button>';
+    }).join('');
+    Array.prototype.forEach.call(filterBox.querySelectorAll('.chip'), function (b) {
+      b.addEventListener('click', function () { active = b.getAttribute('data-k'); run(); });
+    });
+  }
+  var t; box.addEventListener('input', function () { clearTimeout(t); t = setTimeout(run, 120); });
+  var q0 = new URLSearchParams(location.search).get('q');
+  if (q0) { box.value = q0; run(); }
+  box.focus();
+})();
+</script>`;
+  return layout(lang, { file: 'search.html', section: 'search', title: C.title, desc: C.desc, body });
+}
+
+const SEARCH_CSS = `
+.site-search{display:flex;gap:8px;margin:0 0 18px;max-width:640px}
+.site-search input{flex:1;font:inherit;font-size:17px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line-2);border-radius:999px;padding:13px 20px}
+.site-search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.site-search.big input{font-size:18px;padding:15px 22px}
+.site-search .btn{flex:none}
+.search-hero .site-search input{background:rgba(255,255,255,.96);border-color:transparent;color:#1a2b22}
+.search-hero .site-search input:focus{box-shadow:0 0 0 4px rgba(236,208,138,.5)}
+.search-status{color:var(--muted);font-size:14px;margin:0 0 14px}
+.search-results{display:grid;gap:8px}
+.sres{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 14px;text-decoration:none;color:var(--ink)}
+.sres:hover{border-color:var(--accent)}
+.sr-k{flex:none;font-size:11px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);min-width:84px}
+html[dir="rtl"] .sr-k{text-transform:none;letter-spacing:0}
+.sr-a{font-size:24px;line-height:1.4;flex:none;min-width:2.2em}
+.sr-b{display:flex;flex-direction:column;gap:1px;min-width:0}
+.sr-t{font-weight:600}
+.sr-m{color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-k.sr-page,.sr-k.sr-lesson{color:var(--accent)}
+.sr-k.sr-root,.sr-k.sr-qword,.sr-k.sr-surah{color:var(--gold-2)}
+#searchFilters{margin:0 0 14px}
+#searchFilters[hidden]{display:none}
+#searchFilters .chip b{opacity:.7;font-weight:700}
+/* header search icon */
+.search-ic{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:var(--ink);text-decoration:none;flex:none}
+.search-ic:hover{background:var(--accent-soft);color:var(--accent)}
+.search-ic svg{width:19px;height:19px}
+/* homepage search hero */
+.search-hero{display:block;text-align:center;padding:40px 28px 34px}
+.search-hero .eyebrow{color:#ecd08a}
+.search-hero h1{margin:6px 0 10px}
+.search-hero .lead{max-width:620px;margin:0 auto 20px;color:#eef3ee}
+.search-hero .site-search{margin:0 auto 14px}
+.search-hero .quick{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:680px;margin:0 auto}
+.search-hero .quick a{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:999px;padding:6px 14px;text-decoration:none;font-size:14.5px;font-weight:500}
+.search-hero .quick a:hover{background:rgba(236,208,138,.25);border-color:rgba(236,208,138,.6)}
+.explore{margin:6px 0 30px}
+.explore h2{margin:0 0 12px}
+.explore + .explore{margin-top:-8px}
+.ex-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ex-chips a{display:inline-flex;align-items:baseline;gap:7px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:7px 13px;text-decoration:none;color:var(--ink)}
+.ex-chips a:hover{border-color:var(--accent)}
+.ex-chips .ar{font-size:21px}
+.ex-chips small{color:var(--muted);font-size:13px}
+@media (max-width:520px){
+  .sr-k{min-width:0;font-size:10px}
+  .search-hero{padding:30px 18px 26px}
+}
+`;
+
 function homePage(lang) {
   const ur = lang === 'ur';
   const n = (v) => num(lang, v);
   const C = ur ? {
     title: 'حرف: اردو میں مفت عربی سیکھیں', desc: 'اردو بولنے والوں کے لیے مفت عربی: حروفِ تہجی، گرامر کے اسباق، الفاظ، جملے اور کوئز، ہر لفظ کی آواز کے ساتھ۔',
     eyebrow: 'مفت · بغیر سائن اپ · اردو اور انگریزی',
+    heroLead: 'عربی کا کوئی بھی لفظ، مادہ، سورہ، دعا یا نام یہاں تلاش کریں — یا نیچے سے براہِ راست سیکھنا شروع کریں۔',
+    searchPh: 'لفظ، مادہ، سورہ یا نام لکھیں…',
     h1: 'مفت عربی سیکھیں، ایک ایک حرف کر کے',
     lead: `حرف آپ کو عربی پہلے حرف سے سکھاتا ہے۔ ${n(28)} حروف اور ان کی بدلتی شکلیں سیکھیں، گرامر کے مختصر اسباق پڑھیں، فلیش کارڈز سے الفاظ یاد کریں اور کوئز سے خود کو جانچیں۔ ہر عربی لفظ کی آواز سنی جا سکتی ہے۔`,
     cta1: 'حروفِ تہجی سے شروع کریں', cta2: 'اسباق دیکھیں',
@@ -3798,6 +4003,8 @@ function homePage(lang) {
   } : {
     title: 'Harf: Learn Arabic Free in English and Urdu', desc: 'Learn Arabic free: the alphabet with audio, beginner grammar lessons, vocabulary flashcards, everyday phrases and quizzes. In English and Urdu, no sign-up.',
     eyebrow: 'Free · No sign-up · English and Urdu',
+    heroLead: 'Search any Arabic word, root, surah, dua or name — or jump straight into learning below.',
+    searchPh: 'Search a word, root, surah or name…',
     h1: 'Learn Arabic for free, one letter at a time',
     lead: 'Harf teaches Arabic from the very first letter. Learn the 28 letters and how they change shape, follow short grammar lessons, build vocabulary with flashcards and test yourself with quizzes. Every Arabic word has audio.',
     cta1: 'Start with the alphabet', cta2: 'Go to the lessons',
@@ -3835,22 +4042,29 @@ function homePage(lang) {
   <h2>اردو بولنے والوں کے لیے</h2>
   <p>آپ عربی رسم الخط پہلے ہی پڑھ سکتے ہیں، اس لیے آپ کا آدھا سفر طے ہو چکا ہے۔ اصل فرق تلفظ کا ہے: ${fmt('{ث ح ذ ص ض ط ظ ع ق}')} عربی میں اردو سے مختلف بولے جاتے ہیں۔ ہر حرف کے صفحے پر یہ فرق تفصیل سے بتایا گیا ہے۔</p>
 </section>` : '';
-  const body = `<section class="hero">
-  <div class="hero-text">
-    <p class="eyebrow">${C.eyebrow}</p>
-    <h1>${C.h1}</h1>
-    <p class="lead">${C.lead}</p>
-    <div class="row">
-      <a class="btn gold" href="${link(lang, 'alphabet.html')}">${C.cta1}</a>
-      <a class="btn ghost" href="${link(lang, 'lessons.html')}">${C.cta2}</a>
-    </div>
-    <p class="hero-note">${C.newBadge}</p>
-    <p class="hero-note"><small>${C.savesNote}</small></p>
-    <p class="hero-note"><a href="${link(lang, 'level-test.html')}">${ur ? 'معلوم نہیں کہاں سے شروع کریں؟ دو منٹ کا لیول ٹیسٹ دیں ←' : 'Not sure where to start? Take the two-minute level test →'}</a></p>
-  </div>
-  <div class="mihrab" aria-hidden="true">
-    <div class="mihrab-in"><img class="mascot" src="/img/teacher-hero.webp" alt="" width="900" height="900" fetchpriority="high"></div>
-  </div>
+  const famSurahs = [1, 36, 67, 18, 55, 112, 2, 78, 56, 97].map((nn) => QURAN.find((s) => s.n === nn)).filter(Boolean);
+  const topRoots = (typeof ROOTS !== 'undefined' && ROOTS) ? ROOT_LIST.slice(0, 12) : [];
+  const exploreHtml = `<section class="explore">
+  <h2 class="orn">${ur ? 'سیدھا قرآن میں جائیں' : 'Jump into the Quran'}</h2>
+  <div class="ex-chips">${famSurahs.map((sx) => `<a href="${link(lang, 'quran-' + sx.slug + '.html')}"><span class="ar" lang="ar">${sx.name}</span><small>${ur ? sx.ur : 'Surah ' + sx.en}</small></a>`).join('')}</div>
+</section>${topRoots.length ? `
+<section class="explore">
+  <h2 class="orn">${ur ? 'الفاظ کے مادے دیکھیں' : 'Explore word roots'}</h2>
+  <div class="ex-chips">${topRoots.map((x) => `<a href="${link(lang, 'quran-root-' + x.slug + '.html')}"><span class="ar" lang="ar">${x.lemmas[0].a}</span><small>${esc(ur ? x.lemmas[0].ur : x.lemmas[0].en)}</small></a>`).join('')}</div>
+  <p class="hero-note" style="margin-top:10px"><a href="${link(lang, 'quran-roots.html')}">${ur ? `تمام ${ud(ROOT_LIST.length)} مادے دیکھیں ←` : `See all ${ROOT_LIST.length} roots →`}</a></p>
+</section>` : ''}`;
+  const quick = ur
+    ? [['quran.html', 'قرآن لفظ بہ لفظ'], ['quran-roots.html', 'قرآنی مادے'], ['alphabet.html', 'حروفِ تہجی'], ['muslim-names.html', 'اسلامی نام'], ['duas.html', 'دعائیں'], ['arabic-keyboard.html', 'عربی کی بورڈ']]
+    : [['quran.html', 'Quran word by word'], ['quran-roots.html', 'Word roots'], ['alphabet.html', 'Alphabet'], ['muslim-names.html', 'Muslim names'], ['duas.html', 'Duas'], ['arabic-keyboard.html', 'Arabic keyboard']];
+  const body = `<section class="hero search-hero">
+  <p class="eyebrow">${C.eyebrow}</p>
+  <h1>${C.h1}</h1>
+  <p class="lead">${C.heroLead}</p>
+  <form class="site-search big" role="search" action="${link(lang, 'search.html')}" method="get">
+    <input type="search" name="q" placeholder="${C.searchPh}" aria-label="${C.searchPh}" autocomplete="off" spellcheck="false" enterkeyhint="search">
+    <button class="btn gold" type="submit">${ur ? 'تلاش' : 'Search'}</button>
+  </form>
+  <nav class="quick" aria-label="${ur ? 'مشہور صفحات' : 'Popular pages'}">${quick.map(([f, l]) => `<a href="${link(lang, f)}">${l}</a>`).join('')}</nav>
 </section>
 <ul class="proof" aria-label="${ur ? 'حرف پر کیا ہے' : 'What is on Harf'}">
   ${[[28, ur ? 'حروف' : 'letters', 'alphabet.html'], [LESSONS.length, ur ? 'گرامر اسباق' : 'grammar lessons', 'lessons.html'], [114, ur ? 'سورتیں لفظ بہ لفظ' : 'surahs word by word', 'quran.html'], ...(ROOTS ? [[ROOT_LIST.length, ur ? 'قرآنی مادے' : 'Quran roots', 'quran-roots.html']] : []), ...(CLASSICS.length ? [[CLASSICS.length, ur ? 'کلاسیکی کہانیاں' : 'classic tales', 'classic-tales.html']] : []), [DUA_TOTAL, ur ? 'دعائیں' : 'duas', 'duas.html']].map(([k, label, f]) => `<li><a href="${link(lang, f)}"><strong>${n(k)}</strong><span>${label}</span></a></li>`).join('')}
@@ -3866,6 +4080,7 @@ function homePage(lang) {
   <div class="stat"><strong id="sBest">–</strong><span>${C.s3}</span><div class="meter"><i id="mBest"></i></div></div>
 </div>
 ${urBox}
+${exploreHtml}
 <section>
   <h2 class="orn">${C.insideH}</h2>
   <div class="cards">
@@ -7433,6 +7648,7 @@ function build() {
     add(lang, 'saudi-arabic.html', saudiPage(lang));
     add(lang, 'quiz.html', quizPage(lang));
     add(lang, 'guides.html', guidesPage(lang));
+    add(lang, 'search.html', searchPage(lang));
     GUIDES.forEach((x, i) => add(lang, x.slug + '.html', guidePage(lang, i)));
     add(lang, 'tools.html', toolsPage(lang));
     add(lang, 'arabic-keyboard.html', keyboardPage(lang));
@@ -7444,12 +7660,14 @@ function build() {
     add(lang, 'privacy.html', privacyPage(lang));
   }
   files['404.html'] = notFoundPage();
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
   }
   files['app.js'] = APP_JS + QURAN_AUDIO_JS.replace('__AUDIO__', JSON.stringify(audioData()));
+  files['search-en.json'] = JSON.stringify(buildSearchIndex('en'));
+  files['search-ur.json'] = JSON.stringify(buildSearchIndex('ur'));
   files['manifest.webmanifest'] = manifest();
   files['sw.js'] = serviceWorker();
   files['offline.html'] = offlinePage();
