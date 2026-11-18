@@ -3314,6 +3314,27 @@ const loadSurah = (q) => JSON.parse(fs.readFileSync(path.join(QURAN_DIR, String(
 
 // ---------------------------------------------------------------- Duas (content in data/duas.js)
 const { DUA_CATS, DUA_TOPICS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
+// Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
+// meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
+const HISN = (() => {
+  const f = path.join(__dirname, 'data', 'hisn.json');
+  if (!fs.existsSync(f)) return [];
+  return JSON.parse(fs.readFileSync(f, 'utf8')).map((c) => ({
+    ...c,
+    items: c.items.map((it) => ({
+      en: '', ur: '', a: it.a || '', say: it.say || '', mEn: it.mEn, mUr: it.mUr, noteEn: it.noteEn, noteUr: it.noteUr,
+      times: it.times, h: it.h, q: it.q, src: ['hisn', it.sn || it.id, it.ref || ''],
+      links: (it.links || []).map((n) => { const q = QURAN.find((x) => x.n === n); return q ? 'quran-' + q.slug + '.html' : null; }).filter(Boolean),
+    })),
+  }));
+})();
+const HISN_GROUPS = [
+  ['daily', 'Daily life', 'روزمرہ زندگی'], ['prayer', 'Adhan and prayer', 'اذان اور نماز'], ['morning', 'Morning, evening and sleep', 'صبح، شام اور نیند'],
+  ['hardship', 'Worry, hardship and protection', 'فکر، مشکل اور حفاظت'], ['family', 'Marriage, children and family', 'نکاح، اولاد اور خاندان'],
+  ['illness', 'Illness, death and funerals', 'بیماری، موت اور جنازہ'], ['nature', 'Weather and nature', 'موسم اور فطرت'], ['food', 'Food and fasting', 'کھانا اور روزہ'],
+  ['social', 'Manners and social life', 'آداب اور میل جول'], ['travel', 'Travel', 'سفر'], ['hajj', 'Hajj, Umrah and sacrifice', 'حج، عمرہ اور قربانی'],
+  ['dhikr', 'Dhikr, repentance and virtues', 'ذکر، توبہ اور فضائل'],
+];
 // Quran duas: build the Arabic, pronunciation and default meanings from data/quran, and the verses to play.
 (function expandDuas() {
   const cache = {};
@@ -3326,6 +3347,7 @@ const { DUA_CATS, DUA_TOPICS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
   const allDuaItems = [];
   for (const c of DUA_CATS) for (const d of c.items) allDuaItems.push(d);
   for (const t of (DUA_TOPICS || [])) for (const d of (t.extra || [])) allDuaItems.push(d);
+  for (const c of HISN) for (const d of c.items) allDuaItems.push(d);
   for (const d of allDuaItems) {
     if (d.q && QURAN.length) {
       const ar = [], tr = [], en = [], ur = [];
@@ -3428,6 +3450,50 @@ function translit(word) {
 }
   return translit;
 })();
+
+// Phrase-level pronunciation for Hisn al-Muslim text: tidies the book's vowel marks, then joins words
+// in Harf's style (bismi llaahi, allaahumma ghfir lii). Approximate; the page says so.
+const trPhrase = (() => {
+  const C = 'بتثجحخدذرزسشصضطظعغفقكلمنهي';
+  const MARK = 'ً-ْ';
+  function norm(s) {
+    return s
+      .replace(/ـ/g, '')
+      .replace(/صلى الله عليه وسلم/g, ' ﷺ ')
+      .replace(/\([^()]*(?:مرة|مرات|مرَّة|مرَّات|ثلاث|سبع|عشر|أربع|مائة|بِاسْمِهِ|ثَلاَث)[^()]*\)/g, ' ')
+      .replace(/[﴿﴾*\[\]«»()]/g, ' ')
+      .replace(new RegExp('([^\\sا])َ?ا([ً])', 'g'), '$1$2ا')
+      .replace(new RegExp('([^\\sا])ا([َّ]+)', 'g'), '$1$2ا')
+      .replace(new RegExp('([' + C + '])(ّ?)ا', 'g'), '$1$2َا')
+      .replace(new RegExp('([' + C + '])ي(?![' + MARK + '])', 'g'), '$1ِي')
+      .replace(new RegExp('(^|\\s)([وف]َ)ا(?=[' + C.replace('ل', '') + 'ء][ّ]?ْ)', 'g'), '$1$2')
+      .replace(new RegExp('(^|\\s)لل(?=[َّ]{1,2}ه)', 'g'), '$1لِل')
+      .replace(/إ(?![ً-ْ])/g, 'إِ')
+      .replace(/أ(?![ً-ْ])/g, 'أَ')
+      .replace(/إِلَه/g, 'إِلَٰه')
+      .replace(/اللّه/g, 'اللَّه')
+      .replace(/(^|\s)الله(?=[\s،.]|$)/g, '$1اللَّهِ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  const bare = (w) => w.replace(/[ً-ْٰ]/g, '');
+  return function trPhrase(ar) {
+    const words = norm(ar).split(' ').filter((w) => /[ء-ي]/.test(w) || w === 'ﷺ');
+    const out = [];
+    words.forEach((w, k) => {
+      let t = w === 'ﷺ' ? 'ṣalla llaahu ʿalayhi wa-sallam' : translit(w);
+      if (w !== 'ﷺ' && !bare(w).includes('لله')) t = t.replace(/llaah/g, 'llah');
+      t = t.replace(/l-lah/g, 'llaah').replace(/^(wa|fa|bi|li|la)’/, '$1-');
+      const comma = /[،,]$/.test(w) ? ',' : /[.؟!]$/.test(w) ? '.' : '';
+      const prev = out.length ? out[out.length - 1] : '';
+      if (k > 0 && w[0] === 'ا' && /[aiu]$/.test(prev) && !/^allaahumma/.test(t)) t = t.replace(/^a/, '');
+      out.push(t + comma);
+    });
+    return out.join(' ').replace(/,+/g, ',').replace(/\s+/g, ' ').trim();
+  };
+})();
+for (const c of HISN) for (const d of c.items) d.tr = d.say ? trPhrase(d.say) : (d.tr || '');
+const HISN_TOTAL = HISN.reduce((k, c) => k + c.items.length, 0);
 
 // ---------------------------------------------------------------- classic tales (data/ folder)
 // data/lexicon.txt:  token | English | Urdu | root letters (or -) | origin note EN | origin note UR
@@ -3813,6 +3879,7 @@ function buildSearchIndex(lang) {
   NAMES.forEach((x) => add(x[0], x[1], ur ? x[4] : x[3], 'muslim-names.html', 'name'));
   DUA_CATS.forEach((c) => c.items.forEach((d, k) => add(d.a.split(/\s+/).slice(0, 4).join(' '), ur ? d.ur : d.en, ur ? c.ur : c.en, c.slug + '.html#d' + (k + 1), 'dua')));
   DUA_TOPICS.forEach((t) => add('', ur ? t.ur : t.en, ur ? 'موضوعاتی دعا' : 'Dua by situation', t.slug + '.html', 'dua'));
+  if (typeof HISN !== 'undefined') HISN.forEach((c) => add('', ur ? c.ur : c.en, ur ? 'حصن المسلم' : 'Hisn al-Muslim', c.slug + '.html', 'dua'));
   PHRASES.forEach((p) => add(p[0], p[1], ur ? p[3] : p[2], 'phrases.html', 'phrase'));
   SAUDI.forEach((g) => g.items.forEach((it) => add(it[0], it[1], ur ? it[3] : it[2], 'saudi-arabic.html', 'phrase')));
   LESSONS.forEach((l) => (l.ex || []).forEach((e) => add(e[0], e[1], ur ? e[3] : e[2], l.slug + '.html', 'sentence')));
@@ -4876,6 +4943,10 @@ const SUNNAH_COM = { bukhari: 'bukhari', muslim: 'muslim', abudawud: 'abudawud',
 function duaSource(lang, src) {
   const ur = lang === 'ur';
   const [book, no] = src;
+  if (book === 'hisn') {
+    const ref = src[2] ? ` <span class="latin" dir="ltr">(${esc(src[2])})</span>` : '';
+    return `<a href="https://sunnah.com/hisn:${no}" target="_blank" rel="noopener">${ur ? 'حصن المسلم' : 'Hisn al-Muslim'} ${num(lang, no)}</a>${ref}`;
+  }
   if (book === 'quran') {
     const [sn, rest] = String(no).split(':'), q = QURAN.find((x) => x.n === +sn);
     const label = (ur ? 'قرآن ' : 'Quran ') + (ur ? ud(no).replace('–', '–') : no);
@@ -4893,15 +4964,15 @@ function duaHtml(lang, d, k) {
   const qa = d.qa ? d.qa.map(([n, a, b]) => `${n}:${a}-${b}`).join(',') : '';
   const btns = [
     qa ? `<button class="btn sm primary dplay" type="button" data-q="${qa}">${ur ? '▶ قاری کی تلاوت' : '▶ Hear it recited'}</button>` : '',
-    !d.qmark ? say(lang, d.a.replace(/ · /g, '، ')) : '',
+    !d.qmark && !d.h ? say(lang, d.a.replace(/ · /g, '، ')) : '',
     d.links ? d.links.map((f) => { const q = QURAN.find((x) => 'quran-' + x.slug + '.html' === f); return q ? `<a class="btn sm" href="${link(lang, f)}">${ur ? q.ur : 'Surah ' + q.en}</a>` : ''; }).join('') : '',
   ].join('');
   return `<article class="dua" id="d${k}">
-  <h2><span class="vn">${num(lang, k)}.</span> ${esc(ur ? d.ur : d.en)}</h2>
+  <h2><span class="vn">${num(lang, k)}.</span> ${esc((ur ? d.ur : d.en) || (d.h ? (ur ? 'حدیث سے' : 'From the hadith') : ''))}</h2>
   ${when || times ? `<p class="when">${esc(when)}${times}</p>` : ''}
   <p class="dua-ar ar" lang="ar">${d.a}</p>
-  <p class="tr latin" dir="ltr">${esc(d.tr)}</p>
-  <p class="mean">${esc(ur ? d.mUr : d.mEn)}</p>
+  ${d.tr ? `<p class="tr latin" dir="ltr">${esc(d.tr)}</p>` : ''}
+  ${(ur ? d.mUr : d.mEn) ? `<p class="mean">${esc(ur ? d.mUr : d.mEn)}</p>` : ''}
   ${(ur ? d.noteUr : d.noteEn) ? `<p class="dua-note">${fmt(ur ? d.noteUr : d.noteEn)}</p>` : ''}
   <div class="dua-foot"><span class="src">${ur ? 'حوالہ' : 'Source'}: ${duaSource(lang, d.src)}</span><span class="row">${btns}</span></div>
 </article>`;
@@ -4937,6 +5008,7 @@ function duasPage(lang) {
     ${DUA_TOPICS.map((t) => `<a class="chip" href="${link(lang, t.slug + '.html')}">${t.icon} ${ur ? t.ur : t.en}</a>`).join('\n    ')}
   </div>
 </section>
+${HISN.length ? `<a class="hisn-cta" href="${link(lang, 'hisn-al-muslim.html')}"><span class="dc-ic" aria-hidden="true">🏰</span><span><strong>${ur ? 'حصن المسلم — ہر موقع کی دعائیں' : 'Hisn al-Muslim — duas for every occasion'}</strong><br>${ur ? `${ud(HISN.length)} ابواب، ${ud(HISN_TOTAL)} دعائیں: جاگنا، وضو، مسجد، نماز، سفر، بیماری، جنازہ، موسم، حج اور بہت کچھ` : `${HISN.length} chapters, ${HISN_TOTAL} duas: waking up, wudu, the mosque, prayer, travel, illness, funerals, weather, Hajj and more`}</span><span aria-hidden="true">${ur ? '←' : '→'}</span></a>` : ''}
 <h2>${ur ? 'موضوع کے لحاظ سے' : 'Browse by topic'}</h2>
 <div class="cards dua-cats">
   ${DUA_CATS.map((c) => `<a class="card" href="${link(lang, c.slug + '.html')}"><h3><span class="dc-ic" aria-hidden="true">${c.icon}</span> ${ur ? c.ur : c.en}</h3><p>${fmt(ur ? c.introUr : c.introEn).replace(/<span class="ar[^"]*" lang="ar">([^<]*)<\/span>/g, '<span class="ar" lang="ar">$1</span>')}</p><p class="note">${C.n(c)}</p></a>`).join('\n  ')}
@@ -4994,6 +5066,52 @@ ${surahLinks ? `<p class="row">${surahLinks}</p>` : ''}
 ${rel.length ? `<section class="dua-related"><h2>${ur ? 'متعلقہ دعائیں' : 'Related duas'}</h2><div class="chips">${rel.map((r) => `<a class="chip" href="${link(lang, r.slug + '.html')}">${r.icon} ${name(r)}</a>`).join('')}</div></section>` : ''}
 <nav class="pager" aria-label="${T[lang].nav.duas}"><a class="btn" href="${link(lang, 'duas.html')}">${ur ? '← سب دعائیں' : '← All duas'}</a></nav>`;
   return layout(lang, { file: t.slug + '.html', section: 'duas', title: ur ? t.titleUr : t.titleEn, desc: esc((ur ? t.leadUr : t.leadEn).slice(0, 155)), body });
+}
+
+const HISN_NOTE = {
+  en: 'From <em>Hisn al-Muslim</em> (Fortress of the Muslim) by Saʿid ibn ʿAli ibn Wahf al-Qahtani. Each reference links to the same entry on <a href="https://sunnah.com/hisn" target="_blank" rel="noopener">sunnah.com</a>, with the hadith books it comes from. Meanings are written by Harf to help you understand. The pronunciation line is generated from the Arabic and may be approximate, so follow the Arabic and, where you can, a teacher.',
+  ur: 'یہ <em>حصن المسلم</em> (از سعید بن علی بن وہف القحطانی) سے ہے۔ ہر حوالہ <a href="https://sunnah.com/hisn" target="_blank" rel="noopener">sunnah.com</a> پر اسی دعا سے جڑا ہے، ساتھ ان حدیث کی کتابوں کا نام جن سے یہ لی گئی۔ ترجمہ سمجھنے میں مدد کے لیے حرف نے لکھا ہے۔ تلفظ کی سطر عربی سے خودکار بنائی گئی ہے اور تقریبی ہو سکتی ہے، اس لیے عربی متن اور ممکن ہو تو کسی استاد کی پیروی کریں۔',
+};
+
+function hisnHubPage(lang) {
+  const ur = lang === 'ur';
+  const title = ur ? 'حصن المسلم: ہر موقع کی مسنون دعائیں، اردو ترجمے کے ساتھ | حرف' : 'Hisn al-Muslim (Fortress of the Muslim): every dua, by occasion | Harf';
+  const lead = ur
+    ? `حصن المسلم کے تمام ${ud(HISN.length)} ابواب اور ${ud(HISN_TOTAL)} دعائیں اور اذکار — جاگنے سے سونے تک، نماز، سفر، بیماری، موسم اور زندگی کے ہر موقع کے لیے — عربی متن، تلفظ، اردو ترجمے اور حوالے کے ساتھ۔`
+    : `All ${HISN.length} chapters and ${HISN_TOTAL} duas and adhkar of Hisn al-Muslim — from waking to sleeping, the prayer, travel, illness, weather and every occasion in life — with the Arabic, pronunciation, meaning and source.`;
+  const groups = HISN_GROUPS.map(([g, en, u]) => {
+    const list = HISN.filter((c) => c.g === g);
+    if (!list.length) return '';
+    return `<section class="hisn-group"><h2>${ur ? u : en}</h2><ol class="hisn-list">${list.map((c) => `<li><a href="${link(lang, c.slug + '.html')}"><span class="hn">${num(lang, c.id)}</span> ${esc(ur ? c.ur : c.en)}</a></li>`).join('')}</ol></section>`;
+  }).join('\n');
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['duas.html', T[lang].nav.duas], [null, ur ? 'حصن المسلم' : 'Hisn al-Muslim']])}
+<p class="eyebrow">${ur ? `${ud(HISN.length)} ابواب · ${ud(HISN_TOTAL)} دعائیں` : `${HISN.length} chapters · ${HISN_TOTAL} duas`}</p>
+<h1>${ur ? 'حصن المسلم — ہر موقع کی دعائیں' : 'Hisn al-Muslim — duas for every occasion'}</h1>
+<p class="lead">${lead}</p>
+${groups}
+<p class="note">${HISN_NOTE[lang]}</p>`;
+  return layout(lang, { file: 'hisn-al-muslim.html', section: 'duas', title, desc: lead.slice(0, 155), body });
+}
+
+function hisnChapterPage(lang, i) {
+  const ur = lang === 'ur';
+  const c = HISN[i], prev = HISN[i - 1], next = HISN[i + 1];
+  const name = (x) => (ur ? x.ur : x.en);
+  const title = ur ? `${c.ur}: عربی، تلفظ، اردو ترجمہ اور حوالہ | حرف` : `${c.en}: Arabic, pronunciation, meaning and source | Harf`;
+  const lead = ur
+    ? `${c.ur} — حصن المسلم کے باب ${ud(c.id)} سے، ہر ایک عربی متن، تلفظ، اردو ترجمے اور مستند حوالے کے ساتھ۔`
+    : `${c.en} — from chapter ${c.id} of Hisn al-Muslim, each with the Arabic, pronunciation, meaning and an authentic source.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['duas.html', T[lang].nav.duas], ['hisn-al-muslim.html', ur ? 'حصن المسلم' : 'Hisn al-Muslim'], [null, name(c)]])}
+<p class="eyebrow">${ur ? `حصن المسلم · باب ${ud(c.id)}` : `Hisn al-Muslim · chapter ${c.id}`}</p>
+<h1>${esc(name(c))}</h1>
+<p class="lead">${esc(lead)}</p>
+${c.items.map((d, k) => duaHtml(lang, d, k + 1)).join('\n')}
+<p class="note">${HISN_NOTE[lang]}</p>
+<nav class="pager" aria-label="${ur ? 'حصن المسلم' : 'Hisn al-Muslim'}">
+  ${prev ? `<a class="btn" href="${link(lang, prev.slug + '.html')}">${T[lang].prev}: ${esc(name(prev))}</a>` : `<a class="btn" href="${link(lang, 'hisn-al-muslim.html')}">${ur ? 'تمام ابواب' : 'All chapters'}</a>`}
+  ${next ? `<a class="btn primary" href="${link(lang, next.slug + '.html')}">${ur ? 'اگلا: ' + esc(name(next)) + ' ←' : 'Next: ' + esc(name(next)) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'hisn-al-muslim.html')}">${ur ? 'تمام ابواب' : 'All chapters'}</a>`}
+</nav>`;
+  return layout(lang, { file: c.slug + '.html', section: 'duas', title, desc: lead.slice(0, 155), body });
 }
 
 function prayerPage(lang) {
@@ -6624,6 +6742,15 @@ table.words{width:100%;border-collapse:collapse;background:var(--surface);border
 .chips.big{gap:9px;margin:14px 0 0}
 .chips.big .chip{padding:9px 16px;color:var(--text);border-color:var(--line-2);font-size:.98rem}
 .chips.big .chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.hisn-cta{display:flex;gap:14px;align-items:center;background:var(--accent-soft);border:1px solid var(--accent);border-radius:16px;padding:16px 20px;margin:0 0 28px;color:var(--text);text-decoration:none}
+.hisn-cta:hover{background:var(--surface)}
+.hisn-cta .dc-ic{font-size:1.8rem}
+.hisn-cta span:nth-child(2){flex:1}
+.hisn-group{margin:26px 0}
+.hisn-list{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.hisn-list a{display:flex;gap:10px;align-items:baseline;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none;height:100%}
+.hisn-list a:hover{border-color:var(--accent);color:var(--accent)}
+.hisn-list .hn{font-weight:700;color:var(--muted);min-width:2.2em;font-size:.88rem}
 .dua-related{margin-top:28px}
 .dua-related .chip{color:var(--text)}
 .dua-related .chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
@@ -7694,6 +7821,7 @@ function build() {
     add(lang, 'duas.html', duasPage(lang));
     DUA_CATS.forEach((c, i) => add(lang, c.slug + '.html', duaCatPage(lang, i)));
     DUA_TOPICS.forEach((t, i) => add(lang, t.slug + '.html', duaTopicPage(lang, i)));
+    if (HISN.length) { add(lang, 'hisn-al-muslim.html', hisnHubPage(lang)); HISN.forEach((c, i) => add(lang, c.slug + '.html', hisnChapterPage(lang, i))); }
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
     if (ROOTS) { add(lang, 'quran-roots.html', rootsHubPage(lang)); ROOT_LIST.forEach((x, i) => add(lang, 'quran-root-' + x.slug + '.html', rootPage(lang, i))); }
     add(lang, 'phrases.html', phrasesPage(lang));
