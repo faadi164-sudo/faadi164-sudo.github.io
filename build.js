@@ -4071,7 +4071,7 @@ const FRONT_CSS = `
 .fp-flag{position:absolute;top:14px;left:14px;background:#c0392b;color:#fff;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 [dir=rtl] .fp-flag{left:auto;right:14px;text-transform:none;letter-spacing:0}
 .fp-kick{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 6px;color:var(--muted);font-size:13.5px;font-weight:600}
-.fp-head{font-size:clamp(1.4rem,2.4vw,2.05rem);line-height:1.18;margin:0 0 8px}
+.fp-head{font-size:clamp(1.35rem,2.1vw,1.8rem);line-height:1.2;margin:0 0 8px}
 .fp-head a{color:var(--text);text-decoration:none}
 .fp-head a:hover{text-decoration:underline;text-decoration-thickness:2px}
 .fp-deck{color:var(--muted);font-size:1.02rem;margin:0 0 14px}
