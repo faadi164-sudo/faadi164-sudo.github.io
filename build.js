@@ -3313,7 +3313,7 @@ const loadSurah = (q) => JSON.parse(fs.readFileSync(path.join(QURAN_DIR, String(
   .v.map(([w, en, ur]) => ({ w, en, ur }));
 
 // ---------------------------------------------------------------- Duas (content in data/duas.js)
-const { DUA_CATS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
+const { DUA_CATS, DUA_TOPICS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
 // Quran duas: build the Arabic, pronunciation and default meanings from data/quran, and the verses to play.
 (function expandDuas() {
   const cache = {};
@@ -3323,7 +3323,10 @@ const { DUA_CATS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
     if (!v) throw new Error(`Dua verse ${n}:${a} not found`);
     return v;
   };
-  for (const c of DUA_CATS) for (const d of c.items) {
+  const allDuaItems = [];
+  for (const c of DUA_CATS) for (const d of c.items) allDuaItems.push(d);
+  for (const t of (DUA_TOPICS || [])) for (const d of (t.extra || [])) allDuaItems.push(d);
+  for (const d of allDuaItems) {
     if (d.q && QURAN.length) {
       const ar = [], tr = [], en = [], ur = [];
       for (const [n, a, first] of d.q) {
@@ -3808,7 +3811,8 @@ function buildSearchIndex(lang) {
   if (typeof ROOTS !== 'undefined' && ROOTS) ROOT_LIST.forEach((x) => add(x.lemmas[0].a, rootLetters(x.r) + ' · ' + rootLatin(x.r), ur ? x.lemmas[0].ur : x.lemmas[0].en, 'quran-root-' + x.slug + '.html', 'root'));
   QWORDS.forEach((w) => add(w[0], w[1], ur ? w[3] : w[2], 'quran-common-words.html', 'qword'));
   NAMES.forEach((x) => add(x[0], x[1], ur ? x[4] : x[3], 'muslim-names.html', 'name'));
-  DUA_CATS.forEach((c) => c.items.forEach((d) => add(d.a.split(/\s+/).slice(0, 4).join(' '), ur ? d.ur : d.en, '', 'duas.html', 'dua')));
+  DUA_CATS.forEach((c) => c.items.forEach((d, k) => add(d.a.split(/\s+/).slice(0, 4).join(' '), ur ? d.ur : d.en, ur ? c.ur : c.en, c.slug + '.html#d' + (k + 1), 'dua')));
+  DUA_TOPICS.forEach((t) => add('', ur ? t.ur : t.en, ur ? 'موضوعاتی دعا' : 'Dua by situation', t.slug + '.html', 'dua'));
   PHRASES.forEach((p) => add(p[0], p[1], ur ? p[3] : p[2], 'phrases.html', 'phrase'));
   SAUDI.forEach((g) => g.items.forEach((it) => add(it[0], it[1], ur ? it[3] : it[2], 'saudi-arabic.html', 'phrase')));
   LESSONS.forEach((l) => (l.ex || []).forEach((e) => add(e[0], e[1], ur ? e[3] : e[2], l.slug + '.html', 'sentence')));
@@ -4921,9 +4925,19 @@ function duasPage(lang) {
     h1: 'Duas and adhkar', lead: `${DUA_TOTAL} authentic duas from the Quran and the Sunnah of the Prophet ﷺ, each with the Arabic, pronunciation, meaning, source and audio. Pick a topic and learn one dua a day; knowing what you are saying brings your heart into the dua.`,
     n: (c) => `${c.items.length} duas`, more: 'See also', prayer: 'The words of the prayer with meaning →', listen: 'Listen to the Quran →',
   };
+  const sitH = ur ? 'موقع کے مطابق دعا' : 'Find a dua for…';
+  const sitLead = ur ? 'جو آپ کو چاہیے وہ چنیں — ہر دعا عربی، ترجمے، تلفظ اور مستند حوالے کے ساتھ۔' : 'Pick what you need — each with the Arabic, meaning, pronunciation and an authentic source.';
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.duas]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
+<section class="dua-situations">
+  <h2>${sitH}</h2>
+  <p class="note">${sitLead}</p>
+  <div class="chips big">
+    ${DUA_TOPICS.map((t) => `<a class="chip" href="${link(lang, t.slug + '.html')}">${t.icon} ${ur ? t.ur : t.en}</a>`).join('\n    ')}
+  </div>
+</section>
+<h2>${ur ? 'موضوع کے لحاظ سے' : 'Browse by topic'}</h2>
 <div class="cards dua-cats">
   ${DUA_CATS.map((c) => `<a class="card" href="${link(lang, c.slug + '.html')}"><h3><span class="dc-ic" aria-hidden="true">${c.icon}</span> ${ur ? c.ur : c.en}</h3><p>${fmt(ur ? c.introUr : c.introEn).replace(/<span class="ar[^"]*" lang="ar">([^<]*)<\/span>/g, '<span class="ar" lang="ar">$1</span>')}</p><p class="note">${C.n(c)}</p></a>`).join('\n  ')}
 </div>
@@ -4953,6 +4967,33 @@ ${c.items.map((d, k) => duaHtml(lang, d, k + 1)).join('\n')}
   ${next ? `<a class="btn primary" href="${link(lang, next.slug + '.html')}">${ur ? 'اگلا: ' + name(next) + ' ←' : 'Next: ' + name(next) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'duas.html')}">${T[lang].nav.duas}</a>`}
 </nav>`;
   return layout(lang, { file: c.slug + '.html', section: 'duas', title, desc, body });
+}
+
+// Resolve a topic's duas: refs into DUA_CATS items, plus inline extras.
+function topicDuas(t) {
+  const out = [];
+  (t.refs || []).forEach(([slug, idx]) => { const c = DUA_CATS.find((x) => x.slug === slug); if (c && c.items[idx]) out.push(c.items[idx]); });
+  (t.extra || []).forEach((d) => out.push(d));
+  return out;
+}
+
+function duaTopicPage(lang, i) {
+  const ur = lang === 'ur';
+  const t = DUA_TOPICS[i];
+  const name = (x) => (ur ? x.ur : x.en);
+  const duas = topicDuas(t);
+  const rel = (t.related || []).map((s) => DUA_TOPICS.find((x) => x.slug === s)).filter(Boolean);
+  const surahLinks = (t.links || []).map((f) => { const q = QURAN.find((x) => 'quran-' + x.slug + '.html' === f); return q ? `<a class="btn sm" href="${link(lang, f)}">${ur ? q.ur : 'Surah ' + q.en}</a>` : ''; }).join('');
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['duas.html', T[lang].nav.duas], [null, name(t)]])}
+<p class="eyebrow">${ur ? 'موضوعاتی دعا' : 'Dua by situation'}</p>
+<h1>${t.icon} ${name(t)}</h1>
+<p class="lead">${esc(ur ? t.leadUr : t.leadEn)}</p>
+${duas.map((d, k) => duaHtml(lang, d, k + 1)).join('\n')}
+${surahLinks ? `<p class="row">${surahLinks}</p>` : ''}
+<p class="note">${DUAS_NOTE[lang]}</p>
+${rel.length ? `<section class="dua-related"><h2>${ur ? 'متعلقہ دعائیں' : 'Related duas'}</h2><div class="chips">${rel.map((r) => `<a class="chip" href="${link(lang, r.slug + '.html')}">${r.icon} ${name(r)}</a>`).join('')}</div></section>` : ''}
+<nav class="pager" aria-label="${T[lang].nav.duas}"><a class="btn" href="${link(lang, 'duas.html')}">${ur ? '← سب دعائیں' : '← All duas'}</a></nav>`;
+  return layout(lang, { file: t.slug + '.html', section: 'duas', title: ur ? t.titleUr : t.titleEn, desc: esc((ur ? t.leadUr : t.leadEn).slice(0, 155)), body });
 }
 
 function prayerPage(lang) {
@@ -6578,6 +6619,14 @@ table.words{width:100%;border-collapse:collapse;background:var(--surface);border
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
 .chip{border:1px solid var(--line);background:transparent;color:var(--muted);padding:5px 14px;border-radius:999px;font-weight:600}
 .chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.dua-situations{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:18px 0 28px}
+.dua-situations h2{margin:0 0 4px}
+.chips.big{gap:9px;margin:14px 0 0}
+.chips.big .chip{padding:9px 16px;color:var(--text);border-color:var(--line-2);font-size:.98rem}
+.chips.big .chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.dua-related{margin-top:28px}
+.dua-related .chip{color:var(--text)}
+.dua-related .chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
 .quiz{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;max-width:640px}
 .qprompt{font-size:15px;color:var(--muted);margin:0 0 6px}
 .qbig{font-size:58px;text-align:center;margin:6px 0 16px;line-height:1.6}
@@ -7644,6 +7693,7 @@ function build() {
     add(lang, 'quran-prayer-words.html', prayerPage(lang));
     add(lang, 'duas.html', duasPage(lang));
     DUA_CATS.forEach((c, i) => add(lang, c.slug + '.html', duaCatPage(lang, i)));
+    DUA_TOPICS.forEach((t, i) => add(lang, t.slug + '.html', duaTopicPage(lang, i)));
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
     if (ROOTS) { add(lang, 'quran-roots.html', rootsHubPage(lang)); ROOT_LIST.forEach((x, i) => add(lang, 'quran-root-' + x.slug + '.html', rootPage(lang, i))); }
     add(lang, 'phrases.html', phrasesPage(lang));
