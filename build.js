@@ -3322,7 +3322,7 @@ const HISN = (() => {
   return JSON.parse(fs.readFileSync(f, 'utf8')).map((c) => ({
     ...c,
     items: c.items.map((it) => ({
-      en: '', ur: '', a: it.a || '', say: it.say || '', mEn: it.mEn, mUr: it.mUr, noteEn: it.noteEn, noteUr: it.noteUr,
+      id: 'hisn-' + it.id, en: '', ur: '', a: it.a || '', say: it.say || '', mEn: it.mEn, mUr: it.mUr, noteEn: it.noteEn, noteUr: it.noteUr,
       times: it.times, h: it.h, q: it.q, src: ['hisn', it.sn || it.id, it.ref || ''],
       links: (it.links || []).map((n) => { const q = QURAN.find((x) => x.n === n); return q ? 'quran-' + q.slug + '.html' : null; }).filter(Boolean),
     })),
@@ -3372,6 +3372,9 @@ const HISN_GROUPS = [
   }
 })();
 const DUA_TOTAL = DUA_CATS.reduce((k, c) => k + c.items.length, 0);
+// Stable ids for memorize/save: category items keep theirs across topic pages that reuse them.
+DUA_CATS.forEach((c) => c.items.forEach((d, k) => { d.id = d.id || c.slug.replace(/^duas-/, '') + '-' + (k + 1); }));
+DUA_TOPICS.forEach((t) => (t.extra || []).forEach((d, k) => { d.id = d.id || 't-' + t.slug + '-' + (k + 1); }));
 
 const translit = (() => {
 // Transliterate fully vowelled Arabic into the Latin style used on Harf. Shared by build.js (copied in) and tests.
@@ -3797,6 +3800,7 @@ ${o.body}
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="app.js" defer></script>
+<script src="engage.js" defer></script>
 ${appScript(lang)}
 ${brevoScript}</body>
 </html>
@@ -4111,6 +4115,289 @@ const FRONT_CSS = `
 @media (max-width:640px){.front{grid-template-columns:1fr;gap:22px}.ticker{font-size:13.5px}.tk-label{padding:0 10px}}
 `;
 
+// Engagement: memorize/save on every dua, WhatsApp + image sharing, My duas, challenges,
+// seasonal banners, and the mini-quiz. Everything is kept in this browser (localStorage), no sign-up.
+const ENGAGE_JS = String.raw`(function () {
+  var ur = document.documentElement.lang === 'ur';
+  var T = ur ? {
+    memTo: function (n) { return 'شاباش! آپ کو ' + num(n) + ' دعائیں یاد ہو گئیں'; }, saved: 'میری دعاؤں میں محفوظ ہو گئی',
+    my: 'میری دعائیں', mine: function (m, s) { return num(m) + ' یاد · ' + num(s) + ' محفوظ — اپنی فہرست دیکھیں ←'; },
+    img: 'تصویر تیار ہے', dayDone: 'آج کا کام مکمل! کل پھر آئیں', ask: 'اس کا مطلب کیا ہے؟', right: 'درست!', wrong: 'صحیح جواب نشان زد ہے',
+    score: function (a, b) { return 'آپ کا اسکور: ' + num(a) + ' / ' + num(b); }, great: 'ماشاء اللہ! اب انہیں یاد کریں اور «یاد ہو گئی» دبائیں۔', more: 'دوبارہ پڑھیں اور پھر کوشش کریں۔', site: 'learnwithharf.com', brand: 'حرف'
+  } : {
+    memTo: function (n) { return 'Well done! ' + n + ' dua' + (n === 1 ? '' : 's') + ' memorized'; }, saved: 'Saved to My duas',
+    my: 'My duas', mine: function (m, s) { return m + ' memorized · ' + s + ' saved — see your list →'; },
+    img: 'Image ready', dayDone: 'Day complete! Come back tomorrow', ask: 'What does this mean?', right: 'Correct!', wrong: 'The right answer is marked',
+    score: function (a, b) { return 'Your score: ' + a + ' / ' + b; }, great: 'MashaAllah! Now memorize them and press Memorized.', more: 'Read them again and try once more.', site: 'learnwithharf.com', brand: 'Harf'
+  };
+  function num(n) { n = String(n); return ur ? n.replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }) : n; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var KEY = 'harf-eng', S;
+  try { S = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { S = {}; }
+  S.m = S.m || {}; S.s = S.s || {}; S.ch = S.ch || {};
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function toast(msg) { var t = document.getElementById('toast'); if (!t) return; t.textContent = msg; t.classList.add('show'); clearTimeout(toast.h); toast.h = setTimeout(function () { t.classList.remove('show'); }, 2600); }
+  function txt(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+  function meta(card) {
+    var page = txt(document.querySelector('main h1')) || document.title;
+    var h = txt(card.querySelector('h2')).replace(/^[\d۰-۹]+\.\s*/, '');
+    if (/^(From the hadith|حدیث سے)$/.test(h)) h = '';
+    return { t: h && h !== page ? page + ' — ' + h : page, u: location.pathname.replace(/^.*\//, '') + '#' + card.id, a: txt(card.querySelector('.dua-ar')).slice(0, 90), ts: Date.now() };
+  }
+
+  // ---- memorize / save / share on every dua
+  function paint(bar) {
+    var id = bar.getAttribute('data-id'), m = !!S.m[id], s = !!S.s[id];
+    var bm = bar.querySelector('.eng-mem'), bs = bar.querySelector('.eng-save');
+    bm.setAttribute('aria-pressed', m); bm.querySelector('.ic').textContent = m ? '✅' : '☐';
+    bs.setAttribute('aria-pressed', s); bs.querySelector('.ic').textContent = s ? '⭐' : '☆';
+  }
+  [].forEach.call(document.querySelectorAll('.dua-eng'), function (bar) {
+    var card = bar.closest('.dua'), id = bar.getAttribute('data-id'); paint(bar);
+    bar.querySelector('.eng-mem').onclick = function () { if (S.m[id]) delete S.m[id]; else { S.m[id] = meta(card); toast(T.memTo(Object.keys(S.m).length)); } save(); paint(bar); };
+    bar.querySelector('.eng-save').onclick = function () { if (S.s[id]) delete S.s[id]; else { S.s[id] = meta(card); toast(T.saved); } save(); paint(bar); };
+    bar.querySelector('.eng-wa').onclick = function () {
+      var md = meta(card), url = location.origin + location.pathname + '#' + card.id;
+      var msg = '*' + md.t + '*\n\n' + txt(card.querySelector('.dua-ar')) + '\n\n' + txt(card.querySelector('.mean')) + '\n\n' + url;
+      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    };
+    bar.querySelector('.eng-img').onclick = function () { makeImage(card); };
+  });
+
+  // ---- shareable dua image (1080x1350, Harf colours)
+  function wrap(x, text, maxW) { var w = text.split(' '), out = [], line = ''; w.forEach(function (p) { var t = line ? line + ' ' + p : p; if (x.measureText(t).width > maxW && line) { out.push(line); line = p; } else line = t; }); if (line) out.push(line); return out; }
+  function fit(x, text, font, maxW, maxH, big, small, lh) {
+    for (var s = big; s >= small; s -= 2) { x.font = font.replace('{s}', s); var L = wrap(x, text, maxW); if (L.length * s * lh <= maxH) return { s: s, L: L }; }
+    x.font = font.replace('{s}', small); var L2 = wrap(x, text, maxW), k = Math.max(1, Math.floor(maxH / (small * lh)));
+    if (L2.length > k) { L2 = L2.slice(0, k); L2[k - 1] = L2[k - 1] + ' …'; } return { s: small, L: L2 };
+  }
+  function makeImage(card) {
+    var arEl = card.querySelector('.dua-ar'), ar = txt(arEl), me = txt(card.querySelector('.mean')), md = meta(card);
+    var arFont = getComputedStyle(arEl).fontFamily, tFont = getComputedStyle(document.body).fontFamily;
+    var draw = function () {
+      var W = 1080, H = 1350, c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d');
+      var g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#0a4234'); g.addColorStop(1, '#11795f'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+      x.strokeStyle = '#ecd08a'; x.lineWidth = 4; x.strokeRect(40, 40, W - 80, H - 80); x.lineWidth = 1.5; x.strokeRect(56, 56, W - 112, H - 112);
+      x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+      x.direction = ur ? 'rtl' : 'ltr'; x.fillStyle = '#ecd08a'; var hd = fit(x, md.t, '700 {s}px ' + tFont, W - 220, 90, 34, 24, 1.3);
+      hd.L.forEach(function (l, i) { x.fillText(l, W / 2, 130 + i * hd.s * 1.3); });
+      x.direction = 'rtl'; x.fillStyle = '#ffffff'; var A = fit(x, ar, '{s}px ' + arFont, W - 200, 600, 76, 30, 1.8);
+      var ah = A.L.length * A.s * 1.8, ay = 250 + (600 - ah) / 2 + A.s * 1.25;
+      A.L.forEach(function (l, i) { x.fillText(l, W / 2, ay + i * A.s * 1.8); });
+      x.fillStyle = 'rgba(236,208,138,.6)'; x.fillRect(W / 2 - 60, 880, 120, 3);
+      x.direction = ur ? 'rtl' : 'ltr'; x.fillStyle = '#f4efe0'; var M = fit(x, me, '{s}px ' + tFont, W - 220, 280, 38, 22, 1.45);
+      M.L.forEach(function (l, i) { x.fillText(l, W / 2, 940 + i * M.s * 1.45); });
+      x.direction = 'ltr'; x.fillStyle = '#ecd08a'; x.font = '700 36px ' + tFont; x.fillText(T.site, W / 2, H - 112);
+      x.fillStyle = 'rgba(244,239,224,.75)'; x.font = '26px ' + tFont; x.fillText('حَرْف · Harf — ' + (ur ? 'مفت عربی، اردو میں' : 'free Arabic in English and Urdu'), W / 2, H - 72);
+      c.toBlob(function (b) {
+        if (!b) return; var name = 'harf-dua.png';
+        try { var f = new File([b], name, { type: 'image/png' }); if (navigator.canShare && navigator.canShare({ files: [f] })) { navigator.share({ files: [f], text: location.href }).catch(function () {}); return; } } catch (e) {}
+        var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); toast(T.img);
+      }, 'image/png');
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw); else draw();
+  }
+
+  // ---- homepage progress card
+  var mine = document.getElementById('fpMine');
+  if (mine) { var nm = Object.keys(S.m).length, ns = Object.keys(S.s).length; if (nm || ns) { mine.hidden = false; mine.innerHTML = '<span class="k k-learn">' + T.my + '</span><span class="fp-big">' + num(nm) + '</span><span class="fp-m">' + T.mine(nm, ns) + '</span>'; } }
+
+  // ---- My duas page
+  function list(id, obj) {
+    var el = document.getElementById(id); if (!el) return;
+    var ks = Object.keys(obj).sort(function (a, b) { return (obj[b].ts || 0) - (obj[a].ts || 0); });
+    var cnt = el.querySelector('.my-n'); if (cnt) cnt.textContent = num(ks.length);
+    if (!ks.length) { el.querySelector('.my-empty').hidden = false; return; }
+    var ul = document.createElement('ul'); ul.className = 'my-list';
+    ks.forEach(function (k) {
+      var o = obj[k], li = document.createElement('li');
+      li.innerHTML = '<a href="' + esc(o.u) + '"><span class="ar" lang="ar">' + esc(o.a) + '</span><span class="my-t">' + esc(o.t) + '</span></a><button type="button" class="my-x" aria-label="✕">✕</button>';
+      li.querySelector('button').onclick = function () { delete obj[k]; save(); li.remove(); if (cnt) cnt.textContent = num(Object.keys(obj).length); };
+      ul.appendChild(li);
+    });
+    el.appendChild(ul);
+  }
+  list('myMem', S.m); list('mySaved', S.s);
+
+  // ---- challenges
+  [].forEach.call(document.querySelectorAll('.ch-card'), function (card) {
+    var id = card.getAttribute('data-ch'), st = S.ch[id] = S.ch[id] || {}, boxes = card.querySelectorAll('input[type=checkbox]');
+    function upd() { var n = 0; [].forEach.call(boxes, function (b) { if (b.checked) n++; }); var m = card.querySelector('.ch-meter i'); if (m) m.style.width = (100 * n / boxes.length) + '%'; var c = card.querySelector('.ch-count'); if (c) c.textContent = num(n) + ' / ' + num(boxes.length); card.classList.toggle('done', n === boxes.length && n > 0); }
+    [].forEach.call(boxes, function (b) { var d = b.getAttribute('data-d'); b.checked = !!st[d]; b.onchange = function () { if (b.checked) { st[d] = Date.now(); toast(T.dayDone); } else delete st[d]; save(); upd(); }; });
+    upd();
+  });
+
+  // ---- seasonal banners (Hijri date + weekday)
+  var ss = document.querySelectorAll('.season');
+  if (ss.length) {
+    var hm = 0, hdy = 0;
+    try { new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric' }).formatToParts(new Date()).forEach(function (p) { if (p.type === 'month') hm = parseInt(p.value, 10); if (p.type === 'day') hdy = parseInt(p.value, 10); }); } catch (e) {}
+    var wd = new Date().getDay(), shown = 0;
+    var rule = { friday: wd === 5, shaban: hm === 8 && hdy >= 15, ramadan: hm === 9 && hdy < 21, lastten: hm === 9 && hdy >= 21, eidfitr: hm === 10 && hdy <= 3, dhulhijjah: hm === 12 && hdy <= 8, arafah: hm === 12 && hdy === 9, eid: hm === 12 && hdy >= 10 && hdy <= 13 };
+    [].forEach.call(ss, function (s) { if (rule[s.getAttribute('data-when')] && shown < 2) { s.hidden = false; shown++; } });
+  }
+
+  // ---- mini-quiz on dua pages
+  var mq = document.getElementById('miniQuiz');
+  if (mq) {
+    var pool = []; try { pool = JSON.parse(mq.querySelector('.mq-pool').textContent); } catch (e) {}
+    var short = function (s) { return s.length > 140 ? s.slice(0, 137).replace(/\s+\S*$/, '') + ' …' : s; };
+    var cards = [].filter.call(document.querySelectorAll('article.dua'), function (c) { var a = txt(c.querySelector('.dua-ar')), m = txt(c.querySelector('.mean')); return a && m && a.length < 260; }).slice(0, 3);
+    if (cards.length && pool.length >= 2) {
+      var body = mq.querySelector('.mq-body'), done = 0, good = 0;
+      cards.forEach(function (c, qi) {
+        var right = short(txt(c.querySelector('.mean'))), opts = [right], others = cards.filter(function (o) { return o !== c; }).map(function (o) { return short(txt(o.querySelector('.mean'))); }).concat(pool.map(short));
+        for (var i = 0; i < others.length && opts.length < 3; i++) { var o = others[(i + qi * 3) % others.length]; if (opts.indexOf(o) < 0) opts.push(o); }
+        opts.sort(function () { return Math.random() - 0.5; });
+        var q = document.createElement('div'); q.className = 'mq-q';
+        q.innerHTML = '<p class="mq-ar ar" lang="ar">' + esc(short(txt(c.querySelector('.dua-ar')))) + '</p><p class="mq-ask">' + num(qi + 1) + '. ' + T.ask + '</p><div class="mq-opts">' + opts.map(function (o) { return '<button type="button">' + esc(o) + '</button>'; }).join('') + '</div><p class="mq-fb" aria-live="polite"></p>';
+        [].forEach.call(q.querySelectorAll('button'), function (b) {
+          b.onclick = function () {
+            var ok = b.textContent === right; [].forEach.call(q.querySelectorAll('button'), function (x) { x.disabled = true; if (x.textContent === right) x.classList.add('right'); });
+            if (!ok) b.classList.add('wrong'); else good++; q.querySelector('.mq-fb').textContent = ok ? T.right : T.wrong; done++;
+            if (done === cards.length) { var r = document.createElement('p'); r.className = 'mq-score'; r.textContent = T.score(good, cards.length) + ' — ' + (good === cards.length ? T.great : T.more); body.appendChild(r); }
+          };
+        });
+        body.appendChild(q);
+      });
+      mq.hidden = false;
+    }
+  }
+})();
+`;
+
+const ENGAGE_CSS = `
+.dua-eng{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.eng-b{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:var(--surface);color:var(--text);border-radius:999px;padding:6px 13px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.eng-b:hover{border-color:var(--accent);color:var(--accent)}
+.eng-b[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.eng-wa:hover{border-color:#1fa855;color:#1a8f48}
+.fp-big{font-size:2.2rem;font-weight:800;line-height:1;color:var(--accent)}
+.fp-actions{display:flex;flex-wrap:wrap;gap:8px;padding-top:12px}
+.seasons{display:grid;gap:10px;margin:0 0 22px}
+.season{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:linear-gradient(90deg,#3d2f05,#7a5a12);color:#fff;border-radius:14px;padding:14px 18px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.season[hidden]{display:none}
+.season .se-ic{font-size:1.9rem}
+.season .se-t{flex:1;min-width:220px}
+.season strong{display:block;font-size:1.1rem;color:#ecd08a}
+.season a.btn{background:#ecd08a;color:#3d2f05;border-color:#ecd08a}
+.also{margin:30px 0}
+.also-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:10px}
+.also-grid a{display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none;font-weight:600}
+.also-grid a:hover{border-color:var(--accent);color:var(--accent)}
+.mini-quiz{margin:30px 0;padding:20px 22px;border:2px solid var(--accent);border-radius:16px;background:var(--surface)}
+.mini-quiz[hidden]{display:none}
+.mini-quiz h2{margin-top:0}
+.mq-q{padding:12px 0;border-bottom:1px solid var(--line)}
+.mq-ar{font-size:1.45rem;line-height:1.9;text-align:right;margin:0 0 4px}
+.mq-ask{font-weight:700;margin:0 0 8px}
+.mq-opts{display:grid;gap:8px}
+.mq-opts button{text-align:start;font:inherit;font-size:.95rem;padding:10px 14px;border:1px solid var(--line-2);border-radius:10px;background:var(--bg);color:var(--text);cursor:pointer}
+.mq-opts button:hover:not(:disabled){border-color:var(--accent)}
+.mq-opts button.right{background:#e3f5ea;border-color:#2e9d5b;color:#145c33}
+.mq-opts button.wrong{background:#fdeaea;border-color:#c0392b;color:#8a1f15}
+.mq-fb{font-weight:700;margin:6px 0 0;min-height:1em}
+.mq-score{font-weight:800;font-size:1.05rem;margin:14px 0 0;color:var(--accent)}
+.my-sec{margin:24px 0}
+.my-sec h2 .my-n{display:inline-block;min-width:2em;text-align:center;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:0 8px;font-size:.9rem;margin-inline-start:6px}
+.my-list{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:8px}
+.my-list li{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:10px 14px}
+.my-list a{flex:1;display:flex;flex-direction:column;gap:2px;color:var(--text);text-decoration:none;min-width:0}
+.my-list .ar{font-size:1.25rem;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.my-t{font-weight:600;font-size:.93rem}
+.my-x{border:0;background:none;color:var(--muted);font-size:1rem;cursor:pointer;padding:4px 8px}
+.ch-grid{display:grid;gap:18px;margin:20px 0}
+.ch-card{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:18px 20px}
+.ch-card.done{border-color:#2e9d5b;box-shadow:0 0 0 3px #e3f5ea}
+.ch-head{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.ch-head h2{margin:0;flex:1;font-size:1.25rem}
+.ch-count{font-weight:800;color:var(--accent)}
+.ch-meter{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 12px}
+.ch-meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#11795f,#ecd08a);transition:width .3s}
+.ch-days{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px}
+.ch-days label{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:10px;cursor:pointer}
+.ch-days label:hover{background:var(--accent-soft)}
+.ch-days input{accent-color:#11795f;width:18px;height:18px;flex:none;transform:translateY(3px)}
+.ch-days .d{font-weight:800;color:var(--muted);min-width:3.6em;font-size:.88rem}
+.ch-days a{color:var(--text)}
+.ch-card.done .ch-head h2::after{content:" ✅"}
+`;
+
+function icsFile(lang) {
+  const ur = lang === 'ur', url = SITE_URL + '/' + (ur ? 'ur.html' : '');
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Harf//Daily dua//' + (ur ? 'UR' : 'EN'), 'CALSCALE:GREGORIAN', 'BEGIN:VEVENT',
+    'UID:harf-daily-dua-' + lang + '-learnwithharf', 'DTSTAMP:20261118T000000Z', 'DTSTART:20261119T070000', 'DURATION:PT10M', 'RRULE:FREQ=DAILY',
+    'SUMMARY:' + (ur ? 'حرف: آج کا لفظ اور آج کی دعا' : 'Harf: today\'s word and dua'),
+    'DESCRIPTION:' + (ur ? 'آج کا لفظ، دعا اور نام دیکھیں: ' : 'Open Harf for today\'s word, dua and name: ') + url, 'URL:' + url,
+    'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + (ur ? 'آج کی دعا' : 'Today\'s dua on Harf'), 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'];
+  return lines.join('\r\n') + '\r\n';
+}
+
+function miniQuizHtml(lang, seed) {
+  const ur = lang === 'ur';
+  const pool = [];
+  const all = [];
+  HISN.forEach((c) => c.items.forEach((d) => { const m = ur ? d.mUr : d.mEn; if (!d.h && !d.q && m && m.length > 25 && m.length < 150) all.push(m); }));
+  for (let k = 0; k < 8 && all.length; k++) pool.push(all[(seed * 37 + k * 53) % all.length]);
+  return `<section class="mini-quiz" id="miniQuiz" hidden>
+  <h2>${ur ? '🧠 خود کو جانچیں' : '🧠 Test yourself'}</h2>
+  <p class="note">${ur ? 'تین سوال — دیکھیں کہ آپ کو کتنا یاد رہا۔' : 'Three quick questions — see how much you remember.'}</p>
+  <div class="mq-body"></div>
+  <script type="application/json" class="mq-pool">${JSON.stringify(pool).replace(/</g, '\\u003c')}</script>
+</section>`;
+}
+
+function myDuasPage(lang) {
+  const ur = lang === 'ur';
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['duas.html', T[lang].nav.duas], [null, ur ? 'میری دعائیں' : 'My duas']])}
+<h1>${ur ? 'میری دعائیں' : 'My duas'}</h1>
+<p class="lead">${ur ? 'جو دعائیں آپ نے «یاد ہو گئی» یا «محفوظ کریں» سے نشان زد کیں، وہ یہاں ہیں۔ یہ اسی براؤزر میں محفوظ رہتی ہیں — سائن اپ کی ضرورت نہیں۔' : 'Duas you mark as Memorized or Saved appear here. They are kept in this browser — no sign-up needed.'}</p>
+<section class="my-sec" id="myMem"><h2>${ur ? '✅ یاد ہو چکی دعائیں' : '✅ Memorized'}<span class="my-n">0</span></h2><p class="note my-empty" hidden>${ur ? 'ابھی کوئی نہیں۔ کسی بھی دعا کے نیچے «یاد ہو گئی» دبائیں۔' : 'None yet. Press Memorized under any dua.'}</p></section>
+<section class="my-sec" id="mySaved"><h2>${ur ? '⭐ محفوظ دعائیں' : '⭐ Saved'}<span class="my-n">0</span></h2><p class="note my-empty" hidden>${ur ? 'ابھی کوئی نہیں۔ کسی بھی دعا کے نیچے «محفوظ کریں» دبائیں۔' : 'None yet. Press Save under any dua.'}</p></section>
+<p class="row"><a class="btn primary" href="${link(lang, 'hisn-al-muslim.html')}">${ur ? 'حصن المسلم کی دعائیں دیکھیں' : 'Browse Hisn al-Muslim'}</a> <a class="btn" href="${link(lang, 'challenges.html')}">${ur ? '🏁 چیلنجز' : '🏁 Challenges'}</a></p>`;
+  return layout(lang, { file: 'my-duas.html', section: 'duas', title: ur ? 'میری دعائیں — یاد اور محفوظ | حرف' : 'My duas — memorized and saved | Harf', desc: ur ? 'آپ کی یاد کی ہوئی اور محفوظ دعائیں۔' : 'Your memorized and saved duas on Harf.', body });
+}
+
+const CHALLENGE_DAYS30 = [1, 2, 3, 5, 6, 7, 9, 10, 11, 13, 14, 18, 20, 29, 30, 43, 46, 53, 61, 64, 65, 67, 68, 69, 70, 77, 82, 85, 95, 124];
+function challengesPage(lang) {
+  const ur = lang === 'ur';
+  const L = (f) => link(lang, f);
+  const hc = (id) => HISN.find((c) => c.id === id);
+  const qs = (n) => { const q = QURAN.find((x) => x.n === n); return q ? 'quran-' + q.slug + '.html' : 'quran.html'; };
+  const CH = [
+    { id: 'adhkar7', ic: '🌅', en: '7-day morning and evening adhkar', ur: '۷ دن: صبح و شام کے اذکار',
+      leadEn: 'Say the morning adhkar after Fajr and the evening adhkar after Asr, every day for a week. Tick each one when you have said it.',
+      leadUr: 'ایک ہفتے تک روز فجر کے بعد صبح کے اور عصر کے بعد شام کے اذکار پڑھیں۔ ہر بار پڑھ کر نشان لگائیں۔',
+      days: Array.from({ length: 14 }, (_, k) => [Math.floor(k / 2) + 1, k % 2 ? (ur ? 'شام کے اذکار' : 'Evening adhkar') : (ur ? 'صبح کے اذکار' : 'Morning adhkar'), 'morning-evening-adhkar.html']) },
+    { id: 'quls7', ic: '🛡️', en: 'Learn the 3 Quls in 7 days', ur: '۷ دن میں تینوں قل یاد کریں',
+      leadEn: 'Al-Ikhlas, Al-Falaq and An-Nas protect you morning, evening and at night. Learn one every two days, then recite all three before you sleep.',
+      leadUr: 'سورہ اخلاص، فلق اور ناس صبح، شام اور رات کو حفاظت ہیں۔ ہر دو دن میں ایک یاد کریں، پھر سونے سے پہلے تینوں پڑھیں۔',
+      days: [
+        [1, ur ? 'سورہ اخلاص سنیں اور لفظ بہ لفظ پڑھیں' : 'Listen to Al-Ikhlas and read it word by word', qs(112)], [2, ur ? 'سورہ اخلاص زبانی سنائیں' : 'Say Al-Ikhlas from memory', qs(112)],
+        [3, ur ? 'سورہ فلق سنیں اور لفظ بہ لفظ پڑھیں' : 'Listen to Al-Falaq and read it word by word', qs(113)], [4, ur ? 'سورہ فلق زبانی سنائیں' : 'Say Al-Falaq from memory', qs(113)],
+        [5, ur ? 'سورہ ناس سنیں اور لفظ بہ لفظ پڑھیں' : 'Listen to An-Nas and read it word by word', qs(114)], [6, ur ? 'سورہ ناس زبانی سنائیں' : 'Say An-Nas from memory', qs(114)],
+        [7, ur ? 'سونے سے پہلے تینوں قل پڑھیں' : 'Recite all three before you sleep', 'dua-before-sleeping.html'],
+      ] },
+    { id: 'duas30', ic: '🤲', en: '30 duas in 30 days', ur: '۳۰ دن میں ۳۰ دعائیں',
+      leadEn: 'One short dua a day for everyday moments — waking, wudu, the mosque, eating, travel. Open the day’s dua, learn it, and press Memorized.',
+      leadUr: 'روز ایک مختصر دعا، روزمرہ لمحوں کے لیے — جاگنا، وضو، مسجد، کھانا، سفر۔ دن کی دعا کھولیں، یاد کریں اور «یاد ہو گئی» دبائیں۔',
+      days: CHALLENGE_DAYS30.map((id, k) => { const c = hc(id); return c ? [k + 1, ur ? c.ur : c.en, c.slug + '.html'] : null; }).filter(Boolean) },
+  ];
+  const card = (c) => `<article class="ch-card" data-ch="${c.id}">
+  <div class="ch-head"><span style="font-size:1.8rem" aria-hidden="true">${c.ic}</span><h2>${ur ? c.ur : c.en}</h2><span class="ch-count">0 / ${num(lang, c.days.length)}</span></div>
+  <p class="note">${ur ? c.leadUr : c.leadEn}</p>
+  <div class="ch-meter"><i></i></div>
+  <ul class="ch-days">${c.days.map(([d, t, f], k) => `<li><label><input type="checkbox" data-d="${k}"><span class="d">${ur ? 'دن' : 'Day'} ${num(lang, d)}</span><a href="${L(f)}">${esc(t)}</a></label></li>`).join('')}</ul>
+</article>`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['duas.html', T[lang].nav.duas], [null, ur ? 'چیلنجز' : 'Challenges']])}
+<h1>${ur ? '🏁 روزانہ چیلنجز' : '🏁 Daily challenges'}</h1>
+<p class="lead">${ur ? 'چھوٹے روزانہ قدم بڑی عادت بناتے ہیں۔ ایک چیلنج چنیں، روز ایک خانہ مکمل کریں۔ آپ کی پیشرفت اسی براؤزر میں محفوظ رہتی ہے۔' : 'Small daily steps build a lasting habit. Pick a challenge and tick one box a day. Your progress is saved in this browser.'}</p>
+<p class="row"><a class="btn primary" href="harf-daily-${lang}.ics" download>${ur ? '📅 ہر صبح یاد دہانی' : '📅 Remind me every morning'}</a> <a class="btn" href="${L('my-duas.html')}">${ur ? 'میری دعائیں' : 'My duas'}</a></p>
+<p class="note">${ur ? 'یاد دہانی کی فائل کھولیں تو آپ کا کیلنڈر روز صبح ۷ بجے حرف کی آج کی دعا یاد دلائے گا۔' : 'Open the reminder file and your calendar will remind you every morning at 7 to open Harf for today’s dua.'}</p>
+<div class="ch-grid">${CH.map(card).join('\n')}</div>`;
+  return layout(lang, { file: 'challenges.html', section: 'duas', title: ur ? 'روزانہ چیلنجز: اذکار، تینوں قل اور ۳۰ دعائیں | حرف' : 'Daily challenges: adhkar, the 3 Quls and 30 duas in 30 days | Harf', desc: ur ? 'روزانہ ایک قدم: ۷ دن کے اذکار، ۷ دن میں تینوں قل، اور ۳۰ دن میں ۳۰ دعائیں۔' : 'One step a day: 7 days of adhkar, the 3 Quls in a week, and 30 duas in 30 days.', body });
+}
+
 // News-style front page: ticker, search band, lead story with labelled sub-links, a daily panel
 // (word, dua and name of the day, picked in the browser by date), numbered top picks, and a video strip.
 function frontPage(lang, C, quick) {
@@ -4156,6 +4443,26 @@ function frontPage(lang, C, quick) {
     ['muslim-names.html', ur ? `${ud(NAMES.length)} اسلامی نام اور ان کے معنی` : `${NAMES.length} Muslim names and their meanings`, K('tool', 'Names', 'نام')],
   ];
 
+  const seasons = ur ? [
+    ['arafah', '🕋', 'آج یومِ عرفہ ہے', 'بہترین دعا عرفہ کے دن کی دعا ہے۔', [['dua-on-the-day-of-arafah.html', 'عرفہ کی دعا'], ['dua-for-forgiveness.html', 'استغفار']]],
+    ['eid', '🐑', 'عید الاضحیٰ مبارک', 'قربانی کی دعا اور تکبیرات۔', [['dua-when-slaughtering.html', 'قربانی کی دعا']]],
+    ['dhulhijjah', '🌙', 'سال کے بہترین دس دن', 'ذوالحجہ کے پہلے دس دن: تکبیر، تلبیہ اور ذکر۔', [['talbiyah.html', 'تلبیہ'], ['dua-on-the-day-of-arafah.html', 'عرفہ کی دعا']]],
+    ['lastten', '✨', 'رمضان کی آخری دس راتیں', 'شبِ قدر تلاش کریں — عائشہؓ کو سکھائی گئی دعا پڑھیں۔', [['dua-for-laylatul-qadr.html', 'شبِ قدر کی دعا']]],
+    ['ramadan', '🌙', 'رمضان مبارک', 'افطار کی دعا، اور روزہ دار کے لیے دعائیں۔', [['dua-for-breaking-fast.html', 'افطار کی دعا'], ['dua-for-laylatul-qadr.html', 'شبِ قدر کی دعا']]],
+    ['eidfitr', '🎉', 'عید مبارک', 'تقبّل اللہ منا ومنکم۔', [['hisn-al-muslim.html', 'حصن المسلم']]],
+    ['shaban', '🌒', 'رمضان آنے والا ہے', 'نیا چاند دیکھنے کی دعا یاد کر لیں۔', [['dua-on-seeing-the-new-moon.html', 'نئے چاند کی دعا']]],
+    ['friday', '🕌', 'جمعہ مبارک', 'آج سورہ کہف پڑھیں اور نبی ﷺ پر کثرت سے درود بھیجیں۔', [[qs(18), 'سورہ کہف'], ['durood-ibrahim.html', 'درودِ ابراہیمی']]],
+  ] : [
+    ['arafah', '🕋', 'Today is the Day of ʿArafah', 'The best dua is the dua of the Day of ʿArafah.', [['dua-on-the-day-of-arafah.html', 'Arafah dua'], ['dua-for-forgiveness.html', 'Istighfar']]],
+    ['eid', '🐑', 'Eid al-Adha Mubarak', 'The dua for the sacrifice, and the takbir.', [['dua-when-slaughtering.html', 'Sacrifice dua']]],
+    ['dhulhijjah', '🌙', 'The best ten days of the year', 'The first ten of Dhul-Hijjah: takbir, talbiyah and remembrance.', [['talbiyah.html', 'Talbiyah'], ['dua-on-the-day-of-arafah.html', 'Arafah dua']]],
+    ['lastten', '✨', 'The last ten nights of Ramadan', 'Seek Laylat al-Qadr — say the dua taught to Aishah.', [['dua-for-laylatul-qadr.html', 'Laylat al-Qadr dua']]],
+    ['ramadan', '🌙', 'Ramadan Mubarak', 'The dua for breaking your fast, and more for the fasting.', [['dua-for-breaking-fast.html', 'Iftar dua'], ['dua-for-laylatul-qadr.html', 'Laylat al-Qadr dua']]],
+    ['eidfitr', '🎉', 'Eid Mubarak', 'Taqabbal Allahu minna wa minkum.', [['hisn-al-muslim.html', 'Hisn al-Muslim']]],
+    ['shaban', '🌒', 'Ramadan is coming', 'Learn the dua for sighting the new moon.', [['dua-on-seeing-the-new-moon.html', 'New moon dua']]],
+    ['friday', '🕌', 'Jumuʿah Mubarak', 'Read Surah Al-Kahf today and send many blessings on the Prophet ﷺ.', [[qs(18), 'Surah Al-Kahf'], ['durood-ibrahim.html', 'Durood Ibrahim']]],
+  ];
+
   let videos = [];
   try {
     videos = fs.readdirSync(path.join(__dirname, 'img')).filter((f) => /^poster-.*\.jpg$/.test(f))
@@ -4183,6 +4490,7 @@ function frontPage(lang, C, quick) {
   </form>
   <nav class="quick" aria-label="${ur ? 'مشہور صفحات' : 'Popular pages'}">${quick.map(([f, l]) => `<a href="${L(f)}">${l}</a>`).join('')}</nav>
 </section>
+<div class="seasons">${seasons.map((s) => `<div class="season" data-when="${s[0]}" hidden><span class="se-ic" aria-hidden="true">${s[1]}</span><span class="se-t"><strong>${s[2]}</strong>${s[3]}</span>${s[4].map(([f, t]) => `<a class="btn sm" href="${L(f)}">${t}</a>`).join(' ')}</div>`).join('')}</div>
 <section class="front">
   <article class="fp-lead">
     <a class="fp-img" href="${L('hisn-al-muslim.html')}"><img src="img/banner-quran.webp" alt="" width="1024" height="572"><span class="fp-flag">${ur ? 'نیا' : 'New'}</span></a>
@@ -4196,6 +4504,8 @@ function frontPage(lang, C, quick) {
     ${w0 ? `<a class="fp-card" id="fpWord" href="${w0[3]}">${K('word', 'Word of the day', 'آج کا لفظ')}<span class="fp-ar ar" lang="ar">${w0[0]}</span><span class="fp-tr latin" dir="ltr">${esc(w0[1])}</span><span class="fp-m">${esc(w0[2])}</span></a>` : ''}
     ${d0 ? `<a class="fp-card" id="fpDua" href="${d0[2]}">${K('dua', 'Dua of the day', 'آج کی دعا')}<span class="fp-ar fp-ar-s ar" lang="ar">${d0[0]}</span><span class="fp-m">${esc(d0[1])}</span><span class="fp-src">${esc(d0[3])} →</span></a>` : ''}
     ${n0 ? `<a class="fp-card" id="fpName" href="${L('muslim-names.html')}">${K('tool', 'Name of the day', 'آج کا نام')}<span class="fp-ar ar" lang="ar">${n0[0]}</span><span class="fp-tr latin" dir="ltr">${esc(n0[1])}</span><span class="fp-m">${esc(n0[2])}</span></a>` : ''}
+    <a class="fp-card" id="fpMine" href="${L('my-duas.html')}" hidden></a>
+    <div class="fp-actions"><a class="btn sm" href="harf-daily-${lang}.ics" download>${ur ? '📅 ہر صبح یاد دہانی' : '📅 Remind me daily'}</a><a class="btn sm" href="${L('challenges.html')}">${ur ? '🏁 چیلنجز' : '🏁 Challenges'}</a></div>
   </aside>
   <aside class="fp-top" aria-label="${ur ? 'منتخب صفحات' : 'Top picks'}">
     <h2 class="fp-h">${ur ? 'منتخب صفحات' : 'Top picks'}</h2>
@@ -5156,6 +5466,12 @@ function duaHtml(lang, d, k) {
   ${(ur ? d.mUr : d.mEn) ? `<p class="mean">${esc(ur ? d.mUr : d.mEn)}</p>` : ''}
   ${(ur ? d.noteUr : d.noteEn) ? `<p class="dua-note">${fmt(ur ? d.noteUr : d.noteEn)}</p>` : ''}
   <div class="dua-foot"><span class="src">${ur ? 'حوالہ' : 'Source'}: ${duaSource(lang, d.src)}</span><span class="row">${btns}</span></div>
+  ${d.id ? `<div class="dua-eng" data-id="${d.id}">
+    <button class="eng-b eng-mem" type="button" aria-pressed="false"><span class="ic" aria-hidden="true">☐</span>${ur ? 'یاد ہو گئی' : 'Memorized'}</button>
+    <button class="eng-b eng-save" type="button" aria-pressed="false"><span class="ic" aria-hidden="true">☆</span>${ur ? 'محفوظ کریں' : 'Save'}</button>
+    <button class="eng-b eng-wa" type="button"><span class="ic" aria-hidden="true">💬</span>WhatsApp</button>
+    <button class="eng-b eng-img" type="button"><span class="ic" aria-hidden="true">🖼</span>${ur ? 'تصویر' : 'Image'}</button>
+  </div>` : ''}
 </article>`;
 }
 
@@ -5189,6 +5505,7 @@ function duasPage(lang) {
     ${DUA_TOPICS.map((t) => `<a class="chip" href="${link(lang, t.slug + '.html')}">${t.icon} ${ur ? t.ur : t.en}</a>`).join('\n    ')}
   </div>
 </section>
+${HISN.length ? `<p class="row" style="margin:-8px 0 18px"><a class="btn" href="${link(lang, 'my-duas.html')}">${ur ? '⭐ میری دعائیں' : '⭐ My duas'}</a> <a class="btn" href="${link(lang, 'challenges.html')}">${ur ? '🏁 روزانہ چیلنجز' : '🏁 Daily challenges'}</a> <a class="btn" href="harf-daily-${lang}.ics" download>${ur ? '📅 ہر صبح یاد دہانی' : '📅 Daily reminder'}</a></p>` : ''}
 ${HISN.length ? `<a class="hisn-cta" href="${link(lang, 'hisn-al-muslim.html')}"><span class="dc-ic" aria-hidden="true">🏰</span><span><strong>${ur ? 'حصن المسلم — ہر موقع کی دعائیں' : 'Hisn al-Muslim — duas for every occasion'}</strong><br>${ur ? `${ud(HISN.length)} ابواب، ${ud(HISN_TOTAL)} دعائیں: جاگنا، وضو، مسجد، نماز، سفر، بیماری، جنازہ، موسم، حج اور بہت کچھ` : `${HISN.length} chapters, ${HISN_TOTAL} duas: waking up, wudu, the mosque, prayer, travel, illness, funerals, weather, Hajj and more`}</span><span aria-hidden="true">${ur ? '←' : '→'}</span></a>` : ''}
 <h2>${ur ? 'موضوع کے لحاظ سے' : 'Browse by topic'}</h2>
 <div class="cards dua-cats">
@@ -5214,6 +5531,7 @@ function duaCatPage(lang, i) {
 <p class="lead">${fmt(ur ? c.introUr : c.introEn)}</p>
 <nav class="dua-toc" aria-label="${ur ? 'فہرست' : 'Contents'}"><ol>${c.items.map((d, k) => `<li><a href="#d${k + 1}">${esc(ur ? d.ur : d.en)}</a></li>`).join('')}</ol></nav>
 ${c.items.map((d, k) => duaHtml(lang, d, k + 1)).join('\n')}
+${miniQuizHtml(lang, i + 400)}
 <p class="note">${DUAS_NOTE[lang]}</p>
 <nav class="pager" aria-label="${T[lang].nav.duas}">
   ${prev ? `<a class="btn" href="${link(lang, prev.slug + '.html')}">${T[lang].prev}: ${name(prev)}</a>` : `<a class="btn" href="${link(lang, 'duas.html')}">${T[lang].prev}: ${T[lang].nav.duas}</a>`}
@@ -5243,6 +5561,7 @@ function duaTopicPage(lang, i) {
 <p class="lead">${esc(ur ? t.leadUr : t.leadEn)}</p>
 ${duas.map((d, k) => duaHtml(lang, d, k + 1)).join('\n')}
 ${surahLinks ? `<p class="row">${surahLinks}</p>` : ''}
+${miniQuizHtml(lang, i + 200)}
 <p class="note">${DUAS_NOTE[lang]}</p>
 ${rel.length ? `<section class="dua-related"><h2>${ur ? 'متعلقہ دعائیں' : 'Related duas'}</h2><div class="chips">${rel.map((r) => `<a class="chip" href="${link(lang, r.slug + '.html')}">${r.icon} ${name(r)}</a>`).join('')}</div></section>` : ''}
 <nav class="pager" aria-label="${T[lang].nav.duas}"><a class="btn" href="${link(lang, 'duas.html')}">${ur ? '← سب دعائیں' : '← All duas'}</a></nav>`;
@@ -5287,6 +5606,14 @@ function hisnChapterPage(lang, i) {
 <h1>${esc(name(c))}</h1>
 <p class="lead">${esc(lead)}</p>
 ${c.items.map((d, k) => duaHtml(lang, d, k + 1)).join('\n')}
+${miniQuizHtml(lang, i)}
+${(() => {
+    const grp = HISN.filter((x) => x.g === c.g), at = grp.indexOf(c);
+    const near = [1, 2, 3].map((s) => grp[(at + s) % grp.length]).filter((x) => x && x !== c);
+    const tops = [DUA_TOPICS[i % DUA_TOPICS.length], DUA_TOPICS[(i * 7 + 3) % DUA_TOPICS.length]].filter((t, k, a) => a.indexOf(t) === k);
+    const kick = (en, u, cls) => `<span class="k k-${cls}">${ur ? u : en}</span>`;
+    return `<section class="also"><h2>${ur ? 'لوگ یہ بھی پڑھتے ہیں' : 'People also read'}</h2><div class="also-grid">${near.map((x) => `<a href="${link(lang, x.slug + '.html')}">${kick('Hisn al-Muslim', 'حصن المسلم', 'dua')}${esc(name(x))}</a>`).join('')}${tops.map((t) => `<a href="${link(lang, t.slug + '.html')}">${kick('Dua for…', 'موقع کی دعا', 'guide')}${t.icon} ${esc(ur ? t.ur : t.en)}</a>`).join('')}<a href="${link(lang, 'challenges.html')}">${kick('Challenge', 'چیلنج', 'new')}${ur ? '۳۰ دن میں ۳۰ دعائیں یاد کریں' : 'Memorize 30 duas in 30 days'}</a></div></section>`;
+  })()}
 <p class="note">${HISN_NOTE[lang]}</p>
 <nav class="pager" aria-label="${ur ? 'حصن المسلم' : 'Hisn al-Muslim'}">
   ${prev ? `<a class="btn" href="${link(lang, prev.slug + '.html')}">${T[lang].prev}: ${esc(name(prev))}</a>` : `<a class="btn" href="${link(lang, 'hisn-al-muslim.html')}">${ur ? 'تمام ابواب' : 'All chapters'}</a>`}
@@ -8003,6 +8330,9 @@ function build() {
     DUA_CATS.forEach((c, i) => add(lang, c.slug + '.html', duaCatPage(lang, i)));
     DUA_TOPICS.forEach((t, i) => add(lang, t.slug + '.html', duaTopicPage(lang, i)));
     if (HISN.length) { add(lang, 'hisn-al-muslim.html', hisnHubPage(lang)); HISN.forEach((c, i) => add(lang, c.slug + '.html', hisnChapterPage(lang, i))); }
+    add(lang, 'my-duas.html', myDuasPage(lang));
+    if (HISN.length) add(lang, 'challenges.html', challengesPage(lang));
+    files['harf-daily-' + lang + '.ics'] = icsFile(lang);
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
     if (ROOTS) { add(lang, 'quran-roots.html', rootsHubPage(lang)); ROOT_LIST.forEach((x, i) => add(lang, 'quran-root-' + x.slug + '.html', rootPage(lang, i))); }
     add(lang, 'phrases.html', phrasesPage(lang));
@@ -8021,7 +8351,8 @@ function build() {
     add(lang, 'privacy.html', privacyPage(lang));
   }
   files['404.html'] = notFoundPage();
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['engage.js'] = ENGAGE_JS;
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
