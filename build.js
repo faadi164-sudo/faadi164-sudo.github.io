@@ -4033,6 +4033,196 @@ html[dir="rtl"] .sr-k{text-transform:none;letter-spacing:0}
 }
 `;
 
+const FRONT_CSS = `
+.ticker{display:flex;align-items:stretch;background:#0b3d30;color:#fff;border-radius:12px;overflow:hidden;margin:14px 0 0;font-size:14.5px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.tk-label{flex:none;display:flex;align-items:center;gap:8px;background:#c0392b;color:#fff;font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:12.5px;padding:0 14px}
+[dir=rtl] .tk-label{text-transform:none;letter-spacing:0;font-size:14px}
+.tk-label i{width:8px;height:8px;border-radius:50%;background:#fff;animation:tkpulse 1.4s infinite}
+@keyframes tkpulse{0%,100%{opacity:1}50%{opacity:.2}}
+.tk-view{overflow:hidden;flex:1;-webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
+.tk-track{display:inline-flex;white-space:nowrap;align-items:center;padding:10px 0 10px 14px;animation:tkmove 70s linear infinite}
+.ticker:hover .tk-track,.ticker:focus-within .tk-track{animation-play-state:paused}
+@keyframes tkmove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+[dir=rtl] .tk-track{animation-name:tkmove-rtl;padding:10px 14px 10px 0}
+@keyframes tkmove-rtl{from{transform:translateX(0)}to{transform:translateX(50%)}}
+.tk-copy{display:inline-flex;align-items:center}
+.tk-item{display:inline-flex;gap:8px;align-items:center;color:#fff;text-decoration:none}
+.tk-item:hover>span:last-child{text-decoration:underline}
+.tk-item .ar{font-size:1.2em;line-height:1}
+.tk-dot{color:#ecd08a;margin:0 16px}
+@media (prefers-reduced-motion:reduce){.tk-track{animation:none}.tk-view{overflow-x:auto}}
+.k{display:inline-block;flex:none;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;line-height:1.5;vertical-align:middle;font-family:inherit}
+[dir=rtl] .k{text-transform:none;letter-spacing:0;font-size:12px}
+.k-new,.k-video{background:#c0392b;color:#fff}.k-word{background:#ecd08a;color:#3d2f05}.k-dua{background:#0d6b57;color:#fff}
+.k-quran{background:#a87a12;color:#fff}.k-roots{background:#5b4a8b;color:#fff}.k-guide{background:#1f5f8b;color:#fff}
+.k-tool{background:#7a5c3a;color:#fff}.k-learn{background:#2e7d32;color:#fff}.k-date{background:rgba(255,255,255,.2);color:#fff}
+.fp-search{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,520px);gap:12px 28px;align-items:end;background:linear-gradient(135deg,#0b4a3b,#11795f);color:#fff;border-radius:16px;padding:22px 26px 20px;margin:14px 0 26px}
+.fp-search .eyebrow{color:#ecd08a;margin:0}
+.fp-search h1{color:#fff;font-size:clamp(1.45rem,2.5vw,2.05rem);margin:4px 0 0;line-height:1.15}
+.fp-search .site-search{margin:0;max-width:none}
+.fp-search .site-search input{background:rgba(255,255,255,.96);border-color:transparent;color:#1a2b22}
+.fp-search .quick{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.fp-search .quick a{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:999px;padding:5px 13px;text-decoration:none;font-size:14px;font-weight:500}
+.fp-search .quick a:hover{background:rgba(236,208,138,.25);border-color:rgba(236,208,138,.6)}
+.front{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr) minmax(0,.95fr);gap:28px;margin:0 0 34px}
+.fp-img{position:relative;display:block;border-radius:14px;overflow:hidden;aspect-ratio:16/9;background:#e9e2cf}
+.fp-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.fp-img:hover img{transform:scale(1.03)}
+.fp-flag{position:absolute;top:14px;left:14px;background:#c0392b;color:#fff;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+[dir=rtl] .fp-flag{left:auto;right:14px;text-transform:none;letter-spacing:0}
+.fp-kick{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 6px;color:var(--muted);font-size:13.5px;font-weight:600}
+.fp-head{font-size:clamp(1.4rem,2.4vw,2.05rem);line-height:1.18;margin:0 0 8px}
+.fp-head a{color:var(--text);text-decoration:none}
+.fp-head a:hover{text-decoration:underline;text-decoration-thickness:2px}
+.fp-deck{color:var(--muted);font-size:1.02rem;margin:0 0 14px}
+.fp-subs{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.fp-subs li{border-bottom:1px solid var(--line)}
+.fp-subs a{display:flex;gap:10px;align-items:baseline;padding:10px 0;color:var(--text);text-decoration:none;font-weight:600}
+.fp-subs a:hover>span:last-child{text-decoration:underline}
+.fp-h{font-size:1rem;text-transform:uppercase;letter-spacing:.07em;border-bottom:3px solid var(--text);padding-bottom:6px;margin:0 0 4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+[dir=rtl] .fp-h{text-transform:none;letter-spacing:0;font-size:1.15rem}
+.fp-date{font-size:.78rem;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0}
+.fp-card{display:flex;flex-direction:column;gap:4px;align-items:flex-start;padding:12px 0 14px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}
+.fp-card:hover .fp-m{color:var(--accent)}
+.fp-ar{font-size:1.9rem;line-height:1.5;align-self:stretch;text-align:right}
+.fp-ar-s{font-size:1.3rem;line-height:1.9}
+.fp-tr{color:var(--accent);font-size:.92rem;font-weight:600}
+.fp-m{font-size:.95rem;line-height:1.5}
+.fp-src{font-size:.82rem;color:var(--muted);font-weight:600}
+.fp-top ol{list-style:none;counter-reset:t;margin:0;padding:0}
+.fp-top li{counter-increment:t;border-bottom:1px solid var(--line)}
+.fp-top a{display:grid;grid-template-columns:2.1rem 1fr;gap:3px 10px;padding:11px 0;color:var(--text);text-decoration:none;align-items:start}
+.fp-top a::before{content:counter(t);grid-row:span 2;font-size:1.9rem;font-weight:800;color:var(--accent);line-height:1}
+.fp-top a .k{justify-self:start}
+.fp-top a>span:last-child{font-weight:600;line-height:1.35}
+.fp-top a:hover>span:last-child{text-decoration:underline}
+.fp-watch{margin:0 0 34px}
+.fp-watch .fp-h{margin-bottom:14px}
+.fp-strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(190px,1fr);gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.fp-vid{scroll-snap-align:start;color:var(--text);text-decoration:none}
+.fp-thumb{position:relative;display:block;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:#ddd}
+.fp-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.fp-vid:hover img{transform:scale(1.05)}
+.fp-play{position:absolute;left:8px;bottom:8px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;display:grid;place-items:center;font-size:13px}
+.fp-vt{display:block;font-weight:600;font-size:.93rem;margin-top:6px;line-height:1.35}
+.fp-vid:hover .fp-vt{text-decoration:underline}
+@media (max-width:1000px){.front{grid-template-columns:1fr 1fr}.fp-lead{grid-column:1/-1}}
+@media (max-width:820px){.fp-search{grid-template-columns:1fr;padding:18px}}
+@media (max-width:640px){.front{grid-template-columns:1fr;gap:22px}.ticker{font-size:13.5px}.tk-label{padding:0 10px}}
+`;
+
+// News-style front page: ticker, search band, lead story with labelled sub-links, a daily panel
+// (word, dua and name of the day, picked in the browser by date), numbered top picks, and a video strip.
+function frontPage(lang, C, quick) {
+  const ur = lang === 'ur';
+  const L = (f) => link(lang, f);
+  const qs = (n) => { const q = QURAN.find((x) => x.n === n); return q ? 'quran-' + q.slug + '.html' : 'quran.html'; };
+  const hisnN = typeof HISN !== 'undefined' ? HISN.length : 0, hisnT = typeof HISN_TOTAL !== 'undefined' ? HISN_TOTAL : 0;
+  const K = (cls, en, u) => `<span class="k k-${cls}">${ur ? u : en}</span>`;
+
+  // daily pools
+  const words = (typeof ROOT_LIST !== 'undefined' ? ROOT_LIST : []).slice(0, 150).map((x) => [x.lemmas[0].a, x.lemmas[0].tr || '', ur ? x.lemmas[0].ur : x.lemmas[0].en, L('quran-root-' + x.slug + '.html')]);
+  const duas = [];
+  (typeof HISN !== 'undefined' ? HISN : []).forEach((c) => c.items.forEach((d) => {
+    if (!d.h && !d.q && d.a && d.a.length <= 140 && !/[()[\]]/.test(d.a) && (ur ? d.mUr : d.mEn)) duas.push([d.a, ur ? d.mUr : d.mEn, L(c.slug + '.html'), ur ? c.ur : c.en]);
+  }));
+  const names = NAMES.map((x) => [x[0], x[1], ur ? x[4] : x[3]]);
+  const day = Math.floor(Date.now() / 864e5);
+  const pick = (a) => a.length ? a[day % a.length] : null;
+  const w0 = pick(words), d0 = pick(duas), n0 = pick(names);
+
+  const tick = [
+    [K('new', 'New', 'نیا'), ur ? `حصن المسلم: ${ud(hisnT)} دعائیں، اب اردو اور انگریزی میں` : `Hisn al-Muslim: all ${hisnT} duas, now in English and Urdu`, 'hisn-al-muslim.html'],
+    [K('word', 'Word of the day', 'آج کا لفظ'), w0 ? `<span class="ar" lang="ar">${w0[0]}</span> — ${esc(w0[2])}` : '', w0 ? null : 'quran-roots.html', 'tkWord'],
+    [K('dua', 'Dua', 'دعا'), ur ? 'جب فکر پیچھا نہ چھوڑے تو یہ پڑھیں' : 'What to say when worry won’t leave you', 'dua-for-worry-and-grief.html'],
+    [K('quran', 'Quran', 'قرآن'), ur ? `تمام ${ud(114)} سورتیں لفظ بہ لفظ، اردو ترجمے کے ساتھ` : `All 114 surahs word by word, in English and Urdu`, 'quran.html'],
+    [K('date', 'Today', 'آج'), `<span class="tkHijri"></span>`, 'hijri-converter.html'],
+    [K('roots', 'Roots', 'مادے'), ur ? `${ud(ROOT_LIST.length)} قرآنی مادے، ہر ایک کے الفاظ کے ساتھ` : `${ROOT_LIST.length} Quran roots, each with its family of words`, 'quran-roots.html'],
+  ].filter((t) => t[1]);
+  const tickHtml = tick.map(([k, t, f]) => `<a class="tk-item" href="${L(f || 'quran-roots.html')}">${k}<span>${t}</span></a>`).join('<span class="tk-dot" aria-hidden="true">•</span>');
+
+  const subs = [
+    [K('dua', 'Dua', 'دعا'), ur ? 'وہ ایک دعا جو نبی ﷺ سب سے زیادہ مانگتے تھے' : 'The one dua the Prophet ﷺ made most often', 'dua-for-good-in-both-worlds.html'],
+    [K('quran', 'Quran', 'قرآن'), ur ? 'آج رات سونے سے پہلے سورہ ملک لفظ بہ لفظ پڑھیں' : 'Read Surah Al-Mulk word by word before you sleep tonight', qs(67)],
+    [K('roots', 'Roots', 'مادے'), ur ? 'تین حرفوں کا ایک مادہ قرآن کے درجنوں الفاظ کیسے کھولتا ہے' : 'How one three-letter root unlocks dozens of Quran words', 'quran-roots.html'],
+    [K('guide', 'Guide', 'رہنمائی'), ur ? 'کیا ۹۰ دن میں قرآنی عربی سیکھی جا سکتی ہے؟ مفت منصوبہ' : 'Can you learn Quranic Arabic in 90 days? A free plan', 'guides.html'],
+  ];
+  const top = [
+    ['hisn-al-muslim.html', ur ? 'حصن المسلم: ہر موقع کی دعا' : 'Hisn al-Muslim: a dua for every occasion', K('dua', 'Duas', 'دعائیں')],
+    [qs(36), ur ? 'سورہ یٰسین لفظ بہ لفظ' : 'Surah Yaseen, word by word', K('quran', 'Quran', 'قرآن')],
+    ['morning-evening-adhkar.html', ur ? 'صبح و شام کے مکمل اذکار' : 'Morning and evening adhkar, complete', K('dua', 'Adhkar', 'اذکار')],
+    ['alphabet.html', ur ? 'عربی حروفِ تہجی: ۲۸ حروف، آواز کے ساتھ' : 'The Arabic alphabet: 28 letters with audio', K('learn', 'Learn', 'سیکھیں')],
+    ['dua-for-anxiety.html', ur ? 'پریشانی اور بے چینی کی دعا' : 'Dua for anxiety and worry', K('dua', 'Dua', 'دعا')],
+    ['muslim-names.html', ur ? `${ud(NAMES.length)} اسلامی نام اور ان کے معنی` : `${NAMES.length} Muslim names and their meanings`, K('tool', 'Names', 'نام')],
+  ];
+
+  let videos = [];
+  try {
+    videos = fs.readdirSync(path.join(__dirname, 'img')).filter((f) => /^poster-.*\.jpg$/.test(f))
+      .map((f) => ({ f, l: LESSONS.find((x) => x.slug === f.replace(/^poster-|\.jpg$/g, '')) })).filter((x) => x.l)
+      .sort((a, b) => LESSONS.indexOf(a.l) - LESSONS.indexOf(b.l)).slice(0, 8);
+  } catch (e) { videos = []; }
+  const watch = videos.length ? `<section class="fp-watch">
+  <h2 class="fp-h">${K('video', 'Video', 'ویڈیو')} ${ur ? 'دیکھ کر سیکھیں' : 'Watch and learn'}</h2>
+  <div class="fp-strip">${videos.map(({ f, l }) => `<a class="fp-vid" href="${L(l.slug + '.html')}"><span class="fp-thumb"><img src="img/${f}" alt="" loading="lazy" width="320" height="180"><span class="fp-play" aria-hidden="true">▶</span></span><span class="fp-vt">${esc(ur ? l.ur.title : l.en.title)}</span></a>`).join('')}</div>
+</section>` : '';
+
+  const data = JSON.stringify({ w: words, d: duas, n: names }).replace(/</g, '\\u003c');
+  return `<div class="ticker" role="region" aria-label="${ur ? 'آج حرف پر' : 'Today on Harf'}">
+  <span class="tk-label"><i aria-hidden="true"></i>${ur ? 'آج حرف پر' : 'Today on Harf'}</span>
+  <div class="tk-view"><div class="tk-track">${tickHtml}<span class="tk-dot" aria-hidden="true">•</span><span class="tk-copy" aria-hidden="true">${tickHtml.replace(/<a /g, '<a tabindex="-1" ')}<span class="tk-dot">•</span></span></div></div>
+</div>
+<section class="fp-search">
+  <div>
+    <p class="eyebrow">${C.eyebrow}</p>
+    <h1>${C.h1}</h1>
+  </div>
+  <form class="site-search big" role="search" action="${L('search.html')}" method="get">
+    <input type="search" name="q" placeholder="${C.searchPh}" aria-label="${C.searchPh}" autocomplete="off" spellcheck="false" enterkeyhint="search">
+    <button class="btn gold" type="submit">${ur ? 'تلاش' : 'Search'}</button>
+  </form>
+  <nav class="quick" aria-label="${ur ? 'مشہور صفحات' : 'Popular pages'}">${quick.map(([f, l]) => `<a href="${L(f)}">${l}</a>`).join('')}</nav>
+</section>
+<section class="front">
+  <article class="fp-lead">
+    <a class="fp-img" href="${L('hisn-al-muslim.html')}"><img src="img/banner-quran.webp" alt="" width="1024" height="572"><span class="fp-flag">${ur ? 'نیا' : 'New'}</span></a>
+    <p class="fp-kick">${K('dua', 'Duas', 'دعائیں')} <span>${ur ? `${ud(hisnN)} مواقع · ${ud(hisnT)} دعائیں · مستند حوالے` : `${hisnN} occasions · ${hisnT} duas · checked sources`}</span></p>
+    <h2 class="fp-head"><a href="${L('hisn-al-muslim.html')}">${ur ? 'دن کے ہر لمحے کی دعا — پوری حصن المسلم، اب اردو میں' : 'A dua for every moment of your day — all of Hisn al-Muslim, now in English and Urdu'}</a></h2>
+    <p class="fp-deck">${ur ? 'جاگنے سے سونے تک، سفر، بیماری، بارش اور حج: ہر دعا عربی متن، تلفظ، ترجمے اور sunnah.com کے حوالے کے ساتھ۔' : 'From waking up to falling asleep, travel, illness, rain and Hajj: every dua with the Arabic, pronunciation, meaning and a sunnah.com reference.'}</p>
+    <ul class="fp-subs">${subs.map(([k, t, f]) => `<li><a href="${L(f)}">${k}<span>${t}</span></a></li>`).join('')}</ul>
+  </article>
+  <aside class="fp-today" aria-label="${ur ? 'آج کا انتخاب' : 'Today’s picks'}">
+    <h2 class="fp-h">${ur ? 'آج' : 'Today'} <span class="fp-date" id="fpDate"></span></h2>
+    ${w0 ? `<a class="fp-card" id="fpWord" href="${w0[3]}">${K('word', 'Word of the day', 'آج کا لفظ')}<span class="fp-ar ar" lang="ar">${w0[0]}</span><span class="fp-tr latin" dir="ltr">${esc(w0[1])}</span><span class="fp-m">${esc(w0[2])}</span></a>` : ''}
+    ${d0 ? `<a class="fp-card" id="fpDua" href="${d0[2]}">${K('dua', 'Dua of the day', 'آج کی دعا')}<span class="fp-ar fp-ar-s ar" lang="ar">${d0[0]}</span><span class="fp-m">${esc(d0[1])}</span><span class="fp-src">${esc(d0[3])} →</span></a>` : ''}
+    ${n0 ? `<a class="fp-card" id="fpName" href="${L('muslim-names.html')}">${K('tool', 'Name of the day', 'آج کا نام')}<span class="fp-ar ar" lang="ar">${n0[0]}</span><span class="fp-tr latin" dir="ltr">${esc(n0[1])}</span><span class="fp-m">${esc(n0[2])}</span></a>` : ''}
+  </aside>
+  <aside class="fp-top" aria-label="${ur ? 'منتخب صفحات' : 'Top picks'}">
+    <h2 class="fp-h">${ur ? 'منتخب صفحات' : 'Top picks'}</h2>
+    <ol>${top.map(([f, t, k]) => `<li><a href="${L(f)}">${k}<span>${t}</span></a></li>`).join('')}</ol>
+  </aside>
+</section>
+${watch}
+<script>
+(function(){
+  var D=${data}, day=Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5);
+  function pk(a){return a&&a.length?a[day%a.length]:null}
+  function set(id,html,href){var e=document.getElementById(id); if(!e) return; e.innerHTML=html; if(href) e.href=href;}
+  var K=function(t){return '<span class="k k-'+t[0]+'">'+t[1]+'</span>'};
+  var ur=${ur ? 'true' : 'false'}, esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+  var w=pk(D.w), d=pk(D.d), n=pk(D.n);
+  if(w) set('fpWord', K(['word', ur?'آج کا لفظ':'Word of the day'])+'<span class="fp-ar ar" lang="ar">'+w[0]+'</span><span class="fp-tr latin" dir="ltr">'+esc(w[1])+'</span><span class="fp-m">'+esc(w[2])+'</span>', w[3]);
+  if(d) set('fpDua', K(['dua', ur?'آج کی دعا':'Dua of the day'])+'<span class="fp-ar fp-ar-s ar" lang="ar">'+d[0]+'</span><span class="fp-m">'+esc(d[1])+'</span><span class="fp-src">'+esc(d[3])+' '+(ur?'←':'→')+'</span>', d[2]);
+  if(n) set('fpName', K(['tool', ur?'آج کا نام':'Name of the day'])+'<span class="fp-ar ar" lang="ar">'+n[0]+'</span><span class="fp-tr latin" dir="ltr">'+esc(n[1])+'</span><span class="fp-m">'+esc(n[2])+'</span>');
+  var loc=ur?'ur-PK':'en-GB', now=new Date(), g, h;
+  try{ g=now.toLocaleDateString(loc,{weekday:'long',day:'numeric',month:'long'}); h=now.toLocaleDateString(loc+'-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}); }catch(e){}
+  var fd=document.getElementById('fpDate'); if(fd&&g) fd.textContent=g;
+  document.querySelectorAll('.tkHijri').forEach(function(e){ e.textContent=(g||'')+(h?' · '+h:''); });
+  document.querySelectorAll('.tk-item .ar').forEach(function(e,i){ if(w){ e.textContent=w[0]; var p=e.parentNode; if(p&&p.lastChild&&p.lastChild.nodeType===3) p.lastChild.textContent=' — '+w[2]; } });
+})();
+</script>`;
+}
+
 function homePage(lang) {
   const ur = lang === 'ur';
   const n = (v) => num(lang, v);
@@ -4129,16 +4319,7 @@ function homePage(lang) {
   const quick = ur
     ? [['quran.html', 'قرآن لفظ بہ لفظ'], ['quran-roots.html', 'قرآنی مادے'], ['alphabet.html', 'حروفِ تہجی'], ['muslim-names.html', 'اسلامی نام'], ['duas.html', 'دعائیں'], ['arabic-keyboard.html', 'عربی کی بورڈ']]
     : [['quran.html', 'Quran word by word'], ['quran-roots.html', 'Word roots'], ['alphabet.html', 'Alphabet'], ['muslim-names.html', 'Muslim names'], ['duas.html', 'Duas'], ['arabic-keyboard.html', 'Arabic keyboard']];
-  const body = `<section class="hero search-hero">
-  <p class="eyebrow">${C.eyebrow}</p>
-  <h1>${C.h1}</h1>
-  <p class="lead">${C.heroLead}</p>
-  <form class="site-search big" role="search" action="${link(lang, 'search.html')}" method="get">
-    <input type="search" name="q" placeholder="${C.searchPh}" aria-label="${C.searchPh}" autocomplete="off" spellcheck="false" enterkeyhint="search">
-    <button class="btn gold" type="submit">${ur ? 'تلاش' : 'Search'}</button>
-  </form>
-  <nav class="quick" aria-label="${ur ? 'مشہور صفحات' : 'Popular pages'}">${quick.map(([f, l]) => `<a href="${link(lang, f)}">${l}</a>`).join('')}</nav>
-</section>
+  const body = `${frontPage(lang, C, quick)}
 <ul class="proof" aria-label="${ur ? 'حرف پر کیا ہے' : 'What is on Harf'}">
   ${[[28, ur ? 'حروف' : 'letters', 'alphabet.html'], [LESSONS.length, ur ? 'گرامر اسباق' : 'grammar lessons', 'lessons.html'], [114, ur ? 'سورتیں لفظ بہ لفظ' : 'surahs word by word', 'quran.html'], ...(ROOTS ? [[ROOT_LIST.length, ur ? 'قرآنی مادے' : 'Quran roots', 'quran-roots.html']] : []), ...(CLASSICS.length ? [[CLASSICS.length, ur ? 'کلاسیکی کہانیاں' : 'classic tales', 'classic-tales.html']] : []), [DUA_TOTAL, ur ? 'دعائیں' : 'duas', 'duas.html']].map(([k, label, f]) => `<li><a href="${link(lang, f)}"><strong>${n(k)}</strong><span>${label}</span></a></li>`).join('')}
 </ul>
@@ -7840,7 +8021,7 @@ function build() {
     add(lang, 'privacy.html', privacyPage(lang));
   }
   files['404.html'] = notFoundPage();
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
