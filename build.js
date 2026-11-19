@@ -3884,6 +3884,7 @@ function buildSearchIndex(lang) {
   DUA_CATS.forEach((c) => c.items.forEach((d, k) => add(d.a.split(/\s+/).slice(0, 4).join(' '), ur ? d.ur : d.en, ur ? c.ur : c.en, c.slug + '.html#d' + (k + 1), 'dua')));
   DUA_TOPICS.forEach((t) => add('', ur ? t.ur : t.en, ur ? 'موضوعاتی دعا' : 'Dua by situation', t.slug + '.html', 'dua'));
   if (typeof HISN !== 'undefined') HISN.forEach((c) => add('', ur ? c.ur : c.en, ur ? 'حصن المسلم' : 'Hisn al-Muslim', c.slug + '.html', 'dua'));
+  add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
   PHRASES.forEach((p) => add(p[0], p[1], ur ? p[3] : p[2], 'phrases.html', 'phrase'));
   SAUDI.forEach((g) => g.items.forEach((it) => add(it[0], it[1], ur ? it[3] : it[2], 'saudi-arabic.html', 'phrase')));
   LESSONS.forEach((l) => (l.ex || []).forEach((e) => add(e[0], e[1], ur ? e[3] : e[2], l.slug + '.html', 'sentence')));
@@ -4293,6 +4294,18 @@ const ENGAGE_JS = String.raw`${HIJRI_REGION_JS}
 `;
 
 const ENGAGE_CSS = `
+.fadail{margin:20px 0 26px;padding:18px 22px;border:1px solid #e6cf8f;border-radius:16px;background:linear-gradient(180deg,#fffaf0,#fdf5e3)}
+.fadail h2{margin:0 0 8px;font-size:1.2rem}
+.fd-when{margin:0 0 10px}
+.fd-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.fd-list li{padding:10px 0 0;border-top:1px dashed #e6cf8f}
+.fd-list li p{margin:0}
+.fd-src{font-size:.85rem;color:var(--muted);margin-top:4px!important}
+.fd-note{margin:12px 0 0;font-size:.9rem;color:var(--muted);border-inline-start:3px solid #e6cf8f;padding-inline-start:10px}
+.ak-box{margin:18px 0 24px;padding:22px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.ak-ar{font-size:2rem;line-height:2.1;text-align:center;margin:0 0 12px}
+.ak-box .tr{text-align:center}
+.ak-mean{font-size:1.05rem;line-height:1.7;margin:10px 0 0}
 .fp-hijri{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:8px 0 2px;padding:10px 12px;background:var(--accent-soft);border-radius:10px}
 .fp-hijri[hidden]{display:none}
 .fp-hd{font-weight:800;font-size:1.08rem;color:var(--accent)}
@@ -4482,7 +4495,7 @@ function frontPage(lang, C, quick) {
     [qs(36), ur ? 'سورہ یٰسین لفظ بہ لفظ' : 'Surah Yaseen, word by word', K('quran', 'Quran', 'قرآن')],
     ['morning-evening-adhkar.html', ur ? 'صبح و شام کے مکمل اذکار' : 'Morning and evening adhkar, complete', K('dua', 'Adhkar', 'اذکار')],
     ['alphabet.html', ur ? 'عربی حروفِ تہجی: ۲۸ حروف، آواز کے ساتھ' : 'The Arabic alphabet: 28 letters with audio', K('learn', 'Learn', 'سیکھیں')],
-    ['dua-for-anxiety.html', ur ? 'پریشانی اور بے چینی کی دعا' : 'Dua for anxiety and worry', K('dua', 'Dua', 'دعا')],
+    ['ayatul-kursi.html', ur ? 'آیت الکرسی اردو ترجمے کے ساتھ' : 'Ayatul Kursi with translation and virtues', K('quran', 'Quran', 'قرآن')],
     ['muslim-names.html', ur ? `${ud(NAMES.length)} اسلامی نام اور ان کے معنی` : `${NAMES.length} Muslim names and their meanings`, K('tool', 'Names', 'نام')],
   ];
 
@@ -5412,6 +5425,7 @@ function surahPage(lang, i) {
 <p class="lead">${fmt(ur ? s.introUr : s.introEn)}</p>
 ${reciteBar(lang, s.n, nV)}
 <p class="row">${QURAN.length ? `<a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a>` : ''}<a class="btn" href="${link(lang, 'quran-listen.html')}">${ur ? 'تمام قراء' : 'All reciters'}</a><span class="note">${ur ? 'کسی بھی لفظ پر ٹیپ کر کے اس کی آواز سنیں، یا آیت کے ▶ سے قاری کی تلاوت۔' : 'Tap any word to hear it on its own, or ▶ on a verse to hear the qari recite it.'}</span></p>
+${fadailHtml(lang, s.n)}
 <p class="surah-name ar" lang="ar">سُورَةُ ${s.name}</p>
 ${s.n === 1 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
 ${s.v.map((v, k) => verseHtml(lang, v, k + 1, s.n)).join('\n')}
@@ -5420,7 +5434,106 @@ ${s.v.map((v, k) => verseHtml(lang, v, k + 1, s.n)).join('\n')}
   ${prev ? `<a class="btn" href="${link(lang, 'quran-' + prev.slug + '.html')}">${T[lang].prev}: ${name(prev)}</a>` : `<a class="btn" href="${link(lang, 'quran.html')}">${T[lang].prev}: ${T[lang].nav.quran}</a>`}
   ${next ? `<a class="btn primary" href="${link(lang, 'quran-' + next.slug + '.html')}">${ur ? 'اگلا: ' + name(next) + ' ←' : 'Next: ' + name(next) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran-prayer-words.html')}">${ur ? 'اگلا: نماز کے اذکار ←' : 'Next: words of the prayer →'}</a>`}
 </nav>`;
-  return layout(lang, { file: 'quran-' + s.slug + '.html', section: 'quran', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+  return layout(lang, { file: 'quran-' + s.slug + '.html', section: 'quran', title: surahSeoTitle(lang, s) + (ur ? ' | حرف' : ' | Harf'), desc, body });
+}
+
+// Virtues and "when to read" for the most-searched surahs. Only well-known narrations, each with its
+// source; where a popular narration is weak, the box says so plainly instead of hiding it.
+const SN = (b, n) => ({ t: { bukhari: 'Al-Bukhari', muslim: 'Muslim', abudawud: 'Abu Dawud', tirmidhi: 'At-Tirmidhi' }[b] + ' ' + n, u: 'https://sunnah.com/' + b + ':' + n });
+const SURAH_FADAIL = {
+  1: { whenEn: 'In every rakʿah of every prayer.', whenUr: 'ہر نماز کی ہر رکعت میں۔',
+    v: [[SN('bukhari', 4474), 'The Prophet ﷺ called it the greatest surah in the Quran: “the seven oft-repeated verses and the Great Quran given to me.”', 'نبی ﷺ نے اسے قرآن کی سب سے عظیم سورت فرمایا: «یہی سبع مثانی (بار بار دہرائی جانے والی سات آیات) اور قرآنِ عظیم ہے جو مجھے دیا گیا۔»'],
+      [SN('bukhari', 756), 'There is no prayer for the one who does not recite Al-Fatiha.', 'جو سورہ فاتحہ نہ پڑھے اس کی نماز نہیں۔']] },
+  2: { whenEn: 'Read it at home; read its last two verses every night.', whenUr: 'گھر میں پڑھیں؛ اس کی آخری دو آیات ہر رات پڑھیں۔',
+    v: [[SN('muslim', 780), 'Do not make your houses graveyards; the devil flees from a house in which Surah Al-Baqarah is recited.', 'اپنے گھروں کو قبرستان نہ بناؤ؛ جس گھر میں سورہ بقرہ پڑھی جائے شیطان وہاں سے بھاگ جاتا ہے۔'],
+      [SN('muslim', 804), 'Recite Al-Baqarah: taking it is a blessing, leaving it is a regret, and the magicians cannot overcome it.', 'سورہ بقرہ پڑھا کرو: اسے لینا برکت ہے، چھوڑنا حسرت ہے، اور جادوگر اس کا مقابلہ نہیں کر سکتے۔'],
+      [SN('bukhari', 5009), 'Whoever recites the last two verses of Al-Baqarah at night, they will suffice him.', 'جو رات کو سورہ بقرہ کی آخری دو آیات پڑھے، وہ اس کے لیے کافی ہیں۔']] },
+  18: { whenEn: 'On Friday (from Thursday sunset to Friday sunset). Memorize its first ten verses.', whenUr: 'جمعہ کے دن (جمعرات کی مغرب سے جمعہ کی مغرب تک)۔ اس کی پہلی دس آیات یاد کریں۔',
+    v: [[{ t: 'Al-Hakim 2/368, Al-Bayhaqi 3/249 — graded sahih by al-Albani (Sahih al-Jamiʿ 6470)' }, 'Whoever recites Surah Al-Kahf on Friday, a light will shine for him between the two Fridays.', 'جو جمعہ کے دن سورہ کہف پڑھے، اس کے لیے دو جمعوں کے درمیان نور روشن رہتا ہے۔'],
+      [SN('muslim', 809), 'Whoever memorizes the first ten verses of Surah Al-Kahf will be protected from the Dajjal.', 'جو سورہ کہف کی پہلی دس آیات یاد کر لے، وہ دجال سے محفوظ رہے گا۔']] },
+  32: { whenEn: 'At night before sleeping, with Surah Al-Mulk; and in Fajr on Friday.', whenUr: 'رات کو سونے سے پہلے سورہ ملک کے ساتھ، اور جمعہ کی فجر میں۔',
+    v: [[SN('tirmidhi', 2892), 'The Prophet ﷺ would not sleep until he had recited Alif Lam Mim Tanzil (As-Sajdah) and Tabarak (Al-Mulk).', 'نبی ﷺ اس وقت تک نہیں سوتے تھے جب تک الم تنزیل (سجدہ) اور تبارک (ملک) نہ پڑھ لیتے۔'],
+      [SN('bukhari', 891), 'In Fajr on Friday the Prophet ﷺ recited Alif Lam Mim Tanzil and Hal ata ʿala l-insan (Al-Insan).', 'نبی ﷺ جمعہ کی فجر میں الم تنزیل (سجدہ) اور ہل اتی علی الانسان (دہر) پڑھتے تھے۔']] },
+  36: { whenEn: 'Any time; many read it daily or on Friday.', whenUr: 'کسی بھی وقت؛ بہت سے لوگ روزانہ یا جمعہ کو پڑھتے ہیں۔',
+    v: [[SN('tirmidhi', 2887), 'Everything has a heart, and the heart of the Quran is Yaseen.', 'ہر چیز کا ایک دل ہوتا ہے، اور قرآن کا دل یٰسین ہے۔']],
+    noteEn: 'At-Tirmidhi himself noted a weakness in this narration’s chain, and most narrations about Yaseen’s special rewards are graded weak. Many scholars allow such reports to encourage good deeds, and reciting any part of the Quran is rewarded.',
+    noteUr: 'امام ترمذی نے خود اس روایت کی سند میں کمزوری ذکر کی ہے، اور یٰسین کے خاص فضائل کی اکثر روایات ضعیف شمار کی گئی ہیں۔ بہت سے علماء فضائلِ اعمال میں ایسی روایات کی اجازت دیتے ہیں، اور قرآن کا ہر حصہ پڑھنا اجر کا باعث ہے۔' },
+  55: { whenEn: 'Any time; reflect at each “Which of the favours of your Lord will you deny?”', whenUr: 'کسی بھی وقت؛ ہر «فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ» پر غور کریں۔',
+    v: [[SN('tirmidhi', 3291), 'The Prophet ﷺ recited it to the jinn, and at every “Which of the favours of your Lord will you deny?” they replied: “None of Your favours, our Lord, do we deny; to You is all praise.”', 'نبی ﷺ نے یہ سورت جنوں کو سنائی، اور ہر «فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ» پر انہوں نے جواب دیا: «اے ہمارے رب! ہم تیری کسی نعمت کو نہیں جھٹلاتے، سب تعریف تیرے لیے ہے۔»']] },
+  56: { whenEn: 'Many read it at night.', whenUr: 'بہت سے لوگ رات کو پڑھتے ہیں۔', v: [],
+    noteEn: 'A popular narration says that whoever recites Al-Waqiʿah every night will never be struck by poverty (Al-Bayhaqi, Ibn as-Sunni). Hadith scholars graded it weak, so it is not stated here as certain; the surah’s description of the Day of Judgement is a powerful reminder in itself.',
+    noteUr: 'ایک مشہور روایت ہے کہ جو ہر رات سورہ واقعہ پڑھے اسے کبھی فاقہ نہیں ہوگا (بیہقی، ابن السنی)۔ محدثین نے اسے ضعیف قرار دیا ہے، اس لیے اسے یقینی طور پر بیان نہیں کیا گیا؛ اس سورت میں قیامت کا بیان بذاتِ خود بڑی نصیحت ہے۔' },
+  67: { whenEn: 'Every night before sleeping.', whenUr: 'ہر رات سونے سے پہلے۔',
+    v: [[SN('abudawud', 1400), 'A surah of the Quran of thirty verses interceded for a man until he was forgiven: “Blessed is He in whose hand is the dominion” (Al-Mulk).', 'قرآن کی تیس آیات والی ایک سورت نے ایک آدمی کی سفارش کی یہاں تک کہ اسے بخش دیا گیا: «تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ» (سورہ ملک)۔'],
+      [SN('tirmidhi', 2892), 'The Prophet ﷺ would not sleep until he had recited As-Sajdah and Al-Mulk.', 'نبی ﷺ اس وقت تک نہیں سوتے تھے جب تک سورہ سجدہ اور سورہ ملک نہ پڑھ لیتے۔']] },
+  109: { whenEn: 'Before sleeping.', whenUr: 'سونے سے پہلے۔',
+    v: [[SN('abudawud', 5055), 'Recite “Qul ya ayyuha l-kafirun”, then sleep at its end, for it is a declaration of freedom from shirk.', '«قُلْ يَا أَيُّهَا الْكَافِرُونَ» پڑھو، پھر اس کے آخر پر سو جاؤ، کیونکہ یہ شرک سے براءت ہے۔']] },
+  112: { whenEn: 'After every prayer, morning and evening (three times), and before sleeping.', whenUr: 'ہر نماز کے بعد، صبح و شام (تین بار)، اور سونے سے پہلے۔',
+    v: [[SN('bukhari', 5013), 'It is equal to a third of the Quran.', 'یہ تہائی قرآن کے برابر ہے۔'],
+      [SN('abudawud', 5082), 'Recite Al-Ikhlas and the two refuges (Al-Falaq and An-Nas) three times morning and evening; they will suffice you against everything.', 'صبح و شام تین بار سورہ اخلاص اور معوذتین (فلق اور ناس) پڑھو؛ یہ ہر چیز سے تمہارے لیے کافی ہوں گی۔']] },
+  113: { whenEn: 'After every prayer, morning and evening (three times), and before sleeping.', whenUr: 'ہر نماز کے بعد، صبح و شام (تین بار)، اور سونے سے پہلے۔',
+    v: [[SN('muslim', 814), 'Verses were revealed tonight the like of which have never been seen: Qul aʿudhu bi-rabbi l-falaq and Qul aʿudhu bi-rabbi n-nas.', 'آج رات ایسی آیات نازل ہوئیں جن جیسی کبھی نہیں دیکھی گئیں: قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ اور قُلْ أَعُوذُ بِرَبِّ النَّاسِ۔'],
+      [SN('bukhari', 5017), 'Every night before sleeping the Prophet ﷺ blew into his cupped hands, recited Al-Ikhlas, Al-Falaq and An-Nas, and wiped over his body, three times.', 'نبی ﷺ ہر رات سونے سے پہلے ہتھیلیاں ملا کر پھونکتے، سورہ اخلاص، فلق اور ناس پڑھتے اور جسم پر ہاتھ پھیرتے، تین بار۔']] },
+  114: { whenEn: 'After every prayer, morning and evening (three times), and before sleeping.', whenUr: 'ہر نماز کے بعد، صبح و شام (تین بار)، اور سونے سے پہلے۔',
+    v: [[SN('muslim', 814), 'Verses were revealed tonight the like of which have never been seen: Qul aʿudhu bi-rabbi l-falaq and Qul aʿudhu bi-rabbi n-nas.', 'آج رات ایسی آیات نازل ہوئیں جن جیسی کبھی نہیں دیکھی گئیں: قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ اور قُلْ أَعُوذُ بِرَبِّ النَّاسِ۔'],
+      [SN('abudawud', 5082), 'Recite Al-Ikhlas, Al-Falaq and An-Nas three times morning and evening; they will suffice you against everything.', 'صبح و شام تین بار سورہ اخلاص، فلق اور ناس پڑھو؛ یہ ہر چیز سے تمہارے لیے کافی ہوں گی۔']] },
+};
+function fadailHtml(lang, n) {
+  const f = SURAH_FADAIL[n]; if (!f) return '';
+  const ur = lang === 'ur';
+  const src = (s) => s.u ? `<a href="${s.u}" target="_blank" rel="noopener" class="latin" dir="ltr">${esc(s.t)}</a>` : `<span class="latin" dir="ltr">${esc(s.t)}</span>`;
+  return `<section class="fadail">
+  <h2>${ur ? '⭐ فضیلت اور کب پڑھیں' : '⭐ Virtues and when to read'}</h2>
+  <p class="fd-when"><strong>${ur ? 'کب:' : 'When:'}</strong> ${esc(ur ? f.whenUr : f.whenEn)}</p>
+  ${f.v.length ? `<ul class="fd-list">${f.v.map(([s, en, u]) => `<li><p>${esc(ur ? u : en)}</p><p class="fd-src">${ur ? 'حوالہ' : 'Source'}: ${src(s)}</p></li>`).join('')}</ul>` : ''}
+  ${f.noteEn ? `<p class="fd-note">${esc(ur ? f.noteUr : f.noteEn)}</p>` : ''}
+</section>`;
+}
+// Title that matches how people search: "Surah Yaseen with Urdu translation".
+function surahSeoTitle(lang, q) {
+  const enName = { 36: 'Yaseen (Ya-Sin)', 67: 'Al-Mulk (Tabarak)', 1: 'Al-Fatiha', 109: 'Al-Kafirun' }[q.n] || q.en;
+  const urName = q.ur.startsWith('سورہ') ? q.ur : 'سورہ ' + q.ur;
+  return lang === 'ur' ? `${urName} اردو ترجمے کے ساتھ — لفظ بہ لفظ، تلفظ${SURAH_FADAIL[q.n] ? ' اور فضیلت' : ''}` : `Surah ${enName} with English translation — word by word${SURAH_FADAIL[q.n] ? ', virtues' : ''} & audio`;
+}
+
+function ayatKursiPage(lang) {
+  const ur = lang === 'ur';
+  const q = QURAN.find((x) => x.n === 2); if (!q) return null;
+  const v = loadSurah(q)[254];
+  const tr = v.w.map((w) => w[1]).join(' ');
+  const mean = ur ? (v.ur || v.tUr || '') : (v.en || v.tEn || '');
+  const title = ur ? 'آیت الکرسی اردو ترجمے کے ساتھ — عربی متن، تلفظ، لفظ بہ لفظ اور فضیلت | حرف' : 'Ayatul Kursi (Ayat al-Kursi) with English translation — Arabic, transliteration, word by word & virtues | Harf';
+  const desc = ur ? 'آیت الکرسی (سورہ بقرہ ۲۵۵) مکمل عربی متن، رومن تلفظ، لفظ بہ لفظ اردو ترجمہ، تلاوت کی آڈیو، اور صحیح احادیث سے فضیلت: قرآن کی سب سے عظیم آیت۔'
+    : 'Ayatul Kursi (Al-Baqarah 2:255) in full: the Arabic, transliteration, word-by-word English meaning, recitation audio, and its virtues from authentic hadith — the greatest verse of the Quran.';
+  const S = (s) => s.u ? `<a href="${s.u}" target="_blank" rel="noopener" class="latin" dir="ltr">${esc(s.t)}</a>` : `<span class="latin" dir="ltr">${esc(s.t)}</span>`;
+  const virtues = [
+    [SN('muslim', 810), 'The Prophet ﷺ asked Ubayy ibn Kaʿb which verse of the Book of Allah is the greatest. He said “Allah — there is no god but Him, the Ever-Living, the Sustainer…”, and the Prophet ﷺ struck his chest and said: “May knowledge be a joy for you, Abu al-Mundhir!”', 'نبی ﷺ نے ابی بن کعبؓ سے پوچھا کہ کتاب اللہ کی سب سے عظیم آیت کون سی ہے؟ انہوں نے کہا «اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ…»، تو نبی ﷺ نے ان کے سینے پر ہاتھ مارا اور فرمایا: «اے ابو المنذر! تمہیں علم مبارک ہو!»'],
+    [SN('bukhari', 2311), 'When you go to bed, recite Ayat al-Kursi: a guardian from Allah will stay with you, and no devil will come near you until morning.', 'جب بستر پر جاؤ تو آیت الکرسی پڑھو: اللہ کی طرف سے ایک نگہبان تمہارے ساتھ رہے گا اور صبح تک کوئی شیطان تمہارے قریب نہیں آئے گا۔'],
+    [{ t: 'An-Nasaʾi, ʿAmal al-Yawm wa l-Laylah (no. 100) — graded sahih by al-Albani' }, 'Whoever recites Ayat al-Kursi after every obligatory prayer, nothing prevents him from entering Paradise except death.', 'جو ہر فرض نماز کے بعد آیت الکرسی پڑھے، اسے جنت میں داخل ہونے سے موت کے سوا کوئی چیز نہیں روکتی۔'],
+  ];
+  const when = [
+    [ur ? 'ہر فرض نماز کے بعد' : 'After every obligatory prayer', 'adhkar-after-salah.html'],
+    [ur ? 'صبح و شام کے اذکار میں' : 'In the morning and evening adhkar', 'morning-evening-adhkar.html'],
+    [ur ? 'سونے سے پہلے' : 'Before sleeping', 'dua-before-sleeping.html'],
+  ];
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], ['quran-' + q.slug + '.html', ur ? q.ur : 'Surah ' + q.en], [null, ur ? 'آیت الکرسی' : 'Ayat al-Kursi']])}
+<p class="eyebrow">${ur ? 'سورہ بقرہ، آیت ۲۵۵' : 'Surah Al-Baqarah 2:255'}</p>
+<h1>${ur ? 'آیت الکرسی — اردو ترجمے کے ساتھ' : 'Ayatul Kursi (Ayat al-Kursi) with English translation'}</h1>
+<p class="lead">${ur ? 'آیت الکرسی، یعنی «کرسی والی آیت»، قرآن کی سب سے عظیم آیت ہے۔ نیچے پورا عربی متن، تلفظ اور ترجمہ ہے، پھر لفظ بہ لفظ معانی — ہر لفظ پر ٹیپ کر کے اس کی آواز سنیں، اور ▶ سے قاری کی تلاوت۔' : 'Ayat al-Kursi, “the Verse of the Throne”, is the greatest verse of the Quran. Below is the full Arabic, its pronunciation and meaning, then every word with its meaning — tap a word to hear it, or ▶ for a qari’s recitation.'}</p>
+<div class="ak-box">
+  <p class="ak-ar ar" lang="ar">${v.w.map((w) => w[0]).join(' ')}</p>
+  <p class="tr latin" dir="ltr">${esc(tr)}</p>
+  ${mean ? `<p class="ak-mean">${esc(mean)}</p>` : ''}
+</div>
+<h2>${ur ? 'لفظ بہ لفظ' : 'Word by word'}</h2>
+${verseHtml(lang, v, 255, 2)}
+<section class="fadail">
+  <h2>${ur ? '⭐ آیت الکرسی کی فضیلت' : '⭐ Virtues of Ayat al-Kursi'}</h2>
+  <ul class="fd-list">${virtues.map(([s, en, u]) => `<li><p>${esc(ur ? u : en)}</p><p class="fd-src">${ur ? 'حوالہ' : 'Source'}: ${S(s)}</p></li>`).join('')}</ul>
+</section>
+<section class="also"><h2>${ur ? 'کب پڑھیں' : 'When to read it'}</h2><div class="also-grid">${when.map(([t, f]) => `<a href="${link(lang, f)}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${t}</a>`).join('')}<a href="${link(lang, 'quran-' + q.slug + '.html')}#v255"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'سورہ بقرہ میں دیکھیں' : 'See it in Surah Al-Baqarah'}</a></div></section>
+<p class="note">${QURAN_FULL_NOTE[lang]}</p>`;
+  return layout(lang, { file: 'ayatul-kursi.html', section: 'quran', title, desc, body });
 }
 
 const QURAN_FULL_NOTE = {
@@ -5448,7 +5561,8 @@ function fullSurahPage(lang, i) {
 <h1>${title}</h1>
 <p class="lead">${esc(lead)}</p>
 ${reciteBar(lang, q.n, nV)}
-<p class="row"><a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a><a class="btn" href="${link(lang, 'quran-listen.html')}">${ur ? 'تمام قراء' : 'All reciters'}</a></p>
+<p class="row"><a class="btn" href="${link(lang, 'quran.html')}#all">${ur ? 'تمام سورتیں' : 'All surahs'}</a><a class="btn" href="${link(lang, 'quran-listen.html')}">${ur ? 'تمام قراء' : 'All reciters'}</a>${q.n === 2 ? `<a class="btn primary" href="${link(lang, 'ayatul-kursi.html')}">${ur ? 'آیت الکرسی' : 'Ayat al-Kursi'}</a>` : ''}</p>
+${fadailHtml(lang, q.n)}
 ${jump}
 <p class="surah-name ar" lang="ar">سُورَةُ ${q.name}</p>
 ${q.n === 1 || q.n === 9 ? '' : `<p class="basmala ar" lang="ar">${BASMALA}</p>`}
@@ -5458,7 +5572,7 @@ ${v.map((x, k) => verseHtml(lang, x, k + 1, q.n)).join('\n')}
   ${prev ? `<a class="btn" href="${href(prev)}">${T[lang].prev}: ${name(prev)}</a>` : `<a class="btn" href="${link(lang, 'quran.html')}">${T[lang].prev}: ${T[lang].nav.quran}</a>`}
   ${next ? `<a class="btn primary" href="${href(next)}">${ur ? 'اگلی: ' + name(next) + ' ←' : 'Next: ' + name(next) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran.html')}">${T[lang].nav.quran}</a>`}
 </nav>`;
-  return layout(lang, { file: 'quran-' + q.slug + '.html', section: 'quran', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+  return layout(lang, { file: 'quran-' + q.slug + '.html', section: 'quran', title: surahSeoTitle(lang, q) + (ur ? ' | حرف' : ' | Harf'), desc, body });
 }
 
 function listenPage(lang) {
@@ -8426,6 +8540,7 @@ function build() {
     DUA_TOPICS.forEach((t, i) => add(lang, t.slug + '.html', duaTopicPage(lang, i)));
     if (HISN.length) { add(lang, 'hisn-al-muslim.html', hisnHubPage(lang)); HISN.forEach((c, i) => add(lang, c.slug + '.html', hisnChapterPage(lang, i))); }
     add(lang, 'my-duas.html', myDuasPage(lang));
+    if (QURAN.length) { const ak = ayatKursiPage(lang); if (ak) add(lang, 'ayatul-kursi.html', ak); }
     if (HISN.length) add(lang, 'challenges.html', challengesPage(lang));
     files['harf-daily-' + lang + '.ics'] = icsFile(lang);
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
