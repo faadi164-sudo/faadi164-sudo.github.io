@@ -256,7 +256,7 @@ const TOPICS = [
   },
   {
     slug: 'days', en: 'Days of the week', ur: 'ہفتے کے دن',
-    titleEn: 'Days of the week in Arabic', titleUr: 'عربی میں ہفتے کے دن',
+    titleEn: 'Days of the week in Arabic', titleUr: 'عربی میں ہفتے کے دنوں کے نام',
     introEn: 'The Arabic week starts on Sunday, {الأحد}, “the first”. Most day names come from numbers: {الاثنين} is “the second” and {الخميس} “the fifth”. Friday, {الجمعة}, means “the gathering”.',
     introUr: 'عرب دنیا میں ہفتہ اتوار ({الأحد} یعنی «پہلا») سے شروع ہوتا ہے۔ زیادہ تر دنوں کے نام گنتی سے بنے ہیں: {الاثنين} یعنی «دوسرا» اور {الخميس} یعنی «پانچواں»۔ جمعہ ({الجمعة}) کا مطلب ہے «اکٹھا ہونا»۔',
     words: [
@@ -4267,6 +4267,14 @@ const ENGAGE_JS = String.raw`(function () {
 `;
 
 const ENGAGE_CSS = `
+.letter-words,.letter-opens{margin:28px 0}
+.lw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px}
+.lw-grid a{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none}
+.lw-grid a:hover{border-color:var(--accent)}
+.lw-grid .ar{font-size:1.6rem;line-height:1.5;text-align:right}
+.lw-m{font-size:.88rem;color:var(--muted)}
+.letter-opens .chip{color:var(--text)}
+.letter-opens .chip .ar{font-size:1.15rem}
 .dua-eng{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
 .eng-b{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);background:var(--surface);color:var(--text);border-radius:999px;padding:6px 13px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .eng-b:hover{border-color:var(--accent);color:var(--accent)}
@@ -4746,9 +4754,17 @@ function letterPage(lang, i) {
   const simHtml = similar.length
     ? similar.map((y) => `<a href="${link(lang, 'letter-' + y.slug + '.html')}"><span class="ar" lang="ar">${y.c}</span> ${letterName(lang, y)}</a>`).join(ur ? '، ' : ', ')
     : (ur ? 'کوئی قریبی ملتا جلتا حرف نہیں۔' : 'No close look-alikes.');
+  // Quran words that start with this letter (from the roots data), and surahs that open with it.
+  const bareW = (w) => w.replace(/[ً-ْٰـ]/g, '').replace(/[أإآٱ]/g, 'ا');
+  const seen = new Set();
+  const startWords = (typeof ROOT_LIST !== 'undefined' ? ROOT_LIST : []).flatMap((r) => r.lemmas.map((l) => ({ l, r })))
+    .filter(({ l }) => bareW(l.a)[0] === bareW(x.c) && (ur ? l.ur : l.en) && !seen.has(bareW(l.a)) && seen.add(bareW(l.a))).slice(0, 10);
+  const OPENERS = { 2: 'الم', 3: 'الم', 7: 'المص', 10: 'الر', 11: 'الر', 12: 'الر', 13: 'المر', 14: 'الر', 15: 'الر', 19: 'كهيعص', 20: 'طه', 26: 'طسم', 27: 'طس', 28: 'طسم', 29: 'الم', 30: 'الم', 31: 'الم', 32: 'الم', 36: 'يس', 38: 'ص', 40: 'حم', 41: 'حم', 42: 'حم عسق', 43: 'حم', 44: 'حم', 45: 'حم', 46: 'حم', 50: 'ق', 68: 'ن' };
+  const opens = Object.entries(OPENERS).filter(([, s]) => s.includes(bareW(x.c))).map(([n, s]) => [QURAN.find((q) => q.n === +n), s]).filter(([q]) => q);
+  const formsTxt = (x.joins ? [x.c + 'ـ', 'ـ' + x.c + 'ـ', 'ـ' + x.c] : ['ـ' + x.c]).join(' ');
   const C = ur ? {
-    title: `عربی حرف ${x.c} (${x.ar}): تلفظ، شکلیں اور مثال | حرف`,
-    desc: `عربی حرف ${x.c} (${x.ar}) سیکھیں: درست تلفظ، چاروں شکلیں اور آواز کے ساتھ مثال، اردو میں۔`,
+    title: `${x.c} (${x.ar}) — عربی حرف: چاروں شکلیں ${formsTxt}، تلفظ اور الفاظ | حرف`,
+    desc: `حرف ${x.c} (${x.ar}) ہر جگہ کیسا لکھا جاتا ہے (${formsTxt})، اس کی آواز سنیں، انگلی سے لکھنے کی مشق کریں اور ${x.c} والے قرآنی الفاظ دیکھیں — مفت، اردو میں۔`,
     h1: `عربی حرف <span class="ar" lang="ar">${x.c}</span> (${x.ar})`,
     lead: `${fmt('{' + x.ar + '}')} عربی حروفِ تہجی کا حرف نمبر ${ud(i + 1)} ہے۔ اردو میں اسے «${x.ur}» کہتے ہیں۔`,
     sndH: 'تلفظ', snd: x.sndUr,
@@ -4760,8 +4776,8 @@ function letterPage(lang, i) {
     listenL: 'حرف سنیں', listenW: 'لفظ سنیں', learn: 'سیکھ لیا؟ نشان لگائیں',
     quiz: 'سارے حروف ہو گئے؟ کوئز دیں ←',
   } : {
-    title: `Arabic letter ${x.en} (${x.c}): sound, shapes and example | Harf`,
-    desc: `Learn the Arabic letter ${x.en} (${x.c}): how to pronounce it, its four shapes, and an example word with audio.`,
+    title: `${x.c} ${x.en} — Arabic letter: ${x.joins ? '4 shapes' : 'shapes'} ${formsTxt}, sound & words | Harf`,
+    desc: `See how ${x.c} (${x.en}) is written in every position (${formsTxt}), hear how to say it, trace it with your finger, and learn Quran words with ${x.c}. Free, no sign-up.`,
     h1: `The Arabic letter ${x.en} <span class="ar" lang="ar">${x.c}</span>`,
     lead: `${esc(x.en)} (${fmt('{' + x.ar + '}')}) is the ${ord(i + 1)} letter of the Arabic alphabet. It is pronounced <strong>${esc(x.tr)}</strong>.`,
     sndH: 'How to say it', snd: x.snd,
@@ -4807,6 +4823,16 @@ function letterPage(lang, i) {
   <div class="fact"><h3>${C.simH}</h3><p>${simHtml}</p></div>
   <div class="fact"><h3>${C.exH}</h3><p class="example"><span class="ar" lang="ar">${x.w}</span><span><span class="latin">${esc(x.wt)}</span><br>${esc(C.mean)}</span></p></div>
 </div>
+${startWords.length ? `<section class="letter-words">
+  <h2>${ur ? `${fmt('{' + x.c + '}')} سے شروع ہونے والے قرآنی الفاظ` : `Quran words that start with ${fmt('{' + x.c + '}')}`}</h2>
+  <div class="lw-grid">${startWords.map(({ l, r }) => `<a href="${link(lang, 'quran-root-' + r.slug + '.html')}"><span class="ar" lang="ar">${l.a}</span><span class="lw-m">${esc(ur ? l.ur : l.en)}</span></a>`).join('')}</div>
+  <p class="note">${ur ? 'کسی لفظ پر کلک کریں: اس کا مادہ اور قرآن میں اس خاندان کے سب الفاظ دیکھیں۔' : 'Tap a word to see its root and the whole family of words from it in the Quran.'}</p>
+</section>` : ''}
+${opens.length ? `<section class="letter-opens">
+  <h2>${ur ? `وہ سورتیں جو ${fmt('{' + x.c + '}')} سے شروع ہوتی ہیں` : `Surahs that open with ${fmt('{' + x.c + '}')}`}</h2>
+  <p class="note">${ur ? 'یہ «حروفِ مقطعات» ہیں: کچھ سورتوں کے شروع میں الگ الگ پڑھے جانے والے حروف، جن کا اصل مطلب اللہ ہی جانتا ہے۔' : 'These are the “disjoined letters” (al-muqattaʿat) that open some surahs. They are read letter by letter, and their full meaning is known to Allah.'}</p>
+  <div class="chips">${opens.map(([q, s]) => `<a class="chip" href="${link(lang, 'quran-' + q.slug + '.html')}"><span class="ar" lang="ar">${s}</span> ${ur ? q.ur : 'Surah ' + q.en} (${num(lang, q.n)})</a>`).join('')}</div>
+</section>` : ''}
 <nav class="pager" aria-label="${ur ? 'حروف' : 'Letters'}">
   ${prev ? `<a class="btn" href="${link(lang, 'letter-' + prev.slug + '.html')}">${T[lang].prev}: <span class="ar" lang="ar">${prev.c}</span></a>` : '<span></span>'}
   ${next ? `<a class="btn" href="${link(lang, 'letter-' + next.slug + '.html')}">${T[lang].next.replace(/[→←]/, '').trim()}: <span class="ar" lang="ar">${next.c}</span> ${ur ? '←' : '→'}</a>` : `<a class="btn primary" href="${link(lang, 'quiz.html')}">${C.quiz}</a>`}
@@ -5187,7 +5213,8 @@ ${deckHtml(lang, t.slug, t.words)}
   ${prev ? `<a class="btn" href="${link(lang, 'vocab-' + prev.slug + '.html')}">${T[lang].prev}: ${ur ? prev.ur : prev.en}</a>` : '<span></span>'}
   ${next ? `<a class="btn primary" href="${link(lang, 'vocab-' + next.slug + '.html')}">${ur ? 'اگلا' : 'Next'}: ${ur ? next.ur + ' ←' : next.en + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quiz.html')}">${ur ? 'کوئز دیں ←' : 'Take the quiz →'}</a>`}
 </nav>`;
-  return layout(lang, { file: 'vocab-' + t.slug + '.html', section: 'vocabulary', title: title + (ur ? ' | حرف' : ' | Harf'), desc, body });
+  const seoTitle = ur ? `${title} — ${ud(t.words.length)} الفاظ، اردو ترجمہ اور تلفظ کے ساتھ | حرف` : `${title}: ${t.words.length} words with pronunciation and audio | Harf`;
+  return layout(lang, { file: 'vocab-' + t.slug + '.html', section: 'vocabulary', title: seoTitle, desc, body });
 }
 
 function phrasesPage(lang) {
@@ -6228,8 +6255,8 @@ const AR_DAYS = ['الأَحَد', 'الاِثْنَيْن', 'الثُّلَاث
 function hijriPage(lang) {
   const ur = lang === 'ur';
   const C = ur ? {
-    title: 'آج کی اسلامی تاریخ اور ہجری عیسوی تاریخ کنورٹر | حرف', desc: 'آج کی ہجری (اسلامی) تاریخ دیکھیں اور کوئی بھی تاریخ ہجری سے عیسوی یا عیسوی سے ہجری میں تبدیل کریں۔ ہجری مہینوں کے نام عربی اور اردو میں۔',
-    h1: 'ہجری تاریخ کنورٹر', lead: 'آج کی اسلامی تاریخ، اور ہجری و عیسوی کیلنڈر کے درمیان تاریخ تبدیل کرنے کا آسان طریقہ۔',
+    title: 'آج کی اسلامی (ہجری) تاریخ — سعودی عرب، اُمّ القریٰ + ہجری عیسوی کنورٹر | حرف', desc: 'آج کی ہجری (اسلامی، عربی) تاریخ کیا ہے؟ سعودی اُمّ القریٰ کیلنڈر کے مطابق آج کی تاریخ دیکھیں، رمضان اور عید میں کتنے دن باقی ہیں، اور کوئی بھی تاریخ ہجری سے عیسوی یا عیسوی سے ہجری میں تبدیل کریں۔',
+    h1: 'آج کی اسلامی (ہجری) تاریخ', lead: 'سعودی عرب کے اُمّ القریٰ کیلنڈر کے مطابق آج کی ہجری تاریخ، رمضان اور عید میں باقی دن، اور ہجری و عیسوی تاریخ تبدیل کرنے کا آسان کنورٹر۔',
     today: 'آج کی تاریخ', g2h: 'عیسوی سے ہجری', h2g: 'ہجری سے عیسوی', day: 'دن', month: 'مہینہ', year: 'سال', conv: 'تبدیل کریں',
     events: 'آنے والی اسلامی تاریخیں', ev: [['رمضان کا آغاز', 9, 1], ['عید الفطر', 10, 1], ['یومِ عرفہ', 12, 9], ['عید الاضحیٰ', 12, 10], ['اسلامی نیا سال', 1, 1], ['عاشورا', 1, 10]],
     monthsH: 'ہجری مہینوں کے نام', note: 'یہ کنورٹر اُمّ القریٰ کیلنڈر استعمال کرتا ہے، جو سعودی عرب کا سرکاری کیلنڈر ہے۔ پاکستان اور دوسرے ممالک میں مہینہ چاند دیکھ کر شروع ہوتا ہے، اس لیے وہاں تاریخ ایک دن آگے پیچھے ہو سکتی ہے۔ عید اور روزوں کے لیے اپنی مقامی رویتِ ہلال کمیٹی کے اعلان پر عمل کریں۔',
@@ -6237,8 +6264,8 @@ function hijriPage(lang) {
     thM: ['#', 'عربی', 'اردو', 'تفصیل'], about: 'ہجری کیلنڈر قمری ہے: ہر مہینہ ۲۹ یا ۳۰ دن کا ہوتا ہے اور سال تقریباً ۳۵۴ دن کا، یعنی عیسوی سال سے ۱۱ دن چھوٹا۔ اسی لیے رمضان ہر سال تقریباً ۱۱ دن پہلے آتا ہے۔ اس کا آغاز نبی کریم ﷺ کی مکہ سے مدینہ ہجرت کے سال سے ہوتا ہے۔', aboutH: 'ہجری کیلنڈر کیا ہے؟',
     wd: ['اتوار', 'پیر', 'منگل', 'بدھ', 'جمعرات', 'جمعہ', 'ہفتہ'], ah: 'ہجری', ce: 'عیسوی',
   } : {
-    title: 'Today’s Islamic date & Hijri to Gregorian converter | Harf', desc: 'See today’s Hijri (Islamic) date and convert any date from Hijri to Gregorian or Gregorian to Hijri. With the Islamic month names in Arabic, English and Urdu.',
-    h1: 'Hijri date converter', lead: 'Today’s Islamic date, and a quick way to convert dates between the Hijri and Gregorian calendars.',
+    title: 'Hijri Date Today (Saudi Umm al-Qura) + Hijri ⇄ Gregorian Converter | Harf', desc: 'What is the Hijri (Islamic, Arabic) date today? See today’s date on Saudi Arabia’s Umm al-Qura calendar, days left until Ramadan and Eid, and convert any date between Hijri and Gregorian.',
+    h1: 'Hijri date today', lead: 'Today’s Islamic date on Saudi Arabia’s Umm al-Qura calendar, the days left until Ramadan and Eid, and a quick Hijri ⇄ Gregorian date converter.',
     today: 'Today', g2h: 'Gregorian to Hijri', h2g: 'Hijri to Gregorian', day: 'Day', month: 'Month', year: 'Year', conv: 'Convert',
     events: 'Coming Islamic dates', ev: [['Start of Ramadan', 9, 1], ['Eid al-Fitr', 10, 1], ['Day of ʿArafah', 12, 9], ['Eid al-Adha', 12, 10], ['Islamic New Year', 1, 1], ['ʿĀshūrāʾ', 1, 10]],
     monthsH: 'The Islamic months', note: 'This converter uses the Umm al-Qura calendar, the official calendar of Saudi Arabia. In Pakistan, India, the UK and elsewhere the month often starts by local moon sighting, so the date there can differ by a day. For Eid and fasting, follow your local moon-sighting announcement.',
@@ -6253,7 +6280,14 @@ function hijriPage(lang) {
   const body = `${toolCrumbs(lang, C.h1)}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
-<div class="tool" id="hToday" aria-live="polite"><p class="small">${C.today}</p><p class="big-date">…</p></div>
+<div class="tool" id="hToday" aria-live="polite"><p class="small">${C.today}</p><p class="big-date">${(() => {
+    try {
+      const d = new Date();
+      const h = new Intl.DateTimeFormat((ur ? 'ur-PK' : 'en-GB') + '-u-ca-islamic-umalqura', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Riyadh' }).format(d);
+      const g = new Intl.DateTimeFormat(ur ? 'ur-PK' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Riyadh' }).format(d);
+      return esc(h + ' · ' + g);
+    } catch (e) { return '…'; }
+  })()}</p></div>
 <div class="conv">
   <div class="tool"><h2>${C.g2h}</h2>
     <label>${C.day} <input id="gD" type="number" min="1" max="31" style="width:5em"></label>
