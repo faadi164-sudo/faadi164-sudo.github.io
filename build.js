@@ -3885,6 +3885,9 @@ function buildSearchIndex(lang) {
   DUA_TOPICS.forEach((t) => add('', ur ? t.ur : t.en, ur ? 'موضوعاتی دعا' : 'Dua by situation', t.slug + '.html', 'dua'));
   if (typeof HISN !== 'undefined') HISN.forEach((c) => add('', ur ? c.ur : c.en, ur ? 'حصن المسلم' : 'Hisn al-Muslim', c.slug + '.html', 'dua'));
   add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
+  add('مَوَاقِيتُ الصَّلَاة', ur ? 'نماز کے اوقات' : 'Prayer times (namaz timings)', ur ? 'فجر، ظہر، عصر، مغرب، عشاء — آپ کے شہر کے لیے' : 'Fajr, Dhuhr, Asr, Maghrib, Isha for your city', 'prayer-times.html', 'page');
+  add('الْقِبْلَة', ur ? 'قبلہ کی سمت' : 'Qibla direction', ur ? 'کمپاس کے ساتھ قبلہ رخ' : 'Find the Qibla with a compass', 'qibla-direction.html', 'page');
+  add('تَسْبِيح', ur ? 'تسبیح کاؤنٹر' : 'Tasbih counter', ur ? 'سبحان اللہ ۳۳، الحمد للہ ۳۳، اللہ اکبر ۳۴' : 'SubhanAllah 33, Alhamdulillah 33, Allahu Akbar 34', 'tasbih-counter.html', 'page');
   PHRASES.forEach((p) => add(p[0], p[1], ur ? p[3] : p[2], 'phrases.html', 'phrase'));
   SAUDI.forEach((g) => g.items.forEach((it) => add(it[0], it[1], ur ? it[3] : it[2], 'saudi-arabic.html', 'phrase')));
   LESSONS.forEach((l) => (l.ex || []).forEach((e) => add(e[0], e[1], ur ? e[3] : e[2], l.slug + '.html', 'sentence')));
@@ -6210,6 +6213,15 @@ function notFoundPage() {
 // Small free tools that people search for: an Arabic keyboard, a Hijri date converter,
 // Muslim names with meanings, and Arabic-to-English letters. Each tool page carries its own script.
 const TOOL_LIST = [
+  ['prayer-times.html', 'صَلَاة', 'Prayer times today', 'آج کے نماز کے اوقات',
+    'Fajr to Isha for your city, a countdown to the next prayer and a 7-day timetable.',
+    'آپ کے شہر کے لیے فجر سے عشاء تک، اگلی نماز کی الٹی گنتی اور ہفتے کا ٹائم ٹیبل۔'],
+  ['qibla-direction.html', 'قِبْلَة', 'Qibla direction', 'قبلہ کی سمت',
+    'The Qibla from your city in degrees, with a live compass on your phone.',
+    'آپ کے شہر سے قبلہ کا رخ درجوں میں، موبائل پر کمپاس کے ساتھ۔'],
+  ['tasbih-counter.html', 'تَسْبِيح', 'Tasbih counter', 'تسبیح کاؤنٹر',
+    'A tap counter for dhikr, with the after-salah and bedtime tasbih built in.',
+    'ذکر گننے کے لیے ٹیپ کاؤنٹر، نماز کے بعد اور سوتے وقت کی تسبیحات کے ساتھ۔'],
   ['arabic-keyboard.html', 'كِيبُورْد', 'Arabic keyboard', 'عربی کی بورڈ',
     'Type Arabic with harakat on any device, then copy it, hear it or turn it into English letters.',
     'کسی بھی ڈیوائس پر اعراب کے ساتھ عربی لکھیں، پھر کاپی کریں، سنیں یا انگریزی حروف میں بدلیں۔'],
@@ -6537,6 +6549,377 @@ ${HIJRI_REGION_JS}
 })();
 </script>`;
   return layout(lang, { file: 'hijri-converter.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
+
+// ---- Daily-use tools: tasbih counter, prayer times, Qibla direction
+const DAILY_CSS = `
+.tsb{text-align:center}
+.tsb-dk{font-family:var(--arabic,serif);font-size:34px;line-height:1.7;margin:4px 0 0}
+.tsb-tr{color:var(--gold);font-weight:600;margin:0}
+.tsb-mn{color:var(--muted);margin:2px 0 10px}
+.tsb-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;width:min(250px,72vw);aspect-ratio:1;margin:8px auto;border-radius:50%;border:6px solid var(--accent);background:var(--accent-soft);color:var(--ink);font:inherit;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;transition:transform .06s}
+.tsb-btn:active{transform:scale(.96)}
+.tsb-btn b{font-size:64px;line-height:1}
+.tsb-btn span{color:var(--muted);font-size:15px;margin-top:6px}
+.tsb-btn.done{border-color:var(--gold);background:var(--surface)}
+.tsb-bar{height:8px;border-radius:8px;background:var(--line);overflow:hidden;max-width:320px;margin:10px auto 0}
+.tsb-bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .15s}
+.tsb .row{justify-content:center}
+.tsb-presets{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 6px}
+.tsb-presets button,.tsb-tg button{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink);padding:6px 12px;cursor:pointer}
+.tsb-presets button[aria-pressed=true],.tsb-tg button[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.tsb-tg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}
+.tsb-tot{color:var(--muted);font-size:14px;margin-top:10px}
+.pt-loc{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:14px}
+.pt-c{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg);text-align:center}
+.pt-c .ar{display:block;font-size:22px;color:var(--gold)}
+.pt-c b{display:block;font-size:15px}
+.pt-c .tm{display:block;font-size:26px;font-weight:700;margin-top:4px;direction:ltr}
+.pt-c.next{border-color:var(--accent);background:var(--accent-soft)}
+.pt-c.sun{opacity:.75}
+.pt-next{font-size:18px;margin:12px 0 0}
+.pt-next strong{color:var(--accent)}
+.pt-wk td,.pt-wk th{text-align:center;direction:ltr}
+.qb-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;align-items:center}
+.qb-dial{position:relative;width:min(280px,78vw);aspect-ratio:1;margin:0 auto;border-radius:50%;border:2px solid var(--line);background:var(--bg)}
+.qb-rose{position:absolute;inset:0;transition:transform .2s}
+.qb-rose span{position:absolute;font-weight:700;color:var(--muted);font-size:15px}
+.qb-rose .n{top:6px;left:50%;transform:translateX(-50%);color:var(--accent)}
+.qb-rose .s{bottom:6px;left:50%;transform:translateX(-50%)}
+.qb-rose .e{right:10px;top:50%;transform:translateY(-50%)}
+.qb-rose .w{left:10px;top:50%;transform:translateY(-50%)}
+.qb-arrow{position:absolute;left:50%;top:50%;width:6px;height:44%;margin-left:-3px;transform-origin:50% 0;background:linear-gradient(var(--gold),var(--accent));border-radius:3px}
+.qb-arrow::after{content:"🕋";position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);font-size:26px}
+.qb-big{font-size:40px;font-weight:700;margin:0;direction:ltr}
+.qb-st{color:var(--muted);font-size:15px}
+.qb-ok{color:var(--accent);font-weight:700}
+`;
+
+// Cities: [key, English, Urdu, lat, lon, IANA time zone]
+const PT_CITIES = [
+  ['makkah', 'Makkah', 'مکہ مکرمہ', 21.4225, 39.8262, 'Asia/Riyadh'], ['madinah', 'Madinah', 'مدینہ منورہ', 24.4672, 39.6024, 'Asia/Riyadh'],
+  ['riyadh', 'Riyadh', 'ریاض', 24.7136, 46.6753, 'Asia/Riyadh'], ['jeddah', 'Jeddah', 'جدہ', 21.5433, 39.1728, 'Asia/Riyadh'],
+  ['dammam', 'Dammam', 'دمام', 26.4207, 50.0888, 'Asia/Riyadh'], ['khobar', 'Al Khobar', 'الخبر', 26.2172, 50.1971, 'Asia/Riyadh'],
+  ['hofuf', 'Al-Ahsa (Hofuf)', 'الاحساء (ہفوف)', 25.3647, 49.5856, 'Asia/Riyadh'], ['dubai', 'Dubai', 'دبئی', 25.2048, 55.2708, 'Asia/Dubai'],
+  ['abudhabi', 'Abu Dhabi', 'ابوظہبی', 24.4539, 54.3773, 'Asia/Dubai'], ['doha', 'Doha', 'دوحہ', 25.2854, 51.531, 'Asia/Qatar'],
+  ['kuwait', 'Kuwait City', 'کویت', 29.3759, 47.9774, 'Asia/Kuwait'], ['manama', 'Manama', 'منامہ', 26.2285, 50.586, 'Asia/Bahrain'],
+  ['muscat', 'Muscat', 'مسقط', 23.588, 58.3829, 'Asia/Muscat'], ['karachi', 'Karachi', 'کراچی', 24.8607, 67.0011, 'Asia/Karachi'],
+  ['lahore', 'Lahore', 'لاہور', 31.5204, 74.3587, 'Asia/Karachi'], ['islamabad', 'Islamabad', 'اسلام آباد', 33.6844, 73.0479, 'Asia/Karachi'],
+  ['rawalpindi', 'Rawalpindi', 'راولپنڈی', 33.5651, 73.0169, 'Asia/Karachi'], ['faisalabad', 'Faisalabad', 'فیصل آباد', 31.4504, 73.135, 'Asia/Karachi'],
+  ['multan', 'Multan', 'ملتان', 30.1575, 71.5249, 'Asia/Karachi'], ['peshawar', 'Peshawar', 'پشاور', 34.0151, 71.5249, 'Asia/Karachi'],
+  ['quetta', 'Quetta', 'کوئٹہ', 30.1798, 66.975, 'Asia/Karachi'], ['hyderabad-pk', 'Hyderabad (Sindh)', 'حیدرآباد (سندھ)', 25.396, 68.3578, 'Asia/Karachi'],
+  ['sialkot', 'Sialkot', 'سیالکوٹ', 32.4945, 74.5229, 'Asia/Karachi'], ['delhi', 'Delhi', 'دہلی', 28.6139, 77.209, 'Asia/Kolkata'],
+  ['mumbai', 'Mumbai', 'ممبئی', 19.076, 72.8777, 'Asia/Kolkata'], ['hyderabad-in', 'Hyderabad (India)', 'حیدرآباد (دکن)', 17.385, 78.4867, 'Asia/Kolkata'],
+  ['dhaka', 'Dhaka', 'ڈھاکہ', 23.8103, 90.4125, 'Asia/Dhaka'], ['london', 'London', 'لندن', 51.5074, -0.1278, 'Europe/London'],
+  ['birmingham', 'Birmingham', 'برمنگھم', 52.4862, -1.8904, 'Europe/London'], ['manchester', 'Manchester', 'مانچسٹر', 53.4808, -2.2426, 'Europe/London'],
+  ['bradford', 'Bradford', 'بریڈفورڈ', 53.796, -1.7594, 'Europe/London'], ['newyork', 'New York', 'نیویارک', 40.7128, -74.006, 'America/New_York'],
+  ['chicago', 'Chicago', 'شکاگو', 41.8781, -87.6298, 'America/Chicago'], ['houston', 'Houston', 'ہیوسٹن', 29.7604, -95.3698, 'America/Chicago'],
+  ['toronto', 'Toronto', 'ٹورنٹو', 43.6532, -79.3832, 'America/Toronto'], ['cairo', 'Cairo', 'قاہرہ', 30.0444, 31.2357, 'Africa/Cairo'],
+  ['istanbul', 'Istanbul', 'استنبول', 41.0082, 28.9784, 'Europe/Istanbul'], ['kualalumpur', 'Kuala Lumpur', 'کوالالمپور', 3.139, 101.6869, 'Asia/Kuala_Lumpur'],
+  ['jakarta', 'Jakarta', 'جکارتہ', -6.2088, 106.8456, 'Asia/Jakarta'], ['sydney', 'Sydney', 'سڈنی', -33.8688, 151.2093, 'Australia/Sydney'],
+];
+
+// Shared client code: location (GPS or city), saved in localStorage 'harf-loc'.
+const LOC_JS = String.raw`
+function harfLocLoad(){ try{ return JSON.parse(localStorage.getItem('harf-loc')||'null'); }catch(e){ return null; } }
+function harfLocSave(o){ try{ localStorage.setItem('harf-loc', JSON.stringify(o)); }catch(e){} }
+function harfDeviceTz(){ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC'; }catch(e){ return 'UTC'; } }
+function harfGuessCity(cities){ var tz=harfDeviceTz(), best=null; for(var i=0;i<cities.length;i++){ if(cities[i][5]===tz){ best=cities[i]; break; } } return best; }
+`;
+
+const PRAYER_JS = String.raw`
+(function(){
+  var D=JSON.parse(document.getElementById('pt-data').textContent), ur=D.ur;
+  var rad=Math.PI/180, sin=function(d){return Math.sin(d*rad);}, cos=function(d){return Math.cos(d*rad);}, tan=function(d){return Math.tan(d*rad);};
+  var asin=function(x){return Math.asin(x)/rad;}, acos=function(x){return Math.acos(x)/rad;}, atan2=function(y,x){return Math.atan2(y,x)/rad;}, acot=function(x){return Math.atan(1/x)/rad;};
+  var fixA=function(a){a=a-360*Math.floor(a/360);return a;}, fixH=function(h){h=h-24*Math.floor(h/24);return h;};
+  // Methods: fajr angle, isha angle or minutes after maghrib
+  var M={ mwl:{f:18,i:17}, isna:{f:15,i:15}, egypt:{f:19.5,i:17.5}, makkah:{f:18.5,im:90}, karachi:{f:18,i:18}, gulf:{f:19.5,im:90}, tehran:{f:17.7,i:14} };
+  var TZM={'Asia/Karachi':['karachi',2],'Asia/Kolkata':['karachi',2],'Asia/Calcutta':['karachi',2],'Asia/Dhaka':['karachi',2],'Asia/Riyadh':['makkah',1],'Asia/Dubai':['gulf',1],'Asia/Qatar':['gulf',1],'Asia/Kuwait':['gulf',1],'Asia/Bahrain':['gulf',1],'Asia/Muscat':['gulf',1],'Africa/Cairo':['egypt',1],'America/New_York':['isna',1],'America/Chicago':['isna',1],'America/Toronto':['isna',1],'America/Los_Angeles':['isna',1],'America/Denver':['isna',1],'Asia/Tehran':['tehran',1]};
+  function julian(y,m,d){ if(m<=2){y-=1;m+=12;} var A=Math.floor(y/100),B=2-A+Math.floor(A/4); return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5; }
+  function sunPos(jd){ var Dd=jd-2451545.0, g=fixA(357.529+0.98560028*Dd), q=fixA(280.459+0.98564736*Dd), L=fixA(q+1.915*sin(g)+0.020*sin(2*g)), e=23.439-0.00000036*Dd;
+    var RA=atan2(cos(e)*sin(L),cos(L))/15; return {decl:asin(sin(e)*sin(L)), eqt:q/15-fixH(RA)}; }
+  function compute(y,m,d,lat,lon,method,asrF,ram){
+    var jd=julian(y,m,d)-lon/(15*24);
+    var mid=function(t){ var e=sunPos(jd+t).eqt; return fixH(12-e); };
+    var ang=function(a,t,ccw){ var dc=sunPos(jd+t).decl, n=mid(t), x=(-sin(a)-sin(dc)*sin(lat))/(cos(dc)*cos(lat)); var T=acos(x)/15; return n+(ccw?-T:T); };
+    var asr=function(f,t){ var dc=sunPos(jd+t).decl; return ang(-acot(f+tan(Math.abs(lat-dc))),t); };
+    var t={fajr:5/24,sunrise:6/24,dhuhr:12/24,asr:13/24,sunset:18/24,isha:18/24}, r, k, mm=M[method];
+    for(k=0;k<2;k++){
+      r={ fajr:ang(mm.f,t.fajr,true), sunrise:ang(0.833,t.sunrise,true), dhuhr:mid(t.dhuhr), asr:asr(asrF,t.asr), sunset:ang(0.833,t.sunset), isha:mm.im?NaN:ang(mm.i,t.isha) };
+      for(var key in r) if(!isNaN(r[key])) t[key]=r[key]/24;
+    }
+    var night=24-(r.sunset-r.sunrise);
+    // High latitudes: if the angle never happens, use the angle-based portion of the night.
+    if(isNaN(r.fajr)||r.sunrise-r.fajr>mm.f/60*night) r.fajr=r.sunrise-mm.f/60*night;
+    if(mm.im){ r.isha=r.sunset+(ram&&method==='makkah'?120:mm.im)/60; } else if(isNaN(r.isha)||r.isha-r.sunset>mm.i/60*night) r.isha=r.sunset+mm.i/60*night;
+    var o={}, tzAdj=-lon/15;
+    ['fajr','sunrise','dhuhr','asr','sunset','isha'].forEach(function(n){ o[n]=r[n]+tzAdj; });
+    o.dhuhr+=1/60; // a minute after zawal, as most timetables do
+    return o; // hours in UTC
+  }
+  function toDate(y,m,d,h){ return new Date(Date.UTC(y,m-1,d)+Math.round(h*60)*60000); }
+  function partsIn(date,tz){ var p={}; new Intl.DateTimeFormat('en-GB',{timeZone:tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(date).forEach(function(x){p[x.type]=x.value;}); return {y:+p.year,m:+p.month,d:+p.day}; }
+  function hm(date,tz){ var s=new Intl.DateTimeFormat(ur?'en-GB':'en-US',{timeZone:tz,hour:'numeric',minute:'2-digit',hour12:true}).format(date); return ur?s.replace(/[0-9]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'[x];}).replace('am','صبح').replace('pm','شام').replace('AM','صبح').replace('PM','شام'):s; }
+  var NAMES=D.names, sel=document.getElementById('ptCity'), mSel=document.getElementById('ptMethod'), aSel=document.getElementById('ptAsr'), st=document.getElementById('ptStatus');
+  var loc=harfLocLoad();
+  if(!loc){ var g=harfGuessCity(D.cities)||D.cities[0]; loc={k:g[0]}; }
+  function cur(){ if(loc.k==='gps') return {name:D.here, lat:loc.lat, lon:loc.lon, tz:loc.tz||harfDeviceTz()}; for(var i=0;i<D.cities.length;i++) if(D.cities[i][0]===loc.k){ var c=D.cities[i]; return {name:ur?c[2]:c[1],lat:c[3],lon:c[4],tz:c[5]}; } var c0=D.cities[0]; return {name:ur?c0[2]:c0[1],lat:c0[3],lon:c0[4],tz:c0[5]}; }
+  function defaults(tz){ var x=TZM[tz]; if(!x){ x=/^Europe\//.test(tz)?['mwl',1]:['mwl',1]; } return x; }
+  var timer=null;
+  function render(){
+    var c=cur(), dm=defaults(c.tz), method=loc.m||dm[0], asrF=+(loc.a||dm[1]);
+    mSel.value=method; aSel.value=String(asrF); sel.value=loc.k;
+    var now=new Date(), p=partsIn(now,c.tz), ram=false; try{ ram=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{month:'numeric',timeZone:c.tz}).format(now)==='9'; }catch(e){}
+    var o=compute(p.y,p.m,p.d,c.lat,c.lon,method,asrF,ram);
+    var keys=['fajr','sunrise','dhuhr','asr','sunset','isha'], dates={};
+    keys.forEach(function(k){ dates[k]=toDate(p.y,p.m,p.d,o[k]); });
+    if(dates.dhuhr.getUTCDay&&new Intl.DateTimeFormat('en-US',{timeZone:c.tz,weekday:'short'}).format(now)==='Fri') document.getElementById('ptDhuhrName').textContent=D.jumuah; else document.getElementById('ptDhuhrName').textContent=NAMES.dhuhr[0];
+    var next=null; for(var i=0;i<keys.length;i++){ if(keys[i]!=='sunrise'&&dates[keys[i]]>now){ next=keys[i]; break; } }
+    var nextDate; if(!next){ var tm=new Date(now.getTime()+864e5), p2=partsIn(tm,c.tz), o2=compute(p2.y,p2.m,p2.d,c.lat,c.lon,method,asrF,ram); next='fajr'; nextDate=toDate(p2.y,p2.m,p2.d,o2.fajr); } else nextDate=dates[next];
+    keys.forEach(function(k){ var el=document.getElementById('pt-'+k); el.querySelector('.tm').textContent=hm(dates[k],c.tz); el.classList.toggle('next',k===next); });
+    document.getElementById('ptPlace').textContent=c.name;
+    document.getElementById('ptDate').textContent=new Intl.DateTimeFormat(ur?'ur-PK':'en-GB',{timeZone:c.tz,weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(now);
+    var nName=next==='sunset'?NAMES.sunset[0]:NAMES[next][0];
+    function tick(){ var ms=nextDate-new Date(); if(ms<0){ render(); return; } var h=Math.floor(ms/36e5), m=Math.floor(ms%36e5/6e4), s=Math.floor(ms%6e4/1e3);
+      var t=(h?h+(ur?' گھنٹے ':'h '):'')+m+(ur?' منٹ ':'m ')+s+(ur?' سیکنڈ':'s'); if(ur) t=t.replace(/[0-9]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'[x];});
+      document.getElementById('ptNext').innerHTML=(ur?'اگلی نماز: <strong>'+nName+'</strong> — '+t+' باقی':'Next: <strong>'+nName+'</strong> in '+t); }
+    clearInterval(timer); tick(); timer=setInterval(tick,1000);
+    // 7-day table
+    var rows=''; for(var dd=0;dd<7;dd++){ var day=new Date(now.getTime()+dd*864e5), q=partsIn(day,c.tz), oo=compute(q.y,q.m,q.d,c.lat,c.lon,method,asrF,ram);
+      rows+='<tr><td>'+new Intl.DateTimeFormat(ur?'ur-PK':'en-GB',{timeZone:c.tz,weekday:'short',day:'numeric',month:'short'}).format(day)+'</td>'+keys.map(function(k){ return '<td>'+hm(toDate(q.y,q.m,q.d,oo[k]),c.tz)+'</td>'; }).join('')+'</tr>'; }
+    document.getElementById('ptWeek').innerHTML=rows;
+    st.textContent=(loc.k==='gps'?D.usingGps:'')+' '+D.tzLabel+' '+c.tz;
+  }
+  sel.addEventListener('change',function(){ loc={k:sel.value,m:loc.m,a:loc.a}; if(sel.value!=='gps'){ delete loc.m; delete loc.a; } harfLocSave(loc); render(); });
+  mSel.addEventListener('change',function(){ loc.m=mSel.value; harfLocSave(loc); render(); });
+  aSel.addEventListener('change',function(){ loc.a=aSel.value; harfLocSave(loc); render(); });
+  document.getElementById('ptGps').addEventListener('click',function(){
+    if(!navigator.geolocation){ st.textContent=D.noGps; return; } st.textContent=D.finding;
+    navigator.geolocation.getCurrentPosition(function(pos){ loc={k:'gps',lat:+pos.coords.latitude.toFixed(4),lon:+pos.coords.longitude.toFixed(4),tz:harfDeviceTz()}; harfLocSave(loc); render(); },
+      function(){ st.textContent=D.noGps; },{timeout:15000,maximumAge:6e5});
+  });
+  render();
+})();
+`;
+
+const QIBLA_JS = String.raw`
+(function(){
+  var D=JSON.parse(document.getElementById('qb-data').textContent), ur=D.ur;
+  var K={lat:21.422487,lon:39.826206}, rad=Math.PI/180;
+  function bearing(lat,lon){ var p1=lat*rad,p2=K.lat*rad,dl=(K.lon-lon)*rad; var y=Math.sin(dl)*Math.cos(p2), x=Math.cos(p1)*Math.sin(p2)-Math.sin(p1)*Math.cos(p2)*Math.cos(dl); return (Math.atan2(y,x)/rad+360)%360; }
+  function dist(lat,lon){ var p1=lat*rad,p2=K.lat*rad,dp=(K.lat-lat)*rad,dl=(K.lon-lon)*rad; var a=Math.sin(dp/2)*Math.sin(dp/2)+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)*Math.sin(dl/2); return 6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
+  function n(x){ return ur?String(x).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d];}):String(x); }
+  var DIRS=ur?['شمال','شمال مشرق','مشرق','جنوب مشرق','جنوب','جنوب مغرب','مغرب','شمال مغرب']:['north','north-east','east','south-east','south','south-west','west','north-west'];
+  var sel=document.getElementById('qbCity'), st=document.getElementById('qbStatus'), arrow=document.getElementById('qbArrow'), rose=document.getElementById('qbRose');
+  var loc=harfLocLoad(); if(!loc){ var g=harfGuessCity(D.cities)||D.cities[0]; loc={k:g[0]}; }
+  var qib=0, heading=null;
+  function cur(){ if(loc.k==='gps') return {name:D.here,lat:loc.lat,lon:loc.lon}; for(var i=0;i<D.cities.length;i++) if(D.cities[i][0]===loc.k){ var c=D.cities[i]; return {name:ur?c[2]:c[1],lat:c[3],lon:c[4]}; } var c0=D.cities[0]; return {name:ur?c0[2]:c0[1],lat:c0[3],lon:c0[4]}; }
+  function draw(){ var rot=heading===null?0:-heading; rose.style.transform='rotate('+rot+'deg)'; arrow.style.transform='rotate('+(180+qib+rot)+'deg)';
+    if(heading!==null){ var diff=Math.abs(((qib-heading)+540)%360-180); document.getElementById('qbFace').innerHTML=diff<5?'<span class="qb-ok">'+D.facing+'</span>':D.turn; } }
+  function render(){ var c=cur(); sel.value=loc.k; qib=bearing(c.lat,c.lon);
+    var dir=DIRS[Math.round(qib/45)%8], km=Math.round(dist(c.lat,c.lon));
+    document.getElementById('qbDeg').textContent=n(qib.toFixed(1))+'°';
+    document.getElementById('qbTxt').textContent=ur?(c.name+' سے قبلہ: شمال سے گھڑی کی سمت '+n(Math.round(qib))+' درجے ('+dir+' کی طرف)۔ مکہ مکرمہ کا فاصلہ تقریباً '+n(km.toLocaleString('en'))+' کلومیٹر۔'):('From '+c.name+', the Qibla is '+Math.round(qib)+'° clockwise from true north (towards the '+dir+'). Makkah is about '+km.toLocaleString('en')+' km away.');
+    draw(); }
+  sel.addEventListener('change',function(){ loc={k:sel.value}; harfLocSave(loc); render(); });
+  document.getElementById('qbGps').addEventListener('click',function(){
+    if(!navigator.geolocation){ st.textContent=D.noGps; return; } st.textContent=D.finding;
+    navigator.geolocation.getCurrentPosition(function(pos){ loc={k:'gps',lat:+pos.coords.latitude.toFixed(4),lon:+pos.coords.longitude.toFixed(4),tz:harfDeviceTz()}; harfLocSave(loc); st.textContent=''; render(); },function(){ st.textContent=D.noGps; },{timeout:15000,maximumAge:6e5});
+  });
+  function onOri(e){ var h=null; if(typeof e.webkitCompassHeading==='number') h=e.webkitCompassHeading; else if(e.absolute&&typeof e.alpha==='number') h=360-e.alpha; if(h!==null){ heading=h; draw(); } }
+  document.getElementById('qbCompass').addEventListener('click',function(){
+    var go=function(){ window.addEventListener('deviceorientationabsolute',onOri,true); window.addEventListener('deviceorientation',onOri,true); st.textContent=D.calib; setTimeout(function(){ if(heading===null) st.textContent=D.noCompass; },3000); };
+    if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function'){ DeviceOrientationEvent.requestPermission().then(function(r){ if(r==='granted') go(); else st.textContent=D.noCompass; }).catch(function(){ st.textContent=D.noCompass; }); }
+    else if(window.DeviceOrientationEvent) go(); else st.textContent=D.noCompass;
+  });
+  render();
+})();
+`;
+
+const TASBIH_JS = String.raw`
+(function(){
+  var D=JSON.parse(document.getElementById('tsb-data').textContent), ur=D.ur;
+  function n(x){ return ur?String(x).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d];}):String(x); }
+  var S; try{ S=JSON.parse(localStorage.getItem('harf-tasbih')||'null'); }catch(e){}
+  if(!S) S={p:0,c:0,t:33,step:0,total:0,day:''};
+  var today=new Date().toISOString().slice(0,10); if(S.day!==today){ S.day=today; S.total=0; }
+  function save(){ try{ localStorage.setItem('harf-tasbih',JSON.stringify(S)); }catch(e){} }
+  var btn=document.getElementById('tsbBtn'), cnt=document.getElementById('tsbCount'), of=document.getElementById('tsbOf'), bar=document.getElementById('tsbBar');
+  function preset(){ return D.presets[S.p]; }
+  function curDhikr(){ var p=preset(); return p.seq?p.seq[S.step]:p; }
+  function target(){ var p=preset(); return p.seq?p.seq[S.step].n:S.t; }
+  function paint(){ var d=curDhikr(), t=target();
+    document.getElementById('tsbAr').textContent=d.a; document.getElementById('tsbTr').textContent=d.tr; document.getElementById('tsbMn').textContent=d.m;
+    cnt.textContent=n(S.c); of.textContent=t?(ur?n(t)+' میں سے':'of '+t):D.free;
+    bar.style.width=t?Math.min(100,S.c/t*100)+'%':'0';
+    btn.classList.toggle('done',!!t&&S.c>=t);
+    document.querySelectorAll('.tsb-presets button').forEach(function(b,i){ b.setAttribute('aria-pressed',String(i===S.p)); });
+    var tg=document.getElementById('tsbTg'); tg.hidden=!!preset().seq;
+    tg.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',String(+b.dataset.t===S.t)); });
+    var p=preset(); document.getElementById('tsbStep').textContent=p.seq?(ur?'مرحلہ '+n(S.step+1)+' / '+n(p.seq.length):'Step '+(S.step+1)+' of '+p.seq.length):'';
+    document.getElementById('tsbSrc').innerHTML=p.src||'';
+    document.getElementById('tsbTot').textContent=(ur?'آج کل گنتی: ':'Counted today: ')+n(S.total);
+  }
+  function buzz(ms){ try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(e){} }
+  function tap(){ var t=target(), p=preset();
+    if(t&&S.c>=t){ if(p.seq&&S.step<p.seq.length-1){ S.step++; S.c=0; } else { S.c=0; S.step=0; } }
+    S.c++; S.total++; if(t&&S.c===t){ buzz([60,60,120]); } else buzz(12);
+    save(); paint(); }
+  btn.addEventListener('click',tap);
+  document.addEventListener('keydown',function(e){ if((e.code==='Space'||e.key==='Enter')&&e.target===document.body){ e.preventDefault(); tap(); } });
+  document.getElementById('tsbReset').addEventListener('click',function(){ S.c=0; S.step=0; save(); paint(); });
+  document.getElementById('tsbUndo').addEventListener('click',function(){ if(S.c>0){ S.c--; S.total=Math.max(0,S.total-1); save(); paint(); } });
+  document.querySelectorAll('.tsb-presets button').forEach(function(b,i){ b.addEventListener('click',function(){ S.p=i; S.c=0; S.step=0; save(); paint(); }); });
+  document.querySelectorAll('#tsbTg button').forEach(function(b){ b.addEventListener('click',function(){ S.t=+b.dataset.t; save(); paint(); }); });
+  paint();
+})();
+`;
+
+const TASBIH_PRESETS = [
+  { a: 'سُبْحَانَ اللّٰهِ', tr: 'Subḥān Allāh', en: 'Glory be to Allah', ur: 'اللہ پاک ہے' },
+  { a: 'الْحَمْدُ لِلّٰهِ', tr: 'Al-ḥamdu lillāh', en: 'All praise is for Allah', ur: 'تمام تعریفیں اللہ کے لیے ہیں' },
+  { a: 'اللّٰهُ أَكْبَرُ', tr: 'Allāhu akbar', en: 'Allah is the Greatest', ur: 'اللہ سب سے بڑا ہے' },
+  { a: 'لَا إِلٰهَ إِلَّا اللّٰهُ', tr: 'Lā ilāha illallāh', en: 'There is no god but Allah', ur: 'اللہ کے سوا کوئی معبود نہیں' },
+  { a: 'أَسْتَغْفِرُ اللّٰهَ', tr: 'Astaghfirullāh', en: 'I seek Allah’s forgiveness', ur: 'میں اللہ سے معافی مانگتا ہوں' },
+  { a: 'سُبْحَانَ اللّٰهِ وَبِحَمْدِهِ', tr: 'Subḥān Allāhi wa bi-ḥamdih', en: 'Glory be to Allah and praise be to Him', ur: 'اللہ پاک ہے اپنی تعریف کے ساتھ' },
+  { a: 'اللّٰهُمَّ صَلِّ عَلٰى مُحَمَّدٍ', tr: 'Allāhumma ṣalli ʿalā Muḥammad', en: 'O Allah, send blessings on Muhammad', ur: 'اے اللہ! محمد ﷺ پر رحمت نازل فرما' },
+];
+
+function tasbihPage(lang) {
+  const ur = lang === 'ur';
+  const P = TASBIH_PRESETS, d = (i) => ({ a: P[i].a, tr: P[i].tr, m: ur ? P[i].ur : P[i].en });
+  const tahlil = { a: 'لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلٰى كُلِّ شَيْءٍ قَدِيرٌ', tr: 'Lā ilāha illallāhu waḥdahū lā sharīka lah, lahul-mulku wa lahul-ḥamdu wa huwa ʿalā kulli shay’in qadīr', m: ur ? 'اللہ کے سوا کوئی معبود نہیں، وہ اکیلا ہے، اس کا کوئی شریک نہیں، بادشاہی اسی کی ہے اور تعریف اسی کے لیے ہے، اور وہ ہر چیز پر قادر ہے' : 'There is no god but Allah alone, with no partner. His is the dominion and His is the praise, and He has power over all things' };
+  const src = (book, no, en, u) => `${ur ? u : en} <a href="${SN(book, no).u}" rel="noopener" target="_blank">${SN(book, no).t}</a>`;
+  const presets = [
+    { label: ur ? 'نماز کے بعد (۱۰۰)' : 'After salah (100)', seq: [{ ...d(0), n: 33 }, { ...d(1), n: 33 }, { ...d(2), n: 33 }, { ...tahlil, n: 1 }],
+      src: src('muslim', 597, 'After every prayer: 33 × each, then the tahlil to complete 100; the Prophet ﷺ said his sins are forgiven even if like the foam of the sea.', 'ہر نماز کے بعد: ہر ایک ۳۳ بار، پھر سو پورا کرنے کے لیے یہ کلمہ؛ نبی ﷺ نے فرمایا اس کے گناہ معاف ہو جاتے ہیں چاہے سمندر کی جھاگ کے برابر ہوں۔') },
+    { label: ur ? 'سوتے وقت (۳۳، ۳۳، ۳۴)' : 'Before sleep (33/33/34)', seq: [{ ...d(0), n: 33 }, { ...d(1), n: 33 }, { ...d(2), n: 34 }],
+      src: src('bukhari', 6318, 'Taught by the Prophet ﷺ to Ali and Fatimah for bedtime: better for them than a servant.', 'نبی ﷺ نے حضرت علی اور حضرت فاطمہ کو سوتے وقت کے لیے سکھایا: یہ ان کے لیے خادم سے بہتر ہے۔') },
+    { label: d(0).tr, ...d(0) }, { label: d(1).tr, ...d(1) }, { label: d(2).tr, ...d(2) }, { label: d(3).tr, ...d(3) },
+    { label: d(4).tr, ...d(4), src: src('muslim', 2702, 'The Prophet ﷺ said he sought Allah’s forgiveness a hundred times a day.', 'نبی ﷺ نے فرمایا کہ میں دن میں سو بار اللہ سے استغفار کرتا ہوں۔') },
+    { label: d(5).tr, ...d(5), src: src('bukhari', 6405, 'Whoever says it 100 times a day, his sins are wiped away even if like the foam of the sea.', 'جو دن میں سو بار کہے اس کے گناہ مٹا دیے جاتے ہیں چاہے سمندر کی جھاگ کے برابر ہوں۔') },
+    { label: ur ? 'درود شریف' : 'Salawat', ...d(6) },
+  ];
+  const C = ur ? {
+    title: 'ڈیجیٹل تسبیح کاؤنٹر آن لائن — نماز کے بعد کی تسبیحات | حرف', desc: 'مفت آن لائن تسبیح کاؤنٹر: سبحان اللہ، الحمد للہ، اللہ اکبر، استغفار اور درود گنیں۔ نماز کے بعد ۳۳-۳۳-۳۳ اور سوتے وقت کی تسبیحات خود بخود، حوالوں کے ساتھ۔ موبائل پر وائبریشن، گنتی محفوظ رہتی ہے۔',
+    h1: 'ڈیجیٹل تسبیح کاؤنٹر', lead: 'بڑے دائرے پر ٹیپ کریں (کمپیوٹر پر اسپیس بار)۔ ہدف پورا ہونے پر فون وائبریٹ ہوگا۔ گنتی اسی ڈیوائس پر محفوظ رہتی ہے، کوئی سائن اپ نہیں۔',
+    tap: 'ٹیپ کریں', reset: 'دوبارہ شروع', undo: 'ایک کم', target: 'ہدف:', free: 'بغیر حد', aboutH: 'تسبیح کے بارے میں',
+    about: 'تسبیح انگلیوں پر گننا سنت ہے: نبی ﷺ نے عورتوں کو انگلیوں پر گننے کا حکم دیا کہ قیامت کے دن ان سے پوچھا جائے گا اور وہ بولیں گی (ترمذی ۳۵۸۳، ابو داود ۱۵۰۱)۔ یہ کاؤنٹر ان لوگوں کے لیے ہے جو گنتی بھول جاتے ہیں یا سفر میں ہیں۔',
+  } : {
+    title: 'Online Tasbih Counter — Digital Dhikr Counter for After Salah | Harf', desc: 'Free online tasbih counter: count SubhanAllah, Alhamdulillah, Allahu Akbar, istighfar and salawat. Built-in 33-33-33 after salah and bedtime tasbih with hadith sources. Vibrates on your phone and remembers your count.',
+    h1: 'Online tasbih counter', lead: 'Tap the big circle (or press Space on a computer). Your phone vibrates when you reach the target. Your count is saved on this device; no sign-up.',
+    tap: 'Tap', reset: 'Reset', undo: 'Undo', target: 'Target:', free: 'no limit', aboutH: 'About counting dhikr',
+    about: 'Counting dhikr on the fingers is Sunnah: the Prophet ﷺ told women to count on their fingers, because the fingers will be asked and made to speak on the Day of Judgement (At-Tirmidhi 3583, Abu Dawud 1501). This counter is for when you lose count, or are travelling.',
+  };
+  const data = { ur, free: C.free, presets: presets.map((p) => ({ seq: p.seq, a: p.a, tr: p.tr, m: p.m, src: p.src || '' })) };
+  const body = `${toolCrumbs(lang, C.h1)}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tool tsb">
+  <div class="tsb-presets" role="group">${presets.map((p) => `<button type="button" aria-pressed="false">${esc(p.label)}</button>`).join('')}</div>
+  <p class="small" id="tsbStep"></p>
+  <p class="tsb-dk" lang="ar" id="tsbAr"></p><p class="tsb-tr" id="tsbTr"></p><p class="tsb-mn" id="tsbMn"></p>
+  <button class="tsb-btn" type="button" id="tsbBtn" aria-live="polite"><b id="tsbCount">0</b><span id="tsbOf"></span></button>
+  <div class="tsb-bar"><i id="tsbBar"></i></div>
+  <div class="tsb-tg" id="tsbTg" role="group"><span class="small">${C.target}</span>${[33, 34, 99, 100, 0].map((t) => `<button type="button" data-t="${t}">${t ? num(lang, t) : C.free}</button>`).join('')}</div>
+  <div class="row"><button class="btn" type="button" id="tsbUndo">${C.undo}</button><button class="btn" type="button" id="tsbReset">${C.reset}</button></div>
+  <p class="small" id="tsbSrc"></p>
+  <p class="tsb-tot" id="tsbTot"></p>
+</div>
+<section><h2>${C.aboutH}</h2><p>${C.about}</p>
+<p><a href="${link(lang, 'hisn-al-muslim.html')}">${ur ? 'حصن المسلم: صبح، شام اور نماز کے بعد کے اذکار ←' : 'Hisn al-Muslim: morning, evening and after-prayer adhkar →'}</a></p></section>
+${toolMore(lang, 'tasbih-counter.html')}
+${jsonData('tsb-data', data)}
+<script>${TASBIH_JS}</script>`;
+  return layout(lang, { file: 'tasbih-counter.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
+
+function cityOptions(lang, gpsLabel) {
+  const ur = lang === 'ur';
+  return `<option value="gps">📍 ${gpsLabel}</option>` + PT_CITIES.map((c) => `<option value="${c[0]}">${esc(ur ? c[2] : c[1])}</option>`).join('');
+}
+
+function prayerTimesPage(lang) {
+  const ur = lang === 'ur';
+  const N = { fajr: ['فجر', 'الفجر', 'Fajr'], sunrise: ['طلوعِ آفتاب', 'الشروق', 'Sunrise'], dhuhr: ['ظہر', 'الظهر', 'Dhuhr'], asr: ['عصر', 'العصر', 'Asr'], sunset: ['مغرب', 'المغرب', 'Maghrib'], isha: ['عشاء', 'العشاء', 'Isha'] };
+  const names = {}; Object.keys(N).forEach((k) => { names[k] = [ur ? N[k][0] : N[k][2], N[k][1]]; });
+  const C = ur ? {
+    title: 'آج کے نماز کے اوقات — کراچی، لاہور، اسلام آباد، ریاض اور آپ کا شہر | حرف', desc: 'آج کے نماز کے اوقات: فجر، ظہر، عصر (حنفی/شافعی)، مغرب اور عشاء، اگلی نماز تک الٹی گنتی اور ہفتے کا ٹائم ٹیبل۔ اپنا شہر چنیں یا لوکیشن استعمال کریں۔ کراچی، اُمّ القریٰ، ISNA اور دیگر طریقے۔',
+    h1: 'آج کے نماز کے اوقات', lead: 'اپنا شہر چنیں یا «میری لوکیشن» دبائیں۔ اوقات فلکیاتی حساب سے ہیں؛ جماعت کے وقت کے لیے اپنی مسجد کا ٹائم ٹیبل دیکھیں۔',
+    gps: 'میری لوکیشن', city: 'شہر', method: 'طریقۂ حساب', asr: 'عصر', hanafi: 'حنفی (دُگنا سایہ)', shafii: 'جمہور: شافعی، مالکی، حنبلی (ایک سایہ)', week: 'اگلے ۷ دن', day: 'دن',
+    here: 'میری لوکیشن', jumuah: 'جمعہ', usingGps: 'آپ کی لوکیشن سے۔', tzLabel: 'ٹائم زون:', noGps: 'لوکیشن نہیں مل سکی۔ براہِ کرم فہرست سے شہر چنیں۔', finding: 'لوکیشن ڈھونڈ رہے ہیں…',
+    methods: [['karachi', 'کراچی (جامعہ علوم اسلامیہ) — پاکستان، ہند'], ['makkah', 'اُمّ القریٰ، مکہ — سعودی عرب'], ['gulf', 'خلیج (UAE، قطر، کویت)'], ['mwl', 'مسلم ورلڈ لیگ — یورپ'], ['isna', 'ISNA — امریکہ، کینیڈا'], ['egypt', 'مصری ادارہ'], ['tehran', 'تہران']],
+    noteH: 'اوقات کیسے نکالے جاتے ہیں؟', note: 'فجر اور عشاء کا وقت سورج کے افق سے نیچے ایک خاص زاویے پر ہوتا ہے، اور ہر ادارہ الگ زاویہ لیتا ہے: کراچی ۱۸°، مسلم ورلڈ لیگ ۱۸° اور ۱۷°، ISNA ۱۵°، اُمّ القریٰ فجر ۱۸٫۵° اور عشاء مغرب کے ۹۰ منٹ بعد (رمضان میں ۱۲۰)۔ عصر کا وقت حنفی مذہب میں جب ہر چیز کا سایہ دُگنا ہو جائے، اور جمہور کے نزدیک جب سایہ ایک گنا ہو۔ اس لیے مختلف ایپس میں ایک دو منٹ کا فرق عام ہے۔',
+    warn: 'احتیاط: سحری فجر سے چند منٹ پہلے بند کر دیں، اور مغرب کے بعد ایک دو منٹ رک کر افطار کریں۔ جماعت کا وقت مسجد طے کرتی ہے۔',
+  } : {
+    title: 'Prayer Times Today — Fajr, Dhuhr, Asr, Maghrib, Isha for your city | Harf', desc: 'Today’s prayer times (namaz timings) for your city: Fajr, Sunrise, Dhuhr, Asr (Hanafi or standard), Maghrib and Isha, with a countdown to the next prayer and a 7-day timetable. Use your location or pick a city.',
+    h1: 'Prayer times today', lead: 'Pick your city or tap “Use my location”. Times are calculated astronomically; for congregation times, check your local masjid’s timetable.',
+    gps: 'Use my location', city: 'City', method: 'Calculation method', asr: 'Asr', hanafi: 'Hanafi (shadow ×2)', shafii: 'Standard: Shafiʿi, Maliki, Hanbali (shadow ×1)', week: 'Next 7 days', day: 'Day',
+    here: 'My location', jumuah: 'Jumuʿah', usingGps: 'Using your location.', tzLabel: 'Time zone:', noGps: 'Could not get your location. Please pick a city from the list.', finding: 'Finding your location…',
+    methods: [['karachi', 'Karachi (Univ. of Islamic Sciences) — Pakistan, India, Bangladesh'], ['makkah', 'Umm al-Qura, Makkah — Saudi Arabia'], ['gulf', 'Gulf region (UAE, Qatar, Kuwait)'], ['mwl', 'Muslim World League — Europe'], ['isna', 'ISNA — North America'], ['egypt', 'Egyptian General Authority'], ['tehran', 'Tehran (Institute of Geophysics)']],
+    noteH: 'How are prayer times calculated?', note: 'Fajr and Isha begin when the sun is a set angle below the horizon, and each authority uses a different angle: Karachi 18°, Muslim World League 18° and 17°, ISNA 15°, Umm al-Qura 18.5° for Fajr and Isha 90 minutes after Maghrib (120 in Ramadan). Asr begins, in the Hanafi school, when an object’s shadow is twice its length; in the other three schools, when it equals its length. This is why apps often differ by a minute or two.',
+    warn: 'To be safe, stop eating suhur a few minutes before Fajr, and wait a minute or two after Maghrib before breaking the fast. Your masjid sets the jamaʿah times.',
+  };
+  const data = { ur, cities: PT_CITIES, names, here: C.here, jumuah: C.jumuah, usingGps: C.usingGps, tzLabel: C.tzLabel, noGps: C.noGps, finding: C.finding };
+  const cell = (k) => `<div class="pt-c${k === 'sunrise' ? ' sun' : ''}" id="pt-${k}"><span class="ar" lang="ar">${N[k][1]}</span><b${k === 'dhuhr' ? ' id="ptDhuhrName"' : ''}>${names[k][0]}</b><span class="tm">--:--</span></div>`;
+  const body = `${toolCrumbs(lang, C.h1)}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tool">
+  <div class="pt-loc"><label>${C.city} <select id="ptCity">${cityOptions(lang, C.gps)}</select></label><button class="btn primary" type="button" id="ptGps">📍 ${C.gps}</button></div>
+  <p style="margin:12px 0 0"><strong id="ptPlace"></strong> · <span id="ptDate"></span></p>
+  <div class="pt-grid">${Object.keys(N).map(cell).join('')}</div>
+  <p class="pt-next" id="ptNext" aria-live="polite"></p>
+  <div class="row"><label>${C.method} <select id="ptMethod">${C.methods.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</select></label>
+  <label>${C.asr} <select id="ptAsr"><option value="2">${C.hanafi}</option><option value="1">${C.shafii}</option></select></label></div>
+  <p class="small" id="ptStatus"></p>
+</div>
+<section><h2 class="orn">${C.week}</h2><div class="tbl"><table class="words pt-wk"><thead><tr><th>${C.day}</th>${Object.keys(N).map((k) => `<th>${names[k][0]}</th>`).join('')}</tr></thead><tbody id="ptWeek"></tbody></table></div></section>
+<section class="box"><p>${C.warn}</p></section>
+<section><h2>${C.noteH}</h2><p>${C.note}</p>
+<p><a href="${link(lang, 'qibla-direction.html')}">${ur ? 'قبلہ کی سمت معلوم کریں ←' : 'Find the Qibla direction →'}</a> · <a href="${link(lang, 'tasbih-counter.html')}">${ur ? 'نماز کے بعد کی تسبیح ←' : 'Tasbih after salah →'}</a></p></section>
+${toolMore(lang, 'prayer-times.html')}
+${jsonData('pt-data', data)}
+<script>${LOC_JS}${PRAYER_JS}</script>`;
+  return layout(lang, { file: 'prayer-times.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
+
+function qiblaPage(lang) {
+  const ur = lang === 'ur';
+  const C = ur ? {
+    title: 'قبلہ کی سمت — آن لائن قبلہ رخ معلوم کریں (کمپاس کے ساتھ) | حرف', desc: 'اپنے شہر سے قبلہ کی سمت درجوں میں معلوم کریں: لوکیشن یا شہر چنیں، موبائل پر کمپاس آن کریں اور تیر کعبہ کی طرف اشارہ کرے گا۔ مکہ مکرمہ کا فاصلہ بھی۔',
+    h1: 'قبلہ کی سمت', lead: 'اپنا شہر چنیں یا «میری لوکیشن» دبائیں۔ موبائل پر «کمپاس آن کریں» دبائیں اور فون کو ہموار رکھ کر گھمائیں یہاں تک کہ تیر سیدھا اوپر ہو۔',
+    gps: 'میری لوکیشن', city: 'شہر', compass: 'کمپاس آن کریں', here: 'میری لوکیشن', noGps: 'لوکیشن نہیں مل سکی۔ براہِ کرم فہرست سے شہر چنیں۔', finding: 'لوکیشن ڈھونڈ رہے ہیں…',
+    calib: 'فون کو ہموار رکھیں۔ اگر سمت غلط لگے تو فون کو ہوا میں ۸ کے انداز میں گھمائیں۔', noCompass: 'اس ڈیوائس پر کمپاس دستیاب نہیں۔ درجوں والا رخ استعمال کریں: شمال سے گھڑی کی سمت۔',
+    facing: '✓ آپ کا رخ قبلہ کی طرف ہے', turn: 'فون گھمائیں یہاں تک کہ تیر سیدھا اوپر ہو جائے', fromN: 'شمال سے گھڑی کی سمت',
+    tipsH: 'کمپاس کے بغیر قبلہ کیسے معلوم کریں؟', tips: ['قریب کی مسجد کا رخ سب سے قابلِ اعتماد ہے۔', 'پاکستان سے قبلہ تقریباً مغرب کی طرف ہے (۲۵۵° سے ۲۶۰°)، برطانیہ سے جنوب مشرق (تقریباً ۱۱۹°)، اور امریکہ کے مشرقی ساحل سے شمال مشرق (تقریباً ۵۸°)۔', 'سال میں دو دن (تقریباً ۲۸ مئی اور ۱۶ جولائی) سورج مکہ کے بالکل اوپر ہوتا ہے؛ اس وقت ہر چیز کا سایہ قبلہ کی مخالف سمت ہوتا ہے۔', 'فون کا کمپاس دھات، مقناطیس اور بجلی کے آلات کے قریب غلط ہو سکتا ہے۔'],
+  } : {
+    title: 'Qibla Direction — Find the Qibla online with a compass | Harf', desc: 'Find the Qibla direction from your city in degrees: use your location or pick a city, turn on the compass on your phone and the arrow points to the Kaaba. Also shows your distance to Makkah.',
+    h1: 'Qibla direction', lead: 'Pick your city or tap “Use my location”. On a phone, tap “Turn on compass”, hold the phone flat and turn until the arrow points straight up.',
+    gps: 'Use my location', city: 'City', compass: 'Turn on compass', here: 'My location', noGps: 'Could not get your location. Please pick a city from the list.', finding: 'Finding your location…',
+    calib: 'Hold the phone flat. If the direction looks wrong, move the phone in a figure-8 to calibrate.', noCompass: 'No compass on this device. Use the bearing in degrees: clockwise from north.',
+    facing: '✓ You are facing the Qibla', turn: 'Turn until the arrow points straight up', fromN: 'clockwise from north',
+    tipsH: 'Finding the Qibla without a compass', tips: ['The direction of your nearest masjid is the most reliable guide.', 'From Pakistan the Qibla is roughly west (255°–260°), from the UK south-east (about 119°), and from the US east coast north-east (about 58°).', 'On two days each year (about 28 May and 16 July) the sun is directly over Makkah at Dhuhr time; shadows then point directly away from the Qibla.', 'Phone compasses can be thrown off by metal, magnets and electrical devices.'],
+  };
+  const data = { ur, cities: PT_CITIES, here: C.here, noGps: C.noGps, finding: C.finding, calib: C.calib, noCompass: C.noCompass, facing: C.facing, turn: C.turn };
+  const body = `${toolCrumbs(lang, C.h1)}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tool">
+  <div class="pt-loc"><label>${C.city} <select id="qbCity">${cityOptions(lang, C.gps)}</select></label><button class="btn primary" type="button" id="qbGps">📍 ${C.gps}</button><button class="btn" type="button" id="qbCompass">🧭 ${C.compass}</button></div>
+  <div class="qb-wrap" style="margin-top:16px">
+    <div class="qb-dial"><div class="qb-rose" id="qbRose"><span class="n">${ur ? 'شمال' : 'N'}</span><span class="e">${ur ? 'مشرق' : 'E'}</span><span class="s">${ur ? 'جنوب' : 'S'}</span><span class="w">${ur ? 'مغرب' : 'W'}</span></div><div class="qb-arrow" id="qbArrow"></div></div>
+    <div><p class="qb-big" id="qbDeg">--°</p><p class="qb-st">${C.fromN}</p><p id="qbTxt"></p><p id="qbFace" aria-live="polite"></p><p class="small" id="qbStatus"></p></div>
+  </div>
+</div>
+<section><h2>${C.tipsH}</h2><ul>${C.tips.map((t) => `<li>${t}</li>`).join('')}</ul>
+<p><a href="${link(lang, 'prayer-times.html')}">${ur ? 'آج کے نماز کے اوقات ←' : 'Prayer times today →'}</a></p></section>
+${toolMore(lang, 'qibla-direction.html')}
+${jsonData('qb-data', data)}
+<script>${LOC_JS}${QIBLA_JS}</script>`;
+  return layout(lang, { file: 'qibla-direction.html', section: 'tools', title: C.title, desc: C.desc, body });
 }
 
 // ---- Muslim names with meanings
@@ -8555,6 +8938,9 @@ function build() {
     add(lang, 'tools.html', toolsPage(lang));
     add(lang, 'arabic-keyboard.html', keyboardPage(lang));
     add(lang, 'hijri-converter.html', hijriPage(lang));
+    add(lang, 'prayer-times.html', prayerTimesPage(lang));
+    add(lang, 'qibla-direction.html', qiblaPage(lang));
+    add(lang, 'tasbih-counter.html', tasbihPage(lang));
     add(lang, 'muslim-names.html', namesPage(lang));
     add(lang, 'arabic-transliteration.html', translitPage(lang));
     add(lang, 'about.html', aboutPage(lang));
@@ -8563,7 +8949,7 @@ function build() {
   }
   files['404.html'] = notFoundPage();
   files['engage.js'] = ENGAGE_JS;
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
