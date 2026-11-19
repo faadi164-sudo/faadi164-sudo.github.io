@@ -4078,16 +4078,17 @@ const FRONT_CSS = `
 .fp-img:hover img{transform:scale(1.03)}
 .fp-slider{background:linear-gradient(rgba(8,58,44,.86),rgba(8,58,44,.92)),url(img/banner-quran.webp) center/cover;color:#fff8e7;border:1px solid #c9a24b}
 .fs-track{display:flex;height:100%;transition:transform .7s cubic-bezier(.4,0,.2,1)}
-.fs-slide{flex:0 0 100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:34px 28px 40px;text-align:center;color:inherit;text-decoration:none;box-sizing:border-box}
-.fs-occ{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#e9c46a;border:1px solid rgba(233,196,106,.6);border-radius:999px;padding:3px 12px}
-.fs-ar{font-size:clamp(22px,3.1vw,34px);line-height:1.8;color:#fff;max-width:92%}
-.fs-m{font-size:clamp(14px,1.5vw,17px);line-height:1.5;color:#efe6cf;max-width:88%;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fs-slide{flex:0 0 100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:22px 26px 34px;text-align:center;color:inherit;text-decoration:none;box-sizing:border-box;overflow:hidden}
+.fs-occ{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#e9c46a;border:1px solid rgba(233,196,106,.6);border-radius:999px;padding:2px 12px;flex:none}
+.fs-ar{font-size:clamp(18px,2vw,25px);line-height:1.75;color:#fff;max-width:94%;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:none}
+.fs-m{font-size:clamp(13px,1.3vw,15px);line-height:1.45;color:#efe6cf;max-width:88%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:none}
+.fs-go{flex:none}
 .fs-go{font-size:14px;font-weight:600;color:#e9c46a}
 .fs-slide:hover .fs-go{text-decoration:underline}
-.fs-dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.fs-dots{position:absolute;bottom:9px;left:0;right:0;display:flex;justify-content:center;gap:6px}
 .fs-dots button{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:rgba(255,248,231,.4);cursor:pointer}
 .fs-dots button[aria-current=true]{background:#e9c46a;width:22px;border-radius:8px}
-@media (max-width:600px){.fp-slider{aspect-ratio:4/3}.fs-slide{padding:30px 16px 36px}}
+@media (max-width:600px){.fp-slider{aspect-ratio:auto;height:300px}.fs-slide{padding:24px 14px 34px}.fs-ar{font-size:22px}.fs-m{font-size:14px}}
 @media (prefers-reduced-motion:reduce){.fs-track{transition:none}}
 .fp-flag{position:absolute;top:14px;left:14px;background:#c0392b;color:#fff;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 [dir=rtl] .fp-flag{left:auto;right:14px;text-transform:none;letter-spacing:0}
@@ -4567,7 +4568,7 @@ function frontPage(lang, C, quick) {
   <article class="fp-lead">
     ${(() => {
     const slides = FP_DUA_SLIDES.map((s) => HISN.find((c) => c.slug === s)).filter(Boolean).map((c) => {
-      const k = c.items.findIndex((x) => !x.h && x.a && x.a.length > 15 && x.a.length < 140 && x.mEn);
+      const k = c.items.findIndex((x) => !x.h && x.a && x.a.length > 15 && x.a.length < 110 && x.mEn);
       return k < 0 ? null : { c, it: c.items[k], k: k + 1 };
     }).filter(Boolean);
     if (!slides.length) return `<a class="fp-img" href="${L('hisn-al-muslim.html')}"><img src="img/banner-quran.webp" alt="" width="1024" height="572"><span class="fp-flag">${ur ? 'نیا' : 'New'}</span></a>`;
