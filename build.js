@@ -3314,6 +3314,7 @@ const loadSurah = (q) => JSON.parse(fs.readFileSync(path.join(QURAN_DIR, String(
 
 // ---------------------------------------------------------------- Duas (content in data/duas.js)
 const { DUA_CATS, DUA_TOPICS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
+const { NAMES99, NAMES99_DHIKR } = require('./data/names99.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -3885,6 +3886,8 @@ function buildSearchIndex(lang) {
   DUA_TOPICS.forEach((t) => add('', ur ? t.ur : t.en, ur ? 'موضوعاتی دعا' : 'Dua by situation', t.slug + '.html', 'dua'));
   if (typeof HISN !== 'undefined') HISN.forEach((c) => add('', ur ? c.ur : c.en, ur ? 'حصن المسلم' : 'Hisn al-Muslim', c.slug + '.html', 'dua'));
   add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
+  add('الْأَسْمَاءُ الْحُسْنَى', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah (Asma ul Husna)', ur ? 'اسماء الحسنیٰ معنی کے ساتھ' : 'All 99 names with meanings', '99-names-of-allah.html', 'page');
+  NAMES99.forEach((x, i) => add(x[1], x[2], (ur ? x[4] : x[3]) + (ur ? ' · اللہ کا نام' : ' · Name of Allah'), n99File(x), 'page'));
   add('مَوَاقِيتُ الصَّلَاة', ur ? 'نماز کے اوقات' : 'Prayer times (namaz timings)', ur ? 'فجر، ظہر، عصر، مغرب، عشاء — آپ کے شہر کے لیے' : 'Fajr, Dhuhr, Asr, Maghrib, Isha for your city', 'prayer-times.html', 'page');
   add('الْقِبْلَة', ur ? 'قبلہ کی سمت' : 'Qibla direction', ur ? 'کمپاس کے ساتھ قبلہ رخ' : 'Find the Qibla with a compass', 'qibla-direction.html', 'page');
   add('تَسْبِيح', ur ? 'تسبیح کاؤنٹر' : 'Tasbih counter', ur ? 'سبحان اللہ ۳۳، الحمد للہ ۳۳، اللہ اکبر ۳۴' : 'SubhanAllah 33, Alhamdulillah 33, Allahu Akbar 34', 'tasbih-counter.html', 'page');
@@ -4515,7 +4518,7 @@ function frontPage(lang, C, quick) {
     ['morning-evening-adhkar.html', ur ? 'صبح و شام کے مکمل اذکار' : 'Morning and evening adhkar, complete', K('dua', 'Adhkar', 'اذکار')],
     ['alphabet.html', ur ? 'عربی حروفِ تہجی: ۲۸ حروف، آواز کے ساتھ' : 'The Arabic alphabet: 28 letters with audio', K('learn', 'Learn', 'سیکھیں')],
     ['ayatul-kursi.html', ur ? 'آیت الکرسی اردو ترجمے کے ساتھ' : 'Ayatul Kursi with translation and virtues', K('quran', 'Quran', 'قرآن')],
-    ['muslim-names.html', ur ? `${ud(NAMES.length)} اسلامی نام اور ان کے معنی` : `${NAMES.length} Muslim names and their meanings`, K('tool', 'Names', 'نام')],
+    ['99-names-of-allah.html', ur ? 'اللہ کے ۹۹ نام، معنی اور قرآن کی آیات کے ساتھ' : 'The 99 Names of Allah with meanings and Quran verses', K('new', 'New', 'نیا')],
   ];
 
   const seasons = ur ? [
@@ -5572,6 +5575,102 @@ ${verseHtml(lang, v, 255, 2)}
   return layout(lang, { file: 'ayatul-kursi.html', section: 'quran', title, desc, body });
 }
 
+// ---------------------------------------------------------------- 99 Names of Allah (data/names99.js)
+const N99_BARE = (t) => t.replace(/[ً-ٰٟۖ-ۭـ]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
+const n99File = (x) => 'allah-name-' + x[0] + '.html';
+function n99Vocative(x) {
+  if (x[0] === 'malik-al-mulk') return ['يَا مَالِكَ الْمُلْكِ', 'Yā Mālikal-Mulk'];
+  if (x[0] === 'dhul-jalali-wal-ikram') return ['يَا ذَا الْجَلَالِ وَالْإِكْرَامِ', 'Yā Dhal-Jalāli wal-Ikrām'];
+  const a = x[1].replace(/^ال[ْ]?/, '').replace(/^(.)([ً-ْٰ]*)/, (m, b, mk) => b + mk.replace(/ّ/g, ''));
+  return ['يَا ' + a, 'Yā ' + x[2].replace(/^A[^-]{1,2}-/, '')];
+}
+const N99_CSS = `
+.n99-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:14px 0 28px}
+.n99-c{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:14px 10px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);text-decoration:none;position:relative}
+.n99-c:hover{border-color:var(--accent)}
+.n99-c .no{position:absolute;top:8px;inset-inline-start:10px;font-size:12px;color:var(--muted);font-weight:700}
+.n99-c .ar{font-size:30px;line-height:1.6;color:var(--accent)}
+.n99-c b{font-size:15px}
+.n99-c span.m{font-size:14px;color:var(--muted)}
+.n99-hero{text-align:center;background:linear-gradient(rgba(8,58,44,.9),rgba(8,58,44,.94)),url(img/banner-quran.webp) center/cover;color:#fff8e7;border-radius:16px;padding:28px 18px;margin:0 0 22px;border:1px solid #c9a24b}
+.n99-hero .ar{font-size:clamp(48px,8vw,76px);line-height:1.5;color:#fff}
+.n99-hero .tr{color:#e9c46a;font-size:22px;font-weight:700;margin:0}
+.n99-hero .m{font-size:20px;margin:4px 0 12px}
+.n99-hero .btn{margin:4px}
+.n99-v{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 22px}
+.n99-v .ar{font-size:26px;line-height:2;direction:rtl;text-align:right}
+.n99-v mark{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:0 4px}
+.n99-dk{border-inline-start:4px solid var(--gold);background:var(--surface);border-radius:12px;padding:14px 16px;margin:0 0 22px}
+.n99-dk .ar{font-size:26px;line-height:1.9}
+.n99-nav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:22px 0}
+`;
+
+function names99HubPage(lang) {
+  const ur = lang === 'ur';
+  const S = (b, n) => { const s = SN(b, n); return `<a href="${s.u}" target="_blank" rel="noopener" class="latin" dir="ltr">${esc(s.t)}</a>`; };
+  const title = ur ? 'اللہ کے ۹۹ نام (اسماء الحسنیٰ) اردو ترجمے کے ساتھ — معنی، قرآن اور اذکار | حرف' : '99 Names of Allah (Asma ul Husna) with meanings in English — Arabic, pronunciation & Quran | Harf';
+  const desc = ur ? 'اللہ تعالیٰ کے ۹۹ نام (اسماء الحسنیٰ) عربی، تلفظ اور اردو معنی کے ساتھ۔ ہر نام کی وضاحت، قرآن کی آیت جس میں وہ آیا، آواز، اور مسنون اذکار۔'
+    : 'All 99 Names of Allah (Asma ul Husna) with Arabic, pronunciation and English meaning. Each name has its explanation, the Quran verse it appears in, audio, and the authentic dhikr that uses it.';
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['duas.html', ur ? 'دعائیں' : 'Duas'], [null, ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah']])}
+<p class="eyebrow">${ur ? 'اسماء الحسنیٰ' : 'Al-Asmāʾ al-Ḥusnā'}</p>
+<h1>${ur ? 'اللہ کے ۹۹ نام اور ان کے معنی' : 'The 99 Names of Allah and their meanings'}</h1>
+<p class="lead">${ur ? 'ہر نام پر ٹیپ کریں: عربی، تلفظ، آواز، اردو معنی، قرآن کی وہ آیت جس میں یہ نام آیا ہے، اور اس نام سے اللہ کو پکارنے کا مسنون طریقہ۔' : 'Tap any name for its Arabic, pronunciation and audio, its meaning, the Quran verse it appears in, and how to call on Allah by it.'}</p>
+<section class="fadail">
+  <h2>${ur ? '⭐ فضیلت' : '⭐ The virtue of knowing them'}</h2>
+  <ul class="fd-list">
+    <li><p>${ur ? 'نبی ﷺ نے فرمایا: «اللہ کے ننانوے نام ہیں، ایک کم سو۔ جو انہیں شمار کرے (یاد کرے، سمجھے اور ان پر عمل کرے) وہ جنت میں داخل ہوگا۔»' : 'The Prophet ﷺ said: “Allah has ninety-nine names, one hundred less one. Whoever enumerates them (learns, understands and lives by them) will enter Paradise.”'}</p><p class="fd-src">${ur ? 'حوالہ' : 'Source'}: ${S('bukhari', 2736)} · ${S('muslim', 2677)}</p></li>
+    <li><p>${ur ? '«اور اللہ ہی کے لیے سب سے اچھے نام ہیں، پس اسے انہی ناموں سے پکارو۔»' : '“To Allah belong the most beautiful names, so call on Him by them.”'}</p><p class="fd-src">${ur ? 'حوالہ' : 'Source'}: <a href="${link(lang, 'quran-' + (QURAN.find((q) => q.n === 7) || { slug: '' }).slug + '.html')}#v180">${ur ? 'سورہ اعراف ۷:۱۸۰' : 'Quran 7:180'}</a></p></li>
+  </ul>
+</section>
+<div class="n99-grid">${NAMES99.map((x, i) => `<a class="n99-c" href="${link(lang, n99File(x))}"><span class="no">${num(lang, i + 1)}</span><span class="ar" lang="ar">${x[1]}</span><b class="latin" dir="ltr">${esc(x[2])}</b><span class="m">${esc(ur ? x[4] : x[3])}</span></a>`).join('')}</div>
+<section class="box"><p>${ur ? 'یہ فہرست ترمذی (۳۵۰۷) کی مشہور روایت کے مطابق ہے، جو عام طور پر پڑھی جاتی ہے۔ محدثین کے نزدیک ناموں کی یہ گنتی غالباً راوی کی طرف سے ہے، اس لیے علماء نے فہرستیں کچھ مختلف بھی بیان کی ہیں؛ البتہ «ننانوے نام» والی حدیث صحیح بخاری و مسلم میں ہے۔' : 'This list follows the well-known narration in At-Tirmidhi (3507), which is the one most people recite. Hadith scholars consider the listing itself most likely added by a narrator, so scholars have given slightly different lists; the hadith of the ninety-nine names itself is in Sahih al-Bukhari and Muslim.'} ${S('tirmidhi', 3507)}</p></section>
+<section class="also"><h2>${ur ? 'مزید' : 'More'}</h2><div class="also-grid"><a href="${link(lang, 'tasbih-counter.html')}"><span class="k k-tool">${ur ? 'ٹول' : 'Tool'}</span>${ur ? 'تسبیح کاؤنٹر' : 'Tasbih counter'}</a><a href="${link(lang, 'ayatul-kursi.html')}"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'آیت الکرسی: الحی القیوم' : 'Ayat al-Kursi: Al-Hayy, Al-Qayyum'}</a><a href="${link(lang, 'hisn-al-muslim.html')}"><span class="k k-dua">${ur ? 'دعائیں' : 'Duas'}</span>${ur ? 'حصن المسلم' : 'Hisn al-Muslim'}</a></div></section>`;
+  return layout(lang, { file: '99-names-of-allah.html', section: 'duas', title, desc, body });
+}
+
+function names99Page(lang, i) {
+  const ur = lang === 'ur';
+  const x = NAMES99[i], [slug, ar, tr, en, um, nEn, nUr, ref, kind] = x;
+  const S = (b, n) => { const s = SN(b, n); return `<a href="${s.u}" target="_blank" rel="noopener" class="latin" dir="ltr">${esc(s.t)}</a>`; };
+  const bareAr = N99_BARE(ar);
+  const title = ur ? `${bareAr} کا مطلب: ${um} — اللہ کے ۹۹ ناموں میں سے ${num(lang, i + 1)} واں نام | حرف` : `${tr} (${bareAr}) meaning: ${en} — Name ${i + 1} of the 99 Names of Allah | Harf`;
+  const desc = ur ? `اللہ کا نام ${ar} (${tr}) کا مطلب «${um}»: عربی، تلفظ، آواز، وضاحت، قرآن کی آیت اور اس نام سے اللہ کو پکارنے کا طریقہ۔`
+    : `${tr} (${bareAr}) means “${en}”. ${nEn} See the Arabic, pronunciation, audio, the Quran verse and how to call on Allah by this name.`;
+  // Quran verse with the name highlighted
+  let verse = '';
+  if (ref && QURAN.length) {
+    const [s, a] = ref.split(':').map(Number); const q = QURAN.find((z) => z.n === s);
+    const v = q && loadSurah(q)[a - 1];
+    if (v) {
+      let core = N99_BARE(ar).split(' ')[0].replace(/^ال/, ''); core = core.slice(0, Math.max(3, core.length - 1));
+      const words = v.w.map((w) => (kind === 'n' && N99_BARE(w[0]).includes(core)) ? `<mark>${w[0]}</mark>` : w[0]).join(' ');
+      const label = kind === 'n' ? (ur ? 'قرآن میں' : 'In the Quran') : (ur ? 'قرآن میں اس صفت کا ذکر' : 'The meaning in the Quran');
+      verse = `<h2>${label}</h2><div class="n99-v"><p class="ar" lang="ar">${words}</p><p>${esc(ur ? v.ur : v.en)}</p><p class="small"><a href="${link(lang, 'quran-' + q.slug + '.html')}#v${a}">${ur ? `${q.ur} ${num(lang, s)}:${num(lang, a)} ←` : `Surah ${q.en} ${s}:${a} →`}</a>${kind === 'v' ? (ur ? ' · اس آیت میں یہی صفت فعل کی شکل میں آئی ہے۔' : ' · This verse uses the same attribute as a verb.') : ''}</p></div>`;
+    }
+  }
+  if (!verse) verse = `<h2>${ur ? 'ماخذ' : 'Source'}</h2><p>${ur ? 'یہ نام ترمذی (۳۵۰۷) کی مشہور فہرست میں ہے؛ قرآن میں اس خاص صیغے میں نہیں آیا۔' : 'This name is in the well-known list narrated by At-Tirmidhi (3507); it does not appear in this exact form in the Quran.'} ${S('tirmidhi', 3507)}</p>`;
+  const dk = NAMES99_DHIKR[slug];
+  const dkHtml = dk ? `<h2>${ur ? 'مسنون ذکر' : 'Dhikr from the Sunnah'}</h2><div class="n99-dk"><p class="ar" lang="ar">${dk[0]}</p><p class="tr latin" dir="ltr">${esc(dk[1])}</p><p>${esc(ur ? dk[3] : dk[2])}</p><p class="small">${esc(ur ? dk[6] : dk[5])} ${S(dk[4][0], dk[4][1])}</p>
+  <p class="row"><a class="btn" href="${link(lang, 'tasbih-counter.html')}?a=${encodeURIComponent(dk[0])}&amp;tr=${encodeURIComponent(dk[1])}&amp;m=${encodeURIComponent(ur ? dk[3] : dk[2])}">📿 ${ur ? 'اس ذکر کی تسبیح' : 'Count this dhikr'}</a> ${say(lang, dk[0])}</p></div>` : '';
+  const [vo, vtr] = n99Vocative(x);
+  const tsb = `${link(lang, 'tasbih-counter.html')}?a=${encodeURIComponent(vo)}&amp;tr=${encodeURIComponent(vtr)}&amp;m=${encodeURIComponent(ur ? 'اے ' + um : 'O ' + en)}`;
+  const prev = NAMES99[i - 1], next = NAMES99[i + 1];
+  const others = [1, 2, 3, 4, 5, 6].map((k) => NAMES99[(i + k) % NAMES99.length]);
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['99-names-of-allah.html', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah'], [null, tr]])}
+<p class="eyebrow">${ur ? `اللہ کے ۹۹ ناموں میں سے ${num(lang, i + 1)} واں نام` : `Name ${i + 1} of the 99 Names of Allah`}</p>
+<h1>${ur ? `${ar} — ${um}` : `${tr} (${bareAr}): ${en}`}</h1>
+<div class="n99-hero"><p class="ar" lang="ar">${ar}</p><p class="tr latin" dir="ltr">${esc(tr)}</p><p class="m">${esc(ur ? um : en)}</p>${say(lang, ar, ur ? '🔊 سنیں' : '🔊 Listen')} <a class="btn gold" href="${tsb}">📿 ${ur ? `«${vo}» کی تسبیح` : `Tasbih: ${vtr}`}</a></div>
+<h2>${ur ? 'مطلب' : 'Meaning'}</h2>
+<p>${esc(ur ? nUr : nEn)}</p>
+${verse}
+${dkHtml}
+<h2>${ur ? 'اس نام سے اللہ کو پکاریں' : 'Call on Allah by this name'}</h2>
+<p>${ur ? `قرآن کہتا ہے: «اللہ کے اچھے اچھے نام ہیں، پس اسے انہی سے پکارو» (اعراف ۱۸۰)۔ اپنی دعا میں وہ نام لیں جو آپ کی حاجت سے میل کھاتا ہو، جیسے «${vo}»، پھر اپنی حاجت مانگیں۔` : `The Quran says: “To Allah belong the most beautiful names, so call on Him by them” (7:180). Begin your dua with the name that fits your need, such as “${vtr}” (${vo}), then ask for what you need.`}</p>
+<nav class="n99-nav">${prev ? `<a class="btn" href="${link(lang, n99File(prev))}">${ur ? '→ ' : '← '}${esc(prev[2])}</a>` : '<span></span>'}<a class="btn" href="${link(lang, '99-names-of-allah.html')}">${ur ? 'تمام ۹۹ نام' : 'All 99 names'}</a>${next ? `<a class="btn" href="${link(lang, n99File(next))}">${esc(next[2])}${ur ? ' ←' : ' →'}</a>` : '<span></span>'}</nav>
+<div class="n99-grid">${others.map((o) => `<a class="n99-c" href="${link(lang, n99File(o))}"><span class="no">${num(lang, NAMES99.indexOf(o) + 1)}</span><span class="ar" lang="ar">${o[1]}</span><b class="latin" dir="ltr">${esc(o[2])}</b><span class="m">${esc(ur ? o[4] : o[3])}</span></a>`).join('')}</div>`;
+  return layout(lang, { file: n99File(x), section: 'duas', title, desc, body });
+}
+
 const QURAN_FULL_NOTE = {
   en: 'Word-by-word meanings and pronunciation from <a href="https://quran.com">Quran.com</a>. Verse meanings: Saheeh International. These help you follow the Arabic; they are not a tafsir. Tapping a word uses your device’s voice and is not a recitation; for proper tajweed use the ▶ recitation player. Recitations are free audio from <a href="https://everyayah.com">EveryAyah.com</a> and <a href="https://quran.com">Quran.com</a>, which also provides the word-by-word timings.',
   ur: 'لفظ بہ لفظ معانی اور تلفظ <a href="https://quran.com">Quran.com</a> سے لیے گئے ہیں۔ آیات کا ترجمہ: مولانا فتح محمد جالندھری۔ یہ عربی سمجھنے میں مدد کے لیے ہیں؛ تفسیر نہیں۔ لفظ پر ٹیپ کرنے سے آلے کی مشینی آواز آتی ہے، یہ تلاوت نہیں؛ درست تجوید کے لیے ▶ تلاوت والا پلیئر استعمال کریں۔ تلاوت کی آڈیو <a href="https://everyayah.com">EveryAyah.com</a> کی مفت ریکارڈنگز ہیں، جو <a href="https://alquran.cloud/cdn">Al Quran Cloud CDN</a> سے چلتی ہیں۔',
@@ -5720,7 +5819,7 @@ function duasPage(lang) {
     ${DUA_TOPICS.map((t) => `<a class="chip" href="${link(lang, t.slug + '.html')}">${t.icon} ${ur ? t.ur : t.en}</a>`).join('\n    ')}
   </div>
 </section>
-${HISN.length ? `<p class="row" style="margin:-8px 0 18px"><a class="btn" href="${link(lang, 'my-duas.html')}">${ur ? '⭐ میری دعائیں' : '⭐ My duas'}</a> <a class="btn" href="${link(lang, 'challenges.html')}">${ur ? '🏁 روزانہ چیلنجز' : '🏁 Daily challenges'}</a> <a class="btn" href="harf-daily-${lang}.ics" download>${ur ? '📅 ہر صبح یاد دہانی' : '📅 Daily reminder'}</a></p>` : ''}
+${HISN.length ? `<p class="row" style="margin:-8px 0 18px"><a class="btn primary" href="${link(lang, '99-names-of-allah.html')}">${ur ? '✨ اللہ کے ۹۹ نام' : '✨ 99 Names of Allah'}</a> <a class="btn" href="${link(lang, 'my-duas.html')}">${ur ? '⭐ میری دعائیں' : '⭐ My duas'}</a> <a class="btn" href="${link(lang, 'challenges.html')}">${ur ? '🏁 روزانہ چیلنجز' : '🏁 Daily challenges'}</a> <a class="btn" href="harf-daily-${lang}.ics" download>${ur ? '📅 ہر صبح یاد دہانی' : '📅 Daily reminder'}</a></p>` : ''}
 ${HISN.length ? `<a class="hisn-cta" href="${link(lang, 'hisn-al-muslim.html')}"><span class="dc-ic" aria-hidden="true">🏰</span><span><strong>${ur ? 'حصن المسلم — ہر موقع کی دعائیں' : 'Hisn al-Muslim — duas for every occasion'}</strong><br>${ur ? `${ud(HISN.length)} ابواب، ${ud(HISN_TOTAL)} دعائیں: جاگنا، وضو، مسجد، نماز، سفر، بیماری، جنازہ، موسم، حج اور بہت کچھ` : `${HISN.length} chapters, ${HISN_TOTAL} duas: waking up, wudu, the mosque, prayer, travel, illness, funerals, weather, Hajj and more`}</span><span aria-hidden="true">${ur ? '←' : '→'}</span></a>` : ''}
 <h2>${ur ? 'موضوع کے لحاظ سے' : 'Browse by topic'}</h2>
 <div class="cards dua-cats">
@@ -6846,6 +6945,12 @@ const TASBIH_JS = String.raw`
   var S; try{ S=JSON.parse(localStorage.getItem('harf-tasbih')||'null'); }catch(e){}
   if(!S) S={p:0,c:0,t:33,step:0,total:0,day:''};
   var today=new Date().toISOString().slice(0,10); if(S.day!==today){ S.day=today; S.total=0; }
+  // A dhikr passed in the link (from the 99 Names pages): ?a=Arabic&tr=...&m=...
+  try{ var q=new URLSearchParams(location.search), qa=q.get('a');
+    if(qa&&qa.length<200){ D.presets.push({a:qa,tr:(q.get('tr')||'').slice(0,120),m:(q.get('m')||'').slice(0,200),src:''});
+      var b=document.createElement('button'); b.type='button'; b.textContent='★ '+((q.get('tr')||qa).slice(0,40)); document.querySelector('.tsb-presets').appendChild(b);
+      if(S.custom!==qa){ S.c=0; S.step=0; S.custom=qa; } S.p=D.presets.length-1; if(!q.get('keep')) S.t=0; } }catch(e){}
+  if(!D.presets[S.p]) S.p=0;
   function save(){ try{ localStorage.setItem('harf-tasbih',JSON.stringify(S)); }catch(e){} }
   var btn=document.getElementById('tsbBtn'), cnt=document.getElementById('tsbCount'), of=document.getElementById('tsbOf'), bar=document.getElementById('tsbBar');
   function preset(){ return D.presets[S.p]; }
@@ -9026,6 +9131,8 @@ function build() {
     if (HISN.length) { add(lang, 'hisn-al-muslim.html', hisnHubPage(lang)); HISN.forEach((c, i) => add(lang, c.slug + '.html', hisnChapterPage(lang, i))); }
     add(lang, 'my-duas.html', myDuasPage(lang));
     if (QURAN.length) { const ak = ayatKursiPage(lang); if (ak) add(lang, 'ayatul-kursi.html', ak); }
+    add(lang, '99-names-of-allah.html', names99HubPage(lang));
+    NAMES99.forEach((x, i) => add(lang, n99File(x), names99Page(lang, i)));
     if (HISN.length) add(lang, 'challenges.html', challengesPage(lang));
     files['harf-daily-' + lang + '.ics'] = icsFile(lang);
     add(lang, 'quran-common-words.html', quranWordsPage(lang));
@@ -9050,7 +9157,7 @@ function build() {
   }
   files['404.html'] = notFoundPage();
   files['engage.js'] = ENGAGE_JS;
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
