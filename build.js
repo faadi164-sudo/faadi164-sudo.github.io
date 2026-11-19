@@ -4293,6 +4293,11 @@ const ENGAGE_JS = String.raw`${HIJRI_REGION_JS}
 `;
 
 const ENGAGE_CSS = `
+.fp-hijri{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:8px 0 2px;padding:10px 12px;background:var(--accent-soft);border-radius:10px}
+.fp-hijri[hidden]{display:none}
+.fp-hd{font-weight:800;font-size:1.08rem;color:var(--accent)}
+.fp-hr{font-size:.82rem;color:var(--muted);text-decoration:none}
+.fp-hr:hover{text-decoration:underline}
 .h-reg{display:flex;flex-direction:column;gap:6px;margin:10px 0 0;font-size:.95rem}
 .h-reg .h-sa{color:var(--muted)}
 .h-reg .h-adj{color:var(--muted);font-size:.88rem}
@@ -4457,11 +4462,11 @@ function frontPage(lang, C, quick) {
   const w0 = pick(words), d0 = pick(duas), n0 = pick(names);
 
   const tick = [
+    [K('date', 'Today', 'آج'), `<span class="tkHijri"></span>`, 'hijri-converter.html'],
     [K('new', 'New', 'نیا'), ur ? `حصن المسلم: ${ud(hisnT)} دعائیں، اب اردو اور انگریزی میں` : `Hisn al-Muslim: all ${hisnT} duas, now in English and Urdu`, 'hisn-al-muslim.html'],
     [K('word', 'Word of the day', 'آج کا لفظ'), w0 ? `<span class="ar" lang="ar">${w0[0]}</span> — ${esc(w0[2])}` : '', w0 ? null : 'quran-roots.html', 'tkWord'],
     [K('dua', 'Dua', 'دعا'), ur ? 'جب فکر پیچھا نہ چھوڑے تو یہ پڑھیں' : 'What to say when worry won’t leave you', 'dua-for-worry-and-grief.html'],
     [K('quran', 'Quran', 'قرآن'), ur ? `تمام ${ud(114)} سورتیں لفظ بہ لفظ، اردو ترجمے کے ساتھ` : `All 114 surahs word by word, in English and Urdu`, 'quran.html'],
-    [K('date', 'Today', 'آج'), `<span class="tkHijri"></span>`, 'hijri-converter.html'],
     [K('roots', 'Roots', 'مادے'), ur ? `${ud(ROOT_LIST.length)} قرآنی مادے، ہر ایک کے الفاظ کے ساتھ` : `${ROOT_LIST.length} Quran roots, each with its family of words`, 'quran-roots.html'],
   ].filter((t) => t[1]);
   const tickHtml = tick.map(([k, t, f]) => `<a class="tk-item" href="${L(f || 'quran-roots.html')}">${k}<span>${t}</span></a>`).join('<span class="tk-dot" aria-hidden="true">•</span>');
@@ -4539,6 +4544,7 @@ function frontPage(lang, C, quick) {
   </article>
   <aside class="fp-today" aria-label="${ur ? 'آج کا انتخاب' : 'Today’s picks'}">
     <h2 class="fp-h">${ur ? 'آج' : 'Today'} <span class="fp-date" id="fpDate"></span></h2>
+    <p class="fp-hijri" id="fpHijri" hidden></p>
     ${w0 ? `<a class="fp-card" id="fpWord" href="${w0[3]}">${K('word', 'Word of the day', 'آج کا لفظ')}<span class="fp-ar ar" lang="ar">${w0[0]}</span><span class="fp-tr latin" dir="ltr">${esc(w0[1])}</span><span class="fp-m">${esc(w0[2])}</span></a>` : ''}
     ${d0 ? `<a class="fp-card" id="fpDua" href="${d0[2]}">${K('dua', 'Dua of the day', 'آج کی دعا')}<span class="fp-ar fp-ar-s ar" lang="ar">${d0[0]}</span><span class="fp-m">${esc(d0[1])}</span><span class="fp-src">${esc(d0[3])} →</span></a>` : ''}
     ${n0 ? `<a class="fp-card" id="fpName" href="${L('muslim-names.html')}">${K('tool', 'Name of the day', 'آج کا نام')}<span class="fp-ar ar" lang="ar">${n0[0]}</span><span class="fp-tr latin" dir="ltr">${esc(n0[1])}</span><span class="fp-m">${esc(n0[2])}</span></a>` : ''}
@@ -4566,6 +4572,7 @@ ${HIJRI_REGION_JS}
   var loc=ur?'ur-PK':'en-GB', now=new Date(), g, h;
   try{ g=now.toLocaleDateString(loc,{weekday:'long',day:'numeric',month:'long'}); h=harfHijriText(now, harfRegion().adj, ur); }catch(e){}
   var fd=document.getElementById('fpDate'); if(fd&&g) fd.textContent=g;
+  var fh=document.getElementById('fpHijri'); if(fh&&h){ var rg=harfRegion(); fh.innerHTML='<span class="fp-hd">'+esc(h)+'</span><a class="fp-hr" href="'+(ur?'ur-hijri-converter.html':'hijri-converter.html')+'">📍 '+esc(harfRegionName(rg.code, ur))+(rg.adj!==0?(ur?' · مقامی رویت (اندازہ)':' · local moon sighting (est.)'):(rg.code==='sa'||rg.code==='other'?(ur?' · اُمّ القریٰ':' · Umm al-Qura'):''))+'</a>'; fh.hidden=false; }
   document.querySelectorAll('.tkHijri').forEach(function(e){ e.textContent=(g||'')+(h?' · '+h:''); });
   document.querySelectorAll('.tk-item .ar').forEach(function(e,i){ if(w){ e.textContent=w[0]; var p=e.parentNode; if(p&&p.lastChild&&p.lastChild.nodeType===3) p.lastChild.textContent=' — '+w[2]; } });
 })();
