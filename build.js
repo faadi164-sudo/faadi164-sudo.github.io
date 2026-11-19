@@ -4083,6 +4083,8 @@ const FRONT_CSS = `
 .fs-ar{font-size:clamp(18px,2vw,25px);line-height:1.75;color:#fff;max-width:94%;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:none}
 .fs-m{font-size:clamp(13px,1.3vw,15px);line-height:1.45;color:#efe6cf;max-width:88%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:none}
 .fs-go{flex:none}
+[dir=rtl] .fs-m{line-height:2;font-size:clamp(14px,1.4vw,16px)}
+[dir=rtl] .fs-occ{letter-spacing:0}
 .fs-go{font-size:14px;font-weight:600;color:#e9c46a}
 .fs-slide:hover .fs-go{text-decoration:underline}
 .fs-dots{position:absolute;bottom:9px;left:0;right:0;display:flex;justify-content:center;gap:6px}
