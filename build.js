@@ -4115,9 +4115,36 @@ const FRONT_CSS = `
 @media (max-width:640px){.front{grid-template-columns:1fr;gap:22px}.ticker{font-size:13.5px}.tk-label{padding:0 10px}}
 `;
 
+// Region-aware Hijri date. Region comes from the visitor's device time zone. Saudi Arabia and the Gulf
+// follow Umm al-Qura; Pakistan, India and Bangladesh start months by local moon sighting and are usually
+// a day behind, so they default to -1 (an estimate). Visitors can adjust +/- and it is remembered.
+const HIJRI_REGION_JS = String.raw`
+function harfRegion() {
+  var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+  var R = { 'Asia/Karachi': ['pk', -1], 'Asia/Kolkata': ['in', -1], 'Asia/Calcutta': ['in', -1], 'Asia/Dhaka': ['bd', -1],
+    'Asia/Riyadh': ['sa', 0], 'Asia/Dubai': ['ae', 0], 'Asia/Qatar': ['qa', 0], 'Asia/Kuwait': ['kw', 0], 'Asia/Bahrain': ['bh', 0], 'Asia/Muscat': ['om', 0], 'Asia/Aden': ['ye', 0] };
+  var r = R[tz] || ['other', 0], s = null; try { s = localStorage.getItem('harf-hadj'); } catch (e) {}
+  return { code: r[0], auto: r[1], adj: s !== null && s !== '' ? parseInt(s, 10) : r[1], tz: tz };
+}
+function harfRegionName(code, ur) {
+  var N = { pk: ['Pakistan', 'پاکستان'], 'in': ['India', 'بھارت'], bd: ['Bangladesh', 'بنگلہ دیش'], sa: ['Saudi Arabia', 'سعودی عرب'], ae: ['UAE', 'متحدہ عرب امارات'], qa: ['Qatar', 'قطر'], kw: ['Kuwait', 'کویت'], bh: ['Bahrain', 'بحرین'], om: ['Oman', 'عمان'], ye: ['Yemen', 'یمن'], other: ['your area', 'آپ کا علاقہ'] };
+  return (N[code] || N.other)[ur ? 1 : 0];
+}
+function harfHijriParts(date, adj) {
+  var d = new Date(date.getTime() + (adj || 0) * 864e5), p = {};
+  try { new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn', { day: 'numeric', month: 'numeric', year: 'numeric' }).formatToParts(d).forEach(function (x) { p[x.type] = x.value; }); } catch (e) { return null; }
+  return { d: parseInt(p.day, 10), m: parseInt(p.month, 10), y: parseInt(p.year, 10) };
+}
+function harfHijriText(date, adj, ur) {
+  var d = new Date(date.getTime() + (adj || 0) * 864e5);
+  try { return d.toLocaleDateString((ur ? 'ur-PK' : 'en-GB') + '-u-ca-islamic-umalqura', { day: 'numeric', month: 'long', year: 'numeric' }); } catch (e) { return ''; }
+}
+`;
+
 // Engagement: memorize/save on every dua, WhatsApp + image sharing, My duas, challenges,
 // seasonal banners, and the mini-quiz. Everything is kept in this browser (localStorage), no sign-up.
-const ENGAGE_JS = String.raw`(function () {
+const ENGAGE_JS = String.raw`${HIJRI_REGION_JS}
+(function () {
   var ur = document.documentElement.lang === 'ur';
   var T = ur ? {
     memTo: function (n) { return 'شاباش! آپ کو ' + num(n) + ' دعائیں یاد ہو گئیں'; }, saved: 'میری دعاؤں میں محفوظ ہو گئی',
@@ -4230,8 +4257,7 @@ const ENGAGE_JS = String.raw`(function () {
   // ---- seasonal banners (Hijri date + weekday)
   var ss = document.querySelectorAll('.season');
   if (ss.length) {
-    var hm = 0, hdy = 0;
-    try { new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric' }).formatToParts(new Date()).forEach(function (p) { if (p.type === 'month') hm = parseInt(p.value, 10); if (p.type === 'day') hdy = parseInt(p.value, 10); }); } catch (e) {}
+    var hp = harfHijriParts(new Date(), harfRegion().adj) || { m: 0, d: 0 }, hm = hp.m, hdy = hp.d;
     var wd = new Date().getDay(), shown = 0;
     var rule = { friday: wd === 5, shaban: hm === 8 && hdy >= 15, ramadan: hm === 9 && hdy < 21, lastten: hm === 9 && hdy >= 21, eidfitr: hm === 10 && hdy <= 3, dhulhijjah: hm === 12 && hdy <= 8, arafah: hm === 12 && hdy === 9, eid: hm === 12 && hdy >= 10 && hdy <= 13 };
     [].forEach.call(ss, function (s) { if (rule[s.getAttribute('data-when')] && shown < 2) { s.hidden = false; shown++; } });
@@ -4267,6 +4293,10 @@ const ENGAGE_JS = String.raw`(function () {
 `;
 
 const ENGAGE_CSS = `
+.h-reg{display:flex;flex-direction:column;gap:6px;margin:10px 0 0;font-size:.95rem}
+.h-reg .h-sa{color:var(--muted)}
+.h-reg .h-adj{color:var(--muted);font-size:.88rem}
+.h-reg .btn.sm{padding:3px 10px;font-size:.85rem}
 .letter-words,.letter-opens{margin:28px 0}
 .lw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px}
 .lw-grid a{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none}
@@ -4522,6 +4552,7 @@ function frontPage(lang, C, quick) {
 </section>
 ${watch}
 <script>
+${HIJRI_REGION_JS}
 (function(){
   var D=${data}, day=Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5);
   function pk(a){return a&&a.length?a[day%a.length]:null}
@@ -4533,7 +4564,7 @@ ${watch}
   if(d) set('fpDua', K(['dua', ur?'آج کی دعا':'Dua of the day'])+'<span class="fp-ar fp-ar-s ar" lang="ar">'+d[0]+'</span><span class="fp-m">'+esc(d[1])+'</span><span class="fp-src">'+esc(d[3])+' '+(ur?'←':'→')+'</span>', d[2]);
   if(n) set('fpName', K(['tool', ur?'آج کا نام':'Name of the day'])+'<span class="fp-ar ar" lang="ar">'+n[0]+'</span><span class="fp-tr latin" dir="ltr">'+esc(n[1])+'</span><span class="fp-m">'+esc(n[2])+'</span>');
   var loc=ur?'ur-PK':'en-GB', now=new Date(), g, h;
-  try{ g=now.toLocaleDateString(loc,{weekday:'long',day:'numeric',month:'long'}); h=now.toLocaleDateString(loc+'-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}); }catch(e){}
+  try{ g=now.toLocaleDateString(loc,{weekday:'long',day:'numeric',month:'long'}); h=harfHijriText(now, harfRegion().adj, ur); }catch(e){}
   var fd=document.getElementById('fpDate'); if(fd&&g) fd.textContent=g;
   document.querySelectorAll('.tkHijri').forEach(function(e){ e.textContent=(g||'')+(h?' · '+h:''); });
   document.querySelectorAll('.tk-item .ar').forEach(function(e,i){ if(w){ e.textContent=w[0]; var p=e.parentNode; if(p&&p.lastChild&&p.lastChild.nodeType===3) p.lastChild.textContent=' — '+w[2]; } });
@@ -6287,7 +6318,7 @@ function hijriPage(lang) {
       const g = new Intl.DateTimeFormat(ur ? 'ur-PK' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Riyadh' }).format(d);
       return esc(h + ' · ' + g);
     } catch (e) { return '…'; }
-  })()}</p></div>
+  })()}</p><p class="h-reg" id="hReg"></p></div>
 <div class="conv">
   <div class="tool"><h2>${C.g2h}</h2>
     <label>${C.day} <input id="gD" type="number" min="1" max="31" style="width:5em"></label>
@@ -6315,6 +6346,7 @@ ${HIJRI_MONTHS.map((m, i) => `<tr><td>${num(lang, i + 1)}</td><td><span class="a
 ${toolMore(lang, 'hijri-converter.html')}
 ${jsonData('hijri-data', data)}
 <script>
+${HIJRI_REGION_JS}
 (function () {
   var D = JSON.parse(document.getElementById('hijri-data').textContent);
   var n = function (x) { return D.ur ? String(x).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }) : String(x); };
@@ -6335,7 +6367,29 @@ ${jsonData('hijri-data', data)}
   function arStr(h, t) { return '<span class="ar" lang="ar">' + D.ard[t.getUTCDay()] + ' ' + an(h.d) + ' ' + D.har[h.m - 1] + ' ' + an(h.y) + 'هـ</span>'; }
   var now = new Date(), today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
   var th = toH(today);
-  document.querySelector('#hToday .big-date').innerHTML = arStr(th, today) + '<br><strong>' + hStr(th) + '</strong> · ' + gStr(today);
+  function paintToday() {
+    var rg = harfRegion(), lh = toH(new Date(today.getTime() + rg.adj * 864e5));
+    document.querySelector('#hToday .big-date').innerHTML = arStr(lh, today) + '<br><strong>' + hStr(lh) + '</strong> · ' + gStr(today);
+    var name = harfRegionName(rg.code, D.ur), diff = rg.adj;
+    var how = diff === 0 ? (D.ur ? 'سعودی عرب کے اُمّ القریٰ کیلنڈر کے مطابق' : 'on Saudi Arabia’s Umm al-Qura calendar')
+      : (D.ur ? 'مقامی رویتِ ہلال کے مطابق، سعودی عرب سے ' + n(Math.abs(diff)) + ' دن ' + (diff < 0 ? 'پیچھے' : 'آگے') + (diff === rg.auto ? ' (اندازہ)' : '')
+        : 'by local moon sighting, ' + Math.abs(diff) + ' day' + (Math.abs(diff) === 1 ? '' : 's') + (diff < 0 ? ' behind' : ' ahead of') + (diff < 0 ? ' Saudi Arabia' : ' Saudi Arabia') + (diff === rg.auto ? ' (estimate)' : ''));
+    var reg = document.getElementById('hReg');
+    reg.innerHTML = '<span>📍 <strong>' + name + '</strong> — ' + how + '</span>'
+      + (diff !== 0 ? '<span class="h-sa">' + (D.ur ? 'سعودی عرب (اُمّ القریٰ): ' : 'Saudi Arabia (Umm al-Qura): ') + hStr(th) + '</span>' : '')
+      + '<span class="h-adj">' + (D.ur ? 'آپ کے ہاں اعلان مختلف ہے؟' : 'Different where you are?')
+      + ' <button class="btn sm" type="button" data-a="-1">' + (D.ur ? '− ایک دن' : '− 1 day') + '</button>'
+      + ' <button class="btn sm" type="button" data-a="1">' + (D.ur ? '+ ایک دن' : '+ 1 day') + '</button>'
+      + (diff !== rg.auto ? ' <button class="btn sm" type="button" data-a="reset">' + (D.ur ? 'خودکار' : 'Auto') + '</button>' : '') + '</span>';
+    [].forEach.call(reg.querySelectorAll('button'), function (b) {
+      b.onclick = function () {
+        var a = b.getAttribute('data-a'), v = a === 'reset' ? null : Math.max(-2, Math.min(2, rg.adj + parseInt(a, 10)));
+        try { if (v === null) localStorage.removeItem('harf-hadj'); else localStorage.setItem('harf-hadj', String(v)); } catch (e) {}
+        paintToday();
+      };
+    });
+  }
+  paintToday();
   document.getElementById('gD').value = today.getUTCDate(); document.getElementById('gM').value = today.getUTCMonth() + 1; document.getElementById('gY').value = today.getUTCFullYear();
   document.getElementById('hD').value = th.d; document.getElementById('hM').value = th.m; document.getElementById('hY').value = th.y;
   document.getElementById('gGo').addEventListener('click', function () {
