@@ -4076,6 +4076,19 @@ const FRONT_CSS = `
 .fp-img{position:relative;display:block;border-radius:14px;overflow:hidden;aspect-ratio:16/9;background:#e9e2cf}
 .fp-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
 .fp-img:hover img{transform:scale(1.03)}
+.fp-slider{background:linear-gradient(rgba(8,58,44,.86),rgba(8,58,44,.92)),url(img/banner-quran.webp) center/cover;color:#fff8e7;border:1px solid #c9a24b}
+.fs-track{display:flex;height:100%;transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.fs-slide{flex:0 0 100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:34px 28px 40px;text-align:center;color:inherit;text-decoration:none;box-sizing:border-box}
+.fs-occ{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#e9c46a;border:1px solid rgba(233,196,106,.6);border-radius:999px;padding:3px 12px}
+.fs-ar{font-size:clamp(22px,3.1vw,34px);line-height:1.8;color:#fff;max-width:92%}
+.fs-m{font-size:clamp(14px,1.5vw,17px);line-height:1.5;color:#efe6cf;max-width:88%;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fs-go{font-size:14px;font-weight:600;color:#e9c46a}
+.fs-slide:hover .fs-go{text-decoration:underline}
+.fs-dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.fs-dots button{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:rgba(255,248,231,.4);cursor:pointer}
+.fs-dots button[aria-current=true]{background:#e9c46a;width:22px;border-radius:8px}
+@media (max-width:600px){.fp-slider{aspect-ratio:4/3}.fs-slide{padding:30px 16px 36px}}
+@media (prefers-reduced-motion:reduce){.fs-track{transition:none}}
 .fp-flag{position:absolute;top:14px;left:14px;background:#c0392b;color:#fff;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 [dir=rtl] .fp-flag{left:auto;right:14px;text-transform:none;letter-spacing:0}
 .fp-kick{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 6px;color:var(--muted);font-size:13.5px;font-weight:600}
@@ -4552,7 +4565,19 @@ function frontPage(lang, C, quick) {
 <div class="seasons">${seasons.map((s) => `<div class="season" data-when="${s[0]}" hidden><span class="se-ic" aria-hidden="true">${s[1]}</span><span class="se-t"><strong>${s[2]}</strong>${s[3]}</span>${s[4].map(([f, t]) => `<a class="btn sm" href="${L(f)}">${t}</a>`).join(' ')}</div>`).join('')}</div>
 <section class="front">
   <article class="fp-lead">
-    <a class="fp-img" href="${L('hisn-al-muslim.html')}"><img src="img/banner-quran.webp" alt="" width="1024" height="572"><span class="fp-flag">${ur ? 'نیا' : 'New'}</span></a>
+    ${(() => {
+    const slides = FP_DUA_SLIDES.map((s) => HISN.find((c) => c.slug === s)).filter(Boolean).map((c) => {
+      const k = c.items.findIndex((x) => !x.h && x.a && x.a.length > 15 && x.a.length < 140 && x.mEn);
+      return k < 0 ? null : { c, it: c.items[k], k: k + 1 };
+    }).filter(Boolean);
+    if (!slides.length) return `<a class="fp-img" href="${L('hisn-al-muslim.html')}"><img src="img/banner-quran.webp" alt="" width="1024" height="572"><span class="fp-flag">${ur ? 'نیا' : 'New'}</span></a>`;
+    return `<div class="fp-img fp-slider" id="fpSlider" aria-roledescription="carousel" aria-label="${ur ? 'روزمرہ کی دعائیں' : 'Everyday duas'}">
+      <div class="fs-track">${slides.map(({ c, it, k }, i) => `<a class="fs-slide" href="${L(c.slug + '.html')}#d${k}"${i ? ' aria-hidden="true" tabindex="-1"' : ''}><span class="fs-occ">${esc(ur ? c.ur : c.en)}</span><span class="fs-ar ar" lang="ar">${it.a}</span><span class="fs-m">${esc(ur ? it.mUr : it.mEn)}</span><span class="fs-go">${ur ? 'پوری دعا اور حوالہ ←' : 'Full dua and source →'}</span></a>`).join('')}</div>
+      <span class="fp-flag">${ur ? 'نیا' : 'New'}</span>
+      <div class="fs-dots">${slides.map((_, i) => `<button type="button" aria-label="${i + 1}"${i ? '' : ' aria-current="true"'}></button>`).join('')}</div>
+    </div>
+    <script>${FP_SLIDER_JS}</script>`;
+  })()}
     <p class="fp-kick">${K('dua', 'Duas', 'دعائیں')} <span>${ur ? `${ud(hisnN)} مواقع · ${ud(hisnT)} دعائیں · مستند حوالے` : `${hisnN} occasions · ${hisnT} duas · checked sources`}</span></p>
     <h2 class="fp-head"><a href="${L('hisn-al-muslim.html')}">${ur ? 'دن کے ہر لمحے کی دعا — پوری حصن المسلم، اب اردو میں' : 'A dua for every moment of your day — all of Hisn al-Muslim, now in English and Urdu'}</a></h2>
     <p class="fp-deck">${ur ? 'جاگنے سے سونے تک، سفر، بیماری، بارش اور حج: ہر دعا عربی متن، تلفظ، ترجمے اور sunnah.com کے حوالے کے ساتھ۔' : 'From waking up to falling asleep, travel, illness, rain and Hajj: every dua with the Arabic, pronunciation, meaning and a sunnah.com reference.'}</p>
@@ -6722,6 +6747,29 @@ const PRAYER_JS = String.raw`
       function(){ st.textContent=D.noGps; },{timeout:15000,maximumAge:6e5});
   });
   render();
+})();
+`;
+
+// Homepage lead: rotating everyday dua cards (Hisn al-Muslim chapter slugs)
+const FP_DUA_SLIDES = ['dua-when-waking-up', 'dua-leaving-home', 'dua-entering-home', 'dua-in-anguish', 'dua-when-things-are-difficult', 'dua-to-pay-off-debt', 'dua-for-breaking-fast', 'dua-after-eating', 'dua-when-it-rains', 'dua-when-angry', 'dua-for-the-traveller', 'dua-for-someone-who-does-you-good', 'dua-before-sleeping'];
+const FP_SLIDER_JS = String.raw`
+(function(){
+  var box=document.getElementById('fpSlider'); if(!box) return;
+  var tr=box.querySelector('.fs-track'), sl=tr.children, dots=box.querySelectorAll('.fs-dots button'), i=0, n=sl.length, timer=null, rtl=document.documentElement.dir==='rtl';
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Start on a different dua each day
+  i=Math.floor(Date.now()/864e5)%n;
+  function go(k){ i=(k+n)%n; tr.style.transform='translateX('+(rtl?i*100:-i*100)+'%)';
+    for(var j=0;j<n;j++){ sl[j].setAttribute('aria-hidden',String(j!==i)); sl[j].tabIndex=j===i?0:-1; if(dots[j]) dots[j].setAttribute('aria-current',String(j===i)); } }
+  function play(){ stop(); if(!still) timer=setInterval(function(){ go(i+1); },5000); }
+  function stop(){ if(timer) clearInterval(timer); timer=null; }
+  dots.forEach(function(d,k){ d.addEventListener('click',function(){ go(k); play(); }); });
+  box.addEventListener('mouseenter',stop); box.addEventListener('mouseleave',play);
+  box.addEventListener('focusin',stop); box.addEventListener('focusout',play);
+  var x0=null; box.addEventListener('touchstart',function(e){ x0=e.touches[0].clientX; stop(); },{passive:true});
+  box.addEventListener('touchend',function(e){ if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40){ go(i+((dx<0)!==rtl?1:-1)); } x0=null; play(); });
+  document.addEventListener('visibilitychange',function(){ document.hidden?stop():play(); });
+  tr.style.transition='none'; go(i); tr.offsetWidth; tr.style.transition=''; play();
 })();
 `;
 
