@@ -5492,7 +5492,8 @@ function fadailHtml(lang, n) {
 // Title that matches how people search: "Surah Yaseen with Urdu translation".
 function surahSeoTitle(lang, q) {
   const enName = { 36: 'Yaseen (Ya-Sin)', 67: 'Al-Mulk (Tabarak)', 1: 'Al-Fatiha', 109: 'Al-Kafirun' }[q.n] || q.en;
-  const urName = q.ur.startsWith('سورہ') ? q.ur : 'سورہ ' + q.ur;
+  const UR_COMMON = { 1: 'سورہ فاتحہ', 2: 'سورہ بقرہ', 3: 'سورہ آل عمران', 18: 'سورہ کہف', 32: 'سورہ سجدہ', 36: 'سورہ یٰسین (یسین)', 48: 'سورہ فتح', 55: 'سورہ رحمٰن', 56: 'سورہ واقعہ', 62: 'سورہ جمعہ', 67: 'سورہ ملک', 73: 'سورہ مزمل', 78: 'سورہ نبا', 97: 'سورہ قدر', 109: 'سورہ کافرون', 110: 'سورہ نصر', 112: 'سورہ اخلاص', 113: 'سورہ فلق', 114: 'سورہ ناس' };
+  const urName = UR_COMMON[q.n] || (q.ur.startsWith('سورہ') ? q.ur : 'سورہ ' + q.ur);
   return lang === 'ur' ? `${urName} اردو ترجمے کے ساتھ — لفظ بہ لفظ، تلفظ${SURAH_FADAIL[q.n] ? ' اور فضیلت' : ''}` : `Surah ${enName} with English translation — word by word${SURAH_FADAIL[q.n] ? ', virtues' : ''} & audio`;
 }
 
