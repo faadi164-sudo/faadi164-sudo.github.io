@@ -5653,7 +5653,7 @@ function names99Page(lang, i) {
   const dkHtml = dk ? `<h2>${ur ? 'مسنون ذکر' : 'Dhikr from the Sunnah'}</h2><div class="n99-dk"><p class="ar" lang="ar">${dk[0]}</p><p class="tr latin" dir="ltr">${esc(dk[1])}</p><p>${esc(ur ? dk[3] : dk[2])}</p><p class="small">${esc(ur ? dk[6] : dk[5])} ${S(dk[4][0], dk[4][1])}</p>
   <p class="row"><a class="btn" href="${link(lang, 'tasbih-counter.html')}?a=${encodeURIComponent(dk[0])}&amp;tr=${encodeURIComponent(dk[1])}&amp;m=${encodeURIComponent(ur ? dk[3] : dk[2])}">📿 ${ur ? 'اس ذکر کی تسبیح' : 'Count this dhikr'}</a> ${say(lang, dk[0])}</p></div>` : '';
   const [vo, vtr] = n99Vocative(x);
-  const tsb = `${link(lang, 'tasbih-counter.html')}?a=${encodeURIComponent(vo)}&amp;tr=${encodeURIComponent(vtr)}&amp;m=${encodeURIComponent(ur ? 'اے ' + um : 'O ' + en)}`;
+  const tsb = `${link(lang, 'tasbih-counter.html')}?a=${encodeURIComponent(vo)}&amp;tr=${encodeURIComponent(vtr)}&amp;m=${encodeURIComponent(ur ? 'اے ' + um.split('،')[0] : 'O ' + en.replace(/^The /, '').split(',')[0])}`;
   const prev = NAMES99[i - 1], next = NAMES99[i + 1];
   const others = [1, 2, 3, 4, 5, 6].map((k) => NAMES99[(i + k) % NAMES99.length]);
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['99-names-of-allah.html', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah'], [null, tr]])}
