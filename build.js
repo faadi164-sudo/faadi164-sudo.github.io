@@ -4566,6 +4566,8 @@ function frontPage(lang, C, quick) {
     ${n0 ? `<a class="fp-card" id="fpName" href="${L('muslim-names.html')}">${K('tool', 'Name of the day', 'آج کا نام')}<span class="fp-ar ar" lang="ar">${n0[0]}</span><span class="fp-tr latin" dir="ltr">${esc(n0[1])}</span><span class="fp-m">${esc(n0[2])}</span></a>` : ''}
     <a class="fp-card" id="fpMine" href="${L('my-duas.html')}" hidden></a>
     <div class="fp-actions"><a class="btn sm" href="harf-daily-${lang}.ics" download>${ur ? '📅 ہر صبح یاد دہانی' : '📅 Remind me daily'}</a><a class="btn sm" href="${L('challenges.html')}">${ur ? '🏁 چیلنجز' : '🏁 Challenges'}</a></div>
+    <a class="fp-card fp-pray" id="fpPray" href="${L('prayer-times.html')}" hidden></a>
+    <div class="fp-tools"><a href="${L('prayer-times.html')}"><span aria-hidden="true">🕌</span>${ur ? 'نماز کے اوقات' : 'Prayer times'}</a><a href="${L('qibla-direction.html')}"><span aria-hidden="true">🧭</span>${ur ? 'قبلہ' : 'Qibla'}</a><a href="${L('tasbih-counter.html')}"><span aria-hidden="true">📿</span>${ur ? 'تسبیح' : 'Tasbih'}</a></div>
   </aside>
   <aside class="fp-top" aria-label="${ur ? 'منتخب صفحات' : 'Top picks'}">
     <h2 class="fp-h">${ur ? 'منتخب صفحات' : 'Top picks'}</h2>
@@ -4592,7 +4594,9 @@ ${HIJRI_REGION_JS}
   document.querySelectorAll('.tkHijri').forEach(function(e){ e.textContent=(g||'')+(h?' · '+h:''); });
   document.querySelectorAll('.tk-item .ar').forEach(function(e,i){ if(w){ e.textContent=w[0]; var p=e.parentNode; if(p&&p.lastChild&&p.lastChild.nodeType===3) p.lastChild.textContent=' — '+w[2]; } });
 })();
-</script>`;
+</script>
+${jsonData('fp-pt', { ur, cities: PT_CITIES, here: ur ? 'میری لوکیشن' : 'My location', names: ur ? { fajr: 'فجر', dhuhr: 'ظہر', jumuah: 'جمعہ', asr: 'عصر', sunset: 'مغرب', isha: 'عشاء' } : { fajr: 'Fajr', dhuhr: 'Dhuhr', jumuah: 'Jumuʿah', asr: 'Asr', sunset: 'Maghrib', isha: 'Isha' } })}
+<script>${LOC_JS}${PT_CORE_JS}${FP_PRAY_JS}</script>`;
 }
 
 function homePage(lang) {
@@ -6594,6 +6598,15 @@ const DAILY_CSS = `
 .qb-big{font-size:40px;font-weight:700;margin:0;direction:ltr}
 .qb-st{color:var(--muted);font-size:15px}
 .qb-ok{color:var(--accent);font-weight:700}
+.fp-pray{margin-top:12px}
+.fp-pray .pp-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:4px}
+.fp-pray .pp-n{font-size:24px;font-weight:700}
+.fp-pray .pp-t{font-size:24px;font-weight:700;color:var(--accent)}
+.fp-pray .pp-l{color:var(--muted);font-size:15px}
+.fp-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.fp-tools a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;text-align:center}
+.fp-tools a span{font-size:22px}
+.fp-tools a:hover{border-color:var(--accent)}
 `;
 
 // Cities: [key, English, Urdu, lat, lon, IANA time zone]
@@ -6628,9 +6641,8 @@ function harfDeviceTz(){ try{ return Intl.DateTimeFormat().resolvedOptions().tim
 function harfGuessCity(cities){ var tz=harfDeviceTz(), best=null; for(var i=0;i<cities.length;i++){ if(cities[i][5]===tz){ best=cities[i]; break; } } return best; }
 `;
 
-const PRAYER_JS = String.raw`
-(function(){
-  var D=JSON.parse(document.getElementById('pt-data').textContent), ur=D.ur;
+const PT_CORE_JS = String.raw`
+function harfPTCore(ur){
   var rad=Math.PI/180, sin=function(d){return Math.sin(d*rad);}, cos=function(d){return Math.cos(d*rad);}, tan=function(d){return Math.tan(d*rad);};
   var asin=function(x){return Math.asin(x)/rad;}, acos=function(x){return Math.acos(x)/rad;}, atan2=function(y,x){return Math.atan2(y,x)/rad;}, acot=function(x){return Math.atan(1/x)/rad;};
   var fixA=function(a){a=a-360*Math.floor(a/360);return a;}, fixH=function(h){h=h-24*Math.floor(h/24);return h;};
@@ -6664,6 +6676,13 @@ const PRAYER_JS = String.raw`
   function hm(date,tz){ var s=new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'numeric',minute:'2-digit',hour12:true}).format(date); if(!ur) return s;
     var h24=+new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',hour12:false}).format(date), lab=h24<4?'رات':h24<12?'صبح':h24<16?'دوپہر':h24<19?'شام':'رات';
     return s.replace(/\s?[AP]M/i,'').replace(/[0-9]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'[x];})+' '+lab; }
+  return {compute:compute,TZM:TZM,toDate:toDate,partsIn:partsIn,hm:hm};
+}
+`;
+const PRAYER_JS = String.raw`
+(function(){
+  var D=JSON.parse(document.getElementById('pt-data').textContent), ur=D.ur;
+  var P=harfPTCore(ur), compute=P.compute, TZM=P.TZM, toDate=P.toDate, partsIn=P.partsIn, hm=P.hm;
   var NAMES=D.names, sel=document.getElementById('ptCity'), mSel=document.getElementById('ptMethod'), aSel=document.getElementById('ptAsr'), st=document.getElementById('ptStatus');
   var loc=harfLocLoad();
   if(!loc){ var g=harfGuessCity(D.cities)||D.cities[0]; loc={k:g[0]}; }
@@ -6703,6 +6722,35 @@ const PRAYER_JS = String.raw`
       function(){ st.textContent=D.noGps; },{timeout:15000,maximumAge:6e5});
   });
   render();
+})();
+`;
+
+// Homepage "Next prayer" card
+const FP_PRAY_JS = String.raw`
+(function(){
+  var el=document.getElementById('fpPray'), dataEl=document.getElementById('fp-pt'); if(!el||!dataEl) return;
+  try{
+  var C=JSON.parse(dataEl.textContent), ur=C.ur, P=harfPTCore(ur), loc=harfLocLoad(), c=null, i;
+  function nu(x){ return ur?String(x).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d];}):String(x); }
+  var K='<span class="k k-new">'+(ur?'اگلی نماز':'Next prayer')+'</span>';
+  if(loc&&loc.k==='gps') c={name:C.here,lat:loc.lat,lon:loc.lon,tz:loc.tz||harfDeviceTz()};
+  else { var row=null; if(loc) for(i=0;i<C.cities.length;i++) if(C.cities[i][0]===loc.k) row=C.cities[i]; if(!row) row=harfGuessCity(C.cities);
+    if(row) c={name:ur?row[2]:row[1],lat:row[3],lon:row[4],tz:row[5]}; }
+  if(!c){ el.innerHTML=K+'<span class="pp-n">'+(ur?'اپنے شہر کے نماز کے اوقات':'Prayer times for your city')+'</span><span class="fp-src">'+(ur?'شہر چنیں ←':'Choose your city →')+'</span>'; el.hidden=false; return; }
+  var dm=P.TZM[c.tz]||['mwl',1], method=(loc&&loc.m)||dm[0], asrF=+((loc&&loc.a)||dm[1]), ram=false;
+  try{ ram=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{month:'numeric',timeZone:c.tz}).format(new Date())==='9'; }catch(e){}
+  function paint(){
+    var now=new Date(), p=P.partsIn(now,c.tz), o=P.compute(p.y,p.m,p.d,c.lat,c.lon,method,asrF,ram), keys=['fajr','dhuhr','asr','sunset','isha'], nk=null, nd=null;
+    for(i=0;i<keys.length;i++){ var d=P.toDate(p.y,p.m,p.d,o[keys[i]]); if(d>now){ nk=keys[i]; nd=d; break; } }
+    if(!nk){ var t=new Date(now.getTime()+864e5), p2=P.partsIn(t,c.tz), o2=P.compute(p2.y,p2.m,p2.d,c.lat,c.lon,method,asrF,ram); nk='fajr'; nd=P.toDate(p2.y,p2.m,p2.d,o2.fajr); }
+    var name=C.names[nk]; if(nk==='dhuhr'&&new Intl.DateTimeFormat('en-US',{timeZone:c.tz,weekday:'short'}).format(nd)==='Fri') name=C.names.jumuah;
+    var mins=Math.max(0,Math.ceil((nd-now)/6e4)), h=Math.floor(mins/60), m=mins%60;
+    var left=ur?((h?nu(h)+' گھنٹے ':'')+nu(m)+' منٹ باقی'):('in '+(h?h+'h ':'')+m+'m');
+    el.innerHTML=K+'<span class="pp-row"><span class="pp-n">'+name+'</span><span class="pp-t">'+P.hm(nd,c.tz)+'</span></span><span class="pp-l">'+left+'</span><span class="fp-src">📍 '+c.name+' · '+(ur?'پورا ٹائم ٹیبل ←':'Full timetable →')+'</span>';
+    el.hidden=false;
+  }
+  paint(); setInterval(paint,30000);
+  }catch(e){}
 })();
 `;
 
@@ -6884,7 +6932,7 @@ function prayerTimesPage(lang) {
 <p><a href="${link(lang, 'qibla-direction.html')}">${ur ? 'قبلہ کی سمت معلوم کریں ←' : 'Find the Qibla direction →'}</a> · <a href="${link(lang, 'tasbih-counter.html')}">${ur ? 'نماز کے بعد کی تسبیح ←' : 'Tasbih after salah →'}</a></p></section>
 ${toolMore(lang, 'prayer-times.html')}
 ${jsonData('pt-data', data)}
-<script>${LOC_JS}${PRAYER_JS}</script>`;
+<script>${LOC_JS}${PT_CORE_JS}${PRAYER_JS}</script>`;
   return layout(lang, { file: 'prayer-times.html', section: 'tools', title: C.title, desc: C.desc, body });
 }
 
