@@ -6661,7 +6661,9 @@ const PRAYER_JS = String.raw`
   }
   function toDate(y,m,d,h){ return new Date(Date.UTC(y,m-1,d)+Math.round(h*60)*60000); }
   function partsIn(date,tz){ var p={}; new Intl.DateTimeFormat('en-GB',{timeZone:tz,year:'numeric',month:'numeric',day:'numeric'}).formatToParts(date).forEach(function(x){p[x.type]=x.value;}); return {y:+p.year,m:+p.month,d:+p.day}; }
-  function hm(date,tz){ var s=new Intl.DateTimeFormat(ur?'en-GB':'en-US',{timeZone:tz,hour:'numeric',minute:'2-digit',hour12:true}).format(date); return ur?s.replace(/[0-9]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'[x];}).replace('am','صبح').replace('pm','شام').replace('AM','صبح').replace('PM','شام'):s; }
+  function hm(date,tz){ var s=new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'numeric',minute:'2-digit',hour12:true}).format(date); if(!ur) return s;
+    var h24=+new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',hour12:false}).format(date), lab=h24<4?'رات':h24<12?'صبح':h24<16?'دوپہر':h24<19?'شام':'رات';
+    return s.replace(/\s?[AP]M/i,'').replace(/[0-9]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'[x];})+' '+lab; }
   var NAMES=D.names, sel=document.getElementById('ptCity'), mSel=document.getElementById('ptMethod'), aSel=document.getElementById('ptAsr'), st=document.getElementById('ptStatus');
   var loc=harfLocLoad();
   if(!loc){ var g=harfGuessCity(D.cities)||D.cities[0]; loc={k:g[0]}; }
@@ -6894,14 +6896,14 @@ function qiblaPage(lang) {
     gps: 'میری لوکیشن', city: 'شہر', compass: 'کمپاس آن کریں', here: 'میری لوکیشن', noGps: 'لوکیشن نہیں مل سکی۔ براہِ کرم فہرست سے شہر چنیں۔', finding: 'لوکیشن ڈھونڈ رہے ہیں…',
     calib: 'فون کو ہموار رکھیں۔ اگر سمت غلط لگے تو فون کو ہوا میں ۸ کے انداز میں گھمائیں۔', noCompass: 'اس ڈیوائس پر کمپاس دستیاب نہیں۔ درجوں والا رخ استعمال کریں: شمال سے گھڑی کی سمت۔',
     facing: '✓ آپ کا رخ قبلہ کی طرف ہے', turn: 'فون گھمائیں یہاں تک کہ تیر سیدھا اوپر ہو جائے', fromN: 'شمال سے گھڑی کی سمت',
-    tipsH: 'کمپاس کے بغیر قبلہ کیسے معلوم کریں؟', tips: ['قریب کی مسجد کا رخ سب سے قابلِ اعتماد ہے۔', 'پاکستان سے قبلہ تقریباً مغرب کی طرف ہے (۲۵۵° سے ۲۶۰°)، برطانیہ سے جنوب مشرق (تقریباً ۱۱۹°)، اور امریکہ کے مشرقی ساحل سے شمال مشرق (تقریباً ۵۸°)۔', 'سال میں دو دن (تقریباً ۲۸ مئی اور ۱۶ جولائی) سورج مکہ کے بالکل اوپر ہوتا ہے؛ اس وقت ہر چیز کا سایہ قبلہ کی مخالف سمت ہوتا ہے۔', 'فون کا کمپاس دھات، مقناطیس اور بجلی کے آلات کے قریب غلط ہو سکتا ہے۔'],
+    tipsH: 'کمپاس کے بغیر قبلہ کیسے معلوم کریں؟', tips: ['قریب کی مسجد کا رخ سب سے قابلِ اعتماد ہے۔', 'پاکستان سے قبلہ تقریباً مغرب کی طرف ہے (لاہور اور اسلام آباد تقریباً ۲۵۸°، کراچی تقریباً ۲۶۸°)، برطانیہ سے جنوب مشرق (تقریباً ۱۱۹°)، اور امریکہ کے مشرقی ساحل سے شمال مشرق (تقریباً ۵۸°)۔', 'سال میں دو دن (تقریباً ۲۸ مئی اور ۱۶ جولائی) سورج مکہ کے بالکل اوپر ہوتا ہے؛ اس وقت ہر چیز کا سایہ قبلہ کی مخالف سمت ہوتا ہے۔', 'فون کا کمپاس دھات، مقناطیس اور بجلی کے آلات کے قریب غلط ہو سکتا ہے۔'],
   } : {
     title: 'Qibla Direction — Find the Qibla online with a compass | Harf', desc: 'Find the Qibla direction from your city in degrees: use your location or pick a city, turn on the compass on your phone and the arrow points to the Kaaba. Also shows your distance to Makkah.',
     h1: 'Qibla direction', lead: 'Pick your city or tap “Use my location”. On a phone, tap “Turn on compass”, hold the phone flat and turn until the arrow points straight up.',
     gps: 'Use my location', city: 'City', compass: 'Turn on compass', here: 'My location', noGps: 'Could not get your location. Please pick a city from the list.', finding: 'Finding your location…',
     calib: 'Hold the phone flat. If the direction looks wrong, move the phone in a figure-8 to calibrate.', noCompass: 'No compass on this device. Use the bearing in degrees: clockwise from north.',
     facing: '✓ You are facing the Qibla', turn: 'Turn until the arrow points straight up', fromN: 'clockwise from north',
-    tipsH: 'Finding the Qibla without a compass', tips: ['The direction of your nearest masjid is the most reliable guide.', 'From Pakistan the Qibla is roughly west (255°–260°), from the UK south-east (about 119°), and from the US east coast north-east (about 58°).', 'On two days each year (about 28 May and 16 July) the sun is directly over Makkah at Dhuhr time; shadows then point directly away from the Qibla.', 'Phone compasses can be thrown off by metal, magnets and electrical devices.'],
+    tipsH: 'Finding the Qibla without a compass', tips: ['The direction of your nearest masjid is the most reliable guide.', 'From Pakistan the Qibla is roughly west (Lahore and Islamabad about 258°, Karachi about 268°), from the UK south-east (about 119°), and from the US east coast north-east (about 58°).', 'On two days each year (about 28 May and 16 July) the sun is directly over Makkah at Dhuhr time; shadows then point directly away from the Qibla.', 'Phone compasses can be thrown off by metal, magnets and electrical devices.'],
   };
   const data = { ur, cities: PT_CITIES, here: C.here, noGps: C.noGps, finding: C.finding, calib: C.calib, noCompass: C.noCompass, facing: C.facing, turn: C.turn };
   const body = `${toolCrumbs(lang, C.h1)}
