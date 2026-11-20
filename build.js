@@ -3888,6 +3888,9 @@ function buildSearchIndex(lang) {
   add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
   add('الْأَسْمَاءُ الْحُسْنَى', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah (Asma ul Husna)', ur ? 'اسماء الحسنیٰ معنی کے ساتھ' : 'All 99 names with meanings', '99-names-of-allah.html', 'page');
   NAMES99.forEach((x, i) => add(x[1], x[2], (ur ? x[4] : x[3]) + (ur ? ' · اللہ کا نام' : ' · Name of Allah'), n99File(x), 'page'));
+  add('الصَّلَاة', ur ? 'بچوں کے لیے نماز کا طریقہ' : 'Salah for kids: how to pray step by step', ur ? 'تصویروں، آواز اور ستاروں کے چارٹ کے ساتھ' : 'With pictures, audio and a star chart', 'salah-for-kids.html', 'page');
+  add('', ur ? 'ہر نماز کی رکعات' : 'How many rakats in each prayer', ur ? 'فرض، سنت، وتر' : 'Fard, sunnah and witr', 'how-many-rakats-in-each-prayer.html', 'page');
+  add('', ur ? 'نماز کے بعد کیا پڑھیں' : 'What to say after salah', ur ? 'مسنون اذکار' : 'The Sunnah adhkar', 'what-to-say-after-salah.html', 'page');
   add('مَوَاقِيتُ الصَّلَاة', ur ? 'نماز کے اوقات' : 'Prayer times (namaz timings)', ur ? 'فجر، ظہر، عصر، مغرب، عشاء — آپ کے شہر کے لیے' : 'Fajr, Dhuhr, Asr, Maghrib, Isha for your city', 'prayer-times.html', 'page');
   add('الْقِبْلَة', ur ? 'قبلہ کی سمت' : 'Qibla direction', ur ? 'کمپاس کے ساتھ قبلہ رخ' : 'Find the Qibla with a compass', 'qibla-direction.html', 'page');
   add('تَسْبِيح', ur ? 'تسبیح کاؤنٹر' : 'Tasbih counter', ur ? 'سبحان اللہ ۳۳، الحمد للہ ۳۳، اللہ اکبر ۳۴' : 'SubhanAllah 33, Alhamdulillah 33, Allahu Akbar 34', 'tasbih-counter.html', 'page');
@@ -5576,6 +5579,146 @@ ${verseHtml(lang, v, 255, 2)}
 <section class="also"><h2>${ur ? 'کب پڑھیں' : 'When to read it'}</h2><div class="also-grid">${when.map(([t, f]) => `<a href="${link(lang, f)}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${t}</a>`).join('')}<a href="${link(lang, 'quran-' + q.slug + '.html')}#v255"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'سورہ بقرہ میں دیکھیں' : 'See it in Surah Al-Baqarah'}</a></div></section>
 <p class="note">${QURAN_FULL_NOTE[lang]}</p>`;
   return layout(lang, { file: 'ayatul-kursi.html', section: 'quran', title, desc, body });
+}
+
+// ---------------------------------------------------------------- Salah for kids
+const KID_POSE = {
+  stand: '<circle cx="30" cy="10" r="5"/><path d="M30 15V38M30 38L25 55M30 38L35 55M22 26H38"/>',
+  takbir: '<circle cx="30" cy="12" r="5"/><path d="M30 17V38M30 38L25 55M30 38L35 55M30 21L22 9M30 21L38 9"/>',
+  ruku: '<circle cx="8" cy="29" r="5"/><path d="M13 30H35M35 30L33 55M35 30L38 55M19 30L31 43"/>',
+  sujood: '<circle cx="11" cy="50" r="5"/><path d="M16 47L40 36M40 36L36 54M36 54H52M22 44L19 55"/>',
+  sit: '<circle cx="28" cy="15" r="5"/><path d="M28 20V45M28 45L44 49M44 49L26 55M28 29L41 46"/>',
+  salam: '<circle cx="28" cy="15" r="5"/><path d="M28 20V45M28 45L44 49M44 49L26 55M28 29L41 46M36 12H48M44 8L48 12L44 16"/>',
+};
+const kidPose = (p) => `<svg class="kp" viewBox="0 0 60 60" aria-hidden="true"><path d="M2 56H58" class="kp-g"/>${KID_POSE[p]}</svg>`;
+const KIDS_CSS = `
+.ks{display:grid;gap:14px;margin:18px 0 28px}
+.ks-c{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.ks-n{display:flex;flex-direction:column;align-items:center;gap:4px}
+.ks-n b{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-size:17px}
+.kp{width:70px;height:70px;fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.kp circle{fill:var(--accent-soft)}
+.kp-g{stroke:var(--line)}
+.ks-c h3{margin:0 0 4px;font-size:19px}
+.ks-c p{margin:4px 0}
+.ks-say{background:var(--bg);border-radius:12px;padding:10px 12px;margin-top:8px}
+.ks-say .ar{font-size:26px;line-height:1.9;display:block}
+.ks-say .tr{color:var(--gold);font-weight:600}
+.ks-x{display:inline-block;font-size:13px;font-weight:700;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:1px 10px;margin-inline-start:6px}
+.kc{overflow-x:auto}
+.kc table{border-collapse:collapse;width:100%;min-width:520px;text-align:center}
+.kc th,.kc td{border:1px solid var(--line);padding:6px}
+.kc button{font-size:22px;width:40px;height:40px;border-radius:10px;border:1px dashed var(--line);background:var(--bg);cursor:pointer;line-height:1}
+.kc button[aria-pressed=true]{border-style:solid;border-color:var(--gold);background:#fff6dc}
+.kc-sum{font-size:18px;margin:10px 0}
+@media (max-width:560px){.ks-c{grid-template-columns:1fr}.ks-n{flex-direction:row;gap:12px}}
+@media print{header,footer,nav,.no-print,.ks,.box,.also{display:none!important}.kc table{min-width:0}}
+`;
+const KIDS_CHART_JS = String.raw`
+(function(){
+  var box=document.getElementById('kChart'); if(!box) return; var ur=box.dataset.ur==='1';
+  var P=JSON.parse(box.dataset.p), DAYS=JSON.parse(box.dataset.d);
+  function n(x){ return ur?String(x).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d];}):String(x); }
+  var now=new Date(), wk=new Date(now); wk.setDate(now.getDate()-now.getDay()); var key='harf-kids-'+wk.toISOString().slice(0,10);
+  var S; try{ S=JSON.parse(localStorage.getItem(key)||'{}'); }catch(e){ S={}; }
+  var h='<table><thead><tr><th></th>'+P.map(function(p){return '<th>'+p+'</th>';}).join('')+'</tr></thead><tbody>';
+  for(var d=0;d<7;d++){ h+='<tr'+(d===now.getDay()?' style="background:var(--accent-soft)"':'')+'><th>'+DAYS[d]+'</th>'; for(var p=0;p<5;p++){ var k=d+'-'+p; h+='<td><button type="button" data-k="'+k+'" aria-pressed="'+(!!S[k])+'" aria-label="'+DAYS[d]+' '+P[p]+'">'+(S[k]?'⭐':'')+'</button></td>'; } h+='</tr>'; }
+  box.innerHTML=h+'</tbody></table>';
+  function sum(){ var c=0; for(var k in S) if(S[k]) c++; var msg=c>=35?(ur?'ماشاء اللہ! پورا ہفتہ مکمل! 🎉':'MashaAllah! A full week! 🎉'):c>=20?(ur?'شاباش! بہت اچھے جا رہے ہو':'Great job, keep going!'):(ur?'ہر نماز پر ایک ستارہ':'One star for every prayer'); document.getElementById('kSum').textContent=(ur?'اس ہفتے کے ستارے: ':'Stars this week: ')+n(c)+' / '+n(35)+' — '+msg; }
+  box.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var k=b.dataset.k; S[k]=!S[k]; if(!S[k]) delete S[k]; b.setAttribute('aria-pressed',String(!!S[k])); b.textContent=S[k]?'⭐':''; try{ localStorage.setItem(key,JSON.stringify(S)); }catch(e){} sum(); if(S[k]&&navigator.vibrate) try{navigator.vibrate(15);}catch(e){} });
+  sum();
+  var pr=document.getElementById('kPrint'); if(pr) pr.addEventListener('click',function(){ window.print(); });
+})();
+`;
+
+function salahKidsPage(lang) {
+  const ur = lang === 'ur';
+  const S = (b, n) => { const s = SN(b, n); return `<a href="${s.u}" target="_blank" rel="noopener" class="latin" dir="ltr">${esc(s.t)}</a>`; };
+  const sura = (n) => { const q = QURAN.find((z) => z.n === n); if (!q) return null; const vs = loadSurah(q); return { q, ar: vs.map((v, i) => v.w.map((w) => w[0]).join(' ') + ' <span class="anum">' + arNum(i + 1) + '</span>').join(' '), say: vs.map((v) => v.w.map((w) => w[0]).join(' ')).join(' '), tr: vs.map((v) => v.w.map((w) => w[1]).join(' ')).join(' · '), m: vs.map((v) => ur ? v.ur : v.en).join(' ') }; };
+  const fat = sura(1), ikh = sura(112);
+  const L = (f, t) => `<a href="${link(lang, f)}">${t}</a>`;
+  // [pose, title, what to do, Arabic, transliteration, meaning, times]
+  const E = [
+    ['stand', 'Get ready', 'Make @@wudu@@ first. Wear clean clothes, stand on a clean place and face the Qibla (the direction of the Kaaba in Makkah). Say in your heart which prayer you are praying, for example “2 rakats of Fajr for Allah”.', '', '', '', ''],
+    ['takbir', 'Say Allahu akbar', 'Raise both hands to your ears and say the takbir. Now you are in salah: no talking, no looking around.', 'اللّٰهُ أَكْبَرُ', 'Allāhu akbar', 'Allah is the Greatest.', ''],
+    ['stand', 'Stand and praise Allah', 'Fold your hands and look at the place where your forehead will go. Say the opening praise (thana) quietly, then the taʿawwudh and Bismillah.', 'سُبْحَانَكَ اللّٰهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالٰى جَدُّكَ، وَلَا إِلٰهَ غَيْرُكَ ✦ أَعُوذُ بِاللّٰهِ مِنَ الشَّيْطَانِ الرَّجِيمِ ✦ بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ', 'Subḥānaka-llāhumma wa bi-ḥamdik, wa tabāraka-smuk, wa taʿālā jadduk, wa lā ilāha ghayruk ✦ Aʿūdhu billāhi minash-shayṭānir-rajīm ✦ Bismillāhir-raḥmānir-raḥīm', 'Glory be to You, O Allah, and praise. Blessed is Your name, high is Your majesty, and there is no god but You. ✦ I seek refuge in Allah from Shaytan the rejected. ✦ In the name of Allah, the Most Merciful, the Especially Merciful.', ''],
+    ['stand', 'Recite Al-Fatiha', 'Recite Surah Al-Fatiha. Every rakat needs it. At the end say “Amin” quietly.', 'FATIHA', '', '', ''],
+    ['stand', 'Recite a short surah', 'Now recite any short surah you know. Surah Al-Ikhlas is a great one to start with.', 'IKHLAS', '', '', ''],
+    ['ruku', 'Bow (ruku)', 'Say Allahu akbar and bow. Hold your knees and keep your back straight and flat.', 'سُبْحَانَ رَبِّيَ الْعَظِيمِ', 'Subḥāna rabbiyal-ʿaẓīm', 'Glory be to my Lord, the Magnificent.', '3'],
+    ['stand', 'Stand up again', 'Rise up straight while saying the first part, then stand still and say the second.', 'سَمِعَ اللّٰهُ لِمَنْ حَمِدَهُ ✦ رَبَّنَا لَكَ الْحَمْدُ', 'Samiʿallāhu liman ḥamidah ✦ Rabbanā lakal-ḥamd', 'Allah hears the one who praises Him. ✦ Our Lord, all praise is Yours.', ''],
+    ['sujood', 'Prostrate (sajdah)', 'Say Allahu akbar and go down: knees, then hands, then nose and forehead on the ground. This is when you are closest to Allah.', 'سُبْحَانَ رَبِّيَ الْأَعْلٰى', 'Subḥāna rabbiyal-aʿlā', 'Glory be to my Lord, the Most High.', '3'],
+    ['sit', 'Sit for a moment', 'Say Allahu akbar and sit up for a short moment, calmly.', '', '', '', ''],
+    ['sujood', 'Second sajdah', 'Say Allahu akbar and do a second sajdah, exactly like the first. That is one rakat complete!', 'سُبْحَانَ رَبِّيَ الْأَعْلٰى', 'Subḥāna rabbiyal-aʿlā', 'Glory be to my Lord, the Most High.', '3'],
+    ['stand', 'The second rakat', 'Say Allahu akbar and stand up. Do it all again from Al-Fatiha: Fatiha, a short surah, ruku, standing, two sajdahs. (No thana this time.)', '', '', '', ''],
+    ['sit', 'Sit and say the tashahhud', 'After the second rakat, sit. Say At-Tahiyyat. When you reach “ashhadu an lā ilāha”, raise your right index finger.', 'التَّحِيَّاتُ لِلّٰهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلٰى عِبَادِ اللّٰهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ', 'At-taḥiyyātu lillāhi waṣ-ṣalawātu waṭ-ṭayyibāt, as-salāmu ʿalayka ayyuhan-nabiyyu wa raḥmatullāhi wa barakātuh, as-salāmu ʿalaynā wa ʿalā ʿibādillāhiṣ-ṣāliḥīn, ashhadu an lā ilāha illallāhu wa ashhadu anna Muḥammadan ʿabduhū wa rasūluh', 'All greetings, prayers and good things are for Allah. Peace be on you, O Prophet, and the mercy of Allah and His blessings. Peace be on us and on the righteous servants of Allah. I bear witness that there is no god but Allah, and that Muhammad is His servant and messenger.', ''],
+    ['sit', 'Send blessings on the Prophet ﷺ', 'Keep sitting and say the Durood Ibrahim.', 'اللّٰهُمَّ صَلِّ عَلٰى مُحَمَّدٍ وَعَلٰى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلٰى إِبْرَاهِيمَ وَعَلٰى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ، اللّٰهُمَّ بَارِكْ عَلٰى مُحَمَّدٍ وَعَلٰى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلٰى إِبْرَاهِيمَ وَعَلٰى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ', 'Allāhumma ṣalli ʿalā Muḥammadin wa ʿalā āli Muḥammad, kamā ṣallayta ʿalā Ibrāhīma wa ʿalā āli Ibrāhīm, innaka ḥamīdun majīd. Allāhumma bārik ʿalā Muḥammadin wa ʿalā āli Muḥammad, kamā bārakta ʿalā Ibrāhīma wa ʿalā āli Ibrāhīm, innaka ḥamīdun majīd', 'O Allah, send blessings on Muhammad and his family as You sent blessings on Ibrahim and his family; You are Praiseworthy, Glorious. O Allah, bless Muhammad and his family as You blessed Ibrahim and his family; You are Praiseworthy, Glorious.', ''],
+    ['sit', 'Make a short dua', 'Many children learn this dua from the Quran (Surah Ibrahim 14:40–41) to say before ending the prayer.', 'رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي، رَبَّنَا وَتَقَبَّلْ دُعَاءِ، رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ', 'Rabbij-ʿalnī muqīmaṣ-ṣalāti wa min dhurriyyatī, rabbanā wa taqabbal duʿāʾ. Rabbanagh-fir lī wa li-wālidayya wa lil-muʾminīna yawma yaqūmul-ḥisāb', 'My Lord, make me and my children keep up the prayer. Our Lord, accept my dua. Our Lord, forgive me, my parents and all the believers on the Day the account is taken.', ''],
+    ['salam', 'Finish with salam', 'Turn your face to the right and say the salam, then to the left and say it again. Well done, your salah is complete!', 'السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللّٰهِ', 'As-salāmu ʿalaykum wa raḥmatullāh', 'Peace be on you and the mercy of Allah.', ''],
+  ];
+  const U = [
+    ['تیار ہو جائیں', 'پہلے @@wudu@@ کریں۔ صاف کپڑے پہنیں، صاف جگہ پر کھڑے ہوں اور قبلہ (مکہ میں کعبہ کی سمت) کی طرف منہ کریں۔ دل میں نیت کریں کہ کون سی نماز پڑھ رہے ہیں، جیسے «دو رکعت نماز فجر اللہ کے لیے»۔', ''],
+    ['اللہ اکبر کہیں', 'دونوں ہاتھ کانوں تک اٹھائیں اور تکبیر کہیں۔ اب آپ نماز میں ہیں: نہ بات کرنی ہے، نہ ادھر ادھر دیکھنا ہے۔', 'اللہ سب سے بڑا ہے۔'],
+    ['کھڑے ہو کر اللہ کی تعریف کریں', 'ہاتھ باندھ لیں اور سجدے کی جگہ پر نظر رکھیں۔ آہستہ سے ثنا پڑھیں، پھر تعوذ اور بسم اللہ۔', 'اے اللہ! تو پاک ہے، تیری تعریف کے ساتھ، تیرا نام بابرکت ہے، تیری شان بلند ہے اور تیرے سوا کوئی معبود نہیں۔ ✦ میں شیطان مردود سے اللہ کی پناہ مانگتا ہوں۔ ✦ اللہ کے نام سے جو نہایت مہربان، رحم والا ہے۔'],
+    ['سورہ فاتحہ پڑھیں', 'سورہ فاتحہ پڑھیں؛ ہر رکعت میں یہ ضروری ہے۔ آخر میں آہستہ سے «آمین» کہیں۔', ''],
+    ['کوئی چھوٹی سورت پڑھیں', 'اب کوئی بھی چھوٹی سورت پڑھیں جو آپ کو یاد ہو۔ سورہ اخلاص سے شروع کرنا بہت اچھا ہے۔', ''],
+    ['رکوع', 'اللہ اکبر کہہ کر جھک جائیں۔ گھٹنوں کو پکڑیں اور کمر سیدھی رکھیں۔', 'پاک ہے میرا رب، عظمت والا۔'],
+    ['دوبارہ کھڑے ہوں', 'اٹھتے ہوئے پہلا حصہ کہیں، پھر سیدھے کھڑے ہو کر دوسرا۔', 'اللہ نے اس کی سن لی جس نے اس کی تعریف کی۔ ✦ اے ہمارے رب! ساری تعریف تیرے ہی لیے ہے۔'],
+    ['سجدہ', 'اللہ اکبر کہہ کر نیچے جائیں: پہلے گھٹنے، پھر ہاتھ، پھر ناک اور پیشانی زمین پر۔ سجدے میں بندہ اللہ کے سب سے زیادہ قریب ہوتا ہے۔', 'پاک ہے میرا رب، سب سے بلند۔'],
+    ['تھوڑی دیر بیٹھیں', 'اللہ اکبر کہہ کر سکون سے تھوڑی دیر بیٹھیں۔', ''],
+    ['دوسرا سجدہ', 'اللہ اکبر کہہ کر پہلے کی طرح دوسرا سجدہ کریں۔ ایک رکعت مکمل!', 'پاک ہے میرا رب، سب سے بلند۔'],
+    ['دوسری رکعت', 'اللہ اکبر کہہ کر کھڑے ہو جائیں اور سورہ فاتحہ سے سب کچھ دوبارہ کریں: فاتحہ، چھوٹی سورت، رکوع، قیام اور دو سجدے۔ (اس بار ثنا نہیں۔)', ''],
+    ['بیٹھ کر التحیات پڑھیں', 'دوسری رکعت کے بعد بیٹھ جائیں اور التحیات پڑھیں۔ «اشہد ان لا الٰہ» پر دائیں ہاتھ کی شہادت کی انگلی اٹھائیں۔', 'تمام زبانی، بدنی اور مالی عبادتیں اللہ ہی کے لیے ہیں۔ اے نبی! آپ پر سلام اور اللہ کی رحمت اور اس کی برکتیں۔ سلام ہو ہم پر اور اللہ کے نیک بندوں پر۔ میں گواہی دیتا ہوں کہ اللہ کے سوا کوئی معبود نہیں، اور گواہی دیتا ہوں کہ محمد ﷺ اس کے بندے اور رسول ہیں۔'],
+    ['درود شریف', 'بیٹھے رہیں اور درود ابراہیمی پڑھیں۔', 'اے اللہ! محمد ﷺ اور ان کی آل پر رحمت نازل فرما جیسے تو نے ابراہیم اور ان کی آل پر رحمت نازل فرمائی، بے شک تو تعریف والا، بزرگی والا ہے۔ اے اللہ! محمد ﷺ اور ان کی آل پر برکت نازل فرما جیسے تو نے ابراہیم اور ان کی آل پر برکت نازل فرمائی، بے شک تو تعریف والا، بزرگی والا ہے۔'],
+    ['چھوٹی سی دعا', 'بہت سے بچے سلام سے پہلے قرآن کی یہ دعا پڑھنا سیکھتے ہیں (سورہ ابراہیم ۱۴:۴۰–۴۱)۔', 'اے میرے رب! مجھے اور میری اولاد کو نماز قائم کرنے والا بنا۔ اے ہمارے رب! میری دعا قبول فرما۔ اے ہمارے رب! مجھے، میرے والدین کو اور سب مومنوں کو حساب کے دن بخش دے۔'],
+    ['سلام پھیریں', 'دائیں طرف منہ پھیر کر سلام کہیں، پھر بائیں طرف۔ شاباش، آپ کی نماز مکمل ہو گئی!', 'تم پر سلامتی ہو اور اللہ کی رحمت۔'],
+  ];
+  const wuduLink = (s) => s.replace('@@wudu@@', L('dua-before-wudu.html', ur ? 'وضو' : 'wudu'));
+  const steps = E.map((e, i) => {
+    const [pose, tEn, dEn, ar, tr, mEn, times] = e; const t = ur ? U[i][0] : tEn, d = wuduLink(ur ? U[i][1] : esc(dEn)), m = ur ? U[i][2] : mEn;
+    let sayBox = '';
+    const sx = (s) => (ar === 'FATIHA' ? fat : ikh);
+    if ((ar === 'FATIHA' || ar === 'IKHLAS') && sx()) { const s = sx(); sayBox = `<div class="ks-say"><span class="ar" lang="ar">${s.ar}</span><span class="tr latin" dir="ltr">${esc(s.tr)}</span><p>${esc(s.m)}</p><p class="row">${say(lang, s.say)} <a class="btn sm" href="${link(lang, 'quran-' + s.q.slug + '.html')}">${ur ? 'لفظ بہ لفظ ←' : 'Word by word →'}</a></p></div>`; }
+    else if (ar) sayBox = `<div class="ks-say"><span class="ar" lang="ar">${ar}</span><span class="tr latin" dir="ltr">${esc(tr)}</span><p>${esc(m)}</p>${say(lang, ar.replace(/ ✦ /g, '، '))}</div>`;
+    return `<div class="ks-c" id="step${i + 1}"><div class="ks-n"><b>${num(lang, i + 1)}</b>${kidPose(pose)}</div><div><h3>${esc(t)}${times ? `<span class="ks-x">${ur ? `${num(lang, times)} بار` : `${times} times`}</span>` : ''}</h3><p>${d}</p>${sayBox}</div></div>`;
+  }).join('');
+  const P = ur ? ['فجر', 'ظہر', 'عصر', 'مغرب', 'عشاء'] : ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+  const DAYS = ur ? ['اتوار', 'پیر', 'منگل', 'بدھ', 'جمعرات', 'جمعہ', 'ہفتہ'] : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const tips = ur ? [
+    `نبی ﷺ نے فرمایا کہ بچوں کو سات سال کی عمر میں نماز کا کہو (سنن ابی داود ۴۹۵)۔ سات سے پہلے انہیں اپنے ساتھ کھڑا کر کے نقل کرنے دیں؛ زبردستی نہیں، محبت سے۔`,
+    'ایک وقت میں ایک چیز: پہلے ہفتے صرف حرکات، پھر ہر ہفتے ایک نیا ذکر یاد کرائیں (پہلے سورہ فاتحہ اور اخلاص)۔ ہر جملے پر «سنیں» دبا کر ساتھ دہرائیں۔',
+    'بچے دیکھ کر سیکھتے ہیں: انہیں اپنے ساتھ نماز پڑھائیں، خاص طور پر مغرب، اور ستاروں والا چارٹ مل کر بھریں۔',
+    'فقہ حنفی میں لڑکے تکبیر میں ہاتھ کانوں تک اٹھاتے اور ناف کے نیچے باندھتے ہیں؛ لڑکیاں کندھوں تک اٹھاتی اور سینے پر باندھتی ہیں، اور سجدہ سمٹ کر کرتی ہیں۔',
+    'بڑی نمازیں (ظہر، عصر، عشاء میں ۴ اور مغرب میں ۳ رکعات) دو رکعت سیکھنے کے بعد: دیکھیں @@how-many-rakats-in-each-prayer.html|ہر نماز کی رکعات@@۔',
+  ] : [
+    'The Prophet ﷺ said to tell children to pray when they are seven (Sunan Abi Dawud 495). Before seven, let them stand beside you and copy; gently, with love, not pressure.',
+    'One thing at a time: first week, only the movements; then one new phrase a week (Al-Fatiha and Al-Ikhlas first). Press “Listen” on each phrase and repeat together.',
+    'Children learn by watching: pray with them, especially Maghrib, and fill in the star chart together.',
+    'In the Hanafi school boys raise their hands to the ears and fold them below the navel; girls raise them to the shoulders, fold them on the chest and keep compact in sajdah.',
+    'Longer prayers (4 rakats in Dhuhr, Asr and Isha, 3 in Maghrib) come after the 2-rakat prayer is easy: see @@how-many-rakats-in-each-prayer.html|the rakats of each prayer@@.',
+  ];
+  const title = ur ? 'بچوں کے لیے نماز کا طریقہ — تصویروں کے ساتھ آسان قدم بہ قدم سبق | حرف' : 'How to pray salah: step-by-step for kids, with pictures and audio | Harf';
+  const desc = ur ? 'بچوں کو نماز سکھائیں: ہر قدم کی تصویر، عربی الفاظ، تلفظ، اردو ترجمہ اور آواز، ثنا، فاتحہ، رکوع، سجدہ، التحیات، درود اور سلام، اور ستاروں والا ہفتہ وار نماز چارٹ۔'
+    : 'Teach children how to pray salah: a picture for every step, the Arabic words with pronunciation, meaning and audio (thana, Fatiha, ruku, sajdah, tashahhud, durood, salam), and a weekly prayer star chart.';
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['guides.html', ur ? 'رہنمائی' : 'Guides'], [null, ur ? 'بچوں کے لیے نماز' : 'Salah for kids']])}
+<p class="eyebrow">${ur ? 'بچوں کے لیے · ۶ سے ۱۲ سال' : 'For kids · ages 6 to 12'}</p>
+<h1>${ur ? 'بچوں کے لیے نماز کا آسان طریقہ' : 'How to pray: salah for kids, step by step'}</h1>
+<p class="lead">${ur ? 'یہ دو رکعت نماز ہے، جیسے فجر کی۔ ہر قدم میں تصویر ہے، عربی الفاظ ہیں، اور «سنیں» کا بٹن تاکہ آپ صحیح بولنا سیکھیں۔ نیچے ستاروں کا چارٹ ہے: ہر نماز پر ایک ستارہ!' : 'This is a 2-rakat prayer, like Fajr. Each step has a picture, the Arabic words and a Listen button so you can learn to say them right. At the bottom is a star chart: one star for every prayer!'}</p>
+<p class="row no-print"><a class="btn primary" href="#chart">⭐ ${ur ? 'ستاروں کا چارٹ' : 'Star chart'}</a> <a class="btn" href="${link(lang, 'qibla-direction.html')}">🧭 ${ur ? 'قبلہ' : 'Qibla'}</a> <a class="btn" href="${link(lang, 'prayer-times.html')}">🕌 ${ur ? 'نماز کے اوقات' : 'Prayer times'}</a></p>
+<div class="ks">${steps}</div>
+<section id="chart"><h2 class="orn">${ur ? '⭐ میرا نماز چارٹ' : '⭐ My prayer star chart'}</h2>
+<p>${ur ? 'ہر نماز کے بعد اس کے خانے پر ٹیپ کریں۔ ستارے اسی فون یا کمپیوٹر پر محفوظ رہتے ہیں اور ہر اتوار نیا ہفتہ شروع ہوتا ہے۔' : 'Tap the box after each prayer. Stars are saved on this phone or computer, and a new week starts every Sunday.'}</p>
+<div class="kc" id="kChart" data-ur="${ur ? 1 : 0}" data-p='${esc(JSON.stringify(P))}' data-d='${esc(JSON.stringify(DAYS))}'></div>
+<p class="kc-sum" id="kSum" aria-live="polite"></p>
+<p class="no-print"><button class="btn" type="button" id="kPrint">🖨 ${ur ? 'کاغذ کا چارٹ پرنٹ کریں' : 'Print a paper chart'}</button></p></section>
+<section class="box"><h2>${ur ? 'والدین کے لیے' : 'For parents'}</h2><ul>${tips.map((t) => `<li>${gfmt(lang, t)}</li>`).join('')}</ul>
+<p class="small">${ur ? 'حوالے' : 'Sources'}: ${S('abudawud', 495)} · ${ur ? 'ثنا' : 'Thana'} ${S('abudawud', 776)} · ${ur ? 'التحیات' : 'Tashahhud'} ${S('bukhari', 831)} · ${ur ? 'درود' : 'Durood'} ${S('bukhari', 3370)}</p></section>
+<section class="also"><h2>${ur ? 'آگے کیا سیکھیں' : 'What to learn next'}</h2><div class="also-grid">
+<a href="${link(lang, 'what-to-say-after-salah.html')}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${ur ? 'نماز کے بعد کیا پڑھیں' : 'What to say after salah'}</a>
+<a href="${link(lang, 'how-many-rakats-in-each-prayer.html')}"><span class="k k-guide">${ur ? 'رہنمائی' : 'Guide'}</span>${ur ? 'ہر نماز کی رکعات' : 'How many rakats in each prayer'}</a>
+<a href="${link(lang, 'tasbih-counter.html')}"><span class="k k-tool">${ur ? 'ٹول' : 'Tool'}</span>${ur ? 'تسبیح کاؤنٹر' : 'Tasbih counter'}</a>
+<a href="${link(lang, '99-names-of-allah.html')}"><span class="k k-new">${ur ? 'نیا' : 'New'}</span>${ur ? 'اللہ کے ۹۹ نام' : 'The 99 Names of Allah'}</a></div></section>
+<script>${KIDS_CHART_JS}</script>`;
+  return layout(lang, { file: 'salah-for-kids.html', section: 'guides', title, desc, body });
 }
 
 // ---------------------------------------------------------------- 99 Names of Allah (data/names99.js)
@@ -7763,6 +7906,7 @@ const GUIDES = [
         ['Witr', 'In the Hanafi school witr is three rakats with one salam, it is wajib (necessary, just below fard), and the @@dua-qunoot-witr.html|Dua Qunoot@@ is read in the third rakat before ruku. The Shafiʿi, Maliki and Hanbali schools count witr as a stressed sunnah that can be one rakat or more. All agree it is the last prayer of the night: “Make witr the last of your prayer at night” (Sahih al-Bukhari 998). It can be prayed straight after Isha or before Fajr. See also @@dua-after-witr.html|what to say after witr@@.'],
         ['Jumuah (Friday)', 'Jumuah replaces Dhuhr: the khutbah, then 2 fard rakats in congregation. In the Hanafi school 4 sunnah are prayed before it and 4 after (many also pray 2 more). The Prophet ﷺ said: “When one of you prays Jumuah, let him pray four after it” (Sahih Muslim 881).'],
         ['When travelling', 'A traveller shortens the four-rakat fard prayers (Dhuhr, Asr and Isha) to two; Fajr and Maghrib stay the same. In the Hanafi school shortening is required on a journey of about 78 km or more, until you intend to stay 15 days or more in one place. Most sunnah prayers can be left when travelling, but keep the two of Fajr and the witr.'],
+        ['Teaching children', 'Start with the 2-rakat prayer: @@salah-for-kids.html|salah for kids, step by step@@ has a picture and audio for every step, and a star chart to keep them going.'],
         ['After the prayer', 'When you finish, stay seated for the short adhkar the Prophet ﷺ said after every prayer: see @@what-to-say-after-salah.html|what to say after salah@@, and count the 33-33-33 tasbih on the @@tasbih-counter.html|tasbih counter@@.'],
       ],
     },
@@ -7780,6 +7924,7 @@ const GUIDES = [
         ['وتر', 'فقہ حنفی میں وتر تین رکعات ایک سلام کے ساتھ ہیں، واجب ہیں (فرض سے کچھ کم)، اور تیسری رکعت میں رکوع سے پہلے @@dua-qunoot-witr.html|دعائے قنوت@@ پڑھی جاتی ہے۔ شافعی، مالکی اور حنبلی مذاہب میں وتر سنتِ مؤکدہ ہے اور ایک یا زیادہ رکعات ہو سکتی ہیں۔ سب متفق ہیں کہ یہ رات کی آخری نماز ہے: «اپنی رات کی نماز کا آخری حصہ وتر بناؤ» (صحیح بخاری ۹۹۸)۔ عشاء کے فوراً بعد یا فجر سے پہلے پڑھی جا سکتی ہے۔ دیکھیں: @@dua-after-witr.html|وتر کے بعد کیا پڑھیں@@۔'],
         ['جمعہ', 'جمعہ ظہر کی جگہ ہے: خطبہ، پھر جماعت کے ساتھ ۲ فرض۔ فقہ حنفی میں اس سے پہلے ۴ سنت اور بعد میں ۴ سنت (بہت سے لوگ مزید ۲ بھی) پڑھی جاتی ہیں۔ نبی ﷺ نے فرمایا: «جب تم میں سے کوئی جمعہ پڑھے تو اس کے بعد چار رکعات پڑھے» (صحیح مسلم ۸۸۱)۔'],
         ['سفر میں', 'مسافر چار رکعت والے فرض (ظہر، عصر، عشاء) دو پڑھے گا؛ فجر اور مغرب ویسے ہی رہیں گے۔ فقہ حنفی میں تقریباً ۷۸ کلومیٹر یا زیادہ کے سفر میں قصر واجب ہے، جب تک کسی جگہ ۱۵ دن یا زیادہ ٹھہرنے کی نیت نہ ہو۔ سفر میں اکثر سنتیں چھوڑی جا سکتی ہیں، مگر فجر کی دو سنتیں اور وتر نہ چھوڑیں۔'],
+        ['بچوں کو سکھانا', 'دو رکعت سے شروع کریں: @@salah-for-kids.html|بچوں کے لیے نماز کا آسان طریقہ@@ میں ہر قدم کی تصویر اور آواز ہے، اور شوق بڑھانے کے لیے ستاروں والا چارٹ۔'],
         ['نماز کے بعد', 'سلام پھیرنے کے بعد وہ مختصر اذکار پڑھیں جو نبی ﷺ ہر نماز کے بعد پڑھتے: دیکھیں @@what-to-say-after-salah.html|نماز کے بعد کیا پڑھیں@@، اور ۳۳-۳۳-۳۳ کی تسبیح @@tasbih-counter.html|تسبیح کاؤنٹر@@ پر گنیں۔'],
       ],
     },
@@ -7848,6 +7993,7 @@ function guidesPage(lang) {
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>${banner(lang, 'guides')}
 <div class="cards">
+  <a class="card" href="${link(lang, 'salah-for-kids.html')}"><span class="cg" lang="ar" aria-hidden="true">صَلَاة</span><h3>${ur ? 'بچوں کے لیے نماز کا آسان طریقہ' : 'How to pray: salah for kids, step by step'}</h3><p>${ur ? 'ہر قدم کی تصویر، عربی الفاظ آواز کے ساتھ، اور ستاروں والا نماز چارٹ۔' : 'A picture for every step, the Arabic words with audio, and a prayer star chart.'}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>
   ${GUIDES.map((x) => `<a class="card" href="${link(lang, x.slug + '.html')}"><span class="cg" lang="ar" aria-hidden="true">${x.glyph}</span><h3>${esc(x[lang].h1)}</h3><p>${esc(x[lang].desc)}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('\n  ')}
 </div>
 ${supportBox(lang)}`;
@@ -9205,6 +9351,7 @@ function build() {
     add(lang, 'my-duas.html', myDuasPage(lang));
     if (QURAN.length) { const ak = ayatKursiPage(lang); if (ak) add(lang, 'ayatul-kursi.html', ak); }
     add(lang, '99-names-of-allah.html', names99HubPage(lang));
+    if (QURAN.length) add(lang, 'salah-for-kids.html', salahKidsPage(lang));
     NAMES99.forEach((x, i) => add(lang, n99File(x), names99Page(lang, i)));
     if (HISN.length) add(lang, 'challenges.html', challengesPage(lang));
     files['harf-daily-' + lang + '.ics'] = icsFile(lang);
@@ -9230,7 +9377,7 @@ function build() {
   }
   files['404.html'] = notFoundPage();
   files['engage.js'] = ENGAGE_JS;
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
