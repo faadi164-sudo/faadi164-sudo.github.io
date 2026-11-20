@@ -3183,7 +3183,7 @@ const LESSONS = [
 const T = {
   en: {
     dir: 'ltr', brand: 'Harf', skip: 'Skip to content', navLabel: 'Sections',
-    nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', stories: 'Stories', vocabulary: 'Vocabulary', quran: 'Quran', duas: 'Duas', phrases: 'Phrases', quiz: 'Quiz' },
+    nav: { home: 'Home', alphabet: 'Alphabet', lessons: 'Lessons', stories: 'Stories', vocabulary: 'Vocabulary', quran: 'Quran', duas: 'Duas', names: '99 Names', phrases: 'Phrases', quiz: 'Quiz' },
     switchLabel: 'اردو', switchTitle: 'یہ صفحہ اردو میں پڑھیں', switchLang: 'ur',
     about: 'About', contact: 'Contact', privacy: 'Privacy policy', support: 'Support Harf',
     listen: 'Listen', sep: '›', prev: '← Previous', next: 'Next →',
@@ -3191,7 +3191,7 @@ const T = {
   },
   ur: {
     dir: 'rtl', brand: 'حرف', skip: 'مواد پر جائیں', navLabel: 'حصے',
-    nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', stories: 'کہانیاں', vocabulary: 'الفاظ', quran: 'قرآن', duas: 'دعائیں', phrases: 'جملے', quiz: 'کوئز' },
+    nav: { home: 'صفحۂ اول', alphabet: 'حروفِ تہجی', lessons: 'اسباق', stories: 'کہانیاں', vocabulary: 'الفاظ', quran: 'قرآن', duas: 'دعائیں', names: 'اسماء الحسنیٰ', phrases: 'جملے', quiz: 'کوئز' },
     switchLabel: 'English', switchTitle: 'Read this page in English', switchLang: 'en',
     about: 'ہمارے بارے میں', contact: 'رابطہ', privacy: 'رازداری کی پالیسی', support: 'حرف کی مدد کریں',
     listen: 'سنیں', sep: '‹', prev: '→ پچھلا', next: 'اگلا ←',
@@ -3704,7 +3704,7 @@ function layout(lang, o) {
   const t = T[lang];
   const self = link(lang, o.file);
   const other = link(t.switchLang, o.file);
-  const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['stories.html', 'stories'], ['vocabulary.html', 'vocabulary'], ['quran.html', 'quran'], ['duas.html', 'duas'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
+  const navItems = [['index.html', 'home'], ['alphabet.html', 'alphabet'], ['lessons.html', 'lessons'], ['stories.html', 'stories'], ['vocabulary.html', 'vocabulary'], ['quran.html', 'quran'], ['duas.html', 'duas'], ['99-names-of-allah.html', 'names'], ['phrases.html', 'phrases'], ['quiz.html', 'quiz']]
     .map(([f, k]) => `<a href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${t.nav[k]}</a>`).join('')
     + [['tools.html', 'tools', lang === 'ur' ? 'مفت ٹولز' : 'Free tools'], ['guides.html', 'guides', lang === 'ur' ? 'رہنمائی' : 'Guides']].map(([f, k, label]) => `<a class="m-only" href="${link(lang, f)}"${o.section === k ? ' aria-current="page"' : ''}>${label}</a>`).join('');
   const ads = ADSENSE_CLIENT
@@ -4499,6 +4499,8 @@ function frontPage(lang, C, quick) {
   const tick = [
     [K('date', 'Today', 'آج'), `<span class="tkHijri"></span>`, 'hijri-converter.html'],
     [K('new', 'New', 'نیا'), ur ? `حصن المسلم: ${ud(hisnT)} دعائیں، اب اردو اور انگریزی میں` : `Hisn al-Muslim: all ${hisnT} duas, now in English and Urdu`, 'hisn-al-muslim.html'],
+    [K('new', 'New', 'نیا'), ur ? 'اللہ کے ۹۹ نام: ہر نام کا مطلب، قرآن کی آیت اور تسبیح' : 'The 99 Names of Allah: every meaning, its Quran verse and tasbih', '99-names-of-allah.html'],
+    [K('tool', 'Tool', 'ٹول'), ur ? 'آج کے نماز کے اوقات، قبلہ اور تسبیح کاؤنٹر' : 'Prayer times today, Qibla direction and tasbih counter', 'prayer-times.html'],
     [K('word', 'Word of the day', 'آج کا لفظ'), w0 ? `<span class="ar" lang="ar">${w0[0]}</span> — ${esc(w0[2])}` : '', w0 ? null : 'quran-roots.html', 'tkWord'],
     [K('dua', 'Dua', 'دعا'), ur ? 'جب فکر پیچھا نہ چھوڑے تو یہ پڑھیں' : 'What to say when worry won’t leave you', 'dua-for-worry-and-grief.html'],
     [K('quran', 'Quran', 'قرآن'), ur ? `تمام ${ud(114)} سورتیں لفظ بہ لفظ، اردو ترجمے کے ساتھ` : `All 114 surahs word by word, in English and Urdu`, 'quran.html'],
@@ -4555,7 +4557,8 @@ function frontPage(lang, C, quick) {
   const data = JSON.stringify({ w: words, d: duas, n: names }).replace(/</g, '\\u003c');
   return `<div class="ticker" role="region" aria-label="${ur ? 'آج حرف پر' : 'Today on Harf'}">
   <span class="tk-label"><i aria-hidden="true"></i>${ur ? 'آج حرف پر' : 'Today on Harf'}</span>
-  <div class="tk-view"><div class="tk-track">${tickHtml}<span class="tk-dot" aria-hidden="true">•</span><span class="tk-copy" aria-hidden="true">${tickHtml.replace(/<a /g, '<a tabindex="-1" ')}<span class="tk-dot">•</span></span></div></div>
+  <div class="tk-view"><div class="tk-track">${tickHtml}<span class="tk-dot" aria-hidden="true">•</span></div></div>
+  <script>(function(){var t=document.querySelector('.tk-track');if(!t)return;var c=document.createElement('span');c.className='tk-copy';c.setAttribute('aria-hidden','true');c.innerHTML=t.innerHTML.replace(/<a /g,'<a tabindex="-1" ');t.appendChild(c);})();</script>
 </div>
 <section class="fp-search">
   <div>
@@ -4728,12 +4731,12 @@ function homePage(lang) {
     : [['quran.html', 'Quran word by word'], ['quran-roots.html', 'Word roots'], ['alphabet.html', 'Alphabet'], ['muslim-names.html', 'Muslim names'], ['duas.html', 'Duas'], ['arabic-keyboard.html', 'Arabic keyboard']];
   const body = `${frontPage(lang, C, quick)}
 <ul class="proof" aria-label="${ur ? 'حرف پر کیا ہے' : 'What is on Harf'}">
-  ${[[28, ur ? 'حروف' : 'letters', 'alphabet.html'], [LESSONS.length, ur ? 'گرامر اسباق' : 'grammar lessons', 'lessons.html'], [114, ur ? 'سورتیں لفظ بہ لفظ' : 'surahs word by word', 'quran.html'], ...(ROOTS ? [[ROOT_LIST.length, ur ? 'قرآنی مادے' : 'Quran roots', 'quran-roots.html']] : []), ...(CLASSICS.length ? [[CLASSICS.length, ur ? 'کلاسیکی کہانیاں' : 'classic tales', 'classic-tales.html']] : []), [DUA_TOTAL, ur ? 'دعائیں' : 'duas', 'duas.html']].map(([k, label, f]) => `<li><a href="${link(lang, f)}"><strong>${n(k)}</strong><span>${label}</span></a></li>`).join('')}
+  ${[[28, ur ? 'حروف' : 'letters', 'alphabet.html'], [LESSONS.length, ur ? 'گرامر اسباق' : 'grammar lessons', 'lessons.html'], [114, ur ? 'سورتیں لفظ بہ لفظ' : 'surahs word by word', 'quran.html'], ...(ROOTS ? [[ROOT_LIST.length, ur ? 'قرآنی مادے' : 'Quran roots', 'quran-roots.html']] : []), ...(CLASSICS.length ? [[CLASSICS.length, ur ? 'کلاسیکی کہانیاں' : 'classic tales', 'classic-tales.html']] : []), (HISN.length ? [HISN_TOTAL, ur ? 'دعائیں اور اذکار' : 'duas and adhkar', 'hisn-al-muslim.html'] : [DUA_TOTAL, ur ? 'دعائیں' : 'duas', 'duas.html']), [99, ur ? 'اللہ کے نام' : 'Names of Allah', '99-names-of-allah.html']].map(([k, label, f]) => `<li><a href="${link(lang, f)}"><strong>${n(k)}</strong><span>${label}</span></a></li>`).join('')}
 </ul>
 <div class="start-banner" id="startBanner">${C.startBanner}</div>
 <div class="streak box" id="streak" hidden>
   <div class="sk-n"><span class="sk-fire" aria-hidden="true">🔥</span><strong id="skDays">0</strong><span>${ur ? 'دن کا سلسلہ' : 'day streak'}</span></div>
-  <div class="sk-g"><span>${ur ? 'آج کا ہدف:' : 'Today’s goal:'} <strong id="skGoal"></strong> ${ur ? 'صفحات' : 'pages'}</span><div class="meter"><i id="mGoal"></i></div><small id="skMsg"></small></div>
+  <div class="sk-g"><span>${ur ? 'آج کا ہدف:' : 'Today’s goal:'} <strong id="skGoal">${n(0)}/${n(3)}</strong> ${ur ? 'صفحات' : 'pages'}</span><div class="meter"><i id="mGoal"></i></div><small id="skMsg"></small></div>
 </div>
 <div class="stats" id="stats" data-letters="28" data-words="${deckTotal}" style="display:none">
   <div class="stat"><strong id="sLetters">${n(0)}/${n(28)}</strong><span>${C.s1}</span><div class="meter"><i id="mLetters"></i></div></div>
@@ -5625,7 +5628,7 @@ function names99HubPage(lang) {
 <div class="n99-grid">${NAMES99.map((x, i) => `<a class="n99-c" href="${link(lang, n99File(x))}"><span class="no">${num(lang, i + 1)}</span><span class="ar" lang="ar">${x[1]}</span><b class="latin" dir="ltr">${esc(x[2])}</b><span class="m">${esc(ur ? x[4] : x[3])}</span></a>`).join('')}</div>
 <section class="box"><p>${ur ? 'یہ فہرست ترمذی (۳۵۰۷) کی مشہور روایت کے مطابق ہے، جو عام طور پر پڑھی جاتی ہے۔ محدثین کے نزدیک ناموں کی یہ گنتی غالباً راوی کی طرف سے ہے، اس لیے علماء نے فہرستیں کچھ مختلف بھی بیان کی ہیں؛ البتہ «ننانوے نام» والی حدیث صحیح بخاری و مسلم میں ہے۔' : 'This list follows the well-known narration in At-Tirmidhi (3507), which is the one most people recite. Hadith scholars consider the listing itself most likely added by a narrator, so scholars have given slightly different lists; the hadith of the ninety-nine names itself is in Sahih al-Bukhari and Muslim.'} ${S('tirmidhi', 3507)}</p></section>
 <section class="also"><h2>${ur ? 'مزید' : 'More'}</h2><div class="also-grid"><a href="${link(lang, 'tasbih-counter.html')}"><span class="k k-tool">${ur ? 'ٹول' : 'Tool'}</span>${ur ? 'تسبیح کاؤنٹر' : 'Tasbih counter'}</a><a href="${link(lang, 'ayatul-kursi.html')}"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'آیت الکرسی: الحی القیوم' : 'Ayat al-Kursi: Al-Hayy, Al-Qayyum'}</a><a href="${link(lang, 'hisn-al-muslim.html')}"><span class="k k-dua">${ur ? 'دعائیں' : 'Duas'}</span>${ur ? 'حصن المسلم' : 'Hisn al-Muslim'}</a></div></section>`;
-  return layout(lang, { file: '99-names-of-allah.html', section: 'duas', title, desc, body });
+  return layout(lang, { file: '99-names-of-allah.html', section: 'names', title, desc, body });
 }
 
 function names99Page(lang, i) {
@@ -5668,7 +5671,7 @@ ${dkHtml}
 <p>${ur ? `قرآن کہتا ہے: «اللہ کے اچھے اچھے نام ہیں، پس اسے انہی سے پکارو» (اعراف ۱۸۰)۔ اپنی دعا میں وہ نام لیں جو آپ کی حاجت سے میل کھاتا ہو، جیسے «${vo}»، پھر اپنی حاجت مانگیں۔` : `The Quran says: “To Allah belong the most beautiful names, so call on Him by them” (7:180). Begin your dua with the name that fits your need, such as “${vtr}” (${vo}), then ask for what you need.`}</p>
 <nav class="n99-nav">${prev ? `<a class="btn" href="${link(lang, n99File(prev))}">${ur ? '→ ' : '← '}${esc(prev[2])}</a>` : '<span></span>'}<a class="btn" href="${link(lang, '99-names-of-allah.html')}">${ur ? 'تمام ۹۹ نام' : 'All 99 names'}</a>${next ? `<a class="btn" href="${link(lang, n99File(next))}">${esc(next[2])}${ur ? ' ←' : ' →'}</a>` : '<span></span>'}</nav>
 <div class="n99-grid">${others.map((o) => `<a class="n99-c" href="${link(lang, n99File(o))}"><span class="no">${num(lang, NAMES99.indexOf(o) + 1)}</span><span class="ar" lang="ar">${o[1]}</span><b class="latin" dir="ltr">${esc(o[2])}</b><span class="m">${esc(ur ? o[4] : o[3])}</span></a>`).join('')}</div>`;
-  return layout(lang, { file: n99File(x), section: 'duas', title, desc, body });
+  return layout(lang, { file: n99File(x), section: 'names', title, desc, body });
 }
 
 const QURAN_FULL_NOTE = {
@@ -7744,10 +7747,80 @@ const GUIDES = [
       ],
     },
   },
+  {
+    slug: 'how-many-rakats-in-each-prayer', glyph: 'رَكْعَة',
+    en: {
+      title: 'How many rakats in each prayer? Fajr, Dhuhr, Asr, Maghrib, Isha (fard, sunnah, witr) | Harf',
+      desc: 'How many rakats are in each of the five daily prayers: fard, sunnah and witr for Fajr, Dhuhr, Asr, Maghrib and Isha, plus Jumuah and travel, with the hadith behind each number.',
+      h1: 'How many rakats are in each prayer?',
+      lead: 'The five daily prayers have 17 fard (obligatory) rakats in total. Around them the Prophet ﷺ kept up 12 sunnah rakats every day, and the night ends with witr. Here is each prayer, the reason for each number, and what changes on Friday and when travelling. The counts follow the Hanafi school, with differences in the other schools noted.',
+      sections: [
+        ['The short answer', '**Fajr:** 2 sunnah, then 2 fard. **Dhuhr:** 4 sunnah, 4 fard, then 2 sunnah. **Asr:** 4 fard (4 sunnah before it are recommended but not stressed). **Maghrib:** 3 fard, then 2 sunnah. **Isha:** 4 fard, 2 sunnah, then 3 witr (4 sunnah before Isha are recommended but not stressed). Many people add 2 nafl (voluntary) rakats after Dhuhr, Maghrib and Isha; these are extra reward, not part of the required count. Check today’s times on the @@prayer-times.html|prayer times@@ page.'],
+        ['The 17 fard rakats', 'Fajr 2, Dhuhr 4, Asr 4, Maghrib 3 and Isha 4 make 17. ʿAishah said that Allah first made the prayer two rakats each; then the prayer of the traveller was kept at two and the prayer of the resident was increased (Sahih al-Bukhari 350). Maghrib, the “witr of the day”, stayed at three. Missing a fard prayer on purpose is a major sin, and a missed one must be made up.'],
+        ['The 12 sunnah rakats the Prophet ﷺ never left', 'The Prophet ﷺ said that whoever prays twelve rakats in a day and night, a house is built for him in Paradise (Sahih Muslim 728). At-Tirmidhi (415) lists them: 4 before Dhuhr and 2 after it, 2 after Maghrib, 2 after Isha and 2 before Fajr. In the Hanafi school these are “sunnah muʾakkadah”: strongly stressed, and leaving them as a habit is blameworthy.'],
+        ['The two sunnah of Fajr', 'These are the most stressed of all. The Prophet ﷺ said: “The two rakats of Fajr are better than this world and everything in it” (Sahih Muslim 725). He kept them even when travelling. Pray them short, before the fard; reciting {قُلْ يَا أَيُّهَا الْكَافِرُونَ} in the first and {قُلْ هُوَ اللّٰهُ أَحَدٌ} in the second is the Sunnah (Sahih Muslim 726).'],
+        ['Four before Asr and four before Isha', 'These are “ghayr muʾakkadah”: rewarded, but not stressed. The Prophet ﷺ said: “May Allah have mercy on a person who prays four before Asr” (At-Tirmidhi 430). If time is short, the fard comes first.'],
+        ['Witr', 'In the Hanafi school witr is three rakats with one salam, it is wajib (necessary, just below fard), and the @@dua-qunoot-witr.html|Dua Qunoot@@ is read in the third rakat before ruku. The Shafiʿi, Maliki and Hanbali schools count witr as a stressed sunnah that can be one rakat or more. All agree it is the last prayer of the night: “Make witr the last of your prayer at night” (Sahih al-Bukhari 998). It can be prayed straight after Isha or before Fajr. See also @@dua-after-witr.html|what to say after witr@@.'],
+        ['Jumuah (Friday)', 'Jumuah replaces Dhuhr: the khutbah, then 2 fard rakats in congregation. In the Hanafi school 4 sunnah are prayed before it and 4 after (many also pray 2 more). The Prophet ﷺ said: “When one of you prays Jumuah, let him pray four after it” (Sahih Muslim 881).'],
+        ['When travelling', 'A traveller shortens the four-rakat fard prayers (Dhuhr, Asr and Isha) to two; Fajr and Maghrib stay the same. In the Hanafi school shortening is required on a journey of about 78 km or more, until you intend to stay 15 days or more in one place. Most sunnah prayers can be left when travelling, but keep the two of Fajr and the witr.'],
+        ['After the prayer', 'When you finish, stay seated for the short adhkar the Prophet ﷺ said after every prayer: see @@what-to-say-after-salah.html|what to say after salah@@, and count the 33-33-33 tasbih on the @@tasbih-counter.html|tasbih counter@@.'],
+      ],
+    },
+    ur: {
+      title: 'ہر نماز میں کتنی رکعات ہیں؟ فجر، ظہر، عصر، مغرب، عشاء (فرض، سنت، وتر) | حرف',
+      desc: 'پانچوں نمازوں کی رکعات: فجر، ظہر، عصر، مغرب اور عشاء کے فرض، سنت اور وتر، جمعہ اور سفر کی نماز، ہر عدد کی حدیث کے حوالے کے ساتھ۔',
+      h1: 'ہر نماز میں کتنی رکعات ہیں؟',
+      lead: 'پانچ نمازوں میں کل ۱۷ رکعات فرض ہیں۔ ان کے ساتھ نبی ﷺ روزانہ ۱۲ رکعات سنت کی پابندی فرماتے، اور رات وتر پر ختم ہوتی ہے۔ یہاں ہر نماز کی رکعات، ان کی دلیل، اور جمعہ و سفر کے احکام ہیں۔ تعداد فقہ حنفی کے مطابق ہے، اور دوسرے مذاہب کا فرق بھی بتا دیا گیا ہے۔',
+      sections: [
+        ['مختصر جواب', '**فجر:** ۲ سنت، پھر ۲ فرض۔ **ظہر:** ۴ سنت، ۴ فرض، پھر ۲ سنت۔ **عصر:** ۴ فرض (اس سے پہلے ۴ سنت غیر مؤکدہ مستحب ہیں)۔ **مغرب:** ۳ فرض، پھر ۲ سنت۔ **عشاء:** ۴ فرض، ۲ سنت، پھر ۳ وتر (عشاء سے پہلے ۴ سنت غیر مؤکدہ مستحب ہیں)۔ بہت سے لوگ ظہر، مغرب اور عشاء کے بعد ۲ نفل بھی پڑھتے ہیں؛ یہ زائد ثواب ہے، لازمی تعداد کا حصہ نہیں۔ آج کے اوقات @@prayer-times.html|نماز کے اوقات@@ کے صفحے پر دیکھیں۔'],
+        ['۱۷ فرض رکعات', 'فجر ۲، ظہر ۴، عصر ۴، مغرب ۳ اور عشاء ۴، کل ۱۷۔ حضرت عائشہ فرماتی ہیں کہ اللہ نے پہلے ہر نماز دو دو رکعت فرض کی، پھر سفر کی نماز دو ہی رہی اور حضر (گھر) کی نماز بڑھا دی گئی (صحیح بخاری ۳۵۰)۔ مغرب، جو «دن کا وتر» ہے، تین ہی رہی۔ جان بوجھ کر فرض نماز چھوڑنا کبیرہ گناہ ہے، اور چھوٹی ہوئی نماز کی قضا لازم ہے۔'],
+        ['۱۲ سنتیں جو نبی ﷺ نے کبھی نہیں چھوڑیں', 'نبی ﷺ نے فرمایا: جو دن رات میں بارہ رکعات پڑھے، اس کے لیے جنت میں گھر بنایا جاتا ہے (صحیح مسلم ۷۲۸)۔ ترمذی (۴۱۵) میں ان کی تفصیل ہے: ظہر سے پہلے ۴ اور بعد ۲، مغرب کے بعد ۲، عشاء کے بعد ۲ اور فجر سے پہلے ۲۔ فقہ حنفی میں یہ «سنتِ مؤکدہ» ہیں؛ انہیں عادتاً چھوڑنا قابلِ ملامت ہے۔'],
+        ['فجر کی دو سنتیں', 'یہ سب سے زیادہ تاکید والی سنتیں ہیں۔ نبی ﷺ نے فرمایا: «فجر کی دو رکعتیں دنیا اور اس کی ہر چیز سے بہتر ہیں» (صحیح مسلم ۷۲۵)۔ آپ ﷺ سفر میں بھی انہیں نہ چھوڑتے۔ انہیں مختصر پڑھیں؛ پہلی رکعت میں {قُلْ يَا أَيُّهَا الْكَافِرُونَ} اور دوسری میں {قُلْ هُوَ اللّٰهُ أَحَدٌ} پڑھنا سنت ہے (صحیح مسلم ۷۲۶)۔'],
+        ['عصر اور عشاء سے پہلے چار رکعات', 'یہ «غیر مؤکدہ» ہیں: ثواب ہے، تاکید نہیں۔ نبی ﷺ نے فرمایا: «اللہ اس شخص پر رحم کرے جو عصر سے پہلے چار رکعات پڑھے» (ترمذی ۴۳۰)۔ وقت کم ہو تو فرض پہلے۔'],
+        ['وتر', 'فقہ حنفی میں وتر تین رکعات ایک سلام کے ساتھ ہیں، واجب ہیں (فرض سے کچھ کم)، اور تیسری رکعت میں رکوع سے پہلے @@dua-qunoot-witr.html|دعائے قنوت@@ پڑھی جاتی ہے۔ شافعی، مالکی اور حنبلی مذاہب میں وتر سنتِ مؤکدہ ہے اور ایک یا زیادہ رکعات ہو سکتی ہیں۔ سب متفق ہیں کہ یہ رات کی آخری نماز ہے: «اپنی رات کی نماز کا آخری حصہ وتر بناؤ» (صحیح بخاری ۹۹۸)۔ عشاء کے فوراً بعد یا فجر سے پہلے پڑھی جا سکتی ہے۔ دیکھیں: @@dua-after-witr.html|وتر کے بعد کیا پڑھیں@@۔'],
+        ['جمعہ', 'جمعہ ظہر کی جگہ ہے: خطبہ، پھر جماعت کے ساتھ ۲ فرض۔ فقہ حنفی میں اس سے پہلے ۴ سنت اور بعد میں ۴ سنت (بہت سے لوگ مزید ۲ بھی) پڑھی جاتی ہیں۔ نبی ﷺ نے فرمایا: «جب تم میں سے کوئی جمعہ پڑھے تو اس کے بعد چار رکعات پڑھے» (صحیح مسلم ۸۸۱)۔'],
+        ['سفر میں', 'مسافر چار رکعت والے فرض (ظہر، عصر، عشاء) دو پڑھے گا؛ فجر اور مغرب ویسے ہی رہیں گے۔ فقہ حنفی میں تقریباً ۷۸ کلومیٹر یا زیادہ کے سفر میں قصر واجب ہے، جب تک کسی جگہ ۱۵ دن یا زیادہ ٹھہرنے کی نیت نہ ہو۔ سفر میں اکثر سنتیں چھوڑی جا سکتی ہیں، مگر فجر کی دو سنتیں اور وتر نہ چھوڑیں۔'],
+        ['نماز کے بعد', 'سلام پھیرنے کے بعد وہ مختصر اذکار پڑھیں جو نبی ﷺ ہر نماز کے بعد پڑھتے: دیکھیں @@what-to-say-after-salah.html|نماز کے بعد کیا پڑھیں@@، اور ۳۳-۳۳-۳۳ کی تسبیح @@tasbih-counter.html|تسبیح کاؤنٹر@@ پر گنیں۔'],
+      ],
+    },
+  },
+  {
+    slug: 'what-to-say-after-salah', glyph: 'أَذْكَار',
+    en: {
+      title: 'What to say after salah: the Sunnah adhkar after every prayer (with Arabic) | Harf',
+      desc: 'The short adhkar the Prophet ﷺ said after every fard prayer, in order: istighfar, Allahumma antas-salam, the tahlil, 33-33-33 tasbih, Ayat al-Kursi and the three Quls, with Arabic, meaning and hadith sources.',
+      h1: 'What to say after salah',
+      lead: 'After the salam, the Prophet ﷺ did not get up straight away. He said a few short words of remembrance, and taught his companions to say more. All of it takes about five minutes. Here it is in the usual order, with the Arabic, the meaning and the source of each.',
+      sections: [
+        ['1. Seek forgiveness three times, then praise Allah as Peace', 'Say {أَسْتَغْفِرُ اللّٰهَ} ([Astaghfirullāh]) three times, then {اللّٰهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ} ([Allāhumma antas-salāmu wa minkas-salām, tabārakta yā dhal-jalāli wal-ikrām]): “O Allah, You are Peace and from You comes peace; blessed are You, O Lord of Majesty and Honour.” Thawban reported that the Prophet ﷺ said this when he finished his prayer (Sahih Muslim 591).'],
+        ['2. The tahlil', '{لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلٰى كُلِّ شَيْءٍ قَدِيرٌ، اللّٰهُمَّ لَا مَانِعَ لِمَا أَعْطَيْتَ، وَلَا مُعْطِيَ لِمَا مَنَعْتَ، وَلَا يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ}: “There is no god but Allah alone, with no partner; His is the dominion and His is the praise, and He has power over all things. O Allah, no one can withhold what You give or give what You withhold, and a person’s wealth cannot help him against You.” Al-Mughirah wrote that the Prophet ﷺ said this after every fard prayer (Sahih al-Bukhari 844).'],
+        ['3. Tasbih: 33, 33, 33 and one to make 100', 'Say {سُبْحَانَ اللّٰهِ} 33 times, {الْحَمْدُ لِلّٰهِ} 33 times and {اللّٰهُ أَكْبَرُ} 33 times, then complete a hundred with {لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلٰى كُلِّ شَيْءٍ قَدِيرٌ}. The Prophet ﷺ said that whoever does this after every prayer has his sins forgiven, even if they are like the foam of the sea (Sahih Muslim 597). Another narration has Allahu akbar 34 times (Sahih Muslim 596). Count it on your fingers, or on the @@tasbih-counter.html|tasbih counter@@, which has this set built in.'],
+        ['4. Ayat al-Kursi', 'The Prophet ﷺ said that whoever recites @@ayatul-kursi.html|Ayat al-Kursi@@ after every obligatory prayer, nothing stands between him and entering Paradise except death (An-Nasaʾi, ʿAmal al-Yawm wa l-Laylah 100; graded sahih by al-Albani).'],
+        ['5. The three Quls', 'ʿUqbah ibn ʿAmir said the Prophet ﷺ told him to recite the muʿawwidhat after every prayer (Sunan Abi Dawud 1523): @@quran-al-ikhlas.html|Al-Ikhlas@@, @@quran-al-falaq.html|Al-Falaq@@ and @@quran-an-nas.html|An-Nas@@, once each. Many scholars say to read each three times after Fajr and Maghrib, as in the morning and evening adhkar.'],
+        ['6. Ask for help to remember Him', 'The Prophet ﷺ took Muʿadh by the hand, told him he loved him, and advised him never to leave saying after every prayer: {اللّٰهُمَّ أَعِنِّي عَلٰى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ} ([Allāhumma aʿinnī ʿalā dhikrika wa shukrika wa ḥusni ʿibādatik]): “O Allah, help me to remember You, to thank You and to worship You well” (Sunan Abi Dawud 1522).'],
+        ['Then make your own dua', 'After these, ask Allah for whatever you need, in any language. If you are in a hurry, do at least the istighfar and the 33-33-33; they take under three minutes. The full list with audio is in the @@adhkar-after-salah.html|Hisn al-Muslim adhkar after salah@@, and the @@how-many-rakats-in-each-prayer.html|rakats of each prayer@@ are explained here.'],
+      ],
+    },
+    ur: {
+      title: 'نماز کے بعد کیا پڑھیں: ہر فرض نماز کے بعد کے مسنون اذکار (عربی کے ساتھ) | حرف',
+      desc: 'وہ مختصر اذکار جو نبی ﷺ ہر فرض نماز کے بعد پڑھتے، ترتیب سے: استغفار، اللہم انت السلام، تہلیل، ۳۳-۳۳-۳۳ تسبیح، آیت الکرسی اور تینوں قل، عربی، ترجمے اور حدیث کے حوالے کے ساتھ۔',
+      h1: 'نماز کے بعد کیا پڑھیں',
+      lead: 'سلام پھیرنے کے بعد نبی ﷺ فوراً نہیں اٹھتے تھے، بلکہ چند مختصر اذکار پڑھتے اور صحابہ کو مزید سکھاتے۔ یہ سب تقریباً پانچ منٹ میں ہو جاتے ہیں۔ یہاں یہ عام ترتیب سے ہیں، ہر ایک کی عربی، ترجمہ اور حوالہ۔',
+      sections: [
+        ['۱۔ تین بار استغفار، پھر اللہم انت السلام', 'تین بار {أَسْتَغْفِرُ اللّٰهَ} کہیں، پھر {اللّٰهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ}: «اے اللہ! تو سلامتی والا ہے اور تیری ہی طرف سے سلامتی ہے، تو بابرکت ہے اے جلال اور عزت والے۔» حضرت ثوبان بیان کرتے ہیں کہ نبی ﷺ نماز سے فارغ ہو کر یہ کہتے (صحیح مسلم ۵۹۱)۔'],
+        ['۲۔ تہلیل', '{لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلٰى كُلِّ شَيْءٍ قَدِيرٌ، اللّٰهُمَّ لَا مَانِعَ لِمَا أَعْطَيْتَ، وَلَا مُعْطِيَ لِمَا مَنَعْتَ، وَلَا يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ}: «اللہ کے سوا کوئی معبود نہیں، وہ اکیلا ہے، اس کا کوئی شریک نہیں، بادشاہی اور تعریف اسی کی ہے اور وہ ہر چیز پر قادر ہے۔ اے اللہ! جو تو دے اسے کوئی روک نہیں سکتا، جو تو روکے اسے کوئی دے نہیں سکتا، اور کسی مالدار کی مالداری تیرے مقابلے میں کام نہیں آتی۔» حضرت مغیرہ نے لکھا کہ نبی ﷺ ہر فرض نماز کے بعد یہ پڑھتے (صحیح بخاری ۸۴۴)۔'],
+        ['۳۔ تسبیح: ۳۳، ۳۳، ۳۳ اور ایک بار سو پورا کرنے کو', '{سُبْحَانَ اللّٰهِ} ۳۳ بار، {الْحَمْدُ لِلّٰهِ} ۳۳ بار اور {اللّٰهُ أَكْبَرُ} ۳۳ بار، پھر سو پورا کرنے کے لیے {لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلٰى كُلِّ شَيْءٍ قَدِيرٌ}۔ نبی ﷺ نے فرمایا جو ہر نماز کے بعد یہ پڑھے اس کے گناہ معاف ہو جاتے ہیں چاہے سمندر کی جھاگ کے برابر ہوں (صحیح مسلم ۵۹۷)۔ ایک روایت میں اللہ اکبر ۳۴ بار ہے (صحیح مسلم ۵۹۶)۔ انگلیوں پر گنیں، یا @@tasbih-counter.html|تسبیح کاؤنٹر@@ پر جس میں یہ ترتیب پہلے سے موجود ہے۔'],
+        ['۴۔ آیت الکرسی', 'نبی ﷺ نے فرمایا جو ہر فرض نماز کے بعد @@ayatul-kursi.html|آیت الکرسی@@ پڑھے، اس کے اور جنت کے درمیان صرف موت حائل ہے (نسائی، عمل الیوم واللیلہ ۱۰۰؛ البانی نے صحیح کہا)۔'],
+        ['۵۔ تینوں قل', 'حضرت عقبہ بن عامر کہتے ہیں کہ نبی ﷺ نے انہیں ہر نماز کے بعد معوذات پڑھنے کا حکم دیا (سنن ابی داود ۱۵۲۳): @@quran-al-ikhlas.html|سورہ اخلاص@@، @@quran-al-falaq.html|سورہ فلق@@ اور @@quran-an-nas.html|سورہ ناس@@، ایک ایک بار۔ بہت سے علماء کہتے ہیں کہ فجر اور مغرب کے بعد صبح و شام کے اذکار کی طرح تین تین بار پڑھیں۔'],
+        ['۶۔ ذکر کی توفیق مانگیں', 'نبی ﷺ نے حضرت معاذ کا ہاتھ پکڑ کر فرمایا کہ مجھے تم سے محبت ہے، اور نصیحت کی کہ ہر نماز کے بعد یہ کہنا کبھی نہ چھوڑنا: {اللّٰهُمَّ أَعِنِّي عَلٰى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ}: «اے اللہ! اپنے ذکر، اپنے شکر اور اپنی اچھی عبادت پر میری مدد فرما» (سنن ابی داود ۱۵۲۲)۔'],
+        ['پھر اپنی دعا', 'اس کے بعد اللہ سے جو چاہیں، کسی بھی زبان میں مانگیں۔ جلدی ہو تو کم از کم استغفار اور ۳۳-۳۳-۳۳ پڑھ لیں؛ یہ تین منٹ سے کم میں ہو جاتے ہیں۔ آواز کے ساتھ پوری فہرست @@adhkar-after-salah.html|حصن المسلم: نماز کے بعد کے اذکار@@ میں ہے، اور @@how-many-rakats-in-each-prayer.html|ہر نماز کی رکعات@@ یہاں دیکھیں۔'],
+      ],
+    },
+  },
 ];
 
 // {Arabic} and [latin] via fmt, then @@file|text@@ links
-const gfmt = (lang, s) => fmt(s).replace(/@@([a-z0-9.-]+\.html)\|([^@]+)@@/g, (m, f, t) => `<a href="${link(lang, f)}">${t}</a>`);
+const gfmt = (lang, s) => fmt(s).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/@@([a-z0-9.-]+\.html)\|([^@]+)@@/g, (m, f, t) => `<a href="${link(lang, f)}">${t}</a>`);
 
 function guidePage(lang, i) {
   const ur = lang === 'ur';
