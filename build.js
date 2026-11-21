@@ -3323,6 +3323,7 @@ const { COMPANIONS } = require('./data/companions.js');
 const { GUIDES_ISLAM } = require('./data/guides-islam.js');
 const { PHRASES_MORE } = require('./data/phrases-more.js');
 const { VOCAB_MORE } = require('./data/vocab-more.js');
+const { LETTERS_MORE } = require('./data/letters-more.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -4984,6 +4985,12 @@ function letterPage(lang, i) {
   <div class="fact"><h3>${C.simH}</h3><p>${simHtml}</p></div>
   <div class="fact"><h3>${C.exH}</h3><p class="example"><span class="ar" lang="ar">${x.w}</span><span><span class="latin">${esc(x.wt)}</span><br>${esc(C.mean)}</span></p></div>
 </div>
+${LETTERS_MORE[x.slug] ? `<section>
+  <h2>${ur ? 'اردو بولنے والوں کے لیے تلفظ کا مشورہ' : 'Pronunciation tip'}</h2>
+  <p>${esc(LETTERS_MORE[x.slug][ur ? 1 : 0])}</p>
+  <h3>${ur ? 'فرق سن کر مشق کریں' : 'Hear the difference'}</h3>
+  <div class="phr">${LETTERS_MORE[x.slug][2].map(([a, tr, en, u]) => `<div class="ph"><span class="ar" lang="ar">${a}</span><span class="tr latin">${esc(tr)}</span><span class="mean">${esc(ur ? u : en)}</span>${say(lang, a)}</div>`).join('')}</div>
+</section>` : ''}
 ${startWords.length ? `<section class="letter-words">
   <h2>${ur ? `${fmt('{' + x.c + '}')} سے شروع ہونے والے قرآنی الفاظ` : `Quran words that start with ${fmt('{' + x.c + '}')}`}</h2>
   <div class="lw-grid">${startWords.map(({ l, r }) => `<a href="${link(lang, 'quran-root-' + r.slug + '.html')}"><span class="ar" lang="ar">${l.a}</span><span class="lw-m">${esc(ur ? l.ur : l.en)}</span></a>`).join('')}</div>
