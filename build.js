@@ -3325,6 +3325,7 @@ const { GUIDES_ISLAM_2 } = require('./data/guides-islam-2.js');
 const { PHRASES_MORE } = require('./data/phrases-more.js');
 const { VOCAB_MORE } = require('./data/vocab-more.js');
 const { LETTERS_MORE } = require('./data/letters-more.js');
+const { HISN_MORE } = require('./data/hisn-more.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -6635,6 +6636,7 @@ function hisnChapterPage(lang, i) {
 <h1>${esc(name(c))}</h1>
 <p class="lead">${esc(lead)}</p>
 ${c.items.map((d, k) => duaHtml(lang, d, k + 1)).join('\n')}
+${HISN_MORE[c.slug] ? `<section class="prose"><h2>${ur ? 'یہ دعا کب اور کیوں' : 'When and why to say it'}</h2><p>${gfmt(lang, HISN_MORE[c.slug][ur ? 1 : 0])}</p></section>` : ''}
 ${miniQuizHtml(lang, i)}
 ${(() => {
     const grp = HISN.filter((x) => x.g === c.g), at = grp.indexOf(c);
