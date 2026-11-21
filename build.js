@@ -3899,6 +3899,7 @@ function buildSearchIndex(lang) {
   add('', ur ? 'ہر نماز کی رکعات' : 'How many rakats in each prayer', ur ? 'فرض، سنت، وتر' : 'Fard, sunnah and witr', 'how-many-rakats-in-each-prayer.html', 'page');
   add('', ur ? 'نماز کے بعد کیا پڑھیں' : 'What to say after salah', ur ? 'مسنون اذکار' : 'The Sunnah adhkar', 'what-to-say-after-salah.html', 'page');
   add('مَوَاقِيتُ الصَّلَاة', ur ? 'نماز کے اوقات' : 'Prayer times (namaz timings)', ur ? 'فجر، ظہر، عصر، مغرب، عشاء — آپ کے شہر کے لیے' : 'Fajr, Dhuhr, Asr, Maghrib, Isha for your city', 'prayer-times.html', 'page');
+  add('تَهَجُّد', ur ? 'تہجد کا وقت' : 'Tahajjud time (last third of the night)', ur ? 'رات کا آخری تہائی حصہ' : 'When the last third of the night begins', 'tahajjud-time.html', 'page');
   add('الْقِبْلَة', ur ? 'قبلہ کی سمت' : 'Qibla direction', ur ? 'کمپاس کے ساتھ قبلہ رخ' : 'Find the Qibla with a compass', 'qibla-direction.html', 'page');
   add('تَسْبِيح', ur ? 'تسبیح کاؤنٹر' : 'Tasbih counter', ur ? 'سبحان اللہ ۳۳، الحمد للہ ۳۳، اللہ اکبر ۳۴' : 'SubhanAllah 33, Alhamdulillah 33, Allahu Akbar 34', 'tasbih-counter.html', 'page');
   PHRASES.forEach((p) => add(p[0], p[1], ur ? p[3] : p[2], 'phrases.html', 'phrase'));
@@ -6628,6 +6629,9 @@ const TOOL_LIST = [
   ['qibla-direction.html', 'قِبْلَة', 'Qibla direction', 'قبلہ کی سمت',
     'The Qibla from your city in degrees, with a live compass on your phone.',
     'آپ کے شہر سے قبلہ کا رخ درجوں میں، موبائل پر کمپاس کے ساتھ۔'],
+  ['tahajjud-time.html', 'تَهَجُّد', 'Tahajjud time tonight', 'آج رات تہجد کا وقت',
+    'When the last third of the night begins in your city, with a countdown.',
+    'آپ کے شہر میں رات کا آخری تہائی حصہ کب شروع ہوتا ہے، الٹی گنتی کے ساتھ۔'],
   ['tasbih-counter.html', 'تَسْبِيح', 'Tasbih counter', 'تسبیح کاؤنٹر',
     'A tap counter for dhikr, with the after-salah and bedtime tasbih built in.',
     'ذکر گننے کے لیے ٹیپ کاؤنٹر، نماز کے بعد اور سوتے وقت کی تسبیحات کے ساتھ۔'],
@@ -7129,6 +7133,81 @@ const PRAYER_JS = String.raw`
   render();
 })();
 `;
+
+// Tahajjud: thirds of the night between Maghrib and Fajr
+const TAHAJJUD_JS = String.raw`
+(function(){
+  var D=JSON.parse(document.getElementById('th-data').textContent), ur=D.ur, P=harfPTCore(ur);
+  var sel=document.getElementById('thCity'), st=document.getElementById('thStatus');
+  var loc=harfLocLoad(); if(!loc){ var g=harfGuessCity(D.cities)||D.cities[0]; loc={k:g[0]}; }
+  function nu(x){ return ur?String(x).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d];}):String(x); }
+  function cur(){ if(loc.k==='gps') return {name:D.here,lat:loc.lat,lon:loc.lon,tz:loc.tz||harfDeviceTz()}; for(var i=0;i<D.cities.length;i++) if(D.cities[i][0]===loc.k){ var c=D.cities[i]; return {name:ur?c[2]:c[1],lat:c[3],lon:c[4],tz:c[5]}; } var c0=D.cities[0]; return {name:ur?c0[2]:c0[1],lat:c0[3],lon:c0[4],tz:c0[5]}; }
+  var timer=null;
+  function times(day,c,m,a){ var p=P.partsIn(day,c.tz), o=P.compute(p.y,p.m,p.d,c.lat,c.lon,m,a,false); return {mg:P.toDate(p.y,p.m,p.d,o.sunset), fj:P.toDate(p.y,p.m,p.d,o.fajr)}; }
+  function render(){
+    var c=cur(), dm=P.TZM[c.tz]||['mwl',1], m=loc.m||dm[0], a=+(loc.a||dm[1]); sel.value=loc.k;
+    var now=new Date(), today=times(now,c,m,a), mg, fj;
+    if(now<today.fj){ mg=times(new Date(now.getTime()-864e5),c,m,a).mg; fj=today.fj; }
+    else { mg=today.mg; fj=times(new Date(now.getTime()+864e5),c,m,a).fj; }
+    var len=fj-mg, mid=new Date(mg.getTime()+len/2), third=new Date(mg.getTime()+len*2/3);
+    document.getElementById('thMg').textContent=P.hm(mg,c.tz); document.getElementById('thMid').textContent=P.hm(mid,c.tz);
+    document.getElementById('thThird').textContent=P.hm(third,c.tz); document.getElementById('thFj').textContent=P.hm(fj,c.tz);
+    var h=Math.floor(len/36e5), mi=Math.round(len%36e5/6e4);
+    document.getElementById('thLen').textContent=ur?('آج رات کی لمبائی: '+nu(h)+' گھنٹے '+nu(mi)+' منٹ'):('Tonight’s night length: '+h+'h '+mi+'m');
+    document.getElementById('thPlace').textContent=c.name;
+    function tick(){ var n=new Date(), msg, ms;
+      if(n>=third&&n<fj){ ms=fj-n; msg=ur?'ابھی رات کا آخری تہائی حصہ ہے! فجر میں باقی: ':'It is the last third of the night now! Time left until Fajr: '; document.getElementById('thBig').classList.add('on'); }
+      else { ms=third-n; if(ms<0){ render(); return; } msg=ur?'آخری تہائی شروع ہونے میں: ':'The last third begins in: '; document.getElementById('thBig').classList.remove('on'); }
+      var H=Math.floor(ms/36e5), M=Math.floor(ms%36e5/6e4); document.getElementById('thNow').textContent=msg+(ur?(nu(H)+' گھنٹے '+nu(M)+' منٹ'):(H+'h '+M+'m')); }
+    clearInterval(timer); tick(); timer=setInterval(tick,30000);
+  }
+  sel.addEventListener('change',function(){ loc={k:sel.value}; harfLocSave(loc); render(); });
+  document.getElementById('thGps').addEventListener('click',function(){ if(!navigator.geolocation){ st.textContent=D.noGps; return; } st.textContent=D.finding;
+    navigator.geolocation.getCurrentPosition(function(pos){ loc={k:'gps',lat:+pos.coords.latitude.toFixed(4),lon:+pos.coords.longitude.toFixed(4),tz:harfDeviceTz()}; harfLocSave(loc); st.textContent=''; render(); },function(){ st.textContent=D.noGps; },{timeout:15000,maximumAge:6e5}); });
+  render();
+})();
+`;
+function tahajjudPage(lang) {
+  const ur = lang === 'ur';
+  const S = (b, n) => { const s = SN(b, n); return `<a href="${s.u}" target="_blank" rel="noopener" class="latin" dir="ltr">${esc(s.t)}</a>`; };
+  const C = ur ? {
+    title: 'تہجد کا وقت آج — رات کا آخری تہائی حصہ کب شروع ہوتا ہے | حرف', desc: 'اپنے شہر میں آج رات تہجد کا بہترین وقت: مغرب سے فجر تک رات کا حساب، آدھی رات اور آخری تہائی حصہ کب شروع ہوتا ہے، الٹی گنتی کے ساتھ۔',
+    h1: 'آج رات تہجد کا وقت', lead: 'رات مغرب سے فجر تک ہے۔ اس کا آخری تہائی حصہ تہجد اور دعا کا سب سے بہترین وقت ہے، جب اللہ تعالیٰ آسمانِ دنیا پر نزول فرماتا ہے۔ اپنا شہر چنیں:',
+    city: 'شہر', gps: 'میری لوکیشن', mg: 'مغرب (رات شروع)', mid: 'آدھی رات', third: 'آخری تہائی شروع', fj: 'فجر (رات ختم)', here: 'میری لوکیشن', noGps: 'لوکیشن نہیں مل سکی۔ فہرست سے شہر چنیں۔', finding: 'لوکیشن ڈھونڈ رہے ہیں…',
+  } : {
+    title: 'Tahajjud time tonight: when does the last third of the night begin? | Harf', desc: 'The best time for tahajjud tonight in your city: the night from Maghrib to Fajr, the middle of the night, and when the last third begins, with a countdown.',
+    h1: 'Tahajjud time tonight', lead: 'The night runs from Maghrib to Fajr. Its last third is the best time for tahajjud and dua, when Allah descends to the lowest heaven. Choose your city:',
+    city: 'City', gps: 'Use my location', mg: 'Maghrib (night begins)', mid: 'Middle of the night', third: 'Last third begins', fj: 'Fajr (night ends)', here: 'My location', noGps: 'Could not get your location. Please pick a city.', finding: 'Finding your location…',
+  };
+  const sec = ur ? [
+    ['آخری تہائی کیوں؟', `نبی ﷺ نے فرمایا: «ہمارا رب ہر رات، جب رات کا آخری تہائی حصہ باقی رہ جاتا ہے، آسمانِ دنیا پر نزول فرماتا ہے اور کہتا ہے: کون ہے جو مجھے پکارے کہ میں اس کی پکار قبول کروں؟ کون ہے جو مجھ سے مانگے کہ میں اسے دوں؟ کون ہے جو مجھ سے معافی مانگے کہ میں اسے معاف کروں؟» ${S('bukhari', 1145)}`],
+    ['تہجد کی کتنی رکعات؟', `حضرت عائشہ فرماتی ہیں کہ نبی ﷺ رمضان ہو یا غیر رمضان، رات کو گیارہ رکعات سے زیادہ نہیں پڑھتے تھے (وتر سمیت) ${S('bukhari', 1147)}۔ کم از کم دو رکعت بھی تہجد ہے؛ دو دو کر کے پڑھیں اور جتنا آسانی سے ہو سکے۔ رات کی نماز دو دو رکعت ہے ${S('bukhari', 990)}۔`],
+    ['کیا سونا ضروری ہے؟', 'علماء کے مشہور قول کے مطابق تہجد وہ نفل نماز ہے جو عشاء کے بعد کچھ دیر سو کر اٹھ کر پڑھی جائے؛ اگر سوئے بغیر پڑھیں تو یہ «قیام اللیل» ہے اور اس کا بھی بڑا ثواب ہے۔ اگر رات کو نہ اٹھ سکنے کا ڈر ہو تو وتر سونے سے پہلے پڑھ لیں۔'],
+    ['اٹھنے میں مدد', 'جلدی سوئیں، سونے سے پہلے وضو کریں اور سوتے وقت کے اذکار پڑھیں، الارم آخری تہائی سے پندرہ منٹ پہلے لگائیں، اور شروع میں ہفتے میں ایک یا دو راتوں سے آغاز کریں۔ اٹھ کر پہلے نیند سے جاگنے کی دعا پڑھیں۔'],
+  ] : [
+    ['Why the last third?', `The Prophet ﷺ said: “Our Lord descends every night to the lowest heaven when the last third of the night remains, and says: Who is calling on Me, that I may answer him? Who is asking of Me, that I may give him? Who is seeking My forgiveness, that I may forgive him?” ${S('bukhari', 1145)}`],
+    ['How many rakats is tahajjud?', `ʿAishah said the Prophet ﷺ never prayed more than eleven rakats at night, in Ramadan or outside it, including witr ${S('bukhari', 1147)}. Even two rakats count as tahajjud; pray in twos, as much as is easy. “The night prayer is two by two” ${S('bukhari', 990)}.`],
+    ['Do I have to sleep first?', 'In the well-known view of the scholars, tahajjud is the voluntary prayer prayed after waking from some sleep following Isha; praying at night without sleeping first is still qiyam al-layl, with great reward. If you fear you will not wake, pray witr before you sleep.'],
+    ['Tips for waking up', 'Sleep early, make wudu and say the bedtime adhkar, set an alarm fifteen minutes before the last third begins, and start with one or two nights a week. When you wake, begin with the dua for waking up.'],
+  ];
+  const data = { ur, cities: PT_CITIES, here: C.here, noGps: C.noGps, finding: C.finding };
+  const body = `${toolCrumbs(lang, C.h1)}
+<h1>${C.h1}</h1>
+<p class="lead">${C.lead}</p>
+<div class="tool">
+  <div class="pt-loc"><label>${C.city} <select id="thCity">${cityOptions(lang, C.gps)}</select></label><button class="btn primary" type="button" id="thGps">📍 ${C.gps}</button></div>
+  <p style="margin:12px 0 0"><strong id="thPlace"></strong> · <span id="thLen"></span></p>
+  <div class="pt-grid"><div class="pt-c"><b>${C.mg}</b><span class="tm" id="thMg">--:--</span></div><div class="pt-c"><b>${C.mid}</b><span class="tm" id="thMid">--:--</span></div><div class="pt-c next" id="thBig"><b>⭐ ${C.third}</b><span class="tm" id="thThird">--:--</span></div><div class="pt-c"><b>${C.fj}</b><span class="tm" id="thFj">--:--</span></div></div>
+  <p class="pt-next" id="thNow" aria-live="polite"></p>
+  <p class="small" id="thStatus"></p>
+</div>
+${sec.map(([h, p]) => `<section><h2>${h}</h2><p>${p}</p></section>`).join('\n')}
+<p><a href="${link(lang, 'dua-when-waking-up.html')}">${ur ? 'نیند سے جاگنے کی دعا ←' : 'Dua for waking up →'}</a> · <a href="${link(lang, 'dua-before-sleeping.html')}">${ur ? 'سونے سے پہلے کی دعائیں ←' : 'Duas before sleeping →'}</a> · <a href="${link(lang, 'prayer-times.html')}">${ur ? 'نماز کے اوقات ←' : 'Prayer times →'}</a></p>
+${toolMore(lang, 'tahajjud-time.html')}
+${jsonData('th-data', data)}
+<script>${LOC_JS}${PT_CORE_JS}${TAHAJJUD_JS}</script>`;
+  return layout(lang, { file: 'tahajjud-time.html', section: 'tools', title: C.title, desc: C.desc, body });
+}
 
 // Homepage lead: rotating everyday dua cards (Hisn al-Muslim chapter slugs)
 const FP_DUA_SLIDES = ['dua-when-waking-up', 'dua-leaving-home', 'dua-entering-home', 'dua-in-anguish', 'dua-when-things-are-difficult', 'dua-to-pay-off-debt', 'dua-for-breaking-fast', 'dua-after-eating', 'dua-when-it-rains', 'dua-when-angry', 'dua-for-the-traveller', 'dua-for-someone-who-does-you-good', 'dua-before-sleeping'];
@@ -9504,6 +9583,7 @@ function build() {
     add(lang, 'prayer-times.html', prayerTimesPage(lang));
     add(lang, 'qibla-direction.html', qiblaPage(lang));
     add(lang, 'tasbih-counter.html', tasbihPage(lang));
+    add(lang, 'tahajjud-time.html', tahajjudPage(lang));
     add(lang, 'muslim-names.html', namesPage(lang));
     add(lang, 'arabic-transliteration.html', translitPage(lang));
     add(lang, 'about.html', aboutPage(lang));
