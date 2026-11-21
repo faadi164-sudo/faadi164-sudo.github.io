@@ -3320,6 +3320,7 @@ const { VERSE_TOPICS } = require('./data/verses-topics.js');
 const { IQUIZ } = require('./data/islamic-quiz.js');
 const { PROPHETS } = require('./data/prophets.js');
 const { COMPANIONS } = require('./data/companions.js');
+const { GUIDES_ISLAM } = require('./data/guides-islam.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -3735,6 +3736,9 @@ function jsonLd(lang, o, self) {
     }
     if (items.length > 1) out.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items });
   }
+  if (o.article) {
+    out.push({ '@context': 'https://schema.org', '@type': 'Article', headline: String(o.title).replace(/\s*\|\s*(Harf|حرف)$/, '').slice(0, 110), description: o.desc, inLanguage: lang, mainEntityOfPage: pageUrl(self), image: SITE_URL + '/img/og-harf.jpg', author: { '@type': 'Person', name: 'Fawad Ahmed', url: pageUrl(link(lang, 'about.html')) }, publisher: { '@type': 'Organization', name: 'Harf', logo: { '@type': 'ImageObject', url: SITE_URL + '/img/icon-192.png' } } });
+  }
   if (o.file === 'index.html') {
     out.push({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Harf', alternateName: 'حرف', url: pageUrl(self), inLanguage: lang });
     out.push({ '@context': 'https://schema.org', '@type': 'Organization', name: 'Harf', url: SITE_URL + '/', logo: SITE_URL + '/img/icon-192.png', sameAs: [YOUTUBE_URL, FACEBOOK_URL] });
@@ -3759,7 +3763,7 @@ function layout(lang, o) {
 #sib-container a{text-decoration:underline;color:#2BB2FC}
 :where(.sib-form-message-panel){display:none}
 </style>
-<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css" media="print" onload="this.media='all'">
 ` : '';
   const brevoScript = o.brevo ? `<script>
 window.REQUIRED_CODE_ERROR_MESSAGE='Please choose a country code';
@@ -8720,6 +8724,8 @@ const GUIDES = [
   },
 ];
 
+GUIDES.push(...GUIDES_ISLAM);
+
 // {Arabic} and [latin] via fmt, then @@file|text@@ links
 const gfmt = (lang, s) => fmt(s).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/@@([a-z0-9.-]+\.html)\|([^@]+)@@/g, (m, f, t) => `<a href="${link(lang, f)}">${t}</a>`);
 
@@ -8743,8 +8749,8 @@ ${supportBox(lang)}`;
 
 function guidesPage(lang) {
   const ur = lang === 'ur';
-  const C = ur ? { title: 'عربی سیکھنے کی رہنمائی: مدینہ کی کتب، قرآنی عربی، ۹۰ دن کا منصوبہ | حرف', desc: 'عربی سیکھنے کے بارے میں مفصل رہنمائی اردو میں: مدینہ کی کتب کیسے پڑھیں، قرآنی عربی کیسے سیکھیں، فصحیٰ یا لہجہ، اور ۹۰ دن کا مفت منصوبہ۔', h1: 'عربی سیکھنے کی رہنمائی', lead: 'عربی سیکھنے کے عام سوالوں کے تفصیلی جواب: کہاں سے شروع کریں، کون سی عربی سیکھیں اور کیسے آگے بڑھیں۔' }
-    : { title: 'Guides to learning Arabic: Madinah books, Quranic Arabic, 90-day plan | Harf', desc: 'In-depth guides to learning Arabic: how to study the Madinah books, how to learn Quranic Arabic, MSA or dialect, and a free 90-day plan.', h1: 'Guides to learning Arabic', lead: 'Detailed answers to the questions learners ask most: where to start, which Arabic to learn and how to keep going.' };
+  const C = ur ? { title: 'رہنمائی: نماز، وضو، قرآن پڑھنا اور عربی سیکھنا | حرف', desc: 'مفصل رہنمائی اردو میں: نماز اور وضو کا طریقہ، بچوں کو قرآن پڑھانا، بڑی عمر میں قرآن پڑھنا، مدینہ کی کتب، قرآنی عربی اور ۹۰ دن کا منصوبہ۔', h1: 'رہنمائی', lead: 'عام سوالوں کے تفصیلی جواب، حوالوں کے ساتھ: نماز اور وضو کا طریقہ، قرآن پڑھنا سیکھنا اور سکھانا، اور عربی کہاں سے شروع کریں۔' }
+    : { title: 'Guides: how to pray, wudu, reading the Quran and learning Arabic | Harf', desc: 'In-depth, referenced guides: how to pray salah and make wudu step by step, teaching kids the Quran, reading the Quran as an adult, and learning Arabic.', h1: 'Guides', lead: 'Detailed answers to the questions people ask most, with references: how to pray and make wudu, how to read and teach the Quran, and where to start with Arabic.' };
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, C.h1]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>${banner(lang, 'guides')}
@@ -10148,7 +10154,8 @@ function build() {
   }
   files['404.html'] = notFoundPage();
   files['engage.js'] = ENGAGE_JS;
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS + IP_CSS + IQ_CSS + CP_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS + IP_CSS + IQ_CSS + CP_CSS
+    + '\n/* long surah pages: let the browser skip laying out verses that are off screen */\nsection.verse{content-visibility:auto;contain-intrinsic-size:auto 560px}\n').replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
