@@ -3316,6 +3316,7 @@ const loadSurah = (q) => JSON.parse(fs.readFileSync(path.join(QURAN_DIR, String(
 const { DUA_CATS, DUA_TOPICS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
 const { NAMES99, NAMES99_DHIKR } = require('./data/names99.js');
 const { IPHRASES, IGLOSSARY } = require('./data/phrases-islamic.js');
+const { VERSE_TOPICS } = require('./data/verses-topics.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -3889,6 +3890,8 @@ function buildSearchIndex(lang) {
   add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
   add('الْأَسْمَاءُ الْحُسْنَى', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah (Asma ul Husna)', ur ? 'اسماء الحسنیٰ معنی کے ساتھ' : 'All 99 names with meanings', '99-names-of-allah.html', 'page');
   NAMES99.forEach((x, i) => add(x[1], x[2], (ur ? x[4] : x[3]) + (ur ? ' · اللہ کا نام' : ' · Name of Allah'), n99File(x), 'page'));
+  add('', ur ? 'موضوع کے لحاظ سے قرآنی آیات' : 'Quran verses by topic', ur ? 'صبر، امید، والدین، رزق، دعا…' : 'Patience, hope, parents, rizq, dua…', 'quran-verses.html', 'page');
+  VERSE_TOPICS.forEach((t) => add('', ur ? t[2] : t[1], ur ? 'قرآنی آیات' : 'Quran verses', t[0] + '.html', 'page'));
   add('', ur ? 'اسلامی جملے اور اصطلاحات' : 'Islamic phrases and glossary', ur ? 'ان شاء اللہ، ما شاء اللہ، جزاک اللہ خیرا…' : 'InshaAllah, MashaAllah, JazakAllah khair…', 'islamic-phrases.html', 'page');
   IPHRASES.forEach((p) => add(p.a, p.t, (ur ? p.ur : p.en) + (ur ? ' · اسلامی جملہ' : ' · Islamic phrase'), ipFile(p), 'page'));
   IGLOSSARY.forEach((g) => add(g[0], g[2] + ' (' + g[1] + ')', ur ? g[5] : g[4], 'islamic-phrases.html#glossary', 'page'));
@@ -5448,7 +5451,7 @@ ${QURAN.length ? `<section id="all">
 <section>
   <h2>${C.moreH}</h2>
   <div class="cards">
-    ${[C.listen, C.duas, C.prayer, C.common, ...(ROOTS ? [['quran-roots.html', ur ? 'قرآن کے عربی مادے' : 'Arabic roots of the Quran', ur ? `قرآن کے ${ud(ROOT_LIST.length)} عام مادے، ہر مادے سے بنے الفاظ اور آیات کی مثالیں۔` : `The ${ROOT_LIST.length} most common roots, every word built from them, and example verses.`]] : [])].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
+    ${[['quran-verses.html', ur ? 'موضوع کے لحاظ سے آیات' : 'Quran verses by topic', ur ? `صبر، امید، والدین، رزق، دعا اور ${num(lang, VERSE_TOPICS.length)} موضوعات؛ ہر آیت واٹس ایپ یا تصویر کے طور پر شیئر کریں۔` : `Patience, hope, parents, rizq, dua and more: ${VERSE_TOPICS.length} topics, every verse shareable on WhatsApp or as an image.`], C.listen, C.duas, C.prayer, C.common, ...(ROOTS ? [['quran-roots.html', ur ? 'قرآن کے عربی مادے' : 'Arabic roots of the Quran', ur ? `قرآن کے ${ud(ROOT_LIST.length)} عام مادے، ہر مادے سے بنے الفاظ اور آیات کی مثالیں۔` : `The ${ROOT_LIST.length} most common roots, every word built from them, and example verses.`]] : [])].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
   </div>
 </section>
 <section class="box">
@@ -5584,6 +5587,63 @@ ${verseHtml(lang, v, 255, 2)}
 <section class="also"><h2>${ur ? 'کب پڑھیں' : 'When to read it'}</h2><div class="also-grid">${when.map(([t, f]) => `<a href="${link(lang, f)}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${t}</a>`).join('')}<a href="${link(lang, 'quran-' + q.slug + '.html')}#v255"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'سورہ بقرہ میں دیکھیں' : 'See it in Surah Al-Baqarah'}</a></div></section>
 <p class="note">${QURAN_FULL_NOTE[lang]}</p>`;
   return layout(lang, { file: 'ayatul-kursi.html', section: 'quran', title, desc, body });
+}
+
+// ---------------------------------------------------------------- Quran verses by topic (data/verses-topics.js)
+function vtVerses(refs) {
+  const out = [];
+  refs.forEach((r) => {
+    const [s, ab] = r.split(':'); const [a, b] = ab.split('-').map(Number); const q = QURAN.find((z) => z.n === +s); if (!q) return;
+    const V = loadSurah(q); const vs = []; for (let k = a; k <= (b || a); k++) if (V[k - 1]) vs.push(V[k - 1]);
+    if (vs.length) out.push({ q, s: +s, a, b: b || a, vs });
+  });
+  return out;
+}
+function vtCardHtml(lang, x, k, topicTitle) {
+  const ur = lang === 'ur';
+  const ar = x.vs.map((v, i) => v.w.map((w) => w[0]).join(' ') + ' <span class="anum">' + arNum(x.a + i) + '</span>').join(' ');
+  const plain = x.vs.map((v) => v.w.map((w) => w[0]).join(' ')).join(' ');
+  const mean = x.vs.map((v) => ur ? v.ur : v.en).join(' ');
+  const refTxt = ur ? `${x.q.ur} ${num(lang, x.s)}:${num(lang, x.a)}${x.b > x.a ? '–' + num(lang, x.b) : ''}` : `Surah ${x.q.en} ${x.s}:${x.a}${x.b > x.a ? '–' + x.b : ''}`;
+  return `<article class="dua" id="d${k}">
+  <h2><span class="vn">${num(lang, k)}.</span> ${esc(refTxt)}</h2>
+  <p class="dua-ar ar" lang="ar">${ar}</p>
+  <p class="mean">${esc(mean)}</p>
+  <div class="dua-foot"><span class="src">${ur ? 'حوالہ' : 'Source'}: <a href="${link(lang, 'quran-' + x.q.slug + '.html')}#v${x.a}">${esc(refTxt)}</a></span><span class="row">${say(lang, plain)}<a class="btn sm" href="${link(lang, 'quran-' + x.q.slug + '.html')}#v${x.a}">${ur ? 'لفظ بہ لفظ' : 'Word by word'}</a></span></div>
+  <div class="dua-eng" data-id="qv-${x.s}-${x.a}">
+    <button class="eng-b eng-mem" type="button" aria-pressed="false"><span class="ic" aria-hidden="true">☐</span>${ur ? 'یاد ہو گئی' : 'Memorized'}</button>
+    <button class="eng-b eng-save" type="button" aria-pressed="false"><span class="ic" aria-hidden="true">☆</span>${ur ? 'محفوظ کریں' : 'Save'}</button>
+    <button class="eng-b eng-wa" type="button"><span class="ic" aria-hidden="true">💬</span>WhatsApp</button>
+    <button class="eng-b eng-img" type="button"><span class="ic" aria-hidden="true">🖼</span>${ur ? 'تصویر' : 'Image'}</button>
+  </div>
+</article>`;
+}
+function verseTopicsHub(lang) {
+  const ur = lang === 'ur';
+  const title = ur ? 'موضوع کے لحاظ سے قرآنی آیات — صبر، امید، والدین، رزق، دعا اور مزید (اردو ترجمہ) | حرف' : 'Quran verses by topic: patience, hope, parents, rizq, dua and more (with translation) | Harf';
+  const desc = ur ? `${VERSE_TOPICS.length} موضوعات پر منتخب قرآنی آیات عربی اور اردو ترجمے کے ساتھ، واٹس ایپ پر بھیجنے اور تصویر بنانے کے بٹن کے ساتھ۔` : `Hand-picked Quran verses on ${VERSE_TOPICS.length} topics, in Arabic with English translation, each with buttons to share on WhatsApp or save as an image.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', ur ? 'قرآن' : 'Quran'], [null, ur ? 'موضوع وار آیات' : 'Verses by topic']])}
+<p class="eyebrow">${ur ? 'قرآن' : 'Quran'}</p>
+<h1>${ur ? 'موضوع کے لحاظ سے قرآنی آیات' : 'Quran verses by topic'}</h1>
+<p class="lead">${ur ? 'زندگی کے ہر موڑ کے لیے قرآن کی آیات۔ ہر آیت عربی، ترجمے اور آواز کے ساتھ ہے، اور اسے واٹس ایپ پر بھیجا یا خوبصورت تصویر کی صورت میں محفوظ کیا جا سکتا ہے۔' : 'Verses from the Quran for every moment of life. Each verse comes with the Arabic, the meaning and audio, and you can send it on WhatsApp or save it as a beautiful image.'}</p>
+<div class="cards">${VERSE_TOPICS.map((t) => `<a class="card" href="${link(lang, t[0] + '.html')}"><h3>${esc(ur ? t[2] : t[1])}</h3><p>${esc(ur ? t[4] : t[3])}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('')}</div>`;
+  return layout(lang, { file: 'quran-verses.html', section: 'quran', title, desc, body });
+}
+function verseTopicPage(lang, i) {
+  const ur = lang === 'ur';
+  const t = VERSE_TOPICS[i], list = vtVerses(t[5]);
+  const name = ur ? t[2] : t[1];
+  const title = ur ? `${name} — عربی اور اردو ترجمے کے ساتھ | حرف` : `${name}, with Arabic and English translation | Harf`;
+  const desc = ur ? `${num(lang, list.length)} آیات۔ ${t[4]}` : `${list.length} verses with Arabic and translation. ${t[3]}`;
+  const others = VERSE_TOPICS.filter((_, j) => j !== i).slice(0, 6);
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran-verses.html', ur ? 'موضوع وار آیات' : 'Verses by topic'], [null, name]])}
+<p class="eyebrow">${ur ? `${num(lang, list.length)} آیات` : `${list.length} verses`}</p>
+<h1>${esc(name)}</h1>
+<p class="lead">${esc(ur ? t[4] : t[3])} ${ur ? 'ہر آیت کو واٹس ایپ پر بھیجیں یا تصویر بنا کر شیئر کریں۔' : 'Share any verse on WhatsApp or save it as an image.'}</p>
+${list.map((x, k) => vtCardHtml(lang, x, k + 1, name)).join('\n')}
+<section class="also"><h2>${ur ? 'مزید موضوعات' : 'More topics'}</h2><div class="also-grid">${others.map((o) => `<a href="${link(lang, o[0] + '.html')}"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${esc(ur ? o[2] : o[1])}</a>`).join('')}</div>
+<p><a class="btn" href="${link(lang, 'quran-verses.html')}">${ur ? `تمام ${num(lang, VERSE_TOPICS.length)} موضوعات ←` : `All ${VERSE_TOPICS.length} topics →`}</a></p></section>`;
+  return layout(lang, { file: t[0] + '.html', section: 'quran', title, desc, body });
 }
 
 // ---------------------------------------------------------------- Islamic phrases + glossary (data/phrases-islamic.js)
@@ -9424,6 +9484,7 @@ function build() {
     if (QURAN.length) { const ak = ayatKursiPage(lang); if (ak) add(lang, 'ayatul-kursi.html', ak); }
     add(lang, '99-names-of-allah.html', names99HubPage(lang));
     if (QURAN.length) add(lang, 'salah-for-kids.html', salahKidsPage(lang));
+    if (QURAN.length) { add(lang, 'quran-verses.html', verseTopicsHub(lang)); VERSE_TOPICS.forEach((t, i) => add(lang, t[0] + '.html', verseTopicPage(lang, i))); }
     add(lang, 'islamic-phrases.html', islamicPhrasesHub(lang));
     IPHRASES.forEach((p, i) => add(lang, ipFile(p), islamicPhrasePage(lang, i)));
     NAMES99.forEach((x, i) => add(lang, n99File(x), names99Page(lang, i)));
