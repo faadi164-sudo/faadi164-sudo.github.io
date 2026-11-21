@@ -3705,7 +3705,45 @@ function offlinePage() {
 `;
 }
 
+// Search-result friendly lengths: Google cuts titles past ~65 characters and descriptions past ~160.
+function fitTitle(s) {
+  s = String(s);
+  if (s.length > 65) s = s.replace(/\s*\|\s*(Harf|حرف)$/, '');
+  return s;
+}
+function fitDesc(s) {
+  s = String(s).replace(/\s+/g, ' ').trim();
+  if (s.length <= 160) return s;
+  const cut = s.slice(0, 158);
+  const stop = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('۔ '));
+  if (stop > 90) return cut.slice(0, stop + 1);
+  return cut.replace(/[\s,،;:—–-]+\S*$/, '') + '…';
+}
+
+// Structured data: breadcrumbs on every page (read from the page's crumbs line), site + publisher on the home page.
+function jsonLd(lang, o, self) {
+  const out = [];
+  const m = String(o.body || '').match(/<p class="crumbs">([\s\S]*?)<\/p>/);
+  if (m) {
+    const items = [];
+    const re = /<a href="([^"]+)">([\s\S]*?)<\/a>|<span>([\s\S]*?)<\/span>/g;
+    let x;
+    while ((x = re.exec(m[1]))) {
+      const name = (x[2] || x[3] || '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").trim();
+      if (!name) continue;
+      items.push({ '@type': 'ListItem', position: items.length + 1, name, item: pageUrl(x[1] || self) });
+    }
+    if (items.length > 1) out.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items });
+  }
+  if (o.file === 'index.html') {
+    out.push({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Harf', alternateName: 'حرف', url: pageUrl(self), inLanguage: lang });
+    out.push({ '@context': 'https://schema.org', '@type': 'Organization', name: 'Harf', url: SITE_URL + '/', logo: SITE_URL + '/img/icon-192.png', sameAs: [YOUTUBE_URL, FACEBOOK_URL] });
+  }
+  return out.map((d) => `<script type="application/ld+json">${JSON.stringify(d).replace(/</g, '\\u003c')}</script>\n`).join('');
+}
+
 function layout(lang, o) {
+  o = Object.assign({}, o, { title: fitTitle(o.title), desc: fitDesc(o.desc) });
   const t = T[lang];
   const self = link(lang, o.file);
   const other = link(t.switchLang, o.file);
@@ -3747,7 +3785,7 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(o.title)}</title>
 <meta name="description" content="${esc(o.desc)}">
-<link rel="canonical" href="${pageUrl(self)}">
+${isThinPage(o.file) ? '<meta name="robots" content="noindex,follow">\n' : ''}${jsonLd(lang, o, self)}<link rel="canonical" href="${pageUrl(self)}">
 <link rel="alternate" hreflang="en" href="${pageUrl(link('en', o.file))}">
 <link rel="alternate" hreflang="ur" href="${pageUrl(link('ur', o.file))}">
 <link rel="alternate" hreflang="x-default" href="${pageUrl(link('en', o.file))}">
@@ -3798,6 +3836,8 @@ ${o.body}
       <a href="${link(lang, 'about.html')}">${t.about}</a>
       <a href="${link(lang, 'contact.html')}">${t.contact}</a>
       <a href="${link(lang, 'privacy.html')}">${t.privacy}</a>
+      <a href="${link(lang, 'terms.html')}">${lang === 'ur' ? 'استعمال کی شرائط' : 'Terms of use'}</a>
+      <a href="${link(lang, 'our-sources.html')}">${lang === 'ur' ? 'ہمارے ماخذ' : 'Our sources'}</a>
       <a href="${KOFI_URL}">${t.support}</a>
     </nav>
     <p class="social"><a href="${YOUTUBE_URL}" rel="noopener" target="_blank">▶ YouTube</a><a href="${FACEBOOK_URL}" rel="noopener" target="_blank">Facebook</a></p>
@@ -6879,9 +6919,19 @@ function aboutPage(lang) {
   const body = ur ? `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].about]])}
 <h1>حرف کے بارے میں</h1>
 <div class="prose">
-<p class="lead">عربی میں «حرف» کا مطلب ہے letter۔ حرف عربی سیکھنے کی ایک مفت ویب سائٹ ہے، جو اردو اور انگریزی بولنے والوں کے لیے بنائی گئی ہے جو بالکل شروع سے عربی سیکھنا چاہتے ہیں۔</p>${banner(lang, 'about')}
+<p class="lead">عربی میں «حرف» کا مطلب ہے letter۔ حرف ایک مفت ویب سائٹ ہے جو اردو اور انگریزی بولنے والوں کو قرآن کی عربی، روزمرہ کی دعائیں اور اسلام کی بنیادی باتیں آسان انداز میں سکھاتی ہے، بالکل شروع سے۔</p>${banner(lang, 'about')}
+<h2>حرف کس نے بنایا</h2>
+<p>حرف فواد احمد نے بنایا ہے اور وہی اسے چلاتے ہیں۔ وہ پاکستان سے ہیں اور سعودی عرب میں رہتے اور کام کرتے ہیں، جہاں عربی روزمرہ زندگی کا حصہ ہے۔ حرف اس لیے بنایا گیا کہ اردو اور انگریزی بولنے والے مسلمانوں کو ایک ایسی جگہ ملے جہاں قرآن کے الفاظ، مستند دعائیں اور عربی زبان ایک ساتھ، مفت اور بغیر سائن اپ کے سیکھی جا سکیں۔ ہر صفحہ ہاتھ سے جانچا جاتا ہے، اور غلطی کی اطلاع ملنے پر اسے جلد درست کیا جاتا ہے۔</p>
 <h2>یہاں کیا ملے گا</h2>
-<p>مکمل حروفِ تہجی اور ہر حرف کی چاروں شکلیں، گرامر کے ابتدائی اسباق، روزمرہ کے الفاظ، کارآمد جملے اور مختصر کوئز۔ ہر عربی لفظ آپ کے آلے کی عربی آواز میں سنا جا سکتا ہے۔</p>
+<ul>
+<li><a href="${link(lang, 'quran.html')}">قرآن</a>: تمام ${ud(QURAN.length || 114)} سورتیں لفظ بہ لفظ اردو اور انگریزی معنی، تلاوت اور اہم سورتوں کے فضائل کے ساتھ۔</li>
+<li><a href="${link(lang, 'duas.html')}">دعائیں</a>: پوری حصن المسلم (${ud(HISN_TOTAL || 0)} دعائیں اور اذکار)، ہر دعا کا حوالہ sunnah.com سے۔</li>
+<li><a href="${link(lang, 'lessons.html')}">عربی اسباق</a>: ${ud(LESSONS.length)} گرامر کے اسباق، حروفِ تہجی، ذخیرۂ الفاظ اور پڑھنے کی کہانیاں۔</li>
+<li><a href="${link(lang, 'salah-for-kids.html')}">بچوں کے لیے</a>: نماز سیکھنے کا مرحلہ وار طریقہ، انبیاء کے قصے، کوئز اور رنگ بھرنے کے صفحات۔</li>
+<li><a href="${link(lang, 'tools.html')}">مفت ٹولز</a>: نماز کے اوقات، قبلہ، تسبیح، ہجری کیلنڈر اور عربی کی بورڈ۔</li>
+</ul>
+<h2>مواد کہاں سے آتا ہے</h2>
+<p>احادیث اور دعاؤں کے حوالے مستند کتب سے دیے جاتے ہیں اور ہر حوالہ اصل ماخذ سے جڑا ہوتا ہے۔ تفصیل <a href="${link(lang, 'our-sources.html')}">ہمارے ماخذ</a> کے صفحے پر ہے۔ حرف فتویٰ یا تفسیر کا ذریعہ نہیں؛ دینی مسائل میں کسی مستند عالم سے رجوع کریں۔</p>
 <h2>ہم کون سی عربی سکھاتے ہیں</h2>
 <p>جدید فصیح عربی (${fmt('{الفصحى}')})، جو کتابوں، خبروں اور رسمی گفتگو میں استعمال ہوتی ہے اور پوری عرب دنیا میں سمجھی جاتی ہے۔ ہمارے گرامر کے اسباق کی ترتیب مدینہ یونیورسٹی کی کتب جیسے کلاسیکی نصاب سے متاثر ہے، مگر حرف پر تمام وضاحتیں اور مثالیں ہماری اپنی لکھی ہوئی ہیں۔</p>
 <h2>رومن تلفظ کیسے پڑھیں</h2>
@@ -6891,9 +6941,20 @@ function aboutPage(lang) {
 </div>` : `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].about]])}
 <h1>About Harf</h1>
 <div class="prose">
-<p class="lead">Harf (${fmt('{حرف}')}) means “letter” in Arabic. It is a free website for learning Arabic, written for English and Urdu speakers who are starting from zero.</p>${banner(lang, 'about')}
+<p class="lead">Harf (${fmt('{حرف}')}) means “letter” in Arabic. It is a free website that helps English and Urdu speakers understand the Arabic of the Quran, learn everyday duas, and build the basics of Islam, starting from zero.</p>${banner(lang, 'about')}
+<h2>Who makes Harf</h2>
+<p>Harf is made and run by Fawad Ahmed, who is from Pakistan and lives and works in Saudi Arabia, where Arabic is part of daily life. He built Harf so that English and Urdu speaking Muslims have one place to learn the words of the Quran, authentic duas and the Arabic language together, free and without signing up. Every page is checked by hand, and mistakes that readers report are fixed quickly.</p>
 <h2>What you will find here</h2>
-<p>The full alphabet with the four shapes of every letter, beginner grammar lessons, everyday vocabulary, useful phrases and quick quizzes. Every Arabic word can be played aloud with your device’s built-in Arabic voice.</p>
+<ul>
+<li><a href="${link(lang, 'quran.html')}">Quran</a>: all ${QURAN.length || 114} surahs word by word with English and Urdu meanings, recitation, and the virtues of the best-known surahs.</li>
+<li><a href="${link(lang, 'duas.html')}">Duas</a>: the complete Hisn al-Muslim (${HISN_TOTAL || 0} duas and adhkar), each with its reference linked to sunnah.com.</li>
+<li><a href="${link(lang, 'lessons.html')}">Arabic lessons</a>: ${LESSONS.length} grammar lessons, the alphabet with audio, vocabulary and graded reading stories.</li>
+<li><a href="${link(lang, 'salah-for-kids.html')}">For children</a>: salah step by step, stories of the prophets, quizzes and colouring pages.</li>
+<li><a href="${link(lang, 'tools.html')}">Free tools</a>: prayer times, Qibla direction, tasbih counter, Hijri calendar and an Arabic keyboard.</li>
+</ul>
+<p>Every Arabic word can be played aloud with your device’s built-in Arabic voice.</p>
+<h2>Where the content comes from</h2>
+<p>Hadith and dua references are given from the standard collections, and each one links to its source. See <a href="${link(lang, 'our-sources.html')}">our sources</a> for the full list. Harf is a learning aid, not a source of fatwa or tafsir; for religious rulings, please ask a qualified scholar.</p>
 <h2>Which Arabic we teach</h2>
 <p>Modern Standard Arabic (${fmt('{الفصحى}')}, fuṣḥā), the Arabic of books, news and formal speech, understood across the Arab world. Our grammar lessons follow the order of classic courses such as the Madinah books, but every explanation and example on Harf is our own.</p>
 <h2>How we write pronunciation</h2>
@@ -6901,8 +6962,8 @@ function aboutPage(lang) {
 <h2>Free for everyone</h2>
 <p>Harf has no sign-up and no paid plan. If it helps you, you can support new lessons on <a href="${KOFI_URL}">our Ko-fi page</a>.</p>
 </div>`;
-  const title = ur ? 'حرف کے بارے میں | حرف' : 'About Harf | Harf';
-  const desc = ur ? 'حرف اردو اور انگریزی بولنے والوں کے لیے عربی سیکھنے کی ایک مفت ویب سائٹ ہے۔' : 'Harf is a free website for learning Arabic, written for English and Urdu speakers starting from zero.';
+  const title = ur ? 'حرف کے بارے میں: کس نے بنایا اور کیوں | حرف' : 'About Harf: who makes it and why | Harf';
+  const desc = ur ? 'حرف اردو اور انگریزی بولنے والوں کے لیے قرآن کی عربی، مستند دعائیں اور عربی زبان سیکھنے کی مفت ویب سائٹ ہے، جسے فواد احمد چلاتے ہیں۔' : 'Harf is a free website for learning Quranic Arabic, authentic duas and the Arabic language in English and Urdu, run by Fawad Ahmed.';
   return layout(lang, { file: 'about.html', section: '', title, desc, body });
 }
 
@@ -6937,7 +6998,9 @@ function privacyPage(lang) {
 <p class="note">آخری تبدیلی: ${UPDATED.ur}</p>
 <p>حرف عربی سیکھنے کی ایک مفت ویب سائٹ ہے۔ یہ صفحہ بتاتا ہے کہ اسے استعمال کرتے وقت کون سی معلومات جمع ہوتی ہیں۔</p>
 <h2>ہم کیا محفوظ کرتے ہیں</h2>
-<p>حرف پر کوئی اکاؤنٹ نہیں، اور ہم آپ کا نام یا ای میل نہیں مانگتے۔ آپ کی پیش رفت (سیکھے گئے حروف، یاد کیے گئے الفاظ اور کوئز کا بہترین اسکور) صرف آپ کے اپنے براؤزر کی لوکل اسٹوریج میں محفوظ ہوتی ہے۔ یہ ہم تک کبھی نہیں پہنچتی، اور آپ براؤزر کا ڈیٹا صاف کر کے اسے کسی بھی وقت مٹا سکتے ہیں۔</p>
+<p>حرف پر کوئی اکاؤنٹ نہیں۔ آپ کی پیش رفت (سیکھے گئے حروف، یاد کیے گئے الفاظ اور کوئز کا بہترین اسکور) صرف آپ کے اپنے براؤزر کی لوکل اسٹوریج میں محفوظ ہوتی ہے۔ یہ ہم تک کبھی نہیں پہنچتی، اور آپ براؤزر کا ڈیٹا صاف کر کے اسے کسی بھی وقت مٹا سکتے ہیں۔</p>
+<h2>ای میل اپڈیٹس</h2>
+<p>اگر آپ خود ہماری ای میل لسٹ میں شامل ہوں تو آپ کا ای میل ہمارے ای میل فراہم کنندہ Brevo کے پاس محفوظ ہوتا ہے اور صرف حرف کی اپڈیٹس بھیجنے کے لیے استعمال ہوتا ہے۔ ہر ای میل میں ان سبسکرائب کا لنک ہوتا ہے، اور آپ <a href="${link(lang, 'contact.html')}">رابطے کے صفحے</a> سے کسی بھی وقت اپنا ای میل حذف کروا سکتے ہیں۔</p>
 <h2>آواز</h2>
 <p>تلفظ آپ کے آلے کی اپنی ٹیکسٹ ٹو اسپیچ آواز سے چلایا جاتا ہے۔ کوئی آواز یا متن ہمیں نہیں بھیجا جاتا۔ قرآن کی تلاوت Al Quran Cloud CDN (cdn.islamic.network) اور Quran.com سے چلتی ہے، جنہیں تلاوت چلانے پر آپ کا IP ایڈریس ملتا ہے۔ آپ کا چنا ہوا قاری صرف آپ کے براؤزر میں محفوظ رہتا ہے۔</p>
 <h2>ہم کون سی سروسز استعمال کرتے ہیں</h2>
@@ -6956,7 +7019,9 @@ function privacyPage(lang) {
 <p class="note">Last updated: ${UPDATED.en}</p>
 <p>Harf is a free website for learning Arabic. This page explains what information is collected when you use it.</p>
 <h2>What we store</h2>
-<p>Harf has no accounts and never asks for your name or email. Your progress (letters learned, words known and your best quiz score) is saved only in your own browser, using local storage. It never reaches us, and you can delete it at any time by clearing your browser data.</p>
+<p>Harf has no accounts. Your progress (letters learned, words known and your best quiz score) is saved only in your own browser, using local storage. It never reaches us, and you can delete it at any time by clearing your browser data.</p>
+<h2>Email updates</h2>
+<p>If you choose to join our email list, your email address is stored by our email provider, Brevo, and used only to send Harf updates. Every email has an unsubscribe link, and you can ask us to delete your address at any time through the <a href="${link(lang, 'contact.html')}">contact page</a>.</p>
 <h2>Audio</h2>
 <p>Pronunciation is played by your device’s built-in text-to-speech voice. No audio or text is sent to us. Quran recitations are streamed from the Al Quran Cloud CDN (cdn.islamic.network) and from Quran.com (verses.quran.com, mirrors.quranicaudio.com), which receive your IP address when you play one. Your chosen reciter is remembered in your own browser.</p>
 <h2>Services we use</h2>
@@ -6971,6 +7036,107 @@ function privacyPage(lang) {
 <p>If this policy changes, we will update the date at the top of this page. Questions? See our <a href="${link(lang, 'contact.html')}">contact page</a>.</p>
 </div>`;
   return layout(lang, { file: 'privacy.html', section: '', title: ur ? 'رازداری کی پالیسی | حرف' : 'Privacy policy | Harf', desc: ur ? 'حرف کون سی معلومات جمع کرتا ہے اور اشتہارات کی کوکیز کیسے کام کرتی ہیں۔' : 'What information Harf collects, and how advertising cookies work on this site.', body });
+}
+
+function termsPage(lang) {
+  const ur = lang === 'ur';
+  const H = ur ? 'استعمال کی شرائط' : 'Terms of use';
+  const body = ur ? `${crumbs(lang, [['index.html', T[lang].nav.home], [null, H]])}
+<h1>${H}</h1>
+<div class="prose">
+<p class="note">آخری تبدیلی: ${UPDATED.ur}</p>
+<p>حرف (learnwithharf.com) استعمال کر کے آپ ان شرائط سے اتفاق کرتے ہیں۔ یہ سادہ ہیں اور اس لیے لکھی گئی ہیں کہ سب کو معلوم رہے کہ ویب سائٹ کس طرح استعمال ہو سکتی ہے۔</p>
+<h2>ذاتی اور تعلیمی استعمال</h2>
+<p>حرف کا مواد ذاتی سیکھنے، گھر میں بچوں کو پڑھانے، اور مساجد، مدارس اور اسکولوں میں بغیر معاوضے کے پڑھانے کے لیے مفت ہے۔ آپ صفحات پرنٹ کر سکتے ہیں اور دعا کی تصویریں اور لنکس شیئر کر سکتے ہیں۔ براہِ کرم حرف کا نام یا لنک ساتھ رکھیں۔</p>
+<h2>جس کی اجازت نہیں</h2>
+<p>حرف کے متن، ترجمے، کوئز یا ڈیزائن کو بڑی تعداد میں کاپی کر کے کسی دوسری ویب سائٹ، ایپ یا کتاب میں شائع کرنا، یا انہیں بیچنا، بغیر تحریری اجازت کے منع ہے۔ ویب سائٹ کو خودکار طریقے سے بڑے پیمانے پر ڈاؤن لوڈ کرنا بھی منع ہے۔</p>
+<h2>دوسروں کا مواد</h2>
+<p>قرآن کا متن، تلاوتیں، لفظ بہ لفظ ڈیٹا اور رنگ بھرنے کے کچھ ڈیزائن دوسرے اداروں کے ہیں اور ہر جگہ ان کا حوالہ دیا گیا ہے۔ ان پر ان کے اپنے لائسنس لاگو ہوتے ہیں۔ تفصیل کے لیے <a href="${link(lang, 'our-sources.html')}">ہمارے ماخذ</a> دیکھیں۔</p>
+<h2>درستگی</h2>
+<p>ہم ہر صفحہ احتیاط سے جانچتے ہیں، مگر غلطی ممکن ہے۔ تلفظ رومن حروف میں تقریبی ہے، اور نماز کے اوقات اور قبلہ حساب سے نکالے جاتے ہیں؛ اپنی مقامی مسجد کے اوقات کو ترجیح دیں۔ حرف فتویٰ کا ذریعہ نہیں۔ کوئی غلطی نظر آئے تو <a href="${link(lang, 'contact.html')}">ہمیں بتائیں</a>۔</p>
+<h2>اشتہارات اور لنکس</h2>
+<p>حرف مفت رکھنے کے لیے اس پر Google کے اشتہارات دکھائے جا سکتے ہیں۔ ہم اشتہارات یا دوسری ویب سائٹس کے مواد کے ذمہ دار نہیں۔ ڈیٹا کے بارے میں <a href="${link(lang, 'privacy.html')}">رازداری کی پالیسی</a> دیکھیں۔</p>
+<h2>تبدیلیاں</h2>
+<p>یہ شرائط وقتاً فوقتاً بدل سکتی ہیں؛ تبدیلی پر اوپر کی تاریخ بدل دی جائے گی۔</p>
+</div>` : `${crumbs(lang, [['index.html', T[lang].nav.home], [null, H]])}
+<h1>${H}</h1>
+<div class="prose">
+<p class="note">Last updated: ${UPDATED.en}</p>
+<p>By using Harf (learnwithharf.com) you agree to these terms. They are short and plain, so everyone knows how the site may be used.</p>
+<h2>Personal and teaching use</h2>
+<p>Harf’s content is free for personal study, for teaching your children at home, and for unpaid teaching in masajid, madrasas and schools. You may print pages and share dua images and links. Please keep Harf’s name or a link with anything you share.</p>
+<h2>What is not allowed</h2>
+<p>Copying Harf’s text, translations, quizzes or designs in bulk into another website, app or book, or selling them, is not allowed without written permission. Automated bulk downloading of the site is also not allowed.</p>
+<h2>Other people’s content</h2>
+<p>The Quran text, recitations, word-by-word data and some colouring designs belong to others and are credited where they appear. Their own licences apply. See <a href="${link(lang, 'our-sources.html')}">our sources</a> for details.</p>
+<h2>Accuracy</h2>
+<p>We check every page carefully, but mistakes can happen. Pronunciation in English letters is approximate, and prayer times and Qibla are calculated, so follow your local masjid’s timetable where it differs. Harf is not a source of fatwa. If you find a mistake, please <a href="${link(lang, 'contact.html')}">tell us</a>.</p>
+<h2>Ads and links</h2>
+<p>To keep Harf free, it may show ads from Google. We are not responsible for ads or for the content of other websites we link to. See the <a href="${link(lang, 'privacy.html')}">privacy policy</a> for how data is handled.</p>
+<h2>Changes</h2>
+<p>These terms may change from time to time; the date at the top will show the latest version.</p>
+</div>`;
+  return layout(lang, { file: 'terms.html', section: '', title: ur ? 'استعمال کی شرائط | حرف' : 'Terms of use | Harf', desc: ur ? 'حرف کے مواد کو ذاتی، تعلیمی اور مسجد میں استعمال کرنے کی شرائط، درستگی اور اشتہارات کے بارے میں۔' : 'How you may use Harf’s free content for study, home teaching and masjid classes, plus notes on accuracy and ads.', body });
+}
+
+function sourcesPage(lang) {
+  const ur = lang === 'ur';
+  const H = ur ? 'ہمارے ماخذ اور جانچ کا طریقہ' : 'Our sources and how we check';
+  const a = (u, t) => `<a href="${u}" rel="noopener">${t}</a>`;
+  const rows = ur ? [
+    ['قرآن کا عربی متن', `${a('https://tanzil.net', 'Tanzil Project')} اور ${a('https://quran.com', 'Quran.com')}`],
+    ['لفظ بہ لفظ معنی اور تلفظ', a('https://quran.com', 'Quran.com')],
+    ['آیات کا ترجمہ', 'انگریزی: صحیح انٹرنیشنل؛ ہر سورہ کے صفحے پر حوالہ'],
+    ['تلاوت', `${a('https://everyayah.com', 'EveryAyah.com')} اور ${a('https://quran.com', 'Quran.com')}`],
+    ['قرآنی مادے (روٹس)', `${a('https://corpus.quran.com', 'Quranic Arabic Corpus')} (GNU GPL)`],
+    ['دعائیں اور اذکار', `حصن المسلم از سعید بن علی القحطانی؛ ہر حدیث کا حوالہ ${a('https://sunnah.com', 'sunnah.com')} سے جڑا`],
+    ['احادیث', 'صحیح بخاری، صحیح مسلم، ابو داود، ترمذی، نسائی، ابن ماجہ — نمبر sunnah.com کے مطابق'],
+    ['انبیاء کے قصے', 'صرف قرآن کی آیات سے، ہر بات کے ساتھ آیت کا حوالہ'],
+    ['عربی گرامر کے اسباق', 'مدینہ یونیورسٹی کی کتب کی ترتیب سے متاثر؛ وضاحتیں اور مثالیں حرف کی اپنی'],
+    ['رنگ بھرنے کے ڈیزائن', `${a('https://freesvg.org', 'FreeSVG.org')} (CC0 پبلک ڈومین)، ہر ڈیزائن کے ساتھ حوالہ`],
+  ] : [
+    ['Quran Arabic text', `${a('https://tanzil.net', 'Tanzil Project')} and ${a('https://quran.com', 'Quran.com')}`],
+    ['Word-by-word meanings and pronunciation', a('https://quran.com', 'Quran.com')],
+    ['Verse translations', 'English: Saheeh International; credited on every surah page'],
+    ['Recitation audio', `${a('https://everyayah.com', 'EveryAyah.com')} and ${a('https://quran.com', 'Quran.com')}`],
+    ['Quran roots', `${a('https://corpus.quran.com', 'Quranic Arabic Corpus')} (GNU GPL)`],
+    ['Duas and adhkar', `Hisn al-Muslim by Saʿid ibn ʿAli al-Qahtani; every hadith reference links to ${a('https://sunnah.com', 'sunnah.com')}`],
+    ['Hadith', 'Sahih al-Bukhari, Sahih Muslim, Abu Dawud, At-Tirmidhi, An-Nasaʾi, Ibn Majah — numbered as on sunnah.com'],
+    ['Stories of the prophets', 'Told from the Quran only, with the verse reference for each part'],
+    ['Arabic grammar lessons', 'Ordered after the Madinah University books; every explanation and example written for Harf'],
+    ['Colouring designs', `${a('https://freesvg.org', 'FreeSVG.org')} (CC0 public domain), credited on each design`],
+  ];
+  const tbl = `<div class="tbl"><table class="words"><thead><tr><th>${ur ? 'مواد' : 'Content'}</th><th>${ur ? 'ماخذ' : 'Source'}</th></tr></thead><tbody>${rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</tbody></table></div>`;
+  const body = ur ? `${crumbs(lang, [['index.html', T[lang].nav.home], ['about.html', T[lang].about], [null, H]])}
+<h1>${H}</h1>
+<div class="prose">
+<p class="lead">حرف پر ہر دعا، حدیث اور آیت کا حوالہ دیا جاتا ہے تاکہ آپ خود اصل ماخذ دیکھ سکیں۔</p>
+${tbl}
+<h2>ہم کیسے جانچتے ہیں</h2>
+<ul>
+<li>ہر حدیث کا نمبر sunnah.com پر کھول کر ملایا جاتا ہے، اور کمزور روایت ہو تو صاف لکھا جاتا ہے (مثلاً سورہ یٰسین اور واقعہ کے فضائل)۔</li>
+<li>جو بات صحیح حدیث یا قرآن میں نہیں، وہ فضیلت کے طور پر نہیں لکھی جاتی۔</li>
+<li>دعاؤں کے اردو اور انگریزی معنی حرف کے لیے نئے لکھے گئے ہیں، کسی شائع شدہ ترجمے کی نقل نہیں۔</li>
+<li>تلفظ رومن حروف میں تقریبی ہے؛ درست تلفظ کے لیے تلاوت سنیں۔</li>
+</ul>
+<h2>غلطی کی اطلاع</h2>
+<p>کوئی غلطی نظر آئے تو <a href="${link(lang, 'contact.html')}">ہمیں بتائیں</a>۔ ہم اسے جلد درست کر کے صفحہ اپڈیٹ کر دیتے ہیں۔ حرف فتویٰ یا تفسیر کا ذریعہ نہیں؛ دینی مسائل میں مستند عالم سے رجوع کریں۔</p>
+</div>` : `${crumbs(lang, [['index.html', T[lang].nav.home], ['about.html', T[lang].about], [null, H]])}
+<h1>${H}</h1>
+<div class="prose">
+<p class="lead">Every dua, hadith and verse on Harf carries its reference, so you can check the original source yourself.</p>
+${tbl}
+<h2>How we check</h2>
+<ul>
+<li>Each hadith number is opened on sunnah.com and matched; where a narration is weak, the page says so plainly (for example the virtues of Yaseen and Al-Waqiʿah).</li>
+<li>Nothing is presented as a virtue unless it comes from the Quran or an authentic hadith.</li>
+<li>The English and Urdu meanings of the duas are written fresh for Harf, not copied from a published translation.</li>
+<li>Pronunciation in English letters is approximate; listen to the recitation for the exact sounds.</li>
+</ul>
+<h2>Reporting a mistake</h2>
+<p>If you spot an error, please <a href="${link(lang, 'contact.html')}">tell us</a>; we correct it and update the page. Harf is a learning aid, not a source of fatwa or tafsir; for religious rulings, ask a qualified scholar.</p>
+</div>`;
+  return layout(lang, { file: 'our-sources.html', section: '', title: ur ? 'حرف کے ماخذ: قرآن، حدیث اور دعاؤں کے حوالے | حرف' : 'Our sources: where Harf’s Quran, hadith and duas come from | Harf', desc: ur ? 'حرف پر قرآن کا متن، ترجمے، دعائیں اور احادیث کہاں سے لی گئی ہیں، اور ہم ہر حوالہ کیسے جانچتے ہیں۔' : 'Where Harf’s Quran text, translations, duas and hadith come from, and how every reference is checked before it goes live.', body });
 }
 
 function notFoundPage() {
@@ -8215,6 +8381,19 @@ function prepareRoots() {
   }
   ROOT_LIST.forEach((x, i) => { ROOT_INDEX[x.r] = i; });
   ROOT_LIST.text = text;
+}
+
+// Pages kept for visitors but hidden from Google (noindex + left out of the sitemap):
+// thin or tool-shell pages that would count against the site in an AdSense quality review.
+const ROOT_INDEX_MIN = 30; // roots seen fewer times than this in the Quran stay out of search
+function isThinPage(file) {
+  const f = String(file).replace(/^ur-/, '');
+  if (/^(search|level-test|my-duas)\.html$/.test(f)) return true;
+  if (/^coloring-page-/.test(f)) return true; // replaced by the colouring galleries
+  if (/^allah-name-/.test(f)) return true; // until the sourced benefits are added
+  const m = f.match(/^quran-root-(.+)\.html$/);
+  if (m) { const x = ROOT_LIST.find((r) => r.slug === m[1]); return !x || x.n < ROOT_INDEX_MIN; }
+  return false;
 }
 
 function rootExample(lang, x, s, v, w) {
@@ -9964,6 +10143,8 @@ function build() {
     add(lang, 'about.html', aboutPage(lang));
     add(lang, 'contact.html', contactPage(lang));
     add(lang, 'privacy.html', privacyPage(lang));
+    add(lang, 'terms.html', termsPage(lang));
+    add(lang, 'our-sources.html', sourcesPage(lang));
   }
   files['404.html'] = notFoundPage();
   files['engage.js'] = ENGAGE_JS;
@@ -9985,7 +10166,7 @@ function build() {
   files['googleba7aa79e24dbfa47.html'] = 'google-site-verification: googleba7aa79e24dbfa47.html'; // Google Search Console ownership, keep this
   files['robots.txt'] = `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
   files['sitemap.xml'] = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    + pages.map((f) => `  <url><loc>${pageUrl(f)}</loc></url>`).join('\n') + '\n</urlset>\n';
+    + pages.filter((f) => !isThinPage(f)).map((f) => `  <url><loc>${pageUrl(f)}</loc></url>`).join('\n') + '\n</urlset>\n';
   if (ADSENSE_CLIENT) files['ads.txt'] = `google.com, ${ADSENSE_CLIENT.replace(/^ca-/, '')}, DIRECT, f08c47fec0942fa0\n`;
   return files;
 }
