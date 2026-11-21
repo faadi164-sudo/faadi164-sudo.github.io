@@ -4600,18 +4600,18 @@ function frontPage(lang, C, quick) {
     ['eid', '🐑', 'عید الاضحیٰ مبارک', 'قربانی کی دعا اور تکبیرات۔', [['dua-when-slaughtering.html', 'قربانی کی دعا']]],
     ['dhulhijjah', '🌙', 'سال کے بہترین دس دن', 'ذوالحجہ کے پہلے دس دن: تکبیر، تلبیہ اور ذکر۔', [['talbiyah.html', 'تلبیہ'], ['dua-on-the-day-of-arafah.html', 'عرفہ کی دعا']]],
     ['lastten', '✨', 'رمضان کی آخری دس راتیں', 'شبِ قدر تلاش کریں — عائشہؓ کو سکھائی گئی دعا پڑھیں۔', [['dua-for-laylatul-qadr.html', 'شبِ قدر کی دعا']]],
-    ['ramadan', '🌙', 'رمضان مبارک', 'افطار کی دعا، اور روزہ دار کے لیے دعائیں۔', [['dua-for-breaking-fast.html', 'افطار کی دعا'], ['dua-for-laylatul-qadr.html', 'شبِ قدر کی دعا']]],
+    ['ramadan', '🌙', 'رمضان مبارک', 'افطار کی دعا، اور روزہ دار کے لیے دعائیں۔', [['ramadan.html', 'رمضان کا ۳۰ دن کا منصوبہ'], ['dua-for-breaking-fast.html', 'افطار کی دعا'], ['dua-for-laylatul-qadr.html', 'شبِ قدر کی دعا']]],
     ['eidfitr', '🎉', 'عید مبارک', 'تقبّل اللہ منا ومنکم۔', [['hisn-al-muslim.html', 'حصن المسلم']]],
-    ['shaban', '🌒', 'رمضان آنے والا ہے', 'نیا چاند دیکھنے کی دعا یاد کر لیں۔', [['dua-on-seeing-the-new-moon.html', 'نئے چاند کی دعا']]],
+    ['shaban', '🌒', 'رمضان آنے والا ہے', 'نیا چاند دیکھنے کی دعا یاد کر لیں۔', [['ramadan.html', 'رمضان کا منصوبہ'], ['dua-on-seeing-the-new-moon.html', 'نئے چاند کی دعا']]],
     ['friday', '🕌', 'جمعہ مبارک', 'آج سورہ کہف پڑھیں اور نبی ﷺ پر کثرت سے درود بھیجیں۔', [[qs(18), 'سورہ کہف'], ['durood-ibrahim.html', 'درودِ ابراہیمی']]],
   ] : [
     ['arafah', '🕋', 'Today is the Day of ʿArafah', 'The best dua is the dua of the Day of ʿArafah.', [['dua-on-the-day-of-arafah.html', 'Arafah dua'], ['dua-for-forgiveness.html', 'Istighfar']]],
     ['eid', '🐑', 'Eid al-Adha Mubarak', 'The dua for the sacrifice, and the takbir.', [['dua-when-slaughtering.html', 'Sacrifice dua']]],
     ['dhulhijjah', '🌙', 'The best ten days of the year', 'The first ten of Dhul-Hijjah: takbir, talbiyah and remembrance.', [['talbiyah.html', 'Talbiyah'], ['dua-on-the-day-of-arafah.html', 'Arafah dua']]],
     ['lastten', '✨', 'The last ten nights of Ramadan', 'Seek Laylat al-Qadr — say the dua taught to Aishah.', [['dua-for-laylatul-qadr.html', 'Laylat al-Qadr dua']]],
-    ['ramadan', '🌙', 'Ramadan Mubarak', 'The dua for breaking your fast, and more for the fasting.', [['dua-for-breaking-fast.html', 'Iftar dua'], ['dua-for-laylatul-qadr.html', 'Laylat al-Qadr dua']]],
+    ['ramadan', '🌙', 'Ramadan Mubarak', 'The dua for breaking your fast, and more for the fasting.', [['ramadan.html', '30-day Ramadan plan'], ['dua-for-breaking-fast.html', 'Iftar dua'], ['dua-for-laylatul-qadr.html', 'Laylat al-Qadr dua']]],
     ['eidfitr', '🎉', 'Eid Mubarak', 'Taqabbal Allahu minna wa minkum.', [['hisn-al-muslim.html', 'Hisn al-Muslim']]],
-    ['shaban', '🌒', 'Ramadan is coming', 'Learn the dua for sighting the new moon.', [['dua-on-seeing-the-new-moon.html', 'New moon dua']]],
+    ['shaban', '🌒', 'Ramadan is coming', 'Learn the dua for sighting the new moon.', [['ramadan.html', 'Ramadan plan'], ['dua-on-seeing-the-new-moon.html', 'New moon dua']]],
     ['friday', '🕌', 'Jumuʿah Mubarak', 'Read Surah Al-Kahf today and send many blessings on the Prophet ﷺ.', [[qs(18), 'Surah Al-Kahf'], ['durood-ibrahim.html', 'Durood Ibrahim']]],
   ];
 
@@ -6651,6 +6651,101 @@ ${(() => {
   ${next ? `<a class="btn primary" href="${link(lang, next.slug + '.html')}">${ur ? 'اگلا: ' + esc(name(next)) + ' ←' : 'Next: ' + esc(name(next)) + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'hisn-al-muslim.html')}">${ur ? 'تمام ابواب' : 'All chapters'}</a>`}
 </nav>`;
   return layout(lang, { file: c.slug + '.html', section: 'duas', title, desc: lead.slice(0, 155), body });
+}
+
+// ---------------------------------------------------------------- Ramadan hub
+// Where each juz starts: [surah number, ayah]
+const JUZ_START = [[1, 1], [2, 142], [2, 253], [3, 93], [4, 24], [4, 148], [5, 82], [6, 111], [7, 88], [8, 41], [9, 93], [11, 6], [12, 53], [15, 1], [17, 1], [18, 75], [21, 1], [23, 1], [25, 21], [27, 56], [29, 46], [33, 31], [36, 28], [39, 32], [41, 47], [46, 1], [51, 31], [58, 1], [67, 1], [78, 1]];
+const RAMADAN_GOOD = [
+  ['Give charity, even a little', 'تھوڑا ہی سہی، صدقہ کریں'], ['Feed someone at iftar', 'کسی کو افطار کرائیں'], ['Call a relative you have not spoken to', 'کسی ناراض یا دور رشتہ دار کو فون کریں'],
+  ['Pray the 12 sunnah rakats', '۱۲ سنتیں پڑھیں'], ['Help at home before iftar', 'افطار سے پہلے گھر کے کام میں ہاتھ بٹائیں'], ['Say 100 subhanAllahi wa bihamdihi', '۱۰۰ بار سبحان اللہ وبحمدہ'],
+  ['Stay silent instead of arguing', 'بحث کی بجائے خاموش رہیں'], ['Make dua for your parents', 'والدین کے لیے دعا کریں'], ['Visit or call someone who is sick', 'کسی بیمار کی عیادت یا فون کریں'],
+  ['Smile and greet with salam', 'مسکرا کر سلام کریں'], ['Pray taraweeh', 'تراویح پڑھیں'], ['Learn the meaning of one surah you pray with', 'نماز میں پڑھی جانے والی ایک سورت کا مطلب سیکھیں'],
+  ['Give water to someone', 'کسی کو پانی پلائیں'], ['Say 100 astaghfirullah', '۱۰۰ بار استغفراللہ'], ['Thank someone with jazakAllahu khayran', 'کسی کو جزاک اللہ خیراً کہہ کر شکریہ'],
+  ['Forgive someone who wronged you', 'کسی زیادتی کرنے والے کو معاف کریں'], ['Read Surah Al-Mulk before sleeping', 'سونے سے پہلے سورہ ملک پڑھیں'], ['Send salawat 100 times', '۱۰۰ بار درود'],
+  ['Give away something you no longer use', 'کوئی غیر استعمال شدہ چیز دے دیں'], ['Teach a child a short dua', 'کسی بچے کو ایک چھوٹی دعا سکھائیں'], ['Last ten nights begin: pray at night', 'آخری عشرہ: رات کو نماز پڑھیں'],
+  ['Make the Laylat al-Qadr dua many times', 'شبِ قدر کی دعا بار بار پڑھیں'], ['Give charity at night', 'رات کو صدقہ کریں'], ['Make a long dua for the Ummah', 'امت کے لیے لمبی دعا کریں'],
+  ['Read Surah Al-Qadr and reflect on it', 'سورہ قدر پڑھیں اور غور کریں'], ['Pray Tahajjud before suhur', 'سحری سے پہلے تہجد پڑھیں'], ['Make dua for those who have died', 'فوت شدگان کے لیے دعا کریں'],
+  ['Pay zakat al-fitr early', 'صدقۂ فطر جلد ادا کریں'], ['Plan to keep one good habit after Ramadan', 'رمضان کے بعد ایک نیک عادت جاری رکھنے کا ارادہ'], ['Prepare for Eid: say the takbirs', 'عید کی تیاری: تکبیرات کہیں'],
+];
+const RAMADAN_JS = `(function(){
+  var ur=document.documentElement.lang==='ur';
+  var cd=document.getElementById('rmCount');
+  if(cd){try{
+    var f=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{day:'numeric',month:'numeric'});
+    var parts=function(d){var p={};f.formatToParts(d).forEach(function(x){p[x.type]=x.value});return {m:+p.month,d:+p.day}};
+    var t=new Date();t.setHours(12,0,0,0);var now=parts(t),msg;
+    if(now.m===9){msg=ur?('آج رمضان کا '+now.d+'واں دن ہے'):('Today is day '+now.d+' of Ramadan');}
+    else{for(var i=1;i<400;i++){var d=new Date(t.getTime()+i*864e5),p=parts(d);if(p.m===9&&p.d===1){var ds=d.toLocaleDateString(ur?'ur-PK':'en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});msg=ur?('رمضان تقریباً '+i+' دن میں: '+ds):('Ramadan begins in about '+i+' days: '+ds);break;}}}
+    cd.textContent=msg||'';
+  }catch(e){}}
+  var K='harf-ramadan',s={};try{s=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
+  var boxes=document.querySelectorAll('.rm-plan input[type=checkbox]');
+  var sum=document.getElementById('rmDone');
+  function upd(){var n=0;boxes.forEach(function(b){if(b.checked)n++});if(sum)sum.textContent=n+' / '+boxes.length;}
+  boxes.forEach(function(b){b.checked=!!s[b.dataset.k];b.addEventListener('change',function(){s[b.dataset.k]=b.checked?1:0;try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}upd();});});
+  upd();
+  var pr=document.getElementById('rmPrint');if(pr)pr.addEventListener('click',function(){window.print()});
+})();`;
+
+function ramadanPage(lang) {
+  const ur = lang === 'ur';
+  const L = (f) => link(lang, f);
+  const hc = (id) => HISN.find((x) => x.id === id);
+  const rows = JUZ_START.map(([s, a], k) => {
+    const q = QURAN[s - 1];
+    const c = hc(CHALLENGE_DAYS30[k]);
+    const g = RAMADAN_GOOD[k];
+    const day = num(lang, k + 1);
+    return `<tr><td><strong>${day}</strong></td>
+<td><label><input type="checkbox" data-k="q${k + 1}"> <a href="${L('quran-' + q.slug + '.html')}#v${a}">${ur ? `پارہ ${day}` : `Juz ${k + 1}`}</a> <span class="small">(${ur ? q.ur : q.en} ${num(lang, s)}:${num(lang, a)})</span></label></td>
+<td>${c ? `<label><input type="checkbox" data-k="d${k + 1}"> <a href="${L(c.slug + '.html')}">${esc(ur ? c.ur : c.en)}</a></label>` : ''}</td>
+<td><label><input type="checkbox" data-k="g${k + 1}"> ${esc(ur ? g[1] : g[0])}</label></td></tr>`;
+  }).join('');
+  const T2 = ur ? {
+    title: 'رمضان ۲۰۲۷ رہنما: روزانہ منصوبہ، دعائیں، شبِ قدر اور روزے کے مسائل | حرف',
+    desc: 'رمضان کی مکمل رہنمائی: ۳۰ دن کا منصوبہ (روزانہ ایک پارہ، ایک دعا، ایک نیکی)، سحری و افطار کے اوقات، افطار اور شبِ قدر کی دعائیں، اور روزے کے مسائل۔',
+    h1: 'رمضان رہنما', lead: 'رمضان قرآن، روزے اور دعا کا مہینہ ہے۔ یہاں سب کچھ ایک جگہ ہے: روزانہ کا منصوبہ، اوقات، دعائیں، شبِ قدر، اور روزے کے احکام۔',
+  } : {
+    title: 'Ramadan 2027 guide: daily plan, duas, Laylat al-Qadr and fasting rules | Harf',
+    desc: 'Everything for Ramadan in one place: a 30-day plan (one juz, one dua and one good deed a day), suhur and iftar times, the iftar and Laylat al-Qadr duas, and what breaks the fast.',
+    h1: 'Ramadan guide', lead: 'Ramadan is the month of the Quran, fasting and dua. Everything you need is here in one place: a daily plan, prayer times, the key duas, Laylat al-Qadr, and the rules of fasting.',
+  };
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['guides.html', ur ? 'رہنمائی' : 'Guides'], [null, T2.h1]])}
+<p class="eyebrow">🌙 ${ur ? 'رمضان' : 'Ramadan'}</p>
+<h1>${T2.h1}</h1>
+<p class="lead">${T2.lead}</p>
+<div class="box" style="text-align:center"><p style="font-size:20px;font-weight:700;margin:0" id="rmCount"></p><p class="small" style="margin:6px 0 0">${ur ? 'ام القریٰ کیلنڈر کے مطابق اندازہ؛ اصل آغاز چاند دیکھنے پر ہے۔' : 'Estimated from the Umm al-Qura calendar; the actual start depends on the moon sighting.'}</p></div>
+<article class="guide">
+<section><h2>${ur ? 'رمضان کی فضیلت' : 'Why Ramadan matters'}</h2>
+<p>${gfmt(lang, ur ? 'اللہ تعالیٰ فرماتا ہے: «رمضان کا مہینہ وہ ہے جس میں قرآن نازل کیا گیا» (البقرہ ۱۸۵:۲)۔ نبی ﷺ نے فرمایا: «جس نے ایمان اور ثواب کی نیت سے رمضان کے روزے رکھے، اس کے پچھلے گناہ معاف کر دیے جاتے ہیں» (صحیح بخاری ۳۸)۔ رمضان آتا ہے تو جنت کے دروازے کھول دیے جاتے ہیں، جہنم کے دروازے بند کر دیے جاتے ہیں اور شیاطین جکڑ دیے جاتے ہیں (صحیح بخاری ۱۸۹۹)۔' : 'Allah says: “The month of Ramadan is the one in which the Quran was revealed” (Al-Baqarah 2:185). The Prophet ﷺ said: “Whoever fasts Ramadan out of faith and hoping for reward, his past sins are forgiven” (Sahih al-Bukhari 38). When Ramadan comes, the gates of Paradise are opened, the gates of Hell are closed and the devils are chained (Sahih al-Bukhari 1899).')}</p></section>
+<section><h2>${ur ? 'سحری اور افطار کے اوقات' : 'Suhur and iftar times'}</h2>
+<p>${gfmt(lang, ur ? 'سحری فجر کی اذان (صبحِ صادق) پر ختم ہوتی ہے اور افطار مغرب (غروبِ آفتاب) پر۔ اپنے شہر کے روزانہ اوقات @@prayer-times.html|نماز کے اوقات@@ پر دیکھیں؛ فجر کا وقت سحری کی آخری حد اور مغرب کا وقت افطار ہے۔ سحری میں برکت ہے (صحیح بخاری ۱۹۲۳)، اور افطار میں جلدی سنت ہے (صحیح بخاری ۱۹۵۷)۔' : 'Suhur ends at the Fajr adhan (true dawn), and iftar is at Maghrib (sunset). See your city’s daily times on @@prayer-times.html|prayer times@@: the Fajr time is when you stop eating, and the Maghrib time is iftar. There is blessing in suhur (Sahih al-Bukhari 1923), and hurrying to break the fast is Sunnah (Sahih al-Bukhari 1957).')}</p>
+<p><a class="btn primary" href="${L('prayer-times.html')}">${ur ? '🕌 آج کے اوقات دیکھیں' : '🕌 See today’s times'}</a> <a class="btn" href="${L('what-breaks-the-fast.html')}">${ur ? 'روزہ کن چیزوں سے ٹوٹتا ہے' : 'What breaks the fast'}</a></p></section>
+<section><h2>${ur ? 'رمضان کی اہم دعائیں' : 'The key Ramadan duas'}</h2>
+<ul>
+<li><a href="${L('dua-on-seeing-the-new-moon.html')}">${ur ? 'چاند دیکھنے کی دعا' : 'Dua on seeing the new moon'}</a></li>
+<li><a href="${L('dua-for-breaking-fast.html')}">${ur ? 'افطار کی دعا' : 'Dua for breaking the fast'}</a></li>
+<li><a href="${L('dua-when-breaking-fast-at-someones-home.html')}">${ur ? 'کسی کے گھر افطار کی دعا' : 'Dua when breaking the fast at someone’s home'}</a></li>
+<li><a href="${L('when-fasting-and-someone-is-rude.html')}">${ur ? 'روزے میں کوئی بدتمیزی کرے تو' : 'When fasting and someone is rude'}</a></li>
+<li><a href="${L('dua-for-laylatul-qadr.html')}">${ur ? 'شبِ قدر کی دعا' : 'Dua for Laylat al-Qadr'}</a></li>
+<li><a href="${L('ramadan-mubarak-meaning.html')}">${ur ? 'رمضان مبارک کہنا' : 'Saying Ramadan Mubarak'}</a> · <a href="${L('eid-mubarak-meaning.html')}">${ur ? 'عید مبارک' : 'Eid Mubarak'}</a></li>
+</ul></section>
+<section><h2>${ur ? '۳۰ دن کا منصوبہ: روزانہ ایک پارہ، ایک دعا، ایک نیکی' : '30-day plan: one juz, one dua, one good deed a day'}</h2>
+<p>${ur ? 'روزانہ ایک پارہ پڑھنے سے رمضان میں قرآن مکمل ہو جاتا ہے۔ ساتھ ہر دن حصن المسلم کی ایک دعا یاد کریں اور ایک نیکی کریں۔ نشان آپ کے براؤزر میں محفوظ رہتے ہیں۔' : 'Reading one juz a day completes the Quran in Ramadan. Each day also learn one dua from Hisn al-Muslim and do one good deed. Your ticks are saved in your browser.'} <strong>${ur ? 'مکمل:' : 'Done:'} <span id="rmDone">0</span></strong> <button class="btn" type="button" id="rmPrint">🖨 ${ur ? 'پرنٹ کریں' : 'Print'}</button></p>
+<div class="tbl rm-plan"><table class="words"><thead><tr><th>${ur ? 'دن' : 'Day'}</th><th>${ur ? 'قرآن' : 'Quran'}</th><th>${ur ? 'دعا' : 'Dua'}</th><th>${ur ? 'نیکی' : 'Good deed'}</th></tr></thead><tbody>${rows}</tbody></table></div></section>
+<section><h2>${ur ? 'آخری عشرہ اور شبِ قدر' : 'The last ten nights and Laylat al-Qadr'}</h2>
+<p>${gfmt(lang, ur ? 'شبِ قدر ہزار مہینوں سے بہتر ہے (القدر ۳:۹۷)۔ نبی ﷺ نے فرمایا: «اسے رمضان کے آخری عشرے کی طاق راتوں میں تلاش کرو» (صحیح بخاری ۲۰۱۷)۔ آخری عشرے میں آپ ﷺ کمر کس لیتے، رات بھر جاگتے اور گھر والوں کو جگاتے (صحیح بخاری ۲۰۲۴)۔ حضرت عائشہ نے پوچھا کہ شبِ قدر میں کیا کہوں؟ فرمایا: {اللّٰهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي} «اے اللہ! تو معاف کرنے والا ہے، معافی کو پسند کرتا ہے، مجھے معاف فرما» (ترمذی ۳۵۱۳)۔ ان راتوں میں @@tahajjud-time.html|تہجد کا وقت@@ دیکھیں۔' : 'Laylat al-Qadr is better than a thousand months (Al-Qadr 97:3). The Prophet ﷺ said: “Seek it in the odd nights of the last ten of Ramadan” (Sahih al-Bukhari 2017). In the last ten he would tighten his waist-wrap, stay up all night and wake his family (Sahih al-Bukhari 2024). ʿAishah asked what to say on that night, and he taught her: {اللّٰهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي} “O Allah, You are Pardoning and love to pardon, so pardon me” (Sunan at-Tirmidhi 3513). Check the @@tahajjud-time.html|tahajjud time@@ for these nights.')}</p></section>
+<section><h2>${ur ? 'تراویح اور قیام' : 'Taraweeh and night prayer'}</h2>
+<p>${gfmt(lang, ur ? 'نبی ﷺ نے فرمایا: «جس نے ایمان اور ثواب کی نیت سے رمضان کی راتوں میں قیام کیا، اس کے پچھلے گناہ معاف کر دیے جاتے ہیں» (صحیح بخاری ۳۷)۔ تراویح عشاء کے بعد اور وتر سے پہلے پڑھی جاتی ہے؛ فقہ حنفی میں بیس رکعات ہیں۔ نماز کا طریقہ: @@how-to-pray-salah-step-by-step.html|نماز قدم بہ قدم@@، اور @@how-many-rakats-in-each-prayer.html|ہر نماز کی رکعات@@۔' : 'The Prophet ﷺ said: “Whoever stands in prayer in Ramadan out of faith and hoping for reward, his past sins are forgiven” (Sahih al-Bukhari 37). Taraweeh is prayed after Isha and before witr; the Hanafi school prays twenty rakats. See @@how-to-pray-salah-step-by-step.html|salah step by step@@ and @@how-many-rakats-in-each-prayer.html|the rakats of each prayer@@.')}</p></section>
+<section><h2>${ur ? 'صدقۂ فطر اور عید' : 'Zakat al-Fitr and Eid'}</h2>
+<p>${gfmt(lang, ur ? 'صدقۂ فطر ہر اس مسلمان پر واجب ہے جس کے پاس ضرورت سے زائد اتنا مال ہو، اپنی اور زیرِ کفالت افراد کی طرف سے؛ اسے عید کی نماز سے پہلے ادا کرنا چاہیے (صحیح بخاری ۱۵۰۳)۔ مقدار ہر سال مقامی علماء اعلان کرتے ہیں؛ اپنی مسجد سے معلوم کریں۔ عید کی صبح کچھ کھا کر جائیں، طاق کھجوریں سنت ہیں (صحیح بخاری ۹۵۳)، اور راستے میں تکبیرات کہیں۔' : 'Zakat al-Fitr is due from every Muslim who has enough beyond their needs, for themselves and those they support, and it should be paid before the Eid prayer (Sahih al-Bukhari 1503). The amount is announced locally each year; ask your masjid. On Eid morning eat something before going out, an odd number of dates is Sunnah (Sahih al-Bukhari 953), and say the takbirs on the way.')}</p></section>
+<section><h2>${ur ? 'بچوں کے لیے رمضان' : 'Ramadan for children'}</h2>
+<p>${gfmt(lang, ur ? 'صحابہ اپنے بچوں کو روزے کی عادت ڈالتے اور ان کے لیے کھلونے بناتے تاکہ افطار تک مشغول رہیں (صحیح بخاری ۱۹۶۰)۔ چھوٹے بچوں سے آدھے دن کا روزہ رکھوائیں، اور ساتھ @@salah-for-kids.html|بچوں کی نماز@@، @@stories-of-the-prophets.html|انبیاء کے قصے@@، @@islamic-quiz.html|اسلامی کوئز@@ اور @@islamic-coloring-pages.html|رنگ بھرنے کے صفحات@@ استعمال کریں۔' : 'The Companions trained their children to fast and made them toys to keep them busy until iftar (Sahih al-Bukhari 1960). Let young children try half-day fasts, and use @@salah-for-kids.html|salah for kids@@, @@stories-of-the-prophets.html|stories of the prophets@@, @@islamic-quiz.html|Islamic quizzes@@ and the @@islamic-coloring-pages.html|colouring pages@@ during the month.')}</p></section>
+</article>
+${supportBox(lang)}
+<script>${RAMADAN_JS}</script>`;
+  return layout(lang, { file: 'ramadan.html', section: 'guides', title: T2.title, desc: T2.desc, body, article: true });
 }
 
 function prayerPage(lang) {
@@ -8821,6 +8916,7 @@ function guidesPage(lang) {
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>${banner(lang, 'guides')}
 <div class="cards">
+  <a class="card" href="${link(lang, 'ramadan.html')}"><span class="cg" lang="ar" aria-hidden="true">رَمَضَان</span><h3>${ur ? 'رمضان رہنما: ۳۰ دن کا منصوبہ' : 'Ramadan guide: a 30-day plan'}</h3><p>${ur ? 'روزانہ ایک پارہ، ایک دعا، ایک نیکی؛ سحری و افطار، شبِ قدر اور روزے کے مسائل۔' : 'One juz, one dua and one good deed a day; suhur and iftar, Laylat al-Qadr and fasting rules.'}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>
   <a class="card" href="${link(lang, 'salah-for-kids.html')}"><span class="cg" lang="ar" aria-hidden="true">صَلَاة</span><h3>${ur ? 'بچوں کے لیے نماز کا آسان طریقہ' : 'How to pray: salah for kids, step by step'}</h3><p>${ur ? 'ہر قدم کی تصویر، عربی الفاظ آواز کے ساتھ، اور ستاروں والا نماز چارٹ۔' : 'A picture for every step, the Arabic words with audio, and a prayer star chart.'}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>
   ${GUIDES.map((x) => `<a class="card" href="${link(lang, x.slug + '.html')}"><span class="cg" lang="ar" aria-hidden="true">${x.glyph}</span><h3>${esc(x[lang].h1)}</h3><p>${esc(x[lang].desc)}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('\n  ')}
 </div>
@@ -10201,6 +10297,7 @@ function build() {
     add(lang, 'saudi-arabic.html', saudiPage(lang));
     add(lang, 'quiz.html', quizPage(lang));
     add(lang, 'guides.html', guidesPage(lang));
+    if (QURAN.length && HISN.length) add(lang, 'ramadan.html', ramadanPage(lang));
     add(lang, 'search.html', searchPage(lang));
     GUIDES.forEach((x, i) => add(lang, x.slug + '.html', guidePage(lang, i)));
     add(lang, 'tools.html', toolsPage(lang));
