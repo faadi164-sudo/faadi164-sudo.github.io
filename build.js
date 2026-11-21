@@ -3742,7 +3742,7 @@ function jsonLd(lang, o, self) {
     if (items.length > 1) out.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items });
   }
   if (o.article) {
-    out.push({ '@context': 'https://schema.org', '@type': 'Article', headline: String(o.title).replace(/\s*\|\s*(Harf|حرف)$/, '').slice(0, 110), description: o.desc, inLanguage: lang, mainEntityOfPage: pageUrl(self), image: SITE_URL + '/img/og-harf.jpg', author: { '@type': 'Person', name: 'Fawad Ahmed', url: pageUrl(link(lang, 'about.html')) }, publisher: { '@type': 'Organization', name: 'Harf', logo: { '@type': 'ImageObject', url: SITE_URL + '/img/icon-192.png' } } });
+    out.push({ '@context': 'https://schema.org', '@type': 'Article', headline: String(o.title).replace(/\s*\|\s*(Harf|حرف)$/, '').slice(0, 110), description: o.desc, inLanguage: lang, mainEntityOfPage: pageUrl(self), image: SITE_URL + '/img/og-harf.jpg', author: { '@type': 'Organization', name: 'Harf', url: pageUrl(link(lang, 'about.html')) }, publisher: { '@type': 'Organization', name: 'Harf', logo: { '@type': 'ImageObject', url: SITE_URL + '/img/icon-192.png' } } });
   }
   if (o.file === 'index.html') {
     out.push({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Harf', alternateName: 'حرف', url: pageUrl(self), inLanguage: lang });
@@ -6952,8 +6952,27 @@ function aboutPage(lang) {
 <h1>حرف کے بارے میں</h1>
 <div class="prose">
 <p class="lead">عربی میں «حرف» کا مطلب ہے letter۔ حرف ایک مفت ویب سائٹ ہے جو اردو اور انگریزی بولنے والوں کو قرآن کی عربی، روزمرہ کی دعائیں اور اسلام کی بنیادی باتیں آسان انداز میں سکھاتی ہے، بالکل شروع سے۔</p>${banner(lang, 'about')}
-<h2>حرف کس نے بنایا</h2>
-<p>حرف فواد احمد نے بنایا ہے اور وہی اسے چلاتے ہیں۔ وہ پاکستان سے ہیں اور سعودی عرب میں رہتے اور کام کرتے ہیں، جہاں عربی روزمرہ زندگی کا حصہ ہے۔ حرف اس لیے بنایا گیا کہ اردو اور انگریزی بولنے والے مسلمانوں کو ایک ایسی جگہ ملے جہاں قرآن کے الفاظ، مستند دعائیں اور عربی زبان ایک ساتھ، مفت اور بغیر سائن اپ کے سیکھی جا سکیں۔ ہر صفحہ ہاتھ سے جانچا جاتا ہے، اور غلطی کی اطلاع ملنے پر اسے جلد درست کیا جاتا ہے۔</p>
+<h2>حرف کیوں بنایا گیا</h2>
+<p>کروڑوں مسلمان روزانہ قرآن پڑھتے اور دعائیں کرتے ہیں مگر الفاظ کا مطلب نہیں جانتے۔ بہت سوں نے بچپن میں عربی پڑھنا تو سیکھا مگر معنی نہیں؛ اور نومسلم بالکل شروع سے آغاز کرتے ہیں۔ اچھے وسائل موجود ہیں مگر بکھرے ہوئے، اکثر مہنگے، اور اردو بولنے والوں کے لیے کم ہی لکھے گئے۔ حرف ضروری چیزیں ایک جگہ جمع کرتا ہے: قرآن کے الفاظ، روزمرہ کی مستند دعائیں، عبادت کی بنیادیں، اور وہ عربی زبان جو ان سب کو جوڑتی ہے، سب مفت، آسان اردو اور انگریزی میں۔</p>
+<p>ہمارا مقصد سادہ ہے: ہر نمازی سمجھے کہ وہ اپنے رب سے کیا کہہ رہا ہے، اور سیکھنا ممکن لگے، روزانہ چند منٹ میں۔</p>
+<h2>حرف کس کے لیے ہے</h2>
+<ul>
+<li><strong>بالکل شروع کرنے والے بالغ</strong>، جو قرآن عربی میں پڑھنا اور لفظ بہ لفظ سمجھنا چاہتے ہیں۔</li>
+<li><strong>والدین</strong>، جو گھر پر بچوں کو نماز، چھوٹی سورتیں اور روزمرہ کی دعائیں سکھاتے ہیں۔</li>
+<li><strong>نومسلم</strong>، جو نماز اور وضو کا طریقہ اور نماز کے الفاظ کا مطلب سیکھ رہے ہیں۔</li>
+<li><strong>اردو بولنے والے</strong>، جو بغیر جانے سینکڑوں عربی الفاظ پہلے سے جانتے ہیں اور سوچ سے زیادہ تیز سیکھ سکتے ہیں۔</li>
+<li><strong>عربی کے طلبہ</strong>، جو مدینہ کی کتب پڑھ رہے ہیں یا خود قرآنی عربی سیکھ رہے ہیں۔</li>
+</ul>
+<h2>حرف میں خاص کیا ہے</h2>
+<ul>
+<li><strong>صرف پڑھنا نہیں، سمجھنا۔</strong> ہر سورت لفظ بہ لفظ ہے، تاکہ پڑھتے ہوئے ہر عربی لفظ کا مطلب سامنے ہو۔</li>
+<li><strong>جانچے ہوئے حوالے۔</strong> ہر حدیث اور دعا کا حوالہ اصل کتاب سے جڑا ہے۔ ضعیف روایت کو ضعیف لکھا جاتا ہے، اور جو صحیح نہ ہو وہ فضیلت کے طور پر نہیں لکھا جاتا۔</li>
+<li><strong>دو زبانیں، ساتھ ساتھ۔</strong> ہر صفحہ اردو اور انگریزی دونوں میں ہے، تاکہ گھر والے مل کر سیکھیں۔</li>
+<li><strong>مفت، بغیر سائن اپ۔</strong> آپ کی پیش رفت، محفوظ دعائیں اور اسٹریک آپ کے اپنے براؤزر میں رہتی ہیں۔</li>
+<li><strong>روزانہ استعمال کے لیے۔</strong> نماز کے اوقات، قبلہ، تسبیح کاؤنٹر، روزانہ چیلنج اور شیئر کرنے والے دعا کارڈ روز واپس آنا آسان بناتے ہیں۔</li>
+</ul>
+<h2>کہاں سے شروع کریں</h2>
+<p>${gfmt(lang, 'بالکل نئے ہیں؟ @@how-to-pray-salah-step-by-step.html|نماز کا طریقہ@@ اور @@quran-prayer-words.html|نماز کے الفاظ@@ سے شروع کریں۔ قرآن پڑھنا چاہتے ہیں؟ @@alphabet.html|حروفِ تہجی@@ اور @@how-to-read-quran-in-arabic-for-beginners.html|بڑی عمر میں قرآن پڑھنا@@ دیکھیں۔ بچوں کو سکھا رہے ہیں؟ @@salah-for-kids.html|بچوں کی نماز@@ اور @@how-to-teach-kids-quran-at-home.html|بچوں کو گھر پر قرآن@@ دیکھیں۔ روزمرہ کی دعائیں؟ @@hisn-al-muslim.html|حصن المسلم@@ کھولیں۔')}</p>
 <h2>یہاں کیا ملے گا</h2>
 <ul>
 <li><a href="${link(lang, 'quran.html')}">قرآن</a>: تمام ${ud(QURAN.length || 114)} سورتیں لفظ بہ لفظ اردو اور انگریزی معنی، تلاوت اور اہم سورتوں کے فضائل کے ساتھ۔</li>
@@ -6974,8 +6993,27 @@ function aboutPage(lang) {
 <h1>About Harf</h1>
 <div class="prose">
 <p class="lead">Harf (${fmt('{حرف}')}) means “letter” in Arabic. It is a free website that helps English and Urdu speakers understand the Arabic of the Quran, learn everyday duas, and build the basics of Islam, starting from zero.</p>${banner(lang, 'about')}
-<h2>Who makes Harf</h2>
-<p>Harf is made and run by Fawad Ahmed, who is from Pakistan and lives and works in Saudi Arabia, where Arabic is part of daily life. He built Harf so that English and Urdu speaking Muslims have one place to learn the words of the Quran, authentic duas and the Arabic language together, free and without signing up. Every page is checked by hand, and mistakes that readers report are fixed quickly.</p>
+<h2>Why Harf exists</h2>
+<p>Millions of Muslims recite the Quran and say their duas every day without understanding the words. Many grew up learning to read Arabic letters but never their meaning; many new Muslims start with nothing at all. Good resources exist, but they are scattered, often paid, and rarely written for Urdu speakers. Harf brings the essentials together in one place: the words of the Quran, the authentic duas of daily life, the basics of worship, and the Arabic language that ties them together, all free, in plain English and Urdu.</p>
+<p>Our aim is simple: that every person who prays understands what they are saying to their Lord, and that learning it feels possible, a few minutes at a time.</p>
+<h2>Who Harf is for</h2>
+<ul>
+<li><strong>Adults starting from zero</strong>, who want to read the Quran in Arabic and understand it word by word.</li>
+<li><strong>Parents</strong> teaching their children salah, short surahs and daily duas at home.</li>
+<li><strong>New Muslims</strong> learning how to pray, make wudu and what the words of the prayer mean.</li>
+<li><strong>Urdu speakers</strong>, who already know hundreds of Arabic words without realising it, and can learn faster than they think.</li>
+<li><strong>Students of Arabic</strong> following the Madinah books or learning Quranic Arabic on their own.</li>
+</ul>
+<h2>What makes Harf different</h2>
+<ul>
+<li><strong>Understanding, not only reading.</strong> Every surah is shown word by word, so you see what each Arabic word means as you read it.</li>
+<li><strong>Checked sources.</strong> Every hadith and dua carries its reference, linked to the original collection. Weak narrations are labelled as weak, and nothing is presented as a virtue unless it is authentic.</li>
+<li><strong>Two languages, side by side.</strong> Every page exists in English and in Urdu, so families can learn together.</li>
+<li><strong>Free, with no sign-up.</strong> Your progress, saved duas and streaks stay in your own browser.</li>
+<li><strong>Built for daily use.</strong> Prayer times, Qibla, a tasbih counter, daily challenges and shareable dua cards make it easy to come back every day.</li>
+</ul>
+<h2>Where to start</h2>
+<p>${gfmt(lang, 'New to all of it? Start with @@how-to-pray-salah-step-by-step.html|how to pray salah@@ and the @@quran-prayer-words.html|words of the prayer@@. Want to read the Quran? Begin with the @@alphabet.html|alphabet@@ and @@how-to-read-quran-in-arabic-for-beginners.html|reading the Quran as a beginner@@. Teaching children? See @@salah-for-kids.html|salah for kids@@ and @@how-to-teach-kids-quran-at-home.html|teaching kids the Quran at home@@. Want daily duas? Open @@hisn-al-muslim.html|Hisn al-Muslim@@.')}</p>
 <h2>What you will find here</h2>
 <ul>
 <li><a href="${link(lang, 'quran.html')}">Quran</a>: all ${QURAN.length || 114} surahs word by word with English and Urdu meanings, recitation, and the virtues of the best-known surahs.</li>
@@ -6994,8 +7032,8 @@ function aboutPage(lang) {
 <h2>Free for everyone</h2>
 <p>Harf has no sign-up and no paid plan. If it helps you, you can support new lessons on <a href="${KOFI_URL}">our Ko-fi page</a>.</p>
 </div>`;
-  const title = ur ? 'حرف کے بارے میں: کس نے بنایا اور کیوں | حرف' : 'About Harf: who makes it and why | Harf';
-  const desc = ur ? 'حرف اردو اور انگریزی بولنے والوں کے لیے قرآن کی عربی، مستند دعائیں اور عربی زبان سیکھنے کی مفت ویب سائٹ ہے، جسے فواد احمد چلاتے ہیں۔' : 'Harf is a free website for learning Quranic Arabic, authentic duas and the Arabic language in English and Urdu, run by Fawad Ahmed.';
+  const title = ur ? 'حرف کے بارے میں: ہمارا مقصد اور یہ کس کے لیے ہے | حرف' : 'About Harf: our purpose and who it is for | Harf';
+  const desc = ur ? 'حرف اردو اور انگریزی بولنے والوں کے لیے مفت ویب سائٹ ہے: قرآن لفظ بہ لفظ، مستند دعائیں، نماز کا طریقہ اور عربی زبان، تاکہ ہر نمازی سمجھے کہ وہ کیا پڑھ رہا ہے۔' : 'Harf is a free site in English and Urdu: the Quran word by word, authentic duas, how to pray and the Arabic language, so everyone who prays understands what they say.';
   return layout(lang, { file: 'about.html', section: '', title, desc, body });
 }
 
