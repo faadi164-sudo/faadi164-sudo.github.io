@@ -5639,7 +5639,7 @@ function islamicPhrasePage(lang, i) {
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['islamic-phrases.html', ur ? 'اسلامی جملے' : 'Islamic phrases'], [null, p.t]])}
 <p class="eyebrow">${ur ? 'اسلامی جملہ' : 'Islamic phrase'}</p>
 <h1>${ur ? `${p.a} کا مطلب` : `What does ${esc(p.t)} mean?`}</h1>
-<div class="n99-hero"><p class="ar" lang="ar" style="font-size:clamp(40px,7vw,64px)">${p.a}</p><p class="tr latin" dir="ltr">${esc(p.t)}</p><p class="m">${esc(ur ? p.ur : p.en)}</p>${say(lang, p.a, ur ? '🔊 سنیں' : '🔊 Listen')}${tsb}</div>
+<div class="n99-hero"><p class="ar" lang="ar" style="font-size:clamp(40px,7vw,64px)">${p.a}</p><p class="tr latin" dir="ltr">${esc(p.t)}</p><p class="m">${esc(ur ? p.ur : p.en)}</p>${say(lang, p.a)}${tsb}</div>
 <h2>${ur ? 'لفظ بہ لفظ' : 'Word by word'}</h2>
 <div class="ip-wbw">${p.w.map((w) => `<div><span class="ar" lang="ar">${w[0]}</span><span class="m">${esc(ur ? w[2] : w[1])}</span></div>`).join('')}</div>
 <h2>${ur ? 'کب کہیں' : 'When to say it'}</h2>
@@ -5877,7 +5877,7 @@ function names99Page(lang, i) {
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['99-names-of-allah.html', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah'], [null, tr]])}
 <p class="eyebrow">${ur ? `اللہ کے ۹۹ ناموں میں سے ${num(lang, i + 1)} واں نام` : `Name ${i + 1} of the 99 Names of Allah`}</p>
 <h1>${ur ? `${ar} — ${um}` : `${tr} (${bareAr}): ${en}`}</h1>
-<div class="n99-hero"><p class="ar" lang="ar">${ar}</p><p class="tr latin" dir="ltr">${esc(tr)}</p><p class="m">${esc(ur ? um : en)}</p>${say(lang, ar, ur ? '🔊 سنیں' : '🔊 Listen')} <a class="btn gold" href="${tsb}">📿 ${ur ? `«${vo}» کی تسبیح` : `Tasbih: ${vtr}`}</a></div>
+<div class="n99-hero"><p class="ar" lang="ar">${ar}</p><p class="tr latin" dir="ltr">${esc(tr)}</p><p class="m">${esc(ur ? um : en)}</p>${say(lang, ar)} <a class="btn gold" href="${tsb}">📿 ${ur ? `«${vo}» کی تسبیح` : `Tasbih: ${vtr}`}</a></div>
 <h2>${ur ? 'مطلب' : 'Meaning'}</h2>
 <p>${esc(ur ? nUr : nEn)}</p>
 ${verse}
