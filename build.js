@@ -3315,6 +3315,7 @@ const loadSurah = (q) => JSON.parse(fs.readFileSync(path.join(QURAN_DIR, String(
 // ---------------------------------------------------------------- Duas (content in data/duas.js)
 const { DUA_CATS, DUA_TOPICS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
 const { NAMES99, NAMES99_DHIKR } = require('./data/names99.js');
+const { IPHRASES, IGLOSSARY } = require('./data/phrases-islamic.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -3888,6 +3889,9 @@ function buildSearchIndex(lang) {
   add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
   add('الْأَسْمَاءُ الْحُسْنَى', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah (Asma ul Husna)', ur ? 'اسماء الحسنیٰ معنی کے ساتھ' : 'All 99 names with meanings', '99-names-of-allah.html', 'page');
   NAMES99.forEach((x, i) => add(x[1], x[2], (ur ? x[4] : x[3]) + (ur ? ' · اللہ کا نام' : ' · Name of Allah'), n99File(x), 'page'));
+  add('', ur ? 'اسلامی جملے اور اصطلاحات' : 'Islamic phrases and glossary', ur ? 'ان شاء اللہ، ما شاء اللہ، جزاک اللہ خیرا…' : 'InshaAllah, MashaAllah, JazakAllah khair…', 'islamic-phrases.html', 'page');
+  IPHRASES.forEach((p) => add(p.a, p.t, (ur ? p.ur : p.en) + (ur ? ' · اسلامی جملہ' : ' · Islamic phrase'), ipFile(p), 'page'));
+  IGLOSSARY.forEach((g) => add(g[0], g[2] + ' (' + g[1] + ')', ur ? g[5] : g[4], 'islamic-phrases.html#glossary', 'page'));
   add('الصَّلَاة', ur ? 'بچوں کے لیے نماز کا طریقہ' : 'Salah for kids: how to pray step by step', ur ? 'تصویروں، آواز اور ستاروں کے چارٹ کے ساتھ' : 'With pictures, audio and a star chart', 'salah-for-kids.html', 'page');
   add('', ur ? 'ہر نماز کی رکعات' : 'How many rakats in each prayer', ur ? 'فرض، سنت، وتر' : 'Fard, sunnah and witr', 'how-many-rakats-in-each-prayer.html', 'page');
   add('', ur ? 'نماز کے بعد کیا پڑھیں' : 'What to say after salah', ur ? 'مسنون اذکار' : 'The Sunnah adhkar', 'what-to-say-after-salah.html', 'page');
@@ -5330,6 +5334,7 @@ function phrasesPage(lang) {
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.phrases]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
+<section class="hisn-cta"><p><strong>${ur ? 'اسلامی جملے: ان شاء اللہ، ما شاء اللہ، جزاک اللہ خیرا…' : 'Islamic phrases: InshaAllah, MashaAllah, JazakAllah khair…'}</strong> ${ur ? `${num(lang, IPHRASES.length)} جملے لفظ بہ لفظ معنی، کب کہیں، جواب اور حوالے کے ساتھ، اور ${num(lang, IGLOSSARY.length)} اسلامی اصطلاحات۔` : `${IPHRASES.length} phrases with word-by-word meaning, when to say them, the reply and the source, plus ${IGLOSSARY.length} Islamic terms.`} <a class="btn primary" href="${link(lang, 'islamic-phrases.html')}">${ur ? 'دیکھیں ←' : 'Open →'}</a></p></section>
 <div class="phr">
   ${list}
 </div>
@@ -5483,7 +5488,7 @@ ${s.v.map((v, k) => verseHtml(lang, v, k + 1, s.n)).join('\n')}
 
 // Virtues and "when to read" for the most-searched surahs. Only well-known narrations, each with its
 // source; where a popular narration is weak, the box says so plainly instead of hiding it.
-const SN = (b, n) => ({ t: { bukhari: 'Al-Bukhari', muslim: 'Muslim', abudawud: 'Abu Dawud', tirmidhi: 'At-Tirmidhi' }[b] + ' ' + n, u: 'https://sunnah.com/' + b + ':' + n });
+const SN = (b, n) => ({ t: { bukhari: 'Al-Bukhari', muslim: 'Muslim', abudawud: 'Abu Dawud', tirmidhi: 'At-Tirmidhi', ibnmajah: 'Ibn Majah', nasai: 'An-Nasaʾi' }[b] + ' ' + n, u: 'https://sunnah.com/' + b + ':' + n });
 const SURAH_FADAIL = {
   1: { whenEn: 'In every rakʿah of every prayer.', whenUr: 'ہر نماز کی ہر رکعت میں۔',
     v: [[SN('bukhari', 4474), 'The Prophet ﷺ called it the greatest surah in the Quran: “the seven oft-repeated verses and the Great Quran given to me.”', 'نبی ﷺ نے اسے قرآن کی سب سے عظیم سورت فرمایا: «یہی سبع مثانی (بار بار دہرائی جانے والی سات آیات) اور قرآنِ عظیم ہے جو مجھے دیا گیا۔»'],
@@ -5579,6 +5584,73 @@ ${verseHtml(lang, v, 255, 2)}
 <section class="also"><h2>${ur ? 'کب پڑھیں' : 'When to read it'}</h2><div class="also-grid">${when.map(([t, f]) => `<a href="${link(lang, f)}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${t}</a>`).join('')}<a href="${link(lang, 'quran-' + q.slug + '.html')}#v255"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'سورہ بقرہ میں دیکھیں' : 'See it in Surah Al-Baqarah'}</a></div></section>
 <p class="note">${QURAN_FULL_NOTE[lang]}</p>`;
   return layout(lang, { file: 'ayatul-kursi.html', section: 'quran', title, desc, body });
+}
+
+// ---------------------------------------------------------------- Islamic phrases + glossary (data/phrases-islamic.js)
+const ipFile = (p) => p.s + '-meaning.html';
+const IP_DHIKR = new Set(['subhanallah', 'alhamdulillah', 'allahu-akbar', 'astaghfirullah', 'la-ilaha-illallah', 'la-hawla-wa-la-quwwata-illa-billah', 'hasbunallah', 'subhanallahi-wa-bihamdihi']);
+const IP_CSS = `
+.ip-wbw{display:flex;flex-wrap:wrap;gap:10px;direction:rtl;margin:10px 0 22px}
+.ip-wbw div{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:90px}
+.ip-wbw .ar{font-size:28px;line-height:1.6;color:var(--accent)}
+.ip-wbw span.m{font-size:14px;color:var(--muted);direction:ltr;text-align:center}
+[dir=rtl] .ip-wbw span.m{direction:rtl}
+.ip-reply{border-inline-start:4px solid var(--accent);background:var(--surface);border-radius:12px;padding:14px 16px;margin:0 0 22px}
+.ip-reply .ar{font-size:26px;line-height:1.9}
+.ip-gl{width:100%;border-collapse:collapse}
+.ip-gl td{border-bottom:1px solid var(--line);padding:10px 8px;vertical-align:top}
+.ip-gl td.ar{font-size:24px;color:var(--accent);white-space:nowrap}
+.ip-gl b{display:block}
+`;
+function ipSources(lang, src) {
+  const ur = lang === 'ur';
+  return src.map(([b, n]) => {
+    if (b === 'q') { const [s, a] = n.split(':').map(Number); const q = QURAN.find((z) => z.n === s); return q ? `<a href="${link(lang, 'quran-' + q.slug + '.html')}#v${a}">${ur ? `قرآن ${num(lang, s)}:${num(lang, a)}` : `Quran ${s}:${a}`}</a>` : ''; }
+    const x = SN(b, n); return `<a href="${x.u}" target="_blank" rel="noopener" class="latin" dir="ltr">${esc(x.t)}</a>`;
+  }).filter(Boolean).join(' · ');
+}
+function ipCard(lang, p) {
+  const ur = lang === 'ur';
+  return `<a class="n99-c" href="${link(lang, ipFile(p))}"><span class="ar" lang="ar" style="font-size:24px">${p.a}</span><b class="latin" dir="ltr">${esc(p.t)}</b><span class="m">${esc(ur ? p.ur : p.en)}</span></a>`;
+}
+function islamicPhrasesHub(lang) {
+  const ur = lang === 'ur';
+  const title = ur ? 'اسلامی جملے اور اصطلاحات معنی کے ساتھ — ان شاء اللہ، ما شاء اللہ، جزاک اللہ خیرا | حرف' : 'Islamic phrases and their meanings: InshaAllah, MashaAllah, JazakAllah khair & more | Harf';
+  const desc = ur ? `${IPHRASES.length} عام اسلامی جملے لفظ بہ لفظ معنی، کب کہیں، جواب اور قرآن و حدیث کے حوالے کے ساتھ، اور ${IGLOSSARY.length} اسلامی اصطلاحات کی لغت۔`
+    : `${IPHRASES.length} common Islamic phrases with word-by-word meaning, when to say them, the reply and the Quran or hadith source, plus a glossary of ${IGLOSSARY.length} Islamic terms.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['phrases.html', T[lang].nav.phrases], [null, ur ? 'اسلامی جملے' : 'Islamic phrases']])}
+<p class="eyebrow">${ur ? 'عربی سیکھیں، معنی سمجھیں' : 'Learn the Arabic, know the meaning'}</p>
+<h1>${ur ? 'اسلامی جملے اور ان کے معنی' : 'Islamic phrases and what they mean'}</h1>
+<p class="lead">${ur ? 'وہ عربی جملے جو مسلمان روز بولتے ہیں۔ ہر جملے پر ٹیپ کریں: لفظ بہ لفظ معنی، آواز، کب کہنا ہے، جواب کیا ہے، اور قرآن یا حدیث کا حوالہ۔' : 'The Arabic phrases Muslims say every day. Tap any phrase for its word-by-word meaning, audio, when to say it, how to reply, and its source in the Quran or hadith.'}</p>
+<div class="n99-grid">${IPHRASES.map((p) => ipCard(lang, p)).join('')}</div>
+<section id="glossary"><h2 class="orn">${ur ? `اسلامی اصطلاحات کی لغت (${num(lang, IGLOSSARY.length)})` : `Glossary of Islamic terms (${IGLOSSARY.length})`}</h2>
+<table class="ip-gl"><tbody>${IGLOSSARY.map((g) => `<tr><td class="ar" lang="ar">${g[0]}</td><td><b>${esc(ur ? g[3] : g[2])} <span class="latin small" dir="ltr">(${esc(g[1])})</span></b>${esc(ur ? g[5] : g[4])}</td></tr>`).join('')}</tbody></table></section>
+<section class="also"><h2>${ur ? 'مزید' : 'More'}</h2><div class="also-grid"><a href="${link(lang, '99-names-of-allah.html')}"><span class="k k-new">${ur ? 'نیا' : 'New'}</span>${ur ? 'اللہ کے ۹۹ نام' : 'The 99 Names of Allah'}</a><a href="${link(lang, 'what-to-say-after-salah.html')}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${ur ? 'نماز کے بعد کیا پڑھیں' : 'What to say after salah'}</a><a href="${link(lang, 'hisn-al-muslim.html')}"><span class="k k-dua">${ur ? 'دعائیں' : 'Duas'}</span>${ur ? 'حصن المسلم' : 'Hisn al-Muslim'}</a></div></section>`;
+  return layout(lang, { file: 'islamic-phrases.html', section: 'phrases', title, desc, body });
+}
+function islamicPhrasePage(lang, i) {
+  const ur = lang === 'ur';
+  const p = IPHRASES[i];
+  const title = ur ? `${N99_BARE(p.a)} کا مطلب: ${p.ur} — کب کہیں اور جواب کیا ہے | حرف` : `${p.t} meaning: “${p.en}” — when to say it and how to reply | Harf`;
+  const desc = ur ? `«${p.a}» (${p.t}) کا مطلب ${p.ur}۔ لفظ بہ لفظ معنی، آواز، کب کہیں، جواب، اور حوالہ۔` : `What does ${p.t} (${N99_BARE(p.a)}) mean? “${p.en}”. Word-by-word meaning, audio, when to say it, the reply and its source.`;
+  const tsb = IP_DHIKR.has(p.s) ? ` <a class="btn gold" href="${link(lang, 'tasbih-counter.html')}?a=${encodeURIComponent(p.a)}&amp;tr=${encodeURIComponent(p.t)}&amp;m=${encodeURIComponent(ur ? p.ur : p.en)}">📿 ${ur ? 'تسبیح' : 'Count it'}</a>` : '';
+  const reply = p.r ? `<h2>${ur ? (p.s === 'fi-amanillah' || p.s === 'eid-mubarak' ? 'مسنون الفاظ' : 'جواب') : (p.s === 'fi-amanillah' || p.s === 'eid-mubarak' ? 'The Sunnah wording' : 'How to reply')}</h2><div class="ip-reply"><p class="ar" lang="ar">${p.r[0]}</p><p class="tr latin" dir="ltr">${esc(p.r[1])}</p><p>${esc(ur ? p.r[3] : p.r[2])}</p>${say(lang, p.r[0])}</div>` : '';
+  const src = ipSources(lang, p.src);
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['islamic-phrases.html', ur ? 'اسلامی جملے' : 'Islamic phrases'], [null, p.t]])}
+<p class="eyebrow">${ur ? 'اسلامی جملہ' : 'Islamic phrase'}</p>
+<h1>${ur ? `${p.a} کا مطلب` : `What does ${esc(p.t)} mean?`}</h1>
+<div class="n99-hero"><p class="ar" lang="ar" style="font-size:clamp(40px,7vw,64px)">${p.a}</p><p class="tr latin" dir="ltr">${esc(p.t)}</p><p class="m">${esc(ur ? p.ur : p.en)}</p>${say(lang, p.a, ur ? '🔊 سنیں' : '🔊 Listen')}${tsb}</div>
+<h2>${ur ? 'لفظ بہ لفظ' : 'Word by word'}</h2>
+<div class="ip-wbw">${p.w.map((w) => `<div><span class="ar" lang="ar">${w[0]}</span><span class="m">${esc(ur ? w[2] : w[1])}</span></div>`).join('')}</div>
+<h2>${ur ? 'کب کہیں' : 'When to say it'}</h2>
+<p>${esc(ur ? p.whenUr : p.whenEn)}</p>
+${reply}
+<h2>${ur ? 'قرآن و سنت میں' : 'In the Quran and Sunnah'}</h2>
+<p>${esc(ur ? p.noteUr : p.noteEn)}</p>
+${src ? `<p class="small">${ur ? 'حوالہ' : 'Source'}: ${src}</p>` : ''}
+<section class="also"><h2>${ur ? 'متعلقہ جملے' : 'Related phrases'}</h2><div class="n99-grid">${p.also.map((s) => IPHRASES.find((x) => x.s === s)).filter(Boolean).map((x) => ipCard(lang, x)).join('')}</div>
+<p><a class="btn" href="${link(lang, 'islamic-phrases.html')}">${ur ? `تمام ${num(lang, IPHRASES.length)} اسلامی جملے اور لغت ←` : `All ${IPHRASES.length} Islamic phrases and the glossary →`}</a></p></section>`;
+  return layout(lang, { file: ipFile(p), section: 'phrases', title, desc, body });
 }
 
 // ---------------------------------------------------------------- Salah for kids
@@ -9352,6 +9424,8 @@ function build() {
     if (QURAN.length) { const ak = ayatKursiPage(lang); if (ak) add(lang, 'ayatul-kursi.html', ak); }
     add(lang, '99-names-of-allah.html', names99HubPage(lang));
     if (QURAN.length) add(lang, 'salah-for-kids.html', salahKidsPage(lang));
+    add(lang, 'islamic-phrases.html', islamicPhrasesHub(lang));
+    IPHRASES.forEach((p, i) => add(lang, ipFile(p), islamicPhrasePage(lang, i)));
     NAMES99.forEach((x, i) => add(lang, n99File(x), names99Page(lang, i)));
     if (HISN.length) add(lang, 'challenges.html', challengesPage(lang));
     files['harf-daily-' + lang + '.ics'] = icsFile(lang);
@@ -9377,7 +9451,7 @@ function build() {
   }
   files['404.html'] = notFoundPage();
   files['engage.js'] = ENGAGE_JS;
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS + IP_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
