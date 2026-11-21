@@ -3894,6 +3894,7 @@ function buildSearchIndex(lang) {
   add('الْأَسْمَاءُ الْحُسْنَى', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah (Asma ul Husna)', ur ? 'اسماء الحسنیٰ معنی کے ساتھ' : 'All 99 names with meanings', '99-names-of-allah.html', 'page');
   NAMES99.forEach((x, i) => add(x[1], x[2], (ur ? x[4] : x[3]) + (ur ? ' · اللہ کا نام' : ' · Name of Allah'), n99File(x), 'page'));
   add('', ur ? 'رنگ بھرنے کے صفحات' : 'Islamic colouring pages for kids', ur ? 'مسجد، کعبہ، لالٹین، عید مبارک، عربی حروف' : 'Masjid, Kaaba, lantern, Eid Mubarak, Arabic letters', 'islamic-coloring-pages.html', 'page');
+  CG_CATS.forEach((c) => { if (CG.some((g) => g[2] === c[0])) add('', (ur ? c[2] : c[1]) + (ur ? ' · رنگ بھریں' : ' colouring pages'), ur ? 'پرسکون رنگ بھرائی' : 'Soothing colouring', cgFile(c[0], 1), 'page'); });
   [...COLOR_PAGES, ...COLOR_IMGS].forEach((x) => add('', (ur ? x[2] : x[1]) + (ur ? ' · رنگ بھریں' : ' colouring page'), ur ? 'بچوں کے لیے' : 'For kids', 'coloring-page-' + x[0] + '.html', 'page'));
   add('', ur ? 'صحابۂ کرام' : 'Companions of the Prophet ﷺ', ur ? 'صحیح احادیث سے' : 'From authentic hadith', 'companions-of-the-prophet.html', 'page');
   COMPANIONS.forEach((c) => add(c.ar, ur ? c.ur : c.en, ur ? c.tUr : c.tEn, cpFile(c), 'page'));
@@ -5714,7 +5715,8 @@ const COLOR_IMGS = [
 const CPI_JS = String.raw`
 (function(){
   var cv=document.getElementById('cpCanvas'); if(!cv) return; var x=cv.getContext('2d',{willReadFrequently:true}), W=cv.width, H=cv.height, cur='#e74c3c', mask=null, hist=[];
-  var img=new Image(); img.onload=function(){ reset(); }; img.src=cv.dataset.src;
+  var img=new Image(); img.onload=function(){ reset(); }; if(cv.dataset.src) img.src=cv.dataset.src;
+  window.cpLoad=function(src){ img.src=src; };
   function reset(){ x.fillStyle='#fff'; x.fillRect(0,0,W,H); x.drawImage(img,0,0,W,H); var d=x.getImageData(0,0,W,H).data; mask=new Uint8Array(W*H);
     for(var i=0,p=0;i<d.length;i+=4,p++){ var l=d[i]*0.3+d[i+1]*0.59+d[i+2]*0.11; if(l<140){ mask[p]=1; d[i]=d[i+1]=d[i+2]=34; } else { d[i]=d[i+1]=d[i+2]=255; } d[i+3]=255; }
     var id=x.createImageData(W,H); id.data.set(d); x.putImageData(id,0,0); hist=[]; }
@@ -5739,6 +5741,46 @@ const CPI_JS = String.raw`
   document.getElementById('cpSave').onclick=function(){ var c=document.createElement('canvas'); c.width=W; c.height=H+40; var y=c.getContext('2d'); y.fillStyle='#fff'; y.fillRect(0,0,W,H+40); y.drawImage(cv,0,0); y.fillStyle='#777'; y.font='24px sans-serif'; y.textAlign='center'; y.fillText('learnwithharf.com',W/2,H+28); var a=document.createElement('a'); a.download='harf-colouring.png'; a.href=c.toDataURL('image/png'); a.click(); };
 })();
 `;
+// Soothing colouring galleries: public-domain (CC0) designs from FreeSVG.org (data/colouring-gallery.json),
+// each [id, title, category, freesvg slug]. Images: img/cg-<id>.png (1000px) and img/cg-t-<id>.png (thumb).
+const CG = (() => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'colouring-gallery.json'), 'utf8')); } catch (e) { return []; } })();
+const CG_CATS = [
+  ['mandalas', 'Mandalas and rosettes', 'منڈالا اور گول نقش', 'Round, repeating designs that calm the mind as you colour from the centre outwards.', 'گول، دہرائے جانے والے نقش جو مرکز سے باہر کی طرف رنگ بھرتے ہوئے ذہن کو سکون دیتے ہیں۔'],
+  ['flowers', 'Flowers', 'پھول', 'Roses, tulips, lotus, lilies and bouquets.', 'گلاب، ٹیولپ، کنول، سوسن اور گلدستے۔'],
+  ['leaves-and-trees', 'Leaves, trees and plants', 'پتے، درخت اور پودے', 'Gentle botanical designs: leaves, ferns, trees and plants.', 'نرم نباتاتی ڈیزائن: پتے، فرن، درخت اور پودے۔'],
+  ['patterns', 'Patterns, tiles and mandalas', 'نقش و نگار، ٹائل اور منڈالا', 'Geometric patterns, tiles, knots, mandalas and ornaments.', 'جیومیٹرک نقش، ٹائل، گرہیں، منڈالا اور آرائشی نقوش۔'],
+  ['nature', 'Nature and calm scenes', 'فطرت اور پرسکون مناظر', 'Mountains, gardens, clouds, waves, stars and the moon.', 'پہاڑ، باغ، بادل، لہریں، ستارے اور چاند۔'],
+  ['fruits', 'Fruits', 'پھل', 'Fruits to colour, including those mentioned in the Quran: dates, pomegranates, olives, figs and grapes.', 'رنگ بھرنے کے لیے پھل، جن میں قرآن میں ذکر کیے گئے پھل بھی ہیں: کھجور، انار، زیتون، انجیر اور انگور۔'],
+  ['home', 'Home and everyday things', 'گھر اور روزمرہ کی چیزیں', 'Houses, lanterns, cups, vases, boats and kites.', 'گھر، لالٹین، کپ، گلدان، کشتیاں اور پتنگیں۔'],
+];
+const CG_PER = 60;
+const cgFile = (cat, p) => 'colouring-' + cat + (p > 1 ? '-' + p : '') + '.html';
+function cgPage(lang, cat, p) {
+  const ur = lang === 'ur';
+  const C = CG_CATS.find((c) => c[0] === cat), items = CG.filter((g) => g[2] === cat), pages = Math.ceil(items.length / CG_PER);
+  const slice = items.slice((p - 1) * CG_PER, p * CG_PER), name = ur ? C[2] : C[1];
+  const title = ur ? `${name}: پرسکون رنگ بھرنے کے صفحات${p > 1 ? ` (صفحہ ${num(lang, p)})` : ''} — مفت آن لائن یا پرنٹ | حرف` : `${name} colouring pages${p > 1 ? ` (page ${p})` : ''}: soothing, free to colour online or print | Harf`;
+  const desc = ur ? `${num(lang, items.length)} پرسکون ڈیزائن: ${C[4]} ٹیپ کر کے آن لائن رنگ بھریں، محفوظ کریں یا پرنٹ کریں۔` : `${items.length} soothing ${C[1].toLowerCase()} colouring pages. ${C[3]} Tap to colour online, save or print.`;
+  const pager = pages > 1 ? `<nav class="row" style="justify-content:center;margin:16px 0">${Array.from({ length: pages }, (_, k) => k + 1).map((k) => k === p ? `<span class="btn primary">${num(lang, k)}</span>` : `<a class="btn" href="${link(lang, cgFile(cat, k))}">${num(lang, k)}</a>`).join(' ')}</nav>` : '';
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['islamic-coloring-pages.html', ur ? 'رنگ بھرنے کے صفحات' : 'Colouring pages'], [null, name]])}
+<p class="eyebrow">${ur ? 'پرسکون رنگ بھرائی' : 'Soothing colouring'}</p>
+<h1>${esc(name)}</h1>
+<p class="lead">${esc(ur ? C[4] : C[3])} ${ur ? 'کسی بھی ڈیزائن پر ٹیپ کریں، وہ اوپر کھل جائے گا۔ رنگ چنیں اور خانوں پر ٹیپ کریں۔' : 'Tap any design to open it above, then choose a colour and tap the spaces to fill them.'}</p>
+<div class="cp-pal" role="group" aria-label="${ur ? 'رنگ' : 'Colours'}">${CP_COLORS.map((c, k) => `<button type="button" data-c="${c}" style="background:${c}" aria-pressed="${k === 0}" aria-label="${c}"></button>`).join('')}</div>
+<div class="cp-board" id="cgBoard"><canvas id="cpCanvas" width="1000" height="1000" data-src="img/cg-${slice[0] ? slice[0][0] : ''}.png" style="width:100%;height:auto;display:block;touch-action:manipulation;cursor:crosshair"></canvas></div>
+<p class="row" style="justify-content:center;margin-top:12px"><button class="btn primary" type="button" id="cpSave">💾 ${ur ? 'تصویر محفوظ کریں' : 'Save my picture'}</button> <button class="btn" type="button" id="cpUndo">↶ ${ur ? 'واپس' : 'Undo'}</button> <button class="btn" type="button" id="cpPrint">🖨 ${ur ? 'پرنٹ' : 'Print'}</button> <button class="btn" type="button" id="cpClear">↺ ${ur ? 'صاف کریں' : 'Start again'}</button></p>
+<p class="small" style="text-align:center" id="cgCredit">${slice[0] ? `${ur ? 'ماخذ' : 'Source'}: <a href="https://freesvg.org/${slice[0][3]}" target="_blank" rel="noopener">“${esc(slice[0][1])}”</a>, FreeSVG.org (CC0)` : ''}</p>
+${pager}
+<div class="cp-grid cg-grid">${slice.map((g) => `<a href="#cgBoard" data-id="${g[0]}" data-s="${g[3]}" data-t="${esc(g[1])}"><img src="img/cg-t-${g[0]}.png" alt="${esc(g[1])}" loading="lazy" width="200" height="200"><span>${esc(g[1])}</span></a>`).join('')}</div>
+${pager}
+<section class="box"><p>${ur ? 'یہ تمام ڈیزائن FreeSVG.org پر پبلک ڈومین (CC0) فن پارے ہیں، جنہیں حرف نے رنگ بھرنے کی صورت میں تیار کیا ہے۔' : 'All designs are public-domain (CC0) artwork from FreeSVG.org, prepared as colouring outlines for Harf.'}</p></section>
+<section class="also"><h2>${ur ? 'دوسری گیلریاں' : 'Other galleries'}</h2><div class="also-grid">${CG_CATS.filter((c) => c[0] !== cat && CG.some((g) => g[2] === c[0])).map((c) => `<a href="${link(lang, cgFile(c[0], 1))}"><span class="k k-new">${ur ? 'رنگ' : 'Colour'}</span>${ur ? c[2] : c[1]}</a>`).join('')}</div></section>
+<script>${CPI_JS}
+(function(){ var cr=document.getElementById('cgCredit'); document.querySelectorAll('.cg-grid a').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); window.cpLoad('img/cg-'+a.dataset.id+'.png');
+  cr.textContent='${ur ? 'ماخذ' : 'Source'}: '; var l=document.createElement('a'); l.href='https://freesvg.org/'+encodeURIComponent(a.dataset.s); l.target='_blank'; l.rel='noopener'; l.textContent='“'+a.dataset.t+'”'; cr.appendChild(l); cr.appendChild(document.createTextNode(', FreeSVG.org (CC0)'));
+  document.getElementById('cgBoard').scrollIntoView({behavior:'smooth',block:'center'}); }); }); })();</script>`;
+  return layout(lang, { file: cgFile(cat, p), section: 'stories', title, desc, body });
+}
 function coloringImgPage(lang, i) {
   const ur = lang === 'ur';
   const [s, en, u, file, srcTitle, srcUrl, level] = COLOR_IMGS[i], name = ur ? u : en;
@@ -5772,6 +5814,9 @@ function coloringHub(lang) {
 <h2 class="orn">${ur ? 'مسجدیں، ٹائل اور خطاطی' : 'Masjids, tiles and calligraphy'}</h2>
 <div class="cp-grid">${COLOR_IMGS.map(([s, en, u, file]) => `<a href="${link(lang, 'coloring-page-' + s + '.html')}"><img src="img/${file}" alt="" loading="lazy" width="160" height="160">${ur ? u : en}</a>`).join('')}</div>
 <p class="small">${ur ? 'یہ سات ڈیزائن FreeSVG.org کے پبلک ڈومین (CC0) فن پاروں سے بنائے گئے ہیں۔' : 'These seven designs are adapted from public-domain (CC0) artwork on FreeSVG.org.'}</p>
+${CG.length ? `<h2 class="orn">${ur ? `پرسکون رنگ بھرائی: ${num(lang, CG.length)} ڈیزائن` : `Soothing colouring: ${CG.length} designs`}</h2>
+<p>${ur ? 'منڈالا، پھول، پتے، پھل اور نقش و نگار، بچوں اور بڑوں دونوں کے لیے، سکون سے رنگ بھرنے کو۔' : 'Mandalas, flowers, leaves, fruits and patterns, for children and adults to colour calmly.'}</p>
+<div class="cards">${CG_CATS.filter((c) => CG.some((g) => g[2] === c[0])).map((c) => { const it = CG.filter((g) => g[2] === c[0]); return `<a class="card" href="${link(lang, cgFile(c[0], 1))}"><img src="img/cg-t-${it[0][0]}.png" alt="" loading="lazy" width="200" height="200" style="width:90px;height:90px;float:${ur ? 'left' : 'right'};margin-${ur ? 'right' : 'left'}:10px"><h3>${ur ? c[2] : c[1]}</h3><p>${ur ? `${num(lang, it.length)} ڈیزائن` : `${it.length} designs`}</p></a>`; }).join('')}</div>` : ''}
 <section class="also"><h2>${ur ? 'مزید بچوں کے لیے' : 'More for kids'}</h2><div class="also-grid"><a href="${link(lang, 'salah-for-kids.html')}"><span class="k k-guide">${ur ? 'نماز' : 'Salah'}</span>${ur ? 'بچوں کے لیے نماز' : 'Salah for kids'}</a><a href="${link(lang, 'islamic-quiz.html')}"><span class="k k-new">${ur ? 'کوئز' : 'Quiz'}</span>${ur ? 'اسلامی کوئز' : 'Islamic quizzes'}</a><a href="${link(lang, 'alphabet.html')}"><span class="k k-word">${ur ? 'حروف' : 'Letters'}</span>${ur ? 'عربی حروفِ تہجی' : 'The Arabic alphabet'}</a></div></section>`;
   return layout(lang, { file: 'islamic-coloring-pages.html', section: 'stories', title, desc, body });
 }
@@ -9889,6 +9934,7 @@ function build() {
     add(lang, 'islamic-coloring-pages.html', coloringHub(lang));
     COLOR_PAGES.forEach((x, i) => add(lang, 'coloring-page-' + x[0] + '.html', coloringPage(lang, i)));
     COLOR_IMGS.forEach((x, i) => add(lang, 'coloring-page-' + x[0] + '.html', coloringImgPage(lang, i)));
+    CG_CATS.forEach((c) => { const n = Math.ceil(CG.filter((g) => g[2] === c[0]).length / CG_PER); for (let p = 1; p <= n; p++) add(lang, cgFile(c[0], p), cgPage(lang, c[0], p)); });
     add(lang, 'companions-of-the-prophet.html', companionsHub(lang));
     COMPANIONS.forEach((c, i) => add(lang, cpFile(c), companionPage(lang, i)));
     add(lang, 'islamic-quiz.html', islamicQuizHub(lang));
