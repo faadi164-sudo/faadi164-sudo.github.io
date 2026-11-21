@@ -76,4 +76,48 @@ const COMPANIONS = [
     f: [['Khabbab described him: martyred at Uhud, he left nothing but a single cloak; when it covered his head his feet showed, and when it covered his feet his head showed, so the Prophet ﷺ told them to cover his head and put grass over his feet.', 'حضرت خباب نے بیان کیا کہ وہ احد میں شہید ہوئے اور ایک چادر کے سوا کچھ نہ چھوڑا؛ سر ڈھانپتے تو پاؤں کھل جاتے اور پاؤں ڈھانپتے تو سر، تو نبی ﷺ نے فرمایا سر ڈھانپ دو اور پاؤں پر گھاس ڈال دو۔', ['bukhari', 1276]]],
     lEn: 'What we give up for Allah is never lost; Musʿab’s reward is waiting for him in full.', lUr: 'جو کچھ اللہ کے لیے چھوڑا جائے وہ ضائع نہیں ہوتا؛ مصعب کا پورا اجر ان کا منتظر ہے۔' },
 ];
+
+// More sourced facts (added Nov 2026 so every profile is a full page). Same shape as f: [EN, UR, source].
+const MORE_FACTS = {
+  'khadijah': [
+    ['ʿAishah said she was never as protective of her place with the Prophet ﷺ as she was about Khadijah, though she never met her, because he mentioned her so often and would send meat to Khadijah’s friends.', 'حضرت عائشہ فرماتی ہیں کہ انہیں کسی عورت پر اتنا رشک نہیں آیا جتنا خدیجہ پر، حالانکہ انہیں دیکھا بھی نہیں، کیونکہ نبی ﷺ ان کا بہت ذکر کرتے اور ان کی سہیلیوں کو گوشت بھیجتے تھے۔', ['bukhari', 3818]],
+    ['The Prophet ﷺ said of her: “I was blessed with her love.”', 'نبی ﷺ نے ان کے بارے میں فرمایا: «مجھے ان کی محبت عطا کی گئی تھی۔»', ['muslim', 2435]]],
+  'abu-bakr': [
+    ['The Prophet ﷺ said: “If I were to take a close friend (khalil) other than my Lord, I would take Abu Bakr; but he is my brother and companion.”', 'نبی ﷺ نے فرمایا: «اگر میں اپنے رب کے سوا کسی کو خلیل بناتا تو ابو بکر کو بناتا، مگر وہ میرے بھائی اور ساتھی ہیں۔»', ['bukhari', 3656]],
+    ['When ʿAmr ibn al-ʿAs asked who among men was most beloved to the Prophet ﷺ, he answered: “Her father,” meaning Abu Bakr.', 'حضرت عمرو بن عاص نے پوچھا کہ مردوں میں آپ ﷺ کو سب سے زیادہ محبوب کون ہے؟ فرمایا: «ان کے والد»، یعنی ابو بکر۔', ['bukhari', 3662]]],
+  'umar': [
+    ['The Prophet ﷺ said: “Among the nations before you there were people who were inspired; if there is one in my nation, it is ʿUmar.”', 'نبی ﷺ نے فرمایا: «تم سے پہلی امتوں میں ایسے لوگ ہوتے تھے جنہیں الہام ہوتا تھا، اگر میری امت میں کوئی ہے تو وہ عمر ہیں۔»', ['bukhari', 3689]],
+    ['The Prophet ﷺ saw in a dream that he drank milk and gave what was left to ʿUmar; asked what it meant, he said: “Knowledge.”', 'نبی ﷺ نے خواب میں دودھ پیا اور بچا ہوا عمر کو دے دیا؛ پوچھا گیا اس کی تعبیر کیا ہے تو فرمایا: «علم»۔', ['bukhari', 82]]],
+  'uthman': [
+    ['ʿUthman reminded people that the Prophet ﷺ promised Paradise to whoever dug the well of Rumah for the Muslims and whoever equipped the army of hardship (Tabuk), and that he had done both.', 'حضرت عثمان نے لوگوں کو یاد دلایا کہ نبی ﷺ نے بئرِ رومہ کھودنے اور جیشِ عسرہ (تبوک) کو سامان دینے والے کو جنت کی خوشخبری دی تھی، اور یہ دونوں کام انہوں نے کیے۔', ['bukhari', 2778]],
+    ['At the pledge of Ridwan, when ʿUthman was away in Makkah as the Prophet’s envoy, the Prophet ﷺ placed his right hand on his left and said: “This is for ʿUthman,” taking the pledge on his behalf.', 'بیعتِ رضوان کے وقت جب حضرت عثمان نبی ﷺ کے سفیر بن کر مکہ گئے ہوئے تھے، آپ ﷺ نے اپنا دایاں ہاتھ بائیں ہاتھ پر رکھ کر فرمایا: «یہ عثمان کی طرف سے ہے»، اور ان کی طرف سے بیعت لی۔', ['bukhari', 3698]]],
+  'ali': [
+    ['ʿAli said: “By the One who split the seed, the Unlettered Prophet ﷺ promised me that none loves me except a believer and none hates me except a hypocrite.”', 'حضرت علی نے فرمایا: «اس ذات کی قسم جس نے دانہ پھاڑا، نبی اُمّی ﷺ نے مجھ سے عہد کیا کہ مجھ سے محبت صرف مومن کرے گا اور بغض صرف منافق رکھے گا۔»', ['muslim', 78]],
+    ['The Prophet ﷺ found him asleep in the masjid with dust on his side, brushed it off and said: “Get up, Abu Turab (father of dust).” It became the name ʿAli loved most.', 'نبی ﷺ نے انہیں مسجد میں سوتے پایا اور پہلو پر مٹی لگی تھی، آپ ﷺ مٹی جھاڑتے ہوئے فرمانے لگے: «اٹھو ابو تراب!» یہ نام حضرت علی کو سب سے زیادہ پسند تھا۔', ['bukhari', 441]]],
+  'aishah': [
+    ['Asked who was most beloved to him, the Prophet ﷺ said: “ʿAishah.”', 'پوچھا گیا کہ آپ ﷺ کو سب سے زیادہ محبوب کون ہے؟ فرمایا: «عائشہ»۔', ['bukhari', 3662]],
+    ['The Prophet ﷺ said that revelation came to him while he was under the blanket of no other wife except ʿAishah.', 'نبی ﷺ نے فرمایا کہ عائشہ کے سوا کسی بیوی کے لحاف میں مجھ پر وحی نازل نہیں ہوئی۔', ['bukhari', 3775]]],
+  'fatimah': [
+    ['When Fatimah came in, the Prophet ﷺ would stand up for her, kiss her, and seat her in his own place, and she did the same for him.', 'جب حضرت فاطمہ آتیں تو نبی ﷺ ان کے لیے کھڑے ہو جاتے، انہیں بوسہ دیتے اور اپنی جگہ بٹھاتے، اور وہ بھی آپ ﷺ کے لیے ایسا ہی کرتیں۔', ['abudawud', 5217]],
+    ['The Prophet ﷺ gathered Fatimah, ʿAli, Hasan and Husayn under his cloak and recited: “Allah only wants to remove impurity from you, people of the house, and to purify you thoroughly” (Al-Ahzab 33:33).', 'نبی ﷺ نے فاطمہ، علی، حسن اور حسین کو اپنی چادر میں لیا اور یہ آیت پڑھی: «اللہ تو یہی چاہتا ہے کہ اے اہلِ بیت تم سے ناپاکی دور کرے اور تمہیں خوب پاک کرے» (احزاب ۳۳:۳۳)۔', ['muslim', 2424]]],
+  'bilal': [
+    ['When the adhan was first given in Madinah, the Prophet ﷺ said: “O Bilal, get up and call to the prayer,” making him the first muʾadhdhin of Islam.', 'جب مدینہ میں اذان شروع ہوئی تو نبی ﷺ نے فرمایا: «اے بلال! اٹھو اور نماز کے لیے پکارو»، یوں وہ اسلام کے پہلے مؤذن بنے۔', ['bukhari', 604]],
+    ['The Prophet ﷺ would say: “O Bilal, call the iqamah for the prayer; give us rest with it.”', 'نبی ﷺ فرماتے: «اے بلال! نماز کی اقامت کہو، ہمیں اس سے راحت پہنچاؤ۔»', ['abudawud', 4985]]],
+  'abu-hurayrah': [
+    ['Abu Hurayrah asked who would be happiest with the Prophet’s intercession. He ﷺ said: “I thought no one would ask me this before you, because of your eagerness for hadith,” and answered: whoever says “there is no god but Allah” sincerely from the heart.', 'حضرت ابو ہریرہ نے پوچھا کہ آپ ﷺ کی شفاعت کا سب سے زیادہ حقدار کون ہوگا؟ فرمایا: «مجھے یقین تھا کہ تم سے پہلے کوئی یہ نہیں پوچھے گا، کیونکہ تمہیں حدیث کا بہت شوق ہے»، پھر فرمایا: جو دل کے اخلاص سے «لا الٰہ الا اللہ» کہے۔', ['bukhari', 99]],
+    ['He went hungry so often in the masjid that he would press a stone to his stomach; once the Prophet ﷺ gave him a single cup of milk to serve all the people of the Suffah first, and it filled them all before he drank.', 'وہ مسجد میں اتنی بھوک کاٹتے کہ پیٹ پر پتھر باندھ لیتے؛ ایک بار نبی ﷺ نے انہیں دودھ کا ایک پیالہ دیا کہ پہلے سب اہلِ صفہ کو پلائیں، اور سب سیر ہو گئے، پھر انہوں نے پیا۔', ['bukhari', 6452]]],
+  'khalid-ibn-al-walid': [
+    ['When collectors complained that Khalid had not paid zakat, the Prophet ﷺ said: “You are wronging Khalid; he has set aside his armour and weapons for the cause of Allah.”', 'جب زکوٰۃ وصول کرنے والوں نے شکایت کی کہ خالد نے زکوٰۃ نہیں دی تو نبی ﷺ نے فرمایا: «تم خالد پر زیادتی کرتے ہو، انہوں نے اپنی زرہیں اور ہتھیار اللہ کی راہ میں وقف کر رکھے ہیں۔»', ['bukhari', 1468]]],
+  'abu-ubaydah': [
+    ['When the people of Najran asked for a trustworthy man, the Prophet ﷺ said: “I will send you a man who is truly trustworthy,” and sent Abu ʿUbaydah.', 'جب نجران والوں نے امانت دار آدمی مانگا تو نبی ﷺ نے فرمایا: «میں تمہارے پاس ایسا آدمی بھیجوں گا جو واقعی امانت دار ہے»، اور ابو عبیدہ کو بھیجا۔', ['bukhari', 4380]],
+    ['He led an expedition of three hundred men by the sea who ran so short of food that each lived on one date a day, until Allah sent them a huge whale that fed them for weeks.', 'انہوں نے سمندر کے کنارے تین سو آدمیوں کی ایک مہم کی قیادت کی جن کا کھانا اتنا کم ہو گیا کہ ہر ایک کو روزانہ ایک کھجور ملتی، یہاں تک کہ اللہ نے ایک بہت بڑی مچھلی بھیجی جو انہیں ہفتوں کافی رہی۔', ['bukhari', 4361]]],
+  'abdullah-ibn-masud': [
+    ['The Prophet ﷺ said: “Take the Quran from four,” and named ʿAbdullah ibn Masʿud first.', 'نبی ﷺ نے فرمایا: «قرآن چار آدمیوں سے سیکھو»، اور ان میں سب سے پہلے عبداللہ بن مسعود کا نام لیا۔', ['bukhari', 3758]],
+    ['He said: “By Allah, there is no surah of the Book of Allah except that I know where it was revealed, and no verse except that I know about whom it was revealed.”', 'انہوں نے فرمایا: «اللہ کی قسم! کتاب اللہ کی کوئی سورت نہیں جس کے بارے میں مجھے معلوم نہ ہو کہ کہاں نازل ہوئی، اور کوئی آیت نہیں جس کے بارے میں مجھے معلوم نہ ہو کہ کس کے بارے میں نازل ہوئی۔»', ['bukhari', 5002]]],
+  'musab-ibn-umayr': [
+    ['Al-Baraʾ said the first of the Companions to come to Madinah were Musʿab ibn ʿUmayr and Ibn Umm Maktum, and they began teaching people the Quran.', 'حضرت براء فرماتے ہیں کہ مدینہ میں سب سے پہلے مصعب بن عمیر اور ابن ام مکتوم آئے، اور وہ لوگوں کو قرآن پڑھانے لگے۔', ['bukhari', 3925]],
+    ['Years later, ʿAbd ar-Rahman ibn ʿAwf wept at a meal while fasting, remembering that Musʿab, who was better than him, was martyred and had only a sheet to be shrouded in.', 'برسوں بعد حضرت عبدالرحمٰن بن عوف روزہ افطار کرتے ہوئے رو پڑے، یہ یاد کر کے کہ مصعب جو ان سے بہتر تھے شہید ہوئے اور کفن کے لیے صرف ایک چادر تھی۔', ['bukhari', 1274]]],
+};
+for (const c of COMPANIONS) if (MORE_FACTS[c.s]) c.f.push(...MORE_FACTS[c.s]);
+
 module.exports = { COMPANIONS };
