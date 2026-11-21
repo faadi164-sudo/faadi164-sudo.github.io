@@ -3318,6 +3318,7 @@ const { NAMES99, NAMES99_DHIKR } = require('./data/names99.js');
 const { IPHRASES, IGLOSSARY } = require('./data/phrases-islamic.js');
 const { VERSE_TOPICS } = require('./data/verses-topics.js');
 const { IQUIZ } = require('./data/islamic-quiz.js');
+const { PROPHETS } = require('./data/prophets.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -3891,6 +3892,8 @@ function buildSearchIndex(lang) {
   add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
   add('الْأَسْمَاءُ الْحُسْنَى', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah (Asma ul Husna)', ur ? 'اسماء الحسنیٰ معنی کے ساتھ' : 'All 99 names with meanings', '99-names-of-allah.html', 'page');
   NAMES99.forEach((x, i) => add(x[1], x[2], (ur ? x[4] : x[3]) + (ur ? ' · اللہ کا نام' : ' · Name of Allah'), n99File(x), 'page'));
+  add('', ur ? 'انبیاء کے قصے' : 'Stories of the prophets', ur ? 'قرآن سے، آیات کے ساتھ' : 'From the Quran, with verses', 'stories-of-the-prophets.html', 'page');
+  PROPHETS.forEach((p) => add(p.ar, ur ? `حضرت ${p.ur} علیہ السلام کا قصہ` : `Story of Prophet ${p.en}`, ur ? 'انبیاء کے قصے' : 'Stories of the prophets', prFile(p), 'page'));
   add('', ur ? 'اسلامی کوئز' : 'Islamic quiz', ur ? 'نماز، قرآن، انبیاء، ارکانِ اسلام، دعائیں' : 'Salah, Quran, prophets, basics, duas', 'islamic-quiz.html', 'page');
   IQUIZ.forEach((z) => add('', ur ? z.ur : z.en, ur ? 'کوئز' : 'Quiz', 'islamic-quiz-' + z.slug + '.html', 'page'));
   add('', ur ? 'موضوع کے لحاظ سے قرآنی آیات' : 'Quran verses by topic', ur ? 'صبر، امید، والدین، رزق، دعا…' : 'Patience, hope, parents, rizq, dua…', 'quran-verses.html', 'page');
@@ -5456,7 +5459,7 @@ ${QURAN.length ? `<section id="all">
 <section>
   <h2>${C.moreH}</h2>
   <div class="cards">
-    ${[['quran-verses.html', ur ? 'موضوع کے لحاظ سے آیات' : 'Quran verses by topic', ur ? `صبر، امید، والدین، رزق، دعا اور ${num(lang, VERSE_TOPICS.length)} موضوعات؛ ہر آیت واٹس ایپ یا تصویر کے طور پر شیئر کریں۔` : `Patience, hope, parents, rizq, dua and more: ${VERSE_TOPICS.length} topics, every verse shareable on WhatsApp or as an image.`], C.listen, C.duas, C.prayer, C.common, ...(ROOTS ? [['quran-roots.html', ur ? 'قرآن کے عربی مادے' : 'Arabic roots of the Quran', ur ? `قرآن کے ${ud(ROOT_LIST.length)} عام مادے، ہر مادے سے بنے الفاظ اور آیات کی مثالیں۔` : `The ${ROOT_LIST.length} most common roots, every word built from them, and example verses.`]] : [])].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
+    ${[['stories-of-the-prophets.html', ur ? 'انبیاء کے قصے' : 'Stories of the prophets', ur ? `آدم سے عیسیٰ تک ${num(lang, PROPHETS.length)} انبیاء کے قصے صرف قرآن سے، آیات کے حوالوں کے ساتھ۔` : `${PROPHETS.length} prophets from Adam to ʿIsa, told only from the Quran with verse references.`], ['quran-verses.html', ur ? 'موضوع کے لحاظ سے آیات' : 'Quran verses by topic', ur ? `صبر، امید، والدین، رزق، دعا اور ${num(lang, VERSE_TOPICS.length)} موضوعات؛ ہر آیت واٹس ایپ یا تصویر کے طور پر شیئر کریں۔` : `Patience, hope, parents, rizq, dua and more: ${VERSE_TOPICS.length} topics, every verse shareable on WhatsApp or as an image.`], C.listen, C.duas, C.prayer, C.common, ...(ROOTS ? [['quran-roots.html', ur ? 'قرآن کے عربی مادے' : 'Arabic roots of the Quran', ur ? `قرآن کے ${ud(ROOT_LIST.length)} عام مادے، ہر مادے سے بنے الفاظ اور آیات کی مثالیں۔` : `The ${ROOT_LIST.length} most common roots, every word built from them, and example verses.`]] : [])].map(([f, h, p]) => `<a class="card" href="${link(lang, f)}"><h3>${h}</h3><p>${p}</p></a>`).join('\n    ')}
   </div>
 </section>
 <section class="box">
@@ -5592,6 +5595,43 @@ ${verseHtml(lang, v, 255, 2)}
 <section class="also"><h2>${ur ? 'کب پڑھیں' : 'When to read it'}</h2><div class="also-grid">${when.map(([t, f]) => `<a href="${link(lang, f)}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${t}</a>`).join('')}<a href="${link(lang, 'quran-' + q.slug + '.html')}#v255"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'سورہ بقرہ میں دیکھیں' : 'See it in Surah Al-Baqarah'}</a></div></section>
 <p class="note">${QURAN_FULL_NOTE[lang]}</p>`;
   return layout(lang, { file: 'ayatul-kursi.html', section: 'quran', title, desc, body });
+}
+
+// ---------------------------------------------------------------- Stories of the prophets (data/prophets.js)
+const prFile = (p) => 'story-of-prophet-' + p.s + '.html';
+const prAS = (lang) => lang === 'ur' ? 'علیہ السلام' : '(peace be upon him)';
+function prophetsHub(lang) {
+  const ur = lang === 'ur';
+  const title = ur ? 'انبیاء کے قصے قرآن سے — آدم، نوح، ابراہیم، یوسف، موسیٰ، عیسیٰ علیہم السلام | حرف' : 'Stories of the prophets from the Quran: Adam, Nuh, Ibrahim, Yusuf, Musa, ʿIsa | Harf';
+  const desc = ur ? `${num(lang, PROPHETS.length)} انبیاء کے قصے صرف قرآن سے، آیات کے حوالوں کے ساتھ: ہر قصے میں اہم آیات عربی اور ترجمے کے ساتھ، اور اسباق۔ بچوں اور بڑوں کے لیے۔` : `The stories of ${PROPHETS.length} prophets told only from the Quran, with verse references, the key verses in Arabic with translation, and lessons. For children and adults.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', ur ? 'قرآن' : 'Quran'], [null, ur ? 'انبیاء کے قصے' : 'Stories of the prophets']])}
+<p class="eyebrow">${ur ? 'قرآن سے' : 'From the Quran'}</p>
+<h1>${ur ? 'انبیاء کے قصے' : 'Stories of the prophets'}</h1>
+<p class="lead">${ur ? '«ان کے قصوں میں عقل والوں کے لیے عبرت ہے» (یوسف ۱۱۱)۔ یہ قصے صرف قرآن سے بیان کیے گئے ہیں، ہر بات کے ساتھ آیت کا حوالہ، تاکہ آپ خود قرآن میں پڑھ سکیں۔' : '“In their stories there is a lesson for people of understanding” (Quran 12:111). These stories are told only from the Quran, with the verse for every detail, so you can read it there yourself.'}</p>
+<div class="cards">${PROPHETS.map((p) => `<a class="card" href="${link(lang, prFile(p))}"><span class="cg" lang="ar" aria-hidden="true">${p.ar}</span><h3>${ur ? p.ur : p.en} <small>${prAS(lang)}</small></h3><p>${esc(ur ? p.sec[0][1] + '، ' + p.sec[1][1] + '، ' + p.sec[2][1] : p.sec[0][0] + ', ' + p.sec[1][0].toLowerCase() + ', ' + p.sec[2][0].toLowerCase())}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('')}</div>
+<section class="box"><p>${ur ? 'ہم نے یہ قصے صرف قرآن کی آیات سے لکھے ہیں اور اسرائیلی روایات سے گریز کیا ہے۔ انبیاء کی کوئی تصویر نہیں بنائی جاتی۔ مزید انبیاء کے قصے جلد شامل کیے جائیں گے، ان شاء اللہ۔' : 'These stories are written only from the verses of the Quran, avoiding Israʾiliyyat (unverified reports from earlier scriptures). The prophets are never pictured. More prophets will be added soon, in shāʾ Allāh.'}</p></section>
+<section class="also"><h2>${ur ? 'مزید' : 'More'}</h2><div class="also-grid"><a href="${link(lang, 'islamic-quiz-prophets.html')}"><span class="k k-new">${ur ? 'کوئز' : 'Quiz'}</span>${ur ? 'انبیاء کوئز' : 'Prophets quiz'}</a><a href="${link(lang, 'quran-verses.html')}"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'موضوع وار آیات' : 'Verses by topic'}</a><a href="${link(lang, 'classic-tales.html')}"><span class="k k-guide">${ur ? 'کہانیاں' : 'Stories'}</span>${ur ? 'عربی کہانیاں' : 'Arabic tales'}</a></div></section>`;
+  return layout(lang, { file: 'stories-of-the-prophets.html', section: 'quran', title, desc, body });
+}
+function prophetPage(lang, i) {
+  const ur = lang === 'ur';
+  const p = PROPHETS[i], name = ur ? p.ur : p.en;
+  const title = ur ? `حضرت ${p.ur} علیہ السلام کا قصہ قرآن سے — آیات اور اسباق کے ساتھ | حرف` : `Story of Prophet ${p.en} from the Quran, with verses and lessons | Harf`;
+  const desc = ur ? `حضرت ${p.ur} علیہ السلام کا قصہ صرف قرآن سے: ${p.sec.map((x) => x[1]).join('، ')}۔ اہم آیات عربی اور اردو ترجمے کے ساتھ۔` : `The story of Prophet ${p.en} told from the Quran: ${p.sec.map((x) => x[0].toLowerCase()).join(', ')}. With the key verses in Arabic and English, and lessons.`;
+  const vs = QURAN.length ? vtVerses(p.v) : [];
+  const fix = (t) => esc(t).replace(/\((\d+:\d+(?:–\d+)?(?:[;,] ?\d+:\d+(?:–\d+)?)*)\)/g, (m, r) => '(' + r + ')');
+  const prev = PROPHETS[i - 1], next = PROPHETS[i + 1];
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['stories-of-the-prophets.html', ur ? 'انبیاء کے قصے' : 'Stories of the prophets'], [null, name]])}
+<p class="eyebrow">${ur ? 'انبیاء کے قصے، قرآن سے' : 'Stories of the prophets, from the Quran'}</p>
+<h1>${ur ? `حضرت ${p.ur} علیہ السلام کا قصہ` : `The story of Prophet ${esc(p.en)} <small>${prAS(lang)}</small>`}</h1>
+<p class="ar" lang="ar" style="font-size:40px;color:var(--accent);margin:0 0 10px">${p.ar} <span style="font-size:22px">عَلَيْهِ السَّلَام</span></p>
+${p.sec.map((x, k) => `<section><h2>${num(lang, k + 1)}. ${esc(ur ? x[1] : x[0])}</h2><p>${fix(ur ? x[3] : x[2])}</p></section>`).join('\n')}
+${vs.length ? `<h2 class="orn">${ur ? 'اہم آیات' : 'Key verses'}</h2>${vs.map((x, k) => vtCardHtml(lang, x, k + 1, name)).join('\n')}` : ''}
+<section class="box"><h2>${ur ? 'اسباق' : 'Lessons'}</h2><ul>${p.les.map((l) => `<li>${esc(ur ? l[1] : l[0])}</li>`).join('')}</ul></section>
+<p>${ur ? 'پورا قصہ قرآن میں پڑھیں:' : 'Read the full story in the Quran:'} ${p.su.map((n) => { const q = QURAN.find((z) => z.n === n); return q ? `<a class="btn sm" href="${link(lang, 'quran-' + q.slug + '.html')}">${ur ? q.ur : 'Surah ' + q.en}</a>` : ''; }).join(' ')}</p>
+<nav class="n99-nav">${prev ? `<a class="btn" href="${link(lang, prFile(prev))}">${ur ? '→ ' + prev.ur : '← ' + esc(prev.en)}</a>` : '<span></span>'}<a class="btn" href="${link(lang, 'stories-of-the-prophets.html')}">${ur ? 'تمام قصے' : 'All stories'}</a>${next ? `<a class="btn" href="${link(lang, prFile(next))}">${ur ? next.ur + ' ←' : esc(next.en) + ' →'}</a>` : '<span></span>'}</nav>
+<p class="small">${ur ? 'یہ قصہ صرف قرآن کی آیات سے بیان کیا گیا ہے؛ قوسین میں سورت:آیت نمبر ہیں۔' : 'This story is told only from the verses of the Quran; the numbers in brackets are surah:verse.'} <a href="${link(lang, 'islamic-quiz-prophets.html')}">${ur ? 'انبیاء کوئز کھیلیں ←' : 'Play the prophets quiz →'}</a></p>`;
+  return layout(lang, { file: prFile(p), section: 'quran', title, desc, body });
 }
 
 // ---------------------------------------------------------------- Islamic quizzes (data/islamic-quiz.js)
@@ -9644,6 +9684,7 @@ function build() {
     add(lang, '99-names-of-allah.html', names99HubPage(lang));
     if (QURAN.length) add(lang, 'salah-for-kids.html', salahKidsPage(lang));
     if (QURAN.length) { add(lang, 'quran-verses.html', verseTopicsHub(lang)); VERSE_TOPICS.forEach((t, i) => add(lang, t[0] + '.html', verseTopicPage(lang, i))); }
+    if (QURAN.length) { add(lang, 'stories-of-the-prophets.html', prophetsHub(lang)); PROPHETS.forEach((p, i) => add(lang, prFile(p), prophetPage(lang, i))); }
     add(lang, 'islamic-quiz.html', islamicQuizHub(lang));
     IQUIZ.forEach((z, i) => add(lang, 'islamic-quiz-' + z.slug + '.html', islamicQuizPage(lang, i)));
     add(lang, 'islamic-phrases.html', islamicPhrasesHub(lang));
