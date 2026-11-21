@@ -3321,6 +3321,8 @@ const { IQUIZ } = require('./data/islamic-quiz.js');
 const { PROPHETS } = require('./data/prophets.js');
 const { COMPANIONS } = require('./data/companions.js');
 const { GUIDES_ISLAM } = require('./data/guides-islam.js');
+const { PHRASES_MORE } = require('./data/phrases-more.js');
+const { VOCAB_MORE } = require('./data/vocab-more.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -5368,6 +5370,10 @@ function topicPage(lang, i) {
 <h1>${title}</h1>
 <p class="lead">${fmt(ur ? t.introUr : t.introEn)}</p>
 ${deckHtml(lang, t.slug, t.words)}
+${VOCAB_MORE[t.slug] ? `<h2>${ur ? 'جملوں میں استعمال' : 'Use them in sentences'}</h2>
+<div class="phr">${VOCAB_MORE[t.slug].s.map(([a, tr, en, u]) => `<div class="ph"><span class="ar" lang="ar">${a}</span><span class="tr latin">${esc(tr)}</span><span class="mean">${esc(ur ? u : en)}</span>${say(lang, a)}</div>`).join('')}</div>
+<h2>${ur ? 'سیکھنے کا مشورہ' : 'Learning tip'}</h2>
+<p>${gfmt(lang, VOCAB_MORE[t.slug].tip[ur ? 1 : 0])}</p>` : ''}
 <nav class="pager" aria-label="${T[lang].nav.vocabulary}">
   ${prev ? `<a class="btn" href="${link(lang, 'vocab-' + prev.slug + '.html')}">${T[lang].prev}: ${ur ? prev.ur : prev.en}</a>` : '<span></span>'}
   ${next ? `<a class="btn primary" href="${link(lang, 'vocab-' + next.slug + '.html')}">${ur ? 'اگلا' : 'Next'}: ${ur ? next.ur + ' ←' : next.en + ' →'}</a>` : `<a class="btn primary" href="${link(lang, 'quiz.html')}">${ur ? 'کوئز دیں ←' : 'Take the quiz →'}</a>`}
@@ -6099,6 +6105,17 @@ function islamicPhrasesHub(lang) {
 <section class="also"><h2>${ur ? 'مزید' : 'More'}</h2><div class="also-grid"><a href="${link(lang, '99-names-of-allah.html')}"><span class="k k-new">${ur ? 'نیا' : 'New'}</span>${ur ? 'اللہ کے ۹۹ نام' : 'The 99 Names of Allah'}</a><a href="${link(lang, 'what-to-say-after-salah.html')}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${ur ? 'نماز کے بعد کیا پڑھیں' : 'What to say after salah'}</a><a href="${link(lang, 'hisn-al-muslim.html')}"><span class="k k-dua">${ur ? 'دعائیں' : 'Duas'}</span>${ur ? 'حصن المسلم' : 'Hisn al-Muslim'}</a></div></section>`;
   return layout(lang, { file: 'islamic-phrases.html', section: 'phrases', title, desc, body });
 }
+// Examples, variants and questions for a phrase page (data/phrases-more.js)
+function ipMore(lang, p) {
+  const m = PHRASES_MORE[p.s];
+  if (!m) return '';
+  const ur = lang === 'ur', k = ur ? 1 : 0;
+  const ex = m.ex ? `<h2>${ur ? 'روزمرہ میں مثالیں' : 'Examples in everyday life'}</h2><ul>${m.ex.map((e) => `<li>${gfmt(lang, e[k])}</li>`).join('')}</ul>` : '';
+  const vr = m.var ? `<h2>${ur ? 'صیغے اور عام غلطیاں' : 'Variants and common mistakes'}</h2><p>${gfmt(lang, m.var[k])}</p>` : '';
+  const fq = m.faq ? `<h2>${ur ? 'عام سوالات' : 'Questions people ask'}</h2>${m.faq.map((f) => `<h3>${esc(ur ? f[2] : f[0])}</h3><p>${gfmt(lang, ur ? f[3] : f[1])}</p>`).join('')}` : '';
+  return ex + vr + fq;
+}
+
 function islamicPhrasePage(lang, i) {
   const ur = lang === 'ur';
   const p = IPHRASES[i];
@@ -6119,6 +6136,7 @@ ${reply}
 <h2>${ur ? 'قرآن و سنت میں' : 'In the Quran and Sunnah'}</h2>
 <p>${esc(ur ? p.noteUr : p.noteEn)}</p>
 ${src ? `<p class="small">${ur ? 'حوالہ' : 'Source'}: ${src}</p>` : ''}
+${ipMore(lang, p)}
 <section class="also"><h2>${ur ? 'متعلقہ جملے' : 'Related phrases'}</h2><div class="n99-grid">${p.also.map((s) => IPHRASES.find((x) => x.s === s)).filter(Boolean).map((x) => ipCard(lang, x)).join('')}</div>
 <p><a class="btn" href="${link(lang, 'islamic-phrases.html')}">${ur ? `تمام ${num(lang, IPHRASES.length)} اسلامی جملے اور لغت ←` : `All ${IPHRASES.length} Islamic phrases and the glossary →`}</a></p></section>`;
   return layout(lang, { file: ipFile(p), section: 'phrases', title, desc, body });
