@@ -3319,6 +3319,7 @@ const { IPHRASES, IGLOSSARY } = require('./data/phrases-islamic.js');
 const { VERSE_TOPICS } = require('./data/verses-topics.js');
 const { IQUIZ } = require('./data/islamic-quiz.js');
 const { PROPHETS } = require('./data/prophets.js');
+const { COMPANIONS } = require('./data/companions.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -3892,6 +3893,8 @@ function buildSearchIndex(lang) {
   add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
   add('الْأَسْمَاءُ الْحُسْنَى', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah (Asma ul Husna)', ur ? 'اسماء الحسنیٰ معنی کے ساتھ' : 'All 99 names with meanings', '99-names-of-allah.html', 'page');
   NAMES99.forEach((x, i) => add(x[1], x[2], (ur ? x[4] : x[3]) + (ur ? ' · اللہ کا نام' : ' · Name of Allah'), n99File(x), 'page'));
+  add('', ur ? 'صحابۂ کرام' : 'Companions of the Prophet ﷺ', ur ? 'صحیح احادیث سے' : 'From authentic hadith', 'companions-of-the-prophet.html', 'page');
+  COMPANIONS.forEach((c) => add(c.ar, ur ? c.ur : c.en, ur ? c.tUr : c.tEn, cpFile(c), 'page'));
   add('', ur ? 'انبیاء کے قصے' : 'Stories of the prophets', ur ? 'قرآن سے، آیات کے ساتھ' : 'From the Quran, with verses', 'stories-of-the-prophets.html', 'page');
   PROPHETS.forEach((p) => add(p.ar, ur ? `حضرت ${p.ur} علیہ السلام کا قصہ` : `Story of Prophet ${p.en}`, ur ? 'انبیاء کے قصے' : 'Stories of the prophets', prFile(p), 'page'));
   add('', ur ? 'اسلامی کوئز' : 'Islamic quiz', ur ? 'نماز، قرآن، انبیاء، ارکانِ اسلام، دعائیں' : 'Salah, Quran, prophets, basics, duas', 'islamic-quiz.html', 'page');
@@ -5634,6 +5637,45 @@ ${vs.length ? `<h2 class="orn">${ur ? 'اہم آیات' : 'Key verses'}</h2>${vs
   return layout(lang, { file: prFile(p), section: 'quran', title, desc, body });
 }
 
+// ---------------------------------------------------------------- Companions of the Prophet ﷺ (data/companions.js)
+const cpFile = (c) => 'companion-' + c.s + '.html';
+const cpRA = (lang, c) => lang === 'ur' ? (c.ra === 'anha' ? 'رضی اللہ عنہا' : 'رضی اللہ عنہ') : (c.ra === 'anha' ? '(may Allah be pleased with her)' : '(may Allah be pleased with him)');
+function cpSrc(lang, src) {
+  const ur = lang === 'ur'; const [b, n] = src;
+  if (b === 'q') { const [s, a] = n.split(':').map(Number); const q = QURAN.find((z) => z.n === s); return q ? `<a href="${link(lang, 'quran-' + q.slug + '.html')}#v${a}">${ur ? `قرآن ${num(lang, s)}:${num(lang, a)}` : `Quran ${s}:${a}`}</a>` : ''; }
+  const x = SN(b, n); return `<a href="${x.u}" target="_blank" rel="noopener" class="latin" dir="ltr">${esc(x.t)}</a>`;
+}
+function companionsHub(lang) {
+  const ur = lang === 'ur';
+  const title = ur ? 'صحابۂ کرام — ابو بکر، عمر، عثمان، علی، خدیجہ، عائشہ، بلال رضی اللہ عنہم: صحیح احادیث سے | حرف' : 'Companions of the Prophet ﷺ: Abu Bakr, Umar, Uthman, Ali, Khadijah, Aishah, Bilal, from authentic hadith | Harf';
+  const desc = ur ? `${num(lang, COMPANIONS.length)} صحابۂ کرام کا تعارف، ہر بات قرآن یا صحیح حدیث کے حوالے کے ساتھ۔` : `Short profiles of ${COMPANIONS.length} companions of the Prophet ﷺ, with every fact sourced to the Quran or authentic hadith.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['duas.html', ur ? 'دعائیں' : 'Duas'], [null, ur ? 'صحابۂ کرام' : 'Companions']])}
+<p class="eyebrow">${ur ? 'سیرت' : 'Seerah'}</p>
+<h1>${ur ? 'صحابۂ کرام رضی اللہ عنہم' : 'Companions of the Prophet ﷺ'}</h1>
+<p class="lead">${ur ? '«اللہ ان سے راضی ہوا اور وہ اللہ سے راضی ہوئے» (التوبہ ۱۰۰)۔ ان مختصر تعارفوں میں ہر بات کے ساتھ قرآن یا صحیح حدیث کا حوالہ ہے۔' : '“Allah is pleased with them and they are pleased with Him” (Quran 9:100). In these short profiles every fact links to its source in the Quran or authentic hadith.'}</p>
+<div class="cards">${COMPANIONS.map((c) => `<a class="card" href="${link(lang, cpFile(c))}"><span class="cg" lang="ar" aria-hidden="true">${c.ar}</span><h3>${ur ? c.ur : c.en}</h3><p><strong>${esc(ur ? c.tUr : c.tEn)}</strong> · ${esc((ur ? c.iUr : c.iEn).split(/[.۔]/)[0])}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('')}</div>
+<section class="also"><h2>${ur ? 'مزید' : 'More'}</h2><div class="also-grid"><a href="${link(lang, 'stories-of-the-prophets.html')}"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'انبیاء کے قصے' : 'Stories of the prophets'}</a><a href="${link(lang, 'islamic-quiz.html')}"><span class="k k-new">${ur ? 'کوئز' : 'Quiz'}</span>${ur ? 'اسلامی کوئز' : 'Islamic quizzes'}</a><a href="${link(lang, 'radiyallahu-anhu-meaning.html')}"><span class="k k-guide">${ur ? 'جملے' : 'Phrases'}</span>${ur ? 'رضی اللہ عنہ کا مطلب' : 'What “raḍiyallāhu ʿanhu” means'}</a></div></section>`;
+  return layout(lang, { file: 'companions-of-the-prophet.html', section: 'duas', title, desc, body });
+}
+function companionPage(lang, i) {
+  const ur = lang === 'ur';
+  const c = COMPANIONS[i], name = ur ? c.ur : c.en;
+  const title = ur ? `${c.ur} ${cpRA(lang, c)} — ${c.tUr}: حالات اور فضائل صحیح احادیث سے | حرف` : `${c.en}: ${c.tEn}. Life and virtues from authentic hadith | Harf`;
+  const desc = ur ? `${c.iUr}` : `${c.iEn}`;
+  const prev = COMPANIONS[i - 1], next = COMPANIONS[i + 1];
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['companions-of-the-prophet.html', ur ? 'صحابۂ کرام' : 'Companions'], [null, name]])}
+<p class="eyebrow">${esc(ur ? c.tUr : c.tEn)}</p>
+<h1>${esc(name)} <small>${cpRA(lang, c)}</small></h1>
+<p class="ar" lang="ar" style="font-size:38px;color:var(--accent);margin:0 0 10px">${c.ar} <span style="font-size:20px">${c.ra === 'anha' ? 'رَضِيَ اللّٰهُ عَنْهَا' : 'رَضِيَ اللّٰهُ عَنْهُ'}</span></p>
+<p class="lead">${esc(ur ? c.iUr : c.iEn)}</p>
+<h2>${ur ? 'قرآن و حدیث میں' : 'In the Quran and hadith'}</h2>
+<div class="ks">${c.f.map((f, k) => `<div class="ks-c" style="grid-template-columns:44px 1fr"><div class="ks-n"><b>${num(lang, k + 1)}</b></div><div><p>${esc(ur ? f[1] : f[0])}</p><p class="small">${ur ? 'حوالہ' : 'Source'}: ${cpSrc(lang, f[2])}</p></div></div>`).join('')}</div>
+<section class="box"><h2>${ur ? 'سبق' : 'Lesson'}</h2><p>${esc(ur ? c.lUr : c.lEn)}</p></section>
+<nav class="n99-nav">${prev ? `<a class="btn" href="${link(lang, cpFile(prev))}">${ur ? '→ ' + prev.ur : '← ' + esc(prev.en)}</a>` : '<span></span>'}<a class="btn" href="${link(lang, 'companions-of-the-prophet.html')}">${ur ? 'تمام صحابہ' : 'All companions'}</a>${next ? `<a class="btn" href="${link(lang, cpFile(next))}">${ur ? next.ur + ' ←' : esc(next.en) + ' →'}</a>` : '<span></span>'}</nav>
+<p class="small">${ur ? 'تمام احادیث sunnah.com پر کھلتی ہیں تاکہ آپ خود پڑھ سکیں۔' : 'Every hadith opens on sunnah.com so you can read it yourself.'}</p>`;
+  return layout(lang, { file: cpFile(c), section: 'duas', title, desc, body });
+}
+
 // ---------------------------------------------------------------- Islamic quizzes (data/islamic-quiz.js)
 const IQ_CSS = `
 .iq{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0 26px}
@@ -6218,7 +6260,7 @@ function duasPage(lang) {
     ${DUA_TOPICS.map((t) => `<a class="chip" href="${link(lang, t.slug + '.html')}">${t.icon} ${ur ? t.ur : t.en}</a>`).join('\n    ')}
   </div>
 </section>
-${HISN.length ? `<p class="row" style="margin:-8px 0 18px"><a class="btn primary" href="${link(lang, '99-names-of-allah.html')}">${ur ? '✨ اللہ کے ۹۹ نام' : '✨ 99 Names of Allah'}</a> <a class="btn" href="${link(lang, 'my-duas.html')}">${ur ? '⭐ میری دعائیں' : '⭐ My duas'}</a> <a class="btn" href="${link(lang, 'challenges.html')}">${ur ? '🏁 روزانہ چیلنجز' : '🏁 Daily challenges'}</a> <a class="btn" href="harf-daily-${lang}.ics" download>${ur ? '📅 ہر صبح یاد دہانی' : '📅 Daily reminder'}</a></p>` : ''}
+${HISN.length ? `<p class="row" style="margin:-8px 0 18px"><a class="btn primary" href="${link(lang, '99-names-of-allah.html')}">${ur ? '✨ اللہ کے ۹۹ نام' : '✨ 99 Names of Allah'}</a> <a class="btn" href="${link(lang, 'stories-of-the-prophets.html')}">${ur ? '📜 انبیاء کے قصے' : '📜 Prophets'}</a> <a class="btn" href="${link(lang, 'companions-of-the-prophet.html')}">${ur ? '🌟 صحابۂ کرام' : '🌟 Companions'}</a><a class="btn" href="${link(lang, 'my-duas.html')}">${ur ? '⭐ میری دعائیں' : '⭐ My duas'}</a> <a class="btn" href="${link(lang, 'challenges.html')}">${ur ? '🏁 روزانہ چیلنجز' : '🏁 Daily challenges'}</a> <a class="btn" href="harf-daily-${lang}.ics" download>${ur ? '📅 ہر صبح یاد دہانی' : '📅 Daily reminder'}</a></p>` : ''}
 ${HISN.length ? `<a class="hisn-cta" href="${link(lang, 'hisn-al-muslim.html')}"><span class="dc-ic" aria-hidden="true">🏰</span><span><strong>${ur ? 'حصن المسلم — ہر موقع کی دعائیں' : 'Hisn al-Muslim — duas for every occasion'}</strong><br>${ur ? `${ud(HISN.length)} ابواب، ${ud(HISN_TOTAL)} دعائیں: جاگنا، وضو، مسجد، نماز، سفر، بیماری، جنازہ، موسم، حج اور بہت کچھ` : `${HISN.length} chapters, ${HISN_TOTAL} duas: waking up, wudu, the mosque, prayer, travel, illness, funerals, weather, Hajj and more`}</span><span aria-hidden="true">${ur ? '←' : '→'}</span></a>` : ''}
 <h2>${ur ? 'موضوع کے لحاظ سے' : 'Browse by topic'}</h2>
 <div class="cards dua-cats">
@@ -9685,6 +9727,8 @@ function build() {
     if (QURAN.length) add(lang, 'salah-for-kids.html', salahKidsPage(lang));
     if (QURAN.length) { add(lang, 'quran-verses.html', verseTopicsHub(lang)); VERSE_TOPICS.forEach((t, i) => add(lang, t[0] + '.html', verseTopicPage(lang, i))); }
     if (QURAN.length) { add(lang, 'stories-of-the-prophets.html', prophetsHub(lang)); PROPHETS.forEach((p, i) => add(lang, prFile(p), prophetPage(lang, i))); }
+    add(lang, 'companions-of-the-prophet.html', companionsHub(lang));
+    COMPANIONS.forEach((c, i) => add(lang, cpFile(c), companionPage(lang, i)));
     add(lang, 'islamic-quiz.html', islamicQuizHub(lang));
     IQUIZ.forEach((z, i) => add(lang, 'islamic-quiz-' + z.slug + '.html', islamicQuizPage(lang, i)));
     add(lang, 'islamic-phrases.html', islamicPhrasesHub(lang));
