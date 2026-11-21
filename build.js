@@ -3317,6 +3317,7 @@ const { DUA_CATS, DUA_TOPICS, BOOKS: DUA_BOOKS } = require('./data/duas.js');
 const { NAMES99, NAMES99_DHIKR } = require('./data/names99.js');
 const { IPHRASES, IGLOSSARY } = require('./data/phrases-islamic.js');
 const { VERSE_TOPICS } = require('./data/verses-topics.js');
+const { IQUIZ } = require('./data/islamic-quiz.js');
 // Hisn al-Muslim (Fortress of the Muslim): 132 chapters. Arabic from the book, sources from sunnah.com/hisn,
 // meanings written for Harf (data/hisn.json). Items reuse duaHtml(); `say` is the Arabic to transliterate.
 const HISN = (() => {
@@ -3890,6 +3891,8 @@ function buildSearchIndex(lang) {
   add('آيَةُ الْكُرْسِيِّ', ur ? 'آیت الکرسی' : 'Ayat al-Kursi (Ayatul Kursi)', ur ? 'سورہ بقرہ ۲۵۵ — قرآن کی سب سے عظیم آیت' : 'Al-Baqarah 2:255 — the greatest verse of the Quran', 'ayatul-kursi.html', 'surah');
   add('الْأَسْمَاءُ الْحُسْنَى', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah (Asma ul Husna)', ur ? 'اسماء الحسنیٰ معنی کے ساتھ' : 'All 99 names with meanings', '99-names-of-allah.html', 'page');
   NAMES99.forEach((x, i) => add(x[1], x[2], (ur ? x[4] : x[3]) + (ur ? ' · اللہ کا نام' : ' · Name of Allah'), n99File(x), 'page'));
+  add('', ur ? 'اسلامی کوئز' : 'Islamic quiz', ur ? 'نماز، قرآن، انبیاء، ارکانِ اسلام، دعائیں' : 'Salah, Quran, prophets, basics, duas', 'islamic-quiz.html', 'page');
+  IQUIZ.forEach((z) => add('', ur ? z.ur : z.en, ur ? 'کوئز' : 'Quiz', 'islamic-quiz-' + z.slug + '.html', 'page'));
   add('', ur ? 'موضوع کے لحاظ سے قرآنی آیات' : 'Quran verses by topic', ur ? 'صبر، امید، والدین، رزق، دعا…' : 'Patience, hope, parents, rizq, dua…', 'quran-verses.html', 'page');
   VERSE_TOPICS.forEach((t) => add('', ur ? t[2] : t[1], ur ? 'قرآنی آیات' : 'Quran verses', t[0] + '.html', 'page'));
   add('', ur ? 'اسلامی جملے اور اصطلاحات' : 'Islamic phrases and glossary', ur ? 'ان شاء اللہ، ما شاء اللہ، جزاک اللہ خیرا…' : 'InshaAllah, MashaAllah, JazakAllah khair…', 'islamic-phrases.html', 'page');
@@ -5368,6 +5371,7 @@ function quizPage(lang) {
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], [null, T[lang].nav.quiz]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
+<section class="hisn-cta"><p><strong>${ur ? 'نیا: اسلامی کوئز' : 'New: Islamic quizzes'}</strong> ${ur ? 'نماز، قرآن، انبیاء، ارکانِ اسلام اور دعائیں، ہر جواب حوالے کے ساتھ۔' : 'Salah, the Quran, the prophets, Islam basics and duas, every answer with its source.'} <a class="btn primary" href="${link(lang, 'islamic-quiz.html')}">${ur ? 'کھیلیں ←' : 'Play →'}</a></p></section>
 <div class="chips" id="qmode" role="group" aria-label="${ur ? 'کوئز کی قسم' : 'Quiz type'}">
   ${C.modes.map(([m, label], k) => `<button class="chip" type="button" data-m="${m}" aria-pressed="${k === 0}">${label}</button>`).join('')}
 </div>
@@ -5588,6 +5592,82 @@ ${verseHtml(lang, v, 255, 2)}
 <section class="also"><h2>${ur ? 'کب پڑھیں' : 'When to read it'}</h2><div class="also-grid">${when.map(([t, f]) => `<a href="${link(lang, f)}"><span class="k k-dua">${ur ? 'اذکار' : 'Adhkar'}</span>${t}</a>`).join('')}<a href="${link(lang, 'quran-' + q.slug + '.html')}#v255"><span class="k k-quran">${ur ? 'قرآن' : 'Quran'}</span>${ur ? 'سورہ بقرہ میں دیکھیں' : 'See it in Surah Al-Baqarah'}</a></div></section>
 <p class="note">${QURAN_FULL_NOTE[lang]}</p>`;
   return layout(lang, { file: 'ayatul-kursi.html', section: 'quran', title, desc, body });
+}
+
+// ---------------------------------------------------------------- Islamic quizzes (data/islamic-quiz.js)
+const IQ_CSS = `
+.iq{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0 26px}
+.iq-top{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:6px}
+.iq-bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-bottom:14px}.iq-bar i{display:block;height:100%;background:var(--accent);transition:width .2s}
+.iq-q{font-size:20px;font-weight:700;margin:0 0 14px}
+.iq-o{display:grid;gap:8px}
+.iq-o button{font:inherit;text-align:start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);cursor:pointer}
+.iq-o button:hover:not(:disabled){border-color:var(--accent)}
+.iq-o button.ok{background:#e3f4ea;border-color:#2e8b57}.iq-o button.no{background:#fbe5e5;border-color:#c0392b}
+.iq-ex{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--accent-soft)}
+.iq-end{text-align:center}.iq-end .big{font-size:48px;font-weight:800;color:var(--accent);margin:4px 0}
+`;
+const IQ_JS = String.raw`
+(function(){
+  var box=document.getElementById('iqBox'); if(!box) return; var D=JSON.parse(document.getElementById('iq-data').textContent), ur=D.ur;
+  function nu(x){ return ur?String(x).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d];}):String(x); }
+  function sh(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  var Q, i, score;
+  function start(){ Q=sh(D.qs).slice(0,10); i=0; score=0; show(); }
+  function show(){
+    var q=Q[i], opts=sh(q[2].map(function(o,k){ return {t:o,ok:k===0}; }));
+    box.innerHTML='<div class="iq-top"><span>'+(ur?'سوال ':'Question ')+nu(i+1)+' / '+nu(Q.length)+'</span><span>'+(ur?'اسکور: ':'Score: ')+nu(score)+'</span></div><div class="iq-bar"><i style="width:'+(i/Q.length*100)+'%"></i></div><p class="iq-q">'+esc(q[0])+'</p><div class="iq-o">'+opts.map(function(o,k){ return '<button type="button" data-ok="'+(o.ok?1:0)+'">'+esc(o.t)+'</button>'; }).join('')+'</div><div id="iqAfter"></div>';
+    [].forEach.call(box.querySelectorAll('.iq-o button'),function(b){ b.onclick=function(){
+      var ok=b.dataset.ok==='1'; if(ok) score++; [].forEach.call(box.querySelectorAll('.iq-o button'),function(x){ x.disabled=true; if(x.dataset.ok==='1') x.classList.add('ok'); }); if(!ok) b.classList.add('no');
+      try{ if(navigator.vibrate) navigator.vibrate(ok?15:[30,40,30]); }catch(e){}
+      document.getElementById('iqAfter').innerHTML='<p class="iq-ex"><strong>'+(ok?(ur?'✓ درست! ':'✓ Correct! '):(ur?'✗ صحیح جواب نشان زد ہے۔ ':'✗ The right answer is marked. '))+'</strong>'+esc(q[3])+'</p><p class="row" style="margin-top:12px"><button class="btn primary" type="button" id="iqNext">'+(i+1<Q.length?(ur?'اگلا سوال ←':'Next question →'):(ur?'نتیجہ دیکھیں ←':'See my score →'))+'</button></p>';
+      document.getElementById('iqNext').onclick=function(){ i++; if(i<Q.length) show(); else end(); }; document.getElementById('iqNext').focus();
+    }; });
+  }
+  function end(){
+    var key='harf-iq-'+D.slug, best=0; try{ best=+localStorage.getItem(key)||0; if(score>best) localStorage.setItem(key,score); }catch(e){}
+    var msg=score>=9?(ur?'ماشاء اللہ! بہترین':'MashaAllah! Excellent'):score>=6?(ur?'بہت اچھے! تھوڑا اور پڑھیں':'Well done! A little more reading'):(ur?'کوئی بات نہیں، نیچے کے صفحات پڑھ کر دوبارہ کوشش کریں':'No problem: read the pages below and try again');
+    var share=(ur?'میں نے حرف پر «'+D.title+'» میں '+nu(score)+'/'+nu(Q.length)+' اسکور کیا۔ آپ کتنا جانتے ہیں؟ ':'I scored '+score+'/'+Q.length+' on the Harf “'+D.title+'”. How much do you know? ')+location.origin+location.pathname;
+    box.innerHTML='<div class="iq-end"><p>'+(ur?'آپ کا اسکور':'Your score')+'</p><p class="big">'+nu(score)+' / '+nu(Q.length)+'</p><p>'+msg+(best>score?(ur?' · بہترین: '+nu(best):' · Best: '+best):'')+'</p><p class="row" style="justify-content:center"><button class="btn primary" type="button" id="iqAgain">'+(ur?'نئے سوالات':'New questions')+'</button> <a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(share)+'">💬 '+(ur?'دوستوں کو چیلنج کریں':'Challenge friends')+'</a></p></div>';
+    document.getElementById('iqAgain').onclick=start;
+  }
+  start();
+})();
+`;
+function islamicQuizHub(lang) {
+  const ur = lang === 'ur';
+  const title = ur ? 'اسلامی کوئز — نماز، قرآن، انبیاء، ارکانِ اسلام اور دعائیں (جوابات کے ساتھ) | حرف' : 'Islamic quiz: salah, Quran, prophets, pillars and duas (with answers) | Harf';
+  const desc = ur ? `${IQUIZ.length} اسلامی کوئز، ہر ایک میں حوالوں کے ساتھ جوابات: نماز، قرآن، انبیاء، اسلام کی بنیادی باتیں، دعائیں اور اذکار۔ بچوں اور بڑوں کے لیے۔` : `${IQUIZ.length} free Islamic quizzes with sourced answers: salah, the Quran, the prophets, Islam basics, and duas and dhikr. For kids and adults.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quiz.html', T[lang].nav.quiz], [null, ur ? 'اسلامی کوئز' : 'Islamic quiz']])}
+<h1>${ur ? 'اسلامی کوئز' : 'Islamic quizzes'}</h1>
+<p class="lead">${ur ? 'ہر کوئز میں ۱۰ سوال، ہر بار نئی ترتیب۔ ہر جواب کے بعد قرآن یا حدیث کے حوالے کے ساتھ وضاحت۔ گھر والوں کے ساتھ کھیلیں اور دوستوں کو چیلنج کریں۔' : 'Ten questions each, in a new order every time. After each answer you get a short explanation with its Quran or hadith source. Play with your family and challenge your friends.'}</p>
+<div class="cards">${IQUIZ.map((z) => `<a class="card" href="${link(lang, 'islamic-quiz-' + z.slug + '.html')}"><span class="cg" aria-hidden="true">${z.icon}</span><h3>${ur ? z.ur : z.en}</h3><p>${ur ? z.dUr : z.dEn}</p><span class="go" aria-hidden="true">${ur ? '←' : '→'}</span></a>`).join('')}</div>`;
+  return layout(lang, { file: 'islamic-quiz.html', section: 'quiz', title, desc, body });
+}
+function islamicQuizPage(lang, i) {
+  const ur = lang === 'ur';
+  const z = IQUIZ[i], name = ur ? z.ur : z.en;
+  const learn = { salah: [['salah-for-kids.html', ur ? 'بچوں کے لیے نماز' : 'Salah for kids'], ['how-many-rakats-in-each-prayer.html', ur ? 'ہر نماز کی رکعات' : 'Rakats of each prayer'], ['what-to-say-after-salah.html', ur ? 'نماز کے بعد کیا پڑھیں' : 'What to say after salah']],
+    quran: [['quran.html', ur ? 'قرآن لفظ بہ لفظ' : 'The Quran word by word'], ['ayatul-kursi.html', ur ? 'آیت الکرسی' : 'Ayat al-Kursi'], ['quran-verses.html', ur ? 'موضوع وار آیات' : 'Verses by topic']],
+    prophets: [['quran.html', ur ? 'قرآن لفظ بہ لفظ' : 'The Quran word by word'], ['quran-verses.html', ur ? 'موضوع وار آیات' : 'Verses by topic'], ['hisn-al-muslim.html', ur ? 'حصن المسلم' : 'Hisn al-Muslim']],
+    basics: [['islamic-phrases.html', ur ? 'اسلامی جملے اور اصطلاحات' : 'Islamic phrases and glossary'], ['hijri-converter.html', ur ? 'آج کی ہجری تاریخ' : 'Hijri date today'], ['99-names-of-allah.html', ur ? 'اللہ کے ۹۹ نام' : '99 Names of Allah']],
+    duas: [['islamic-phrases.html', ur ? 'اسلامی جملے' : 'Islamic phrases'], ['hisn-al-muslim.html', ur ? 'حصن المسلم' : 'Hisn al-Muslim'], ['tahajjud-time.html', ur ? 'تہجد کا وقت' : 'Tahajjud time']] }[z.slug] || [];
+  // client format: [question, unused, options (first is correct), explanation]
+  const data = { ur, slug: z.slug, title: name, qs: z.qs.map((q) => [ur ? q[1] : q[0], 0, q[2].map((o) => ur ? o[1] : o[0]), ur ? q[4] : q[3]]) };
+  const qsHtml = z.qs.map((q, k) => `<li><strong>${esc(ur ? q[1] : q[0])}</strong><br>${esc(ur ? q[2][0][1] : q[2][0][0])}</li>`).join('');
+  const title = ur ? `${name}: ${num(lang, z.qs.length)} سوالات جوابات کے ساتھ | حرف` : `${name}: ${z.qs.length} questions with answers | Harf`;
+  const desc = ur ? `${z.dUr} مفت ${name}، ہر جواب کے بعد قرآن یا حدیث کے حوالے کے ساتھ وضاحت۔` : `${z.dEn} A free ${name.toLowerCase()} with a sourced explanation after every answer.`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['islamic-quiz.html', ur ? 'اسلامی کوئز' : 'Islamic quiz'], [null, name]])}
+<h1>${z.icon} ${name}</h1>
+<p class="lead">${ur ? z.dUr : z.dEn}</p>
+<div class="iq" id="iqBox" aria-live="polite"></div>
+<details class="box"><summary><strong>${ur ? 'تمام سوالات اور جوابات' : 'All questions and answers'}</strong></summary><ol>${qsHtml}</ol></details>
+<section class="also"><h2>${ur ? 'پڑھیں اور سیکھیں' : 'Read and learn'}</h2><div class="also-grid">${learn.map(([f, t]) => `<a href="${link(lang, f)}"><span class="k k-guide">${ur ? 'سیکھیں' : 'Learn'}</span>${t}</a>`).join('')}</div>
+<p>${IQUIZ.filter((x) => x !== z).map((x) => `<a class="btn sm" href="${link(lang, 'islamic-quiz-' + x.slug + '.html')}">${x.icon} ${ur ? x.ur : x.en}</a>`).join(' ')}</p></section>
+${jsonData('iq-data', data)}
+<script>${IQ_JS}</script>`;
+  return layout(lang, { file: 'islamic-quiz-' + z.slug + '.html', section: 'quiz', title, desc, body });
 }
 
 // ---------------------------------------------------------------- Quran verses by topic (data/verses-topics.js)
@@ -9564,6 +9644,8 @@ function build() {
     add(lang, '99-names-of-allah.html', names99HubPage(lang));
     if (QURAN.length) add(lang, 'salah-for-kids.html', salahKidsPage(lang));
     if (QURAN.length) { add(lang, 'quran-verses.html', verseTopicsHub(lang)); VERSE_TOPICS.forEach((t, i) => add(lang, t[0] + '.html', verseTopicPage(lang, i))); }
+    add(lang, 'islamic-quiz.html', islamicQuizHub(lang));
+    IQUIZ.forEach((z, i) => add(lang, 'islamic-quiz-' + z.slug + '.html', islamicQuizPage(lang, i)));
     add(lang, 'islamic-phrases.html', islamicPhrasesHub(lang));
     IPHRASES.forEach((p, i) => add(lang, ipFile(p), islamicPhrasePage(lang, i)));
     NAMES99.forEach((x, i) => add(lang, n99File(x), names99Page(lang, i)));
@@ -9592,7 +9674,7 @@ function build() {
   }
   files['404.html'] = notFoundPage();
   files['engage.js'] = ENGAGE_JS;
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS + IP_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS + IP_CSS + IQ_CSS).replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
     if (fs.existsSync(f)) files[`qt/${r.qc}/${q.n}.json`] = fs.readFileSync(f, 'utf8');
