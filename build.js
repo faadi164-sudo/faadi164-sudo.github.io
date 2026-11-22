@@ -3322,6 +3322,7 @@ const { PROPHETS } = require('./data/prophets.js');
 const { COMPANIONS } = require('./data/companions.js');
 const { GUIDES_ISLAM } = require('./data/guides-islam.js');
 const { GUIDES_ISLAM_2 } = require('./data/guides-islam-2.js');
+const { GUIDES_ISLAM_3 } = require('./data/guides-islam-3.js');
 const { PHRASES_MORE } = require('./data/phrases-more.js');
 const { VOCAB_MORE } = require('./data/vocab-more.js');
 const { LETTERS_MORE } = require('./data/letters-more.js');
@@ -8885,7 +8886,7 @@ const GUIDES = [
   },
 ];
 
-GUIDES.push(...GUIDES_ISLAM, ...GUIDES_ISLAM_2);
+GUIDES.push(...GUIDES_ISLAM, ...GUIDES_ISLAM_2, ...GUIDES_ISLAM_3);
 
 // {Arabic} and [latin] via fmt, then @@file|text@@ links
 const gfmt = (lang, s) => fmt(s).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/@@([a-z0-9.-]+\.html)\|([^@]+)@@/g, (m, f, t) => `<a href="${link(lang, f)}">${t}</a>`);
