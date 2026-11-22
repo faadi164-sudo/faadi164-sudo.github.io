@@ -5509,6 +5509,7 @@ function quranPage(lang) {
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>${banner(lang, 'quran')}
 <p><a class="btn primary" href="${link(lang, 'quran-al-fatiha.html')}">${C.start}</a></p>
+${QWC ? `<a class="box" style="display:block;text-decoration:none;color:inherit;border:2px solid #0d6b57" href="${link(lang, 'quran-words-course.html')}"><p class="eyebrow" style="margin:0">📖 ${ur ? 'مفت ۱۴ دن کا کورس' : 'Free 14-day course'}</p><h2 style="margin:4px 0">${ur ? '۱۴ دن میں قرآن کے آدھے الفاظ سمجھیں' : 'Understand half the words of the Quran in 14 days'}</h2><p style="margin:0">${qwcIntro(lang)} ${ur ? 'شروع کریں ←' : 'Start →'}</p></a>` : ''}
 <section>
   <h2>${C.sH}</h2>
   <div class="cards">
@@ -6654,6 +6655,118 @@ ${(() => {
   return layout(lang, { file: c.slug + '.html', section: 'duas', title, desc: lead.slice(0, 155), body });
 }
 
+// ---------------------------------------------------------------- 14-day course: the most common Quran words
+// data/quran-words-course.json is generated from Harf's own word-by-word Quran text (counts with و/ف joined).
+const QWC = fs.existsSync(path.join(__dirname, 'data', 'quran-words-course.json')) ? JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'quran-words-course.json'), 'utf8')) : null;
+const qwcFile = (d) => `quran-words-day-${d}.html`;
+const qwcNorm = (w) => String(w).replace(/[ً-ٰٟۖ-ۭـ]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
+const QWC_CSS = `
+.qwc-words{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:16px 0}
+.qwc-w{background:var(--card,#fff);border:1px solid var(--line,#e7dfcf);border-radius:14px;padding:14px 16px}
+.qwc-w .ar{font-size:30px;line-height:1.6;display:block}
+.qwc-w .tr{color:var(--gold,#a77d2b);font-weight:600}
+.qwc-w .n{font-size:13px;color:var(--muted,#6b6b6b)}
+.qwc-wbw{display:flex;flex-wrap:wrap;flex-direction:row-reverse;gap:8px;justify-content:flex-start;margin:12px 0}
+.qwc-wbw span{display:flex;flex-direction:column;align-items:center;padding:6px 10px;border-radius:10px;border:1px solid var(--line,#e7dfcf);background:var(--card,#fff)}
+.qwc-wbw span.hit{background:#e8f4ef;border-color:#0d6b57}
+.qwc-wbw b{font-family:var(--ar-font,inherit);font-size:24px;font-weight:400}
+.qwc-wbw small{font-size:12px;color:var(--muted,#6b6b6b);max-width:110px;text-align:center}
+.qwc-days{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:16px 0}
+.qwc-days a{display:block;padding:14px 16px;border-radius:14px;border:1px solid var(--line,#e7dfcf);background:var(--card,#fff);text-decoration:none;color:inherit}
+.qwc-days a.done{border-color:#0d6b57;background:#eef7f3}
+.qwc-days a .d{font-size:13px;color:var(--gold,#a77d2b);font-weight:700}
+.qwc-q{background:var(--card,#fff);border:1px solid var(--line,#e7dfcf);border-radius:14px;padding:16px;margin:12px 0}
+.qwc-q .qar{font-size:36px;text-align:center;margin:6px 0 12px}
+.qwc-q .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qwc-q .opts button.ok{background:#0d6b57;color:#fff;border-color:#0d6b57}
+.qwc-q .opts button.no{background:#fbe9e7;border-color:#c0392b}
+.qwc-bar{height:10px;border-radius:6px;background:#ece5d6;overflow:hidden;margin:6px 0 14px}
+.qwc-bar i{display:block;height:100%;background:#0d6b57;width:0}
+`;
+const QWC_JS = `(function(){
+  var K='harf-qwc',s={};try{s=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
+  function save(){try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}
+  var ur=document.documentElement.lang==='ur';
+  document.querySelectorAll('.qwc-days a[data-d]').forEach(function(a){if(s[a.dataset.d])a.classList.add('done')});
+  var n=0;for(var k in s)if(s[k])n++;
+  var bar=document.querySelector('.qwc-bar i');if(bar)bar.style.width=Math.round(n/14*100)+'%';
+  var pc=document.getElementById('qwcProg');if(pc)pc.textContent=n+' / 14';
+  var done=document.getElementById('qwcDone');
+  if(done){var d=done.dataset.d;function lab(){done.textContent=s[d]?(ur?'✓ یہ دن مکمل':'✓ Day complete'):(ur?'یہ دن مکمل کریں':'Mark this day complete');done.classList.toggle('primary',!s[d]);}
+    lab();done.addEventListener('click',function(){s[d]=s[d]?0:1;save();lab();});}
+  var q=document.querySelector('.qwc-q');
+  if(q){var W=JSON.parse(q.dataset.w),i=0,score=0,order=W.map(function(_,k){return k}).sort(function(){return Math.random()-.5});
+    var qar=q.querySelector('.qar'),opts=q.querySelector('.opts'),msg=q.querySelector('.qmsg');
+    function show(){if(i>=order.length){qar.textContent='';opts.innerHTML='';msg.textContent=(ur?'نتیجہ: ':'Score: ')+score+' / '+W.length+(score===W.length?(ur?' — ماشاء اللہ!':' — mā shāʾ Allāh!'):'');var r=document.createElement('button');r.className='btn';r.type='button';r.textContent=ur?'دوبارہ':'Try again';r.onclick=function(){i=0;score=0;order.sort(function(){return Math.random()-.5});show();};opts.appendChild(r);return;}
+      var w=W[order[i]];qar.textContent=w[0];msg.textContent=(i+1)+' / '+W.length;opts.innerHTML='';
+      var c=[w[1]];var pool=W.map(function(x){return x[1]}).filter(function(m){return m!==w[1]}).sort(function(){return Math.random()-.5});c=c.concat(pool.slice(0,3)).sort(function(){return Math.random()-.5});
+      c.forEach(function(m){var b=document.createElement('button');b.type='button';b.className='btn';b.textContent=m;b.onclick=function(){var ok=m===w[1];b.classList.add(ok?'ok':'no');if(ok)score++;else opts.querySelectorAll('button').forEach(function(x){if(x.textContent===w[1])x.classList.add('ok')});opts.querySelectorAll('button').forEach(function(x){x.disabled=true});setTimeout(function(){i++;show()},900);};opts.appendChild(b);});}
+    show();}
+})();`;
+
+function qwcIntro(lang) {
+  const ur = lang === 'ur';
+  return ur
+    ? `قرآن کے ${num(lang, QWC.tokens.toLocaleString('en'))} الفاظ میں سے تقریباً ${num(lang, Math.round(QWC.pct))}٪ صرف ان ۱۲۶ الفاظ پر مشتمل ہیں۔ روزانہ ۹ الفاظ، ۱۴ دن میں۔`
+    : `Just 126 words make up about ${Math.round(QWC.pct)}% of the ${QWC.tokens.toLocaleString('en')} words of the Quran. Learn 9 a day for 14 days.`;
+}
+
+function qwcHubPage(lang) {
+  const ur = lang === 'ur';
+  const H = ur ? '۱۴ دن میں قرآن کے آدھے الفاظ سمجھیں' : 'Understand half the words of the Quran in 14 days';
+  const days = QWC.days.map((d, k) => `<a href="${link(lang, qwcFile(k + 1))}" data-d="${k + 1}"><span class="d">${ur ? 'دن' : 'Day'} ${num(lang, k + 1)}</span><h3 style="margin:4px 0">${esc(ur ? d.ur : d.en)}</h3><span class="ar" lang="ar" style="font-size:20px">${d.w.slice(0, 4).map((w) => w[1]).join(' · ')}</span></a>`).join('');
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, H]])}
+<p class="eyebrow">📖 ${ur ? 'مفت کورس' : 'Free course'}</p>
+<h1>${H}</h1>
+<p class="lead">${qwcIntro(lang)}</p>
+<div class="box"><p style="margin:0 0 6px"><strong>${ur ? 'آپ کی پیش رفت:' : 'Your progress:'}</strong> <span id="qwcProg">0 / 14</span> ${ur ? 'دن' : 'days'}</p><div class="qwc-bar"><i></i></div>
+<a class="btn primary" href="${link(lang, qwcFile(1))}">${ur ? 'دن ۱ سے شروع کریں ←' : 'Start with Day 1 →'}</a></div>
+<article class="guide">
+<section><h2>${ur ? 'یہ کورس کیوں کام کرتا ہے' : 'Why this works'}</h2>
+<p>${ur ? 'قرآن میں کچھ الفاظ بار بار آتے ہیں: «مِنْ» (سے) اکیلا ۳ ہزار سے زیادہ بار، «اللّٰه» ۲ ہزار سے زیادہ بار۔ اگر آپ سب سے زیادہ آنے والے الفاظ پہلے سیکھیں تو ہر صفحے پر جلد ہی تقریباً آدھے الفاظ پہچاننے لگیں گے۔ یہ الفاظ ہم نے حرف کے اپنے لفظ بہ لفظ قرآن متن سے گن کر چنے ہیں (و اور ف کو ساتھ والے لفظ کے ساتھ گن کر)۔' : 'Some words come back again and again in the Quran: «مِنْ» (from) alone appears over 3,000 times, and «اللّٰه» over 2,000. Learn the most frequent words first and you will soon recognise about half the words on every page. We chose these words by counting Harf’s own word-by-word Quran text, with the “and” (و، ف) joined to the word that follows.'}</p>
+<p>${gfmt(lang, ur ? 'بہت سے الفاظ آپ نماز میں روز پڑھتے ہیں، اس لیے جو سیکھیں گے وہ فوراً @@quran-prayer-words.html|نماز کے الفاظ@@ میں سنائی دے گا۔ ہر دن: ۹ الفاظ آواز کے ساتھ، ایک آیت جس میں وہ آتے ہیں، اور ایک چھوٹا کوئز۔ روزانہ ۱۰ منٹ کافی ہیں۔' : 'Many of them you already say every day in your prayer, so what you learn will light up the @@quran-prayer-words.html|words of the prayer@@ straight away. Each day: 9 words with audio, a verse where they appear, and a short quiz. Ten minutes a day is enough.')}</p></section>
+<section><h2>${ur ? '۱۴ دن' : 'The 14 days'}</h2><div class="qwc-days">${days}</div></section>
+<section><h2>${ur ? 'اس کے بعد' : 'After the course'}</h2><p>${gfmt(lang, ur ? 'کورس کے بعد @@quran-common-words.html|قرآن کے عام الفاظ@@ کے فلیش کارڈز سے دہرائیں، @@quran-roots.html|قرآنی مادے@@ دیکھیں کہ ایک مادے سے کتنے الفاظ بنتے ہیں، اور @@how-to-read-quran-in-arabic-for-beginners.html|قرآن پڑھنے کی رہنمائی@@ پڑھیں۔' : 'When you finish, revise with the @@quran-common-words.html|common Quran words@@ flashcards, explore @@quran-roots.html|Quran roots@@ to see how one root grows into many words, and read @@how-to-read-quran-in-arabic-for-beginners.html|how to read the Quran as a beginner@@.')}</p></section>
+</article>
+<script>${QWC_JS}</script>`;
+  return layout(lang, { file: 'quran-words-course.html', section: 'quran', title: ur ? '۱۴ دن میں قرآن کے آدھے الفاظ: مفت کورس اردو میں | حرف' : 'Learn half the words of the Quran in 14 days: free course | Harf', desc: ur ? 'مفت ۱۴ دن کا کورس: قرآن کے سب سے زیادہ آنے والے ۱۲۶ الفاظ جو قرآن کے تقریباً ۴۵٪ الفاظ ہیں، آواز، آیات اور کوئز کے ساتھ۔' : 'A free 14-day course: the 126 most frequent Quran words, which make up about 45% of the Quran, with audio, real verses and a quiz each day.', body, article: true });
+}
+
+function qwcDayPage(lang, d) {
+  const ur = lang === 'ur';
+  const D = QWC.days[d - 1];
+  const H = `${ur ? 'دن' : 'Day'} ${num(lang, d)}: ${ur ? D.ur : D.en}`;
+  const keys = new Set(D.w.map((w) => w[0]));
+  const words = D.w.map((w) => `<div class="qwc-w"><span class="ar" lang="ar">${w[1]}</span><span class="tr latin">${esc(w[2])}</span><div>${esc(ur ? w[4] : w[3])}</div><div class="n">${ur ? `قرآن میں ${num(lang, w[5])} بار` : `${w[5].toLocaleString('en')} times in the Quran`}</div>${say(lang, w[1])}</div>`).join('');
+  let ex = '';
+  const q = QURAN.find((z) => z.n === D.ex[0]);
+  if (q) {
+    const v = loadSurah(q)[D.ex[1] - 1];
+    if (v) {
+      const wb = v.w.map((w) => { const k = qwcNorm(w[0]); const b = (k.length > 2 && /^[وف]/.test(k) && keys.has(k.slice(1))) ? k.slice(1) : k; return `<span class="${keys.has(b) ? 'hit' : ''}"><b lang="ar">${w[0]}</b><small>${esc(ur ? w[3] : w[2])}</small></span>`; }).join('');
+      const ref = ur ? `${q.ur} ${num(lang, q.n)}:${num(lang, D.ex[1])}` : `Surah ${q.en} ${q.n}:${D.ex[1]}`;
+      ex = `<section><h2>${ur ? 'آیت میں پہچانیں' : 'Spot them in a verse'}</h2>
+<p>${ur ? 'سبز الفاظ آج کے الفاظ ہیں۔' : 'The green words are today’s words.'}</p>
+<div class="qwc-wbw">${wb}</div>
+<p class="mean">${esc(ur ? v.ur : v.en)}</p>
+<p class="small">${ur ? 'حوالہ' : 'Source'}: <a href="${link(lang, 'quran-' + q.slug + '.html')}#v${D.ex[1]}">${esc(ref)}</a> ${say(lang, v.w.map((w) => w[0]).join(' '))}</p></section>`;
+    }
+  }
+  const quizData = esc(JSON.stringify(D.w.map((w) => [w[1], ur ? w[4] : w[3]])));
+  const prev = d > 1 ? `<a class="btn" href="${link(lang, qwcFile(d - 1))}">${ur ? '→ پچھلا دن' : '← Previous day'}</a>` : `<a class="btn" href="${link(lang, 'quran-words-course.html')}">${ur ? '→ کورس' : '← Course'}</a>`;
+  const next = d < 14 ? `<a class="btn primary" href="${link(lang, qwcFile(d + 1))}">${ur ? 'اگلا دن ←' : 'Next day →'}</a>` : `<a class="btn primary" href="${link(lang, 'quran-common-words.html')}">${ur ? 'مبارک ہو! اب فلیش کارڈز ←' : 'Well done! Now the flashcards →'}</a>`;
+  const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran-words-course.html', ur ? '۱۴ دن کا کورس' : '14-day course'], [null, `${ur ? 'دن' : 'Day'} ${num(lang, d)}`]])}
+<p class="eyebrow">${ur ? `قرآن کے الفاظ · دن ${num(lang, d)} از ۱۴` : `Quran words · Day ${d} of 14`}</p>
+<h1>${esc(H)}</h1>
+<p class="lead">${ur ? `آج کے ۹ الفاظ قرآن میں مل کر ${num(lang, D.w.reduce((a, w) => a + w[5], 0))} بار آتے ہیں۔ ہر لفظ سنیں، بلند آواز سے دہرائیں، پھر آیت میں پہچانیں اور کوئز کریں۔` : `Today’s 9 words appear ${D.w.reduce((a, w) => a + w[5], 0).toLocaleString('en')} times in the Quran between them. Listen to each one, say it aloud, spot it in a verse, then take the quiz.`}</p>
+<div class="qwc-words">${words}</div>
+${ex}
+<section><h2>${ur ? 'کوئز' : 'Quick quiz'}</h2><div class="qwc-q" data-w="${quizData}"><p class="qmsg small"></p><div class="qar ar" lang="ar"></div><div class="opts"></div></div></section>
+<p class="row" style="gap:8px;flex-wrap:wrap">${prev} <button class="btn" type="button" id="qwcDone" data-d="${d}"></button> ${next}</p>
+<script>${QWC_JS}</script>`;
+  return layout(lang, { file: qwcFile(d), section: 'quran', title: ur ? `قرآن کے الفاظ، دن ${num(lang, d)}: ${D.ur} | حرف` : `Quran words day ${d}: ${D.en} | Harf`, desc: ur ? `۱۴ دن کے کورس کا دن ${num(lang, d)}: ${D.w.map((w) => w[1]).join('، ')} — آواز، آیت اور کوئز کے ساتھ۔` : `Day ${d} of the free 14-day course: ${D.w.map((w) => `${w[2]} (${w[3]})`).slice(0, 5).join(', ')} and more, with audio, a verse and a quiz.`, body });
+}
+
 // ---------------------------------------------------------------- Ramadan hub
 // Where each juz starts: [surah number, ayah]
 const JUZ_START = [[1, 1], [2, 142], [2, 253], [3, 93], [4, 24], [4, 148], [5, 82], [6, 111], [7, 88], [8, 41], [9, 93], [11, 6], [12, 53], [15, 1], [17, 1], [18, 75], [21, 1], [23, 1], [25, 21], [27, 56], [29, 46], [33, 31], [36, 28], [39, 32], [41, 47], [46, 1], [51, 31], [58, 1], [67, 1], [78, 1]];
@@ -6800,6 +6913,7 @@ function quranWordsPage(lang) {
   const body = `${crumbs(lang, [['index.html', T[lang].nav.home], ['quran.html', T[lang].nav.quran], [null, C.h1]])}
 <h1>${C.h1}</h1>
 <p class="lead">${C.lead}</p>
+${QWC ? `<p class="box"><strong>${ur ? 'نیا:' : 'New:'}</strong> ${qwcIntro(lang)} <a href="${link(lang, 'quran-words-course.html')}">${ur ? 'مفت ۱۴ دن کا کورس شروع کریں ←' : 'Start the free 14-day course →'}</a></p>` : ''}
 ${deckHtml(lang, 'quran', QWORDS)}
 <nav class="pager" aria-label="${T[lang].nav.quran}">
   <a class="btn" href="${link(lang, 'quran-prayer-words.html')}">${T[lang].prev}: ${ur ? 'نماز کے اذکار' : 'words of the prayer'}</a>
@@ -10299,6 +10413,10 @@ function build() {
     add(lang, 'quiz.html', quizPage(lang));
     add(lang, 'guides.html', guidesPage(lang));
     if (QURAN.length && HISN.length) add(lang, 'ramadan.html', ramadanPage(lang));
+    if (QWC && QURAN.length) {
+      add(lang, 'quran-words-course.html', qwcHubPage(lang));
+      for (let d = 1; d <= 14; d++) add(lang, qwcFile(d), qwcDayPage(lang, d));
+    }
     add(lang, 'search.html', searchPage(lang));
     GUIDES.forEach((x, i) => add(lang, x.slug + '.html', guidePage(lang, i)));
     add(lang, 'tools.html', toolsPage(lang));
@@ -10318,7 +10436,7 @@ function build() {
   }
   files['404.html'] = notFoundPage();
   files['engage.js'] = ENGAGE_JS;
-  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS + IP_CSS + IQ_CSS + CP_CSS
+  files['style.css'] = (STYLE_CSS + TOOL_CSS + ROOT_CSS + GUIDE_CSS + SEARCH_CSS + FRONT_CSS + ENGAGE_CSS + DAILY_CSS + N99_CSS + KIDS_CSS + IP_CSS + IQ_CSS + CP_CSS + QWC_CSS
     + '\n/* long surah pages: let the browser skip laying out verses that are off screen */\nsection.verse{content-visibility:auto;contain-intrinsic-size:auto 560px}\n').replace(/__PAT__/g, PATTERN).replace(/__STAR__/g, STAR).replace(/__ROSETTE__/g, ROSETTE).replace(/__SPK__/g, SPK);
   for (const r of RECITERS) if (r.qc) for (const q of QURAN) {
     const f = path.join(TIMING_DIR, String(r.qc), q.n + '.json');
